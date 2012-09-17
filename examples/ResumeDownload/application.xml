@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application xmlns="http://ns.adobe.com/air/application/3.1">
+  <id>cn.eDoctor.Rainssong</id>
+  <versionNumber>1.0</versionNumber>
+  <supportedProfiles>mobileDevice</supportedProfiles>
+  <filename>ResumeDownload</filename>
+  <name>ResumeDownload</name>
+  <copyright>eDoctor Healthcare Communications‎</copyright>
+  <android>
+    <manifestAdditions><![CDATA[<manifest android:installLocation="auto">
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-feature android:required="true" android:name="android.hardware.touchscreen.multitouch" />
+</manifest>]]></manifestAdditions>
+  </android>
+  <iPhone>
+    <InfoAdditions><![CDATA[<key>UIStatusBarStyle</key>
+<string>UIStatusBarStyleBlackOpaque</string>
+<key>UIRequiresPersistentWiFi</key>
+<string>NO</string>
+<key>UIPrerenderedIcon</key>
+<false />
+<key>UIApplicationExitsOnSuspend</key>
+<false />
+<key>UIDeviceFamily</key>
+<array>
+	<!-- iPhone support -->
+	<string>1</string>
+	<!-- iPad support -->
+	<string>2</string>
+</array>]]></InfoAdditions>
+    <requestedDisplayResolution>high</requestedDisplayResolution>
+  </iPhone>
+  <initialWindow>
+    <title>ResumeDownload</title>
+    <content>Main.swf</content>
+    <visible>true</visible>
+    <fullScreen>false</fullScreen>
+    <!--<autoOrients>false</autoOrients>-->
+    <!--<aspectRatio>landscape</aspectRatio>-->
+    <renderMode>gpu</renderMode>
+    <systemChrome>standard</systemChrome>
+    <aspectRatio>landscape</aspectRatio>
+    <autoOrients>true</autoOrients>
+  </initialWindow>
+  <icon>
+    <image48x48>icons/icon_48.png</image48x48>
+    <image72x72>icons/icon_72.png</image72x72>
+  </icon>
+  <!-- 
+	AIR options:
+	http://livedocs.adobe.com/flex/3/html/File_formats_1.html#1043413
+	
+	AIR mobile options:
+	http://help.adobe.com/en_US/air/build/WSfffb011ac560372f-5d0f4f25128cc9cd0cb-7ffe.html
+	
+	Android manifest documentation:
+	http://developer.android.com/guide/topics/manifest/manifest-intro.html
+	-->
+</application>
