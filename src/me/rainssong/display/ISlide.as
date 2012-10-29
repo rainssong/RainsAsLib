@@ -9,7 +9,10 @@ package  me.rainssong.display
 	{
 		function lock():void
 		function unlock():void
-		function get isLocked():Boolean
+		function get isLeftRollInEnabled():Boolean
+		function get isRightRollInEnabled():Boolean
+		function get isLeftRollOutEnabled():Boolean
+		function get isRightRollOutEnabled():Boolean
 	}
 	
 }

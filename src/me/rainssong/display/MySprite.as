@@ -1,6 +1,7 @@
 package me.rainssong.display 
 {
 	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -87,6 +88,7 @@ package me.rainssong.display
 				delete this[v];
 			}
 		}
+
 		
 		override public function removeChildren(beginIndex:int=0, endIndex:int=2147483647):void
 		{

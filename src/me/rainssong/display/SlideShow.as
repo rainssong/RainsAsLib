@@ -82,7 +82,7 @@ package me.rainssong.display
 			}
 			
 			//
-			TweenMax.killTweensOf(_slideContainer);
+			//TweenMax.killTweensOf(_slideContainer);
 			dpoint.x = e.stageX;
 			dpoint.y = e.stageY;
 			mpoint.x = _slideContainer.x;
@@ -108,8 +108,20 @@ package me.rainssong.display
 			if (_slideContainer.x != (speedX / 0.5 + _slideContainer.x) / -1024)
 			{
 				//dispatchEvent(new Event(SWIPE_LEFT));
+				var result:int = Math.round((speedX / 0.5 + _slideContainer.x) / -1024);
+				if (result > _targetIndex && rightRollAble)
+				{
+					rollNext();
+				}
+				else if (result < _targetIndex && leftRollAble)
+				{
+					rollPrev();
+				}
+				else
+				{
+					rollTo(_targetIndex)
+				}
 				
-				rollTo(Math.round((speedX / 0.5 + _slideContainer.x) / -1024));
 				//if((speedX / 0.5 + _slideContainer.x)>_slideWidth)
 			}
 			if (speedY < -30 && Math.abs(speedX)<25)
@@ -166,7 +178,7 @@ package me.rainssong.display
 		public function rollTo(index:int, time:Number = 0.5):void
 		{
 			
-			TweenMax.killTweensOf(_slideContainer);
+			//TweenMax.killTweensOf(_slideContainer);
 			index = index < 0 ? 0 : index;
 			index = index >= _slideClassArr.length ? _slideClassArr.length - 1 : index;
 			trace("rollTo",index)
@@ -183,7 +195,7 @@ package me.rainssong.display
 		
 		public function rollPrev():void
 		{
-			trace("rollNext",_targetIndex - 1)
+			trace("rollPrev",_targetIndex - 1)
 			rollTo(_targetIndex - 1);
 		}
 		
@@ -311,7 +323,7 @@ package me.rainssong.display
 			if (_targetIndex == 0)
 			return false;
 			
-			var rollAble:Boolean = !_slideArr[_targetIndex].isLocked && !_slideArr[_targetIndex - 1].isLocked;
+			var rollAble:Boolean = !_slideArr[_targetIndex].isLocked && _slideArr[_targetIndex].isLeftRollOutEnabled && _slideArr[_targetIndex-1].isRightRollInEnabled ;
 
 			return  rollAble;
 		}
@@ -321,7 +333,7 @@ package me.rainssong.display
 			if (_targetIndex == _slideClassArr.length-1)
 			return false;
 			
-			var rollAble:Boolean = !_slideArr[_targetIndex].isLocked && !_slideArr[_targetIndex + 1].isLocked;
+			var rollAble:Boolean = !_slideArr[_targetIndex].isLocked && _slideArr[_targetIndex].isRightRollOutEnabled && _slideArr[_targetIndex+1].isLeftRollInEnabled ;
 
 			return  rollAble;
 		}

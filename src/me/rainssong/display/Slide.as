@@ -16,8 +16,12 @@
 	public dynamic class Slide extends MyMovieClip implements ISlide 
 	{
 		
-		protected var _isLocked:Boolean = false;
 		
+		protected var _isLeftRollInEnabled:Boolean = true;
+		protected var _isRightRollInEnabled:Boolean = true;
+		protected var _isLeftRollOutEnabled:Boolean = true;
+		protected var _isRightRollOutEnabled:Boolean = true;
+		protected var _isLocked:Boolean = false;
 		
 		public function Slide() 
 		{
@@ -41,11 +45,6 @@
 			//mouseChildren = false;
 		}
 		
-		public function get isLocked():Boolean 
-		{
-			return _isLocked;
-		}
-		
 		override public function enable():void 
 		{
 			super.enable();
@@ -56,6 +55,31 @@
 		{
 			super.disable();
 			gotoAndStop(1);
+		}
+		
+		public function get isLeftRollInEnabled():Boolean 
+		{
+			return _isLeftRollInEnabled;
+		}
+		
+		public function get isRightRollInEnabled():Boolean 
+		{
+			return _isRightRollInEnabled;
+		}
+		
+		public function get isLeftRollOutEnabled():Boolean 
+		{
+			return _isLeftRollOutEnabled;
+		}
+		
+		public function get isRightRollOutEnabled():Boolean 
+		{
+			return _isRightRollOutEnabled;
+		}
+		
+		public function get isLocked():Boolean 
+		{
+			return _isLocked;
 		}
 		
 		
