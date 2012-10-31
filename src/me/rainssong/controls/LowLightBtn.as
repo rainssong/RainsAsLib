@@ -15,7 +15,7 @@
 	 */
 	public class LowLightBtn extends MySprite
 	{
-		var colorTrans:ColorTransform = new ColorTransform();
+		private const colorTrans:ColorTransform = new ColorTransform();
 		public function LowLightBtn() 
 		{
 			super();
@@ -38,16 +38,14 @@
 		{
 			var temp:ColorTransform = new ColorTransform(0.7, 0.7, 0.7, 1, 0, 0, 0, 0);
 			this.transform.colorTransform = temp;
-			
 		}
 		
 		private function upHandler(e:MouseEvent):void 
 		{
-			/*if (parentD)
-			{*/
-				this.transform.colorTransform = colorTrans;
-			/*}*/
+			this.transform.colorTransform = colorTrans;
 		}
+		
+		
 		
 		//private function removeAt():void 
 //		{

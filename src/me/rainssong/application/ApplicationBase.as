@@ -1,4 +1,4 @@
-package application 
+package me.rainssong.application 
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
