@@ -6,7 +6,11 @@ package me.rainssong.air
 	 */
 	public class AirManager 
 	{
-		public static var rotate
+		public static var rotateDefaultEnable:Boolean=true;
+		public static var rotateRigthEnable:Boolean=true;
+		public static var rotateLeftEnable:Boolean=true;
+		public static var rotateUpsideDownEnable:Boolean=true;
+		
 		
 		public function AirManager() 
 		{
@@ -22,18 +26,18 @@ package me.rainssong.air
 			switch (event.afterOrientation)
 			{
 				case StageOrientation.DEFAULT: 
-					event.preventDefault();
+					if(rotateDefaultEnable)event.preventDefault();
 
 					break;
 				case StageOrientation.ROTATED_RIGHT: 
-
+					if(rotateRigthEnable)event.preventDefault();
 					break;
 				case StageOrientation.ROTATED_LEFT:
-					
+					if(rotateLeftEnable)event.preventDefault();
 
 					break;
 				case StageOrientation.UPSIDE_DOWN: 
-					event.preventDefault();
+					if(rotateUpsideDownEnable)event.preventDefault();
 
 					break;
 			}

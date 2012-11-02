@@ -4,8 +4,10 @@ package me.rainssong.application
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.utils.getDefinitionByName;
 	import me.rainssong.display.MySprite;
 	import mx.core.Singleton;
+	import utils.Config;
 	
 	/**
 	 * ...
@@ -20,6 +22,10 @@ package me.rainssong.application
 		private var _uiLayer:MySprite;
 		private var _warningLayer:MySprite
 		
+		public static var rotateDefaultEnable:Boolean=true;
+		public static var rotateRigthEnable:Boolean=true;
+		public static var rotateLeftEnable:Boolean=true;
+		public static var rotateUpsideDownEnable:Boolean=true;
 		
 		public function ApplicationBase() 
 		{
@@ -44,7 +50,40 @@ package me.rainssong.application
 			addChild(_mainLayer);
 			addChild(_uiLayer);
 			addChild(_warningLayer);
+			
+			
+			try 
+			{
+				var StageOrientationEvent:Class = getDefinitionByName("StageOrientationEvent") as Class;
+				stage.addEventListener(StageOrientationEvent.ORIENTATION_CHANGING, onOrientationChange); 
+			}
+			catch (e:Error)
+			{
+				trace("不支持旋转");
+			}
 		}
+		
+		
+		private function onOrientationChange(e:*):void
+		{
+			var StageOrientation:Class = getDefinitionByName("StageOrientation") as Class;
+			switch (e.afterOrientation)
+			{
+				case StageOrientation.DEFAULT: 
+					if(!rotateDefaultEnable)e.preventDefault();
+					break;
+				case StageOrientation.ROTATED_RIGHT: 
+					if(!rotateRigthEnable)e.preventDefault();
+					break;
+				case StageOrientation.ROTATED_LEFT:
+					if(!rotateLeftEnable)e.preventDefault();
+					break;
+				case StageOrientation.UPSIDE_DOWN: 
+					if(!rotateUpsideDownEnable)e.preventDefault();
+					break;
+			}
+		}
+		
 		
 		private function getInstance():ApplicationBase
 		{
