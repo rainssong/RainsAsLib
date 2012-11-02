@@ -35,8 +35,8 @@ package
 		{
 			_keyDictionary = new Dictionary();
 			_stage = null;
-			_stage.removeEventListener(KeyboardEvent.KEY_DOWN,keyDown);
-			_stage.removeEventListener(KeyboardEvent.KEY_UP,keyUp);
+			_stage.removeEventListener(KeyboardEvent.KEY_DOWN,onKeyDown);
+			_stage.removeEventListener(KeyboardEvent.KEY_UP,onKeyUp);
 		}
 		
 		public static function keyIsDown(keycode:uint):Boolean
@@ -44,12 +44,12 @@ package
 			return _keyDictionary[e.keyCode]?true:false;
 		}
 		
-		private static function keyDown(e:KeyboardEvent):void
+		private static function onKeyDown(e:KeyboardEvent):void
 		{
 			_keyDictionary[e.keyCode] = true;
 		}
 		
-		private static function keyUp(evt:KeyboardEvent):void
+		private static function onKeyUp(evt:KeyboardEvent):void
 		{
 			_keyDictionary[e.keyCode] = false;
 		}

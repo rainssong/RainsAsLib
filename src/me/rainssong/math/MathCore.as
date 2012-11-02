@@ -1,27 +1,51 @@
 package me.rainssong.math
 {
+	import flash.display.SimpleButton;
 	
 	public class MathCore extends Math
 	{
+		/**
+		* Randomize an Array/Vector
+		* @param arr Array or Vector
+		* @return randomedVector
+		*/
 		public static function getRandomArray(arr:Array):Array
 		{
-			return [];
+			var outputArr:Array = arr.slice();
+			var i:int = outputArr.length;
+			var temp:*;
+			var indexA:int;
+			var indexB:int;
+			
+			while (i)
+			{
+				indexA = i - 1;
+				indexB = Math.floor(Math.random() * i);
+				i--;
+				if (indexA == indexB)
+					continue;
+				temp = outputArr[indexA];
+				outputArr[indexA] = outputArr[indexB];
+				outputArr[indexB] = temp;
+			}
+			
+			return outputArr;
 		}
 		
-		public static function getRangeNumber(value:Number, min:Number = -Infinity, max:Number = Infinity):Number
+		public static function getRandomNumber(min:Number = -Infinity, max:Number = Infinity):Number
 		{
-			return 0;
+			return random() * (max - min) + min;
 		}
 		
-		public static function getIntArray(startInt:int=0,endInt:int=99):Array
+		public static function getIntArray(startInt:int = 0, endInt:int = 99):Array
 		{
 			var outArr:Array = [];
-			while (startInt<=endInt)
+			while (startInt <= endInt)
 			{
 				outArr.push(startInt);
 				startInt++;
 			}
-			
+			return outArr;
 		}
 	
 	}

@@ -2,6 +2,7 @@ package me.rainssong.application
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.Event;
 	import me.rainssong.display.MySprite;
 	import mx.core.Singleton;
@@ -18,6 +19,7 @@ package me.rainssong.application
 		private var _mainLayer:MySprite;
 		private var _uiLayer:MySprite;
 		private var _warningLayer:MySprite
+		
 		
 		public function ApplicationBase() 
 		{
@@ -44,7 +46,7 @@ package me.rainssong.application
 			addChild(_warningLayer);
 		}
 		
-		private function get instance():ApplicationBase
+		private function getInstance():ApplicationBase
 		{
 			if (!_instance)_instance = new ApplicationBase();
 			return _instance as ApplicationBase;
@@ -75,6 +77,10 @@ package me.rainssong.application
 			return _warningLayer;
 		}
 		
+		public static function get stage():Stage
+		{
+			return stage;
+		}
 	}
 
 }

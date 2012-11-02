@@ -8,7 +8,7 @@
 	public class MyRadioBtn extends MovieClip {
 		
 		
-		
+		private var _groupName:String;
 		public function MyRadioBtn() {
 			// constructor code
 			stop();
@@ -22,8 +22,6 @@
 		{
 			select();
 		}
-		
-		
 		
 		private function onRemove(e:Event):void 
 		{
@@ -54,7 +52,6 @@
 		{
 			this.gotoAndStop(2);
 			MyRadioButtonGroup.selection = this;
-		
 			MyRadioButtonGroup.dispatcher.dispatchEvent(new Event(MyRadioButtonGroup.Selected));
 		}
 		
