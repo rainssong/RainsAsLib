@@ -9,13 +9,13 @@ package me.rainssong.display
 	 */
 	public interface IView 
 	{
-		function register():void
-		
+		function onRegister():void
+		function onAdd():void
 		function show():void
 		function enable():void
 		function disable():void
 		function hide():void
-		
+		function onRemove():void
 		function destroy():void
 	}
 	

@@ -20,16 +20,15 @@ package me.rainssong.display
 		{
 			super();
 			_listenerArr = new Vector.<Array>;
-			register();
+			onRgister();
 			
 		}
 		
 		/* INTERFACE rainssong.display.IView */
 		
-		public function register():void 
+		public function onRgister():void 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, onAdd);
-			
 		}
 		
 		
