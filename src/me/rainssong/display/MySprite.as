@@ -26,7 +26,7 @@ package me.rainssong.display
 		
 		/* INTERFACE rainssong.display.IView */
 		
-		public function onRgister():void 
+		public function onRegister():void 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, onAdd);
 		}
