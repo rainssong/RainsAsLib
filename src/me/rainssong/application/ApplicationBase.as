@@ -51,7 +51,6 @@ package me.rainssong.application
 			addChild(_uiLayer);
 			addChild(_warningLayer);
 			
-			
 			try 
 			{
 				var StageOrientationEvent:Class = getDefinitionByName("StageOrientationEvent") as Class;
