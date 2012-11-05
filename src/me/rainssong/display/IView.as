@@ -2,7 +2,6 @@
 
 package me.rainssong.display 
 {
-	import flash.display.DisplayObjectContainer;
 	/**
 	 * ...
 	 * @author Rainssong
