@@ -1,7 +1,7 @@
-package me.rainssong.filesytem
+package me.rainssong.fileSystem
 {
 	import avmplus.finish;
-	import com.vsdevelop.air.filesystem.FileCore;
+	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
@@ -12,10 +12,10 @@ package me.rainssong.filesytem
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
-	import com.vsdevelop.net.SharedManage;
+	
 	import flash.net.URLRequestHeader;
 	import flash.utils.ByteArray;
-	import com.vsdevelop.net.SharedManage;
+	
 	import flash.utils.getDefinitionByName;
 	
 	/**
@@ -25,7 +25,7 @@ package me.rainssong.filesytem
 	public class ResumeDownloader extends EventDispatcher
 	{
 		private static const RANGE:int = 100000;
-		private static const EXTENSION:String = "ed";
+		private static const EXTENSION:String = "temp";
 		private var _totalLength:Number;
 		private var _sourceUrl:String;
 		private var _tempFileUrl:String;
@@ -43,21 +43,24 @@ package me.rainssong.filesytem
 		
 		private var _isFinished:Boolean = false;
 		
+		private var _id:String;
+		
 		public function ResumeDownloader()
 		{
 			
 		}
 		
-		public function download(sourceUrl:String, targetUrl:String, autoStart:Boolean = true, isCover:Boolean = false):void
+		public function download(sourceUrl:String, targetUrl:String,id:String=null, autoStart:Boolean = true, isCover:Boolean = false):void
 		{
 			_sourceUrl = sourceUrl;
 			_targetUrl = targetUrl;
 			
+			_id = id;
 			_autoStart = autoStart;
 			_isCover = isCover;
 			_bytesLoaded = 0;
 			_isFinished = false;
-			//_targetFile = FileCore.newFile(targetUrl);
+			
 			
 			_targetFile = new File(targetUrl);
 			_targetFile.parent.createDirectory();
@@ -233,35 +236,6 @@ package me.rainssong.filesytem
 			return fs;
 		}
 		
-		//private function getFileStream(url:String,writeType:String="write"):FileStream
-		//{
-		//
-		//
-		//
-		//trace("是否存在", writeType, f.exists);
-		//if (writetype == "read" && f.exists == false)
-		//{
-		//return null;
-		//}
-		//try
-		//{
-		//var myClass:Class = getDefinitionByName("flash.filesystem.FileStream") as Class;
-		//var fs:* = new myClass();
-		//if (!sync)
-		//{
-		//fs.openAsync(f, writetype);
-		//}
-		//else
-		//{
-		//fs.open(f, writetype);
-		//}
-		//}
-		//catch (e:Error)
-		//{
-		//return null;
-		//}
-		//return fs;
-		//}
 		
 		public function get loadedLength():Number
 		{

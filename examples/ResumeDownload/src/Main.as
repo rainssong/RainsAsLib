@@ -8,7 +8,9 @@ package
 	import flash.filesystem.File;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
-	import me.rainssong.filesytem.ResumeDownloader;
+	import me.rainssong.fileSystem.ResumeDownloader;
+	
+	
 	
 	/**
 	 * ...
@@ -25,6 +27,7 @@ package
 			
 			// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
+			
 			
 			// entry point
 			var d:ResumeDownloader = new ResumeDownloader();

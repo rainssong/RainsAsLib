@@ -21,10 +21,4 @@ public class ApplicationManager
 		}
 		return false;
 	}
-
-
-	public static function get version():Number
-	{
-		URLLoader().load()
-	}
 }
