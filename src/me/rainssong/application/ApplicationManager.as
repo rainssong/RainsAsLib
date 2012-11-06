@@ -9,10 +9,16 @@ import flash.net.URLLoader;
  */
 public class ApplicationManager
 {
-
-    private static var _version:String="1.0";
+	static public const NORMAL_EDITION:String = "normalEdition";
+	static public const AIR_DESKTOP_EDITION:String = "airDesktopEdition";
+	static public const AIR_MOBILE_EDITION:String = "airMobileEdition";
+	static public const TEST_EDITION:String = "testEdition";
 	
-	public static function isDebugMode():Boolean
+	
+    private static var _version:String = "1.0";
+	public static var edition:String = NORMAL_EDITION;
+	
+	public static function get DEBUG_MODE:Boolean
 	{
 		try
 		{
@@ -23,6 +29,11 @@ public class ApplicationManager
 			return true;
 		}
 		return false;
+	}
+	
+	public static function get RELEAS_MODE:Boolean
+	{
+		return !debugMode;
 	}
 	
 	static public function get version():String 
@@ -36,7 +47,6 @@ public class ApplicationManager
 		{
 			
 		}
-		
 		return _version;
 	}
 	
