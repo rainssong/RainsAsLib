@@ -1,4 +1,4 @@
-package me.rainssong.display
+﻿package me.rainssong.display
 {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
@@ -26,12 +26,12 @@ package me.rainssong.display
 		
 		/* INTERFACE rainssong.display.IView */
 		
-		public function onRegister():void
+		protected function onRegister():void
 		{
 			addEventListener(Event.ADDED_TO_STAGE, onAdd);
 		}
 		
-		public function onAdd(e:Event):void
+		protected function onAdd(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAdd);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemove);

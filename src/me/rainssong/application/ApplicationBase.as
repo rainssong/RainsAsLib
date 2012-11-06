@@ -22,10 +22,11 @@ package me.rainssong.application
 		private var _uiLayer:MySprite;
 		private var _warningLayer:MySprite
 		
-		public static var rotateDefaultEnable:Boolean=true;
-		public static var rotateRigthEnable:Boolean=true;
-		public static var rotateLeftEnable:Boolean=true;
-		public static var rotateUpsideDownEnable:Boolean=true;
+		public static var rotateable:Boolean=true;
+		public static var rotateDefaultable:Boolean=true;
+		public static var rotateRigthable:Boolean=true;
+		public static var rotateLeftable:Boolean=true;
+		public static var rotateUpsideDownable:Boolean=true;
 		
 		public function ApplicationBase() 
 		{
@@ -69,16 +70,16 @@ package me.rainssong.application
 			switch (e.afterOrientation)
 			{
 				case StageOrientation.DEFAULT: 
-					if(!rotateDefaultEnable)e.preventDefault();
+					if(!rotateDefaultEnable || !rotateable)e.preventDefault();
 					break;
 				case StageOrientation.ROTATED_RIGHT: 
-					if(!rotateRigthEnable)e.preventDefault();
+					if(!rotateRigthEnable || !rotateable)e.preventDefault();
 					break;
 				case StageOrientation.ROTATED_LEFT:
-					if(!rotateLeftEnable)e.preventDefault();
+					if(!rotateLeftEnable || !rotateable)e.preventDefault();
 					break;
 				case StageOrientation.UPSIDE_DOWN: 
-					if(!rotateUpsideDownEnable)e.preventDefault();
+					if(!rotateUpsideDownEnable || !rotateable)e.preventDefault();
 					break;
 			}
 		}
