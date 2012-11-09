@@ -8,9 +8,7 @@ package me.rainssong.utils
 	public function superTrace(... args):void
 	{
 		var e:Error = new Error();
-		for (var i:int = 0; i < args.length; i++)
-		{
-			trace("[" + e.getStackTrace().match(/[A-z\/]*\(\)/g)[1] + "]" + typeof(args[i]) + ":" + args[i]);
-		}
+		var caller:String = "[" + e.getStackTrace().match(/[\w\/]*\(\)/g)[1] + "]";
+		trace(caller,args);
 	}
 }

@@ -21,17 +21,19 @@
 			super();
 			_listenerArr = new Vector.<Array>;
 			onRegister();
-		
 		}
 		
 		/* INTERFACE rainssong.display.IView */
 		
 		protected function onRegister():void
 		{
-			addEventListener(Event.ADDED_TO_STAGE, onAdd);
+			if(stage)
+				onAdd()
+			else
+				addEventListener(Event.ADDED_TO_STAGE, onAdd);
 		}
 		
-		protected function onAdd(e:Event):void
+		protected function onAdd(e:Event=null):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAdd);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemove);

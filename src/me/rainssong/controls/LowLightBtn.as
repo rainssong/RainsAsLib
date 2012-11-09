@@ -21,7 +21,7 @@
 			super();
 		}
 		
-		override protected function onAdd(evt:Event):void 
+		override protected function onAdd(evt:Event=null):void 
 		{
 			super.onAdd(evt);
 			this.addEventListener(MouseEvent.MOUSE_DOWN, downHandler);
