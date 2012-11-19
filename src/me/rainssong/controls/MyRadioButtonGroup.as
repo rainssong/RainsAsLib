@@ -1,7 +1,8 @@
-﻿package  
+﻿package  me.rainssong.controls
 {
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import me.rainssong.controls.MyRadioBtn;
 
 	/**
 	 * ...

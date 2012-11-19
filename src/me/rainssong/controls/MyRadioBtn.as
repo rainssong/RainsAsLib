@@ -1,6 +1,6 @@
-﻿package  {
+﻿package  me.rainssong.controls
+{
 	
-	import com.vsdevelop.proxy.ViewControl;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -67,12 +67,16 @@
 		
 		public function get label():String
 		{
-			return this.labelText.text;
+			if(this["labelText"])
+			return this["labelText"].text;
+			
+			return "";
 		}
 		
 		public function set label(content:String):void
 		{
-			this.labelText.text=content;
+			if(this["labelText"])
+			this["labelText"].text=content;
 		}
 	}
 	

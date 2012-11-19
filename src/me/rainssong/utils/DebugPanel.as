@@ -19,7 +19,7 @@ package me.rainssong.utils
 		private static var _traceIt:Boolean
 		private static var _isWorking:Boolean;
 		public static const VERSION:String = "1.1";
-		private static const INFORMATION:String = "DebugText" + VERSION + "\nF4:Run/Stop\nF5:Refreash\nF6:Hide/Show";
+		private static const INFORMATION:String = "DebugText" + VERSION + "\nF1:Help\nF4:Run/Stop\nF5:Refreash\nF6:Hide/Show";
 		
 		public function DebugPanel(maxLine:int = 5, traceIt:Boolean = false)
 		{
