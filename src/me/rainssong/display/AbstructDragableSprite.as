@@ -1,6 +1,7 @@
-package
+﻿package me.rainssong.display
+
 {
-	import events.DragEvent;
+	import me.rainssong.events.DragEvent;
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -33,7 +34,7 @@ package
 		 * reduction of speed
 		 */
 		protected var _damping:Number = 0.8;
-		protected var _dragRect:Rectangle;
+		
 		
 		public function AbstructDragableSprite()
 		{
@@ -81,12 +82,12 @@ package
 			
 		}
 		
-		public function startDragging(stageX:Number, stageY:Number, dragRect:Rectangle = null ):void
+		public function startDragging(stageX:Number, stageY:Number):void
 		{
 			_isDragging = true;
 			_startX = stageX;
 			_startY = stageY;
-			_dragRect = dragRect;
+			
 			//_lastX = e.stageX;
 			//_lastY = e.stageY;
 			//_speedX = 0;

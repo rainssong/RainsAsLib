@@ -1,4 +1,4 @@
-package  
+﻿package  me.rainssong.display
 {
 	import flash.geom.Rectangle;
 	
@@ -8,7 +8,7 @@ package
 	 */
 	public interface IDragableView 
 	{
-		function startDragging(stageX:Number,stageY:Number,dragRect:Rectangle=null):void
+		function startDragging(stageX:Number,stageY:Number):void
 		function stopDragging():void
 		function onDragging():void
 		function offDragging():void

@@ -1,4 +1,4 @@
-package  events
+package  me.rainssong.events
 {
 	import flash.events.Event;
 	import me.rainssong.events.MyEvent;

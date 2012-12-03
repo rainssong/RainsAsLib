@@ -40,7 +40,7 @@ package me.rainssong.utils
 			_textField.height = 0;
 			_textField.background = true;
 			_textField.backgroundColor = 0x000000;
-			_textField.alpha = 0.3;
+			_textField.alpha = 0.5;
 			_textField.textColor = 0xFFFFFF;
 			_textField.selectable = false;
 			addEventListener(Event.ADDED_TO_STAGE, onAdd);
@@ -62,7 +62,7 @@ package me.rainssong.utils
 			
 			if (_textField.numLines > _maxLine)
 			{
-				_textField.replaceText(0, _textField.getLineOffset(_textField.numLines - _maxLine), "");
+				_textField.replaceText(0, _textField.getLineOffset(_textField.numLines - _maxLine+1), "");
 			}
 			
 			_textField.height = _textField.textHeight + 6;

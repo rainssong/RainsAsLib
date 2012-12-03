@@ -1,12 +1,15 @@
-package
+﻿package me.rainssong.display
 {
 	
-	import events.DragEvent;
+	import com.greensock.TweenLite;
+	import me.rainssong.events.DragEvent;
 	import flash.display.GradientType;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	
+	
 	import me.rainssong.utils.DebugPanel;
 	
 	/**
@@ -20,19 +23,21 @@ package
 		private var _lastAngle:Number;
 		private var _startAngle:Number
 		
+		//private var _currentAngle:Number
+		
 		//private var _lastRotation:Number;
 		//private var _r:Number
 		/**
 		 * speed of rotation as angle
 		 */
 		private var _speedAngle:Number = 0;
+	
 		
 		public function RotatableSprite()
 		{
 			super();
 			this._damping = 0.95;
-			//graphics.beginGradientFill(GradientType.LINEAR, [0xFF0000, 0x00FF00], [1, 1], [0, 255]);
-			//graphics.drawCircle(0, 0, r);
+			//_currentAngle = this.rotation;
 		}
 		
 		override protected function onAdd(e:Event = null):void
@@ -45,15 +50,15 @@ package
 		{
 			super.stopDragging();
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-			stage.removeEventListener(MouseEvent.MOUSE_OUT, onMouseUp);
+			//stage.removeEventListener(MouseEvent.MOUSE_OUT, onMouseUp);
 		}
 		
-		override public function startDragging(stageX:Number,stageY:Number,drageRect:Rectangle=null):void
+		override public function startDragging(stageX:Number,stageY:Number):void
 		{
 			_lastAngle = angle(stage.mouseX,stage.mouseY);
+			//_startAngle =  angle(stage.mouseX,stage.mouseY)-this.rotation;
 			_startAngle =  angle(stage.mouseX,stage.mouseY)-this.rotation;
-			super.startDragging(stageX,stageY,drageRect);
-			
+			super.startDragging(stageX,stageY);
 		}
 		
 		override public function onDragging():void
@@ -67,28 +72,28 @@ package
 			if (angleDistance <= -180)
 				angleDistance = 360 + angleDistance;
 			
+			_lastAngle = angle(stage.mouseX, stage.mouseY);
 			_speedAngle += angleDistance;
-			_lastAngle = angle(stage.mouseX,stage.mouseY);
 		}
 		
 		override public function offDragging():void
 		{
 			super.offDragging();
-			_speedAngle *= this._damping;
-			this.rotation += _speedAngle;
 			
-			if (Math.abs(_speedAngle) < 0.1)
-			{
-				_speedAngle = 0
-				onMoveEnd();
-				dispatchEvent(new DragEvent(DragEvent.MOVE_END));
-			}
+			//_speedAngle *= this._damping;
+			//
+			//
+			//this.rotation += _speedAngle;
+			//
+			//
+			//if (Math.abs(_speedAngle) < 0.1 && _speedAngle!=0)
+			//{
+				//_speedAngle = 0
+				//onMoveEnd();
+				//dispatchEvent(new DragEvent(DragEvent.MOVE_END));
+			//}
 		}
 		
-		private function onMoveEnd():void 
-		{
-			
-		}
 		
 		public function angle(stageX:Number,stageY:Number ):Number
 		{
@@ -103,14 +108,14 @@ package
 		private function onMouseDown(e:MouseEvent):void
 		{
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-			stage.addEventListener(MouseEvent.MOUSE_OUT, onMouseUp);
+			//stage.addEventListener(MouseEvent.MOUSE_OUT, onMouseUp);
 			startDragging(e.stageX,e.stageX);
 		}
 		
 		private function onMouseUp(e:MouseEvent):void
 		{
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-			stage.removeEventListener(MouseEvent.MOUSE_OUT, onMouseUp);
+			//stage.removeEventListener(MouseEvent.MOUSE_OUT, onMouseUp);
 			stopDragging();
 		}
 	

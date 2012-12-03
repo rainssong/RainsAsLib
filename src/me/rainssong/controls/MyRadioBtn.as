@@ -48,7 +48,7 @@
 			unSelect();
 		}
 		
-		public  function select():void
+		public function select():void
 		{
 			this.gotoAndStop(2);
 			MyRadioButtonGroup.selection = this;
