@@ -7,7 +7,6 @@ package me.rainssong.application
 	import flash.utils.getDefinitionByName;
 	import me.rainssong.display.MySprite;
 	import mx.core.Singleton;
-	import utils.Config;
 	
 	/**
 	 * ...
@@ -70,16 +69,16 @@ package me.rainssong.application
 			switch (e.afterOrientation)
 			{
 				case StageOrientation.DEFAULT: 
-					if(!rotateDefaultEnable || !rotateable)e.preventDefault();
+					if(!rotateDefaultable || !rotateable)e.preventDefault();
 					break;
 				case StageOrientation.ROTATED_RIGHT: 
-					if(!rotateRigthEnable || !rotateable)e.preventDefault();
+					if(!rotateRigthable || !rotateable)e.preventDefault();
 					break;
 				case StageOrientation.ROTATED_LEFT:
-					if(!rotateLeftEnable || !rotateable)e.preventDefault();
+					if(!rotateLeftable || !rotateable)e.preventDefault();
 					break;
 				case StageOrientation.UPSIDE_DOWN: 
-					if(!rotateUpsideDownEnable || !rotateable)e.preventDefault();
+					if(!rotateUpsideDownable || !rotateable)e.preventDefault();
 					break;
 			}
 		}

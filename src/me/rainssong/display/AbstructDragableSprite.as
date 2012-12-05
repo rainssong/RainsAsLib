@@ -85,8 +85,9 @@
 		public function startDragging(stageX:Number, stageY:Number):void
 		{
 			_isDragging = true;
-			_startX = stageX;
-			_startY = stageY;
+			_startX =_lastX= stageX;
+			_startY =_lastY = stageY;
+			
 			
 			//_lastX = e.stageX;
 			//_lastY = e.stageY;

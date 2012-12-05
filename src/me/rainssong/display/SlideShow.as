@@ -1,4 +1,4 @@
-package me.rainssong.display
+﻿package me.rainssong.display
 
 
 {
@@ -6,6 +6,8 @@ package me.rainssong.display
 	import com.ObjectPool.ObjectPool;
 	import flash.errors.IOError;
 	import me.rainssong.events.SlideEvent;
+	import me.rainssong.utils.superTrace;
+	
 
 	
 	import me.rainssong.events.MyEvent;
@@ -21,23 +23,20 @@ package me.rainssong.display
 	 * ...
 	 * @author rainssong
 	 */
-	public class SlideShow extends MySprite
+	public class SlideShow extends MouseDragableSprite
 	{
 		static public const SWIPE_UP:String = "swipeUp";
 		static public const SWIPE_COMPLETE:String = "swipeComplete";
 		static public const NEXT:String = "next";
 		
-		private var _slideClassArr:Array;
+		private var _slideContentArr:Array;
 		private var _targetIndex:int = 0;
 		private var _slideContainer:MySprite;
 		private var _slideArr:Array;
-		private var dpoint:Point = new Point();
 		private var mpoint:Point = new Point();
 		private var isDrag:Boolean = false;
-		private var speedX:Number;
-		private var lastX:Number;
-		private var speedY:Number;
-		private var lastY:Number;
+		
+		
 		private var _slideWidth:Number;
 		private var _slideHeight:Number;
 		
@@ -46,34 +45,13 @@ package me.rainssong.display
 			_slideWidth = slideWidth;
 			_slideHeight = slideHeight;
 			_slideContainer = new MySprite();
-			
+			_slideArr = new Array();
 			addChild(_slideContainer);
-			
-			addEventListener(SlideEvent.ROLL_TO, rollHandler);
-			addEventListener(SlideEvent.ROLL_NEXT, rollHandler);
-			addEventListener(SlideEvent.ROLL_PREV, rollHandler);
 		}
 		
-		private function rollHandler(e:SlideEvent):void 
+		override public function startDragging(stageX:Number,stageY:Number):void
 		{
-			switch(e.type)
-			{
-				case SlideEvent.ROLL_TO:
-					//var target:int = e.data as int;
-					
-					rollTo( e.data as int);
-					break;
-				case SlideEvent.ROLL_NEXT:
-					rollNext();
-					break;
-				case SlideEvent.ROLL_PREV:
-					rollPrev();
-					break;
-			}
-		}
-		
-		private function mouseDownHandler(e:MouseEvent):void
-		{
+			super.startDragging(stageX, stageY);
 			//这里判断锁
 			if (isLocked)
 			{
@@ -81,127 +59,102 @@ package me.rainssong.display
 				return;
 			}
 			
-			//
-			//TweenMax.killTweensOf(_slideContainer);
-			dpoint.x = e.stageX;
-			dpoint.y = e.stageY;
 			mpoint.x = _slideContainer.x;
 			mpoint.y = _slideContainer.y;
-			lastX = e.stageX;
-			lastY = e.stageY;
-			speedX = 0;
-			speedY = 0;
-			
-			isDrag = true;
-			
-			stage.addEventListener(MouseEvent.MOUSE_UP , mouse_Up);
-			addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
+
 		
-		private function mouse_Up(evt:MouseEvent):void
+		
+		
+		override public function stopDragging():void
 		{
+			super.stopDragging();
 			
-			stage.removeEventListener(MouseEvent.MOUSE_UP, mouse_Up);
-			removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
-			isDrag = false;
-			
-			if (_slideContainer.x != (speedX / 0.5 + _slideContainer.x) / -1024)
-			{
+			if (_speedX < -50)
+			rollNext();
+			if (_speedX > 50)
+			rollPrev();
+			//if (_slideContainer.x != (speedX / 0.5 + _slideContainer.x) / -_slideWidth)
+			//{
 				//dispatchEvent(new Event(SWIPE_LEFT));
-				var result:int = Math.round((speedX / 0.5 + _slideContainer.x) / -1024);
-				if (result > _targetIndex && rightRollAble)
-				{
-					rollNext();
-				}
-				else if (result < _targetIndex && leftRollAble)
-				{
-					rollPrev();
-				}
-				else
-				{
-					rollTo(_targetIndex)
-				}
-				
-				//if((speedX / 0.5 + _slideContainer.x)>_slideWidth)
-			}
-			if (speedY < -30 && Math.abs(speedX)<25)
+				//var result:int = Math.round((speedX / 0.5 + _slideContainer.x) / -_slideWidth);
+				//if (result > _targetIndex)
+				//{
+					//rollNext();
+				//}
+				//else if (result < _targetIndex)
+				//{
+					//rollPrev();
+				//}
+				//else
+				//{
+					//rollTo(_targetIndex)
+				//}
+				//
+			//}
+			if (_speedY < -30 && Math.abs(_speedX)<25)
 			{
-				//dispatchEvent(new Event(SWIPE_UP));
 				if (!isLocked)
 					dispatchEvent(new MyEvent(SWIPE_UP));
 			}
-			speedX = 0;
-			speedY = 0;
+			_speedX = 0;
+			_speedY = 0;
 		}
 		
-		private function enterFrameHandler(e:Event):void
+		override public function onDragging():void 
 		{
-			speedX *= 0.8;
-			speedY *= 0.8;
-			//roll();
-			//refreash();
-			
-			if (isDrag)
-			{
-				speedX += stage.mouseX - lastX;
-				speedY += stage.mouseY - lastY;
-				
+			super.onDragging();
 				
 				//忽略细微移动
-				if (speedX ^ 0 != 0 && _slideContainer.mouseChildren)
-				{
-					_slideContainer.mouseChildren = _slideContainer.mouseEnabled = false;
-				}
-				
-				lastX = stage.mouseX;
-				lastY = stage.mouseY;
-				
-				var targetX:int = mpoint.x + stage.mouseX - dpoint.x;
-				
-				if (targetX < -_slideWidth*_targetIndex && !rightRollAble)
-				{
-					targetX = -_slideWidth * _targetIndex;
-					speedX = 0;
-					
-				}
-				if (targetX > -_slideWidth*_targetIndex && !leftRollAble )
-				{
-					targetX = -_slideWidth * _targetIndex;
-					speedX = 0;
-				}
-				
-				_slideContainer.x = targetX;
-			}
+				//if (_speedX ^ 0 != 0 && _slideContainer.mouseChildren)
+				//{
+					//_slideContainer.mouseChildren = _slideContainer.mouseEnabled = false;
+				//}
+				//
+				//var targetX:int = mpoint.x + stage.mouseX - _startX;
+				//
+				//if (targetX < -_slideWidth*_targetIndex && !rightRollAble)
+				//{
+					//targetX = -_slideWidth * _targetIndex;
+					//_speedX = 0;
+					//
+				//}
+				//if (targetX > -_slideWidth*_targetIndex && !leftRollAble )
+				//{
+					//targetX = -_slideWidth * _targetIndex;
+					//_speedX = 0;
+				//}
+				//
+				//_slideContainer.x = targetX;
+			
 		}
-		
 		
 		public function rollTo(index:int, time:Number = 0.5):void
 		{
-			
+			//if (currentIndex == _targetIndex) return;
 			//TweenMax.killTweensOf(_slideContainer);
 			index = index < 0 ? 0 : index;
-			index = index >= _slideClassArr.length ? _slideClassArr.length - 1 : index;
+			index = index >= _slideContentArr.length ? _slideContentArr.length - 1 : index;
 			trace("rollTo",index)
 			_targetIndex = index;
 			dispatchEvent(new SlideEvent(SlideEvent.START_ROLL));
-			TweenMax.to(_slideContainer, time, {x: -1024 * _targetIndex, onUpdate: rollUpdateHandler, onComplete: TweenXComplete, onCompleteParams: [index != currentIndex ? true : false]});
+			TweenMax.to(_slideContainer, time, {x: -_slideWidth * _targetIndex, onUpdate: rollUpdateHandler, onComplete: TweenXComplete, onCompleteParams: [index != currentIndex ? true : false]});
 		}
 		
 		public function rollNext():void
 		{
-			trace("rollNext",_targetIndex + 1)
 			rollTo(_targetIndex + 1);
 		}
 		
 		public function rollPrev():void
 		{
-			trace("rollPrev",_targetIndex - 1)
+			
 			rollTo(_targetIndex - 1);
 		}
 		
 		private function TweenXComplete(isSwiped:Boolean = false):void
 		{
-			for (var i:int = 0; i < _slideArr.length; i++)
+			for (var i:int = 0; i < _slideContentArr.length; i++)
 			{
 				if (i == currentIndex && !_slideArr[i].isEnable )
 				{
@@ -228,23 +181,20 @@ package me.rainssong.display
 			addSlide(currentIndex);
 			addSlide(currentIndex + 1);
 			addSlide(currentIndex - 1);
+			
 		}
 		
-		public function load(slideClassArr:Array):void
-		{
-			_slideClassArr = slideClassArr;
-			_slideArr = new Array(_slideClassArr.length);
-			//_slideContainer.addChild(new slideArr[0]);
-			//addSlide(_targetIndex-1);
-			//addSlide(_targetIndex);
+		//public function load(slideContentArr:Array):void
+		//{
+			//_slideContentArr = slideClassArr;
+			//_slideArr = new Array(_slideContentArr.length);
+			//
+			//rollTo(_targetIndex,0);
+			//
 			//_slideArr[_targetIndex].enable();
-			//addSlide(_targetIndex + 1);
-			rollTo(_targetIndex,0);
-			addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
-			//_slideArr[_targetIndex].enable();
-			
-			dispatchEvent(new Event(SlideShow.SWIPE_COMPLETE));
-		}
+			//
+			//dispatchEvent(new Event(SlideShow.SWIPE_COMPLETE));
+		//}
 		
 		override public function destroy():void 
 		{
@@ -253,12 +203,7 @@ package me.rainssong.display
 				destroySlide(i);
 			}
 			_slideArr = null;
-			_slideClassArr = null;
-			
-			removeEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
-			
-			dispatchEvent(new Event("destroy"));
-			
+			_slideContentArr = null;
 			removeChild(_slideContainer);
 			_slideContainer = null;
 			
@@ -267,43 +212,34 @@ package me.rainssong.display
 		
 		private function addSlide(index:int):void
 		{
-			if (_slideArr[index]!=null || index < 0 || index >= _slideClassArr.length)
+			if (_slideArr[index]!=null || index < 0 || index >= _slideContentArr.length)
 				return;
-			_slideArr[index] = new _slideClassArr[index]();
+			_slideArr[index] = new Slide(_slideContentArr[index]);
 			_slideContainer.addChild(_slideArr[index]);
-			
-			_slideArr[index].x = 1024 * index;
+			//
+			_slideArr[index].x = _slideWidth * index;
 			_slideArr[index].disable();
-			trace("[addSlide]" + index);
-		}
-		
-		private function jumpHandler(e:MyEvent):void
-		{
-			rollTo(int(e.data));
+			superTrace(index);
 		}
 		
 		private function destroySlide(index:int):void
 		{
-			
 			if (_slideArr[index] == null)
 				return;
 			
 			_slideArr[index].destroy();
 			_slideArr[index] = null;
 			
-			trace("[destroySlide]" + index);
+			superTrace(index);
 		}
-		
-		
 		
 		public function get currentIndex():int
 		{
-			var index:int = Math.round(_slideContainer.x / -1024);
-			if (index > _slideClassArr.length-1)
-			index = _slideClassArr.length-1 ; 
+			var index:int = -Math.round(_slideContainer.x / _slideWidth);
+			if (index > _slideContentArr.length-1)
+			index = _slideContentArr.length-1 ; 
 			if (index < 0)
 			index = 0;
-			
 			return index;
 		}
 		
@@ -330,12 +266,24 @@ package me.rainssong.display
 		
 		public function get rightRollAble():Boolean
 		{
-			if (_targetIndex == _slideClassArr.length-1)
+			if (_targetIndex == _slideContentArr.length-1)
 			return false;
 			
 			var rollAble:Boolean = !_slideArr[_targetIndex].isLocked && _slideArr[_targetIndex].isRightRollOutEnabled && _slideArr[_targetIndex+1].isLeftRollInEnabled ;
 
 			return  rollAble;
+		}
+		
+		public function get slideContentArr():Array 
+		{
+			return _slideContentArr;
+		}
+		
+		public function set slideContentArr(value:Array):void 
+		{
+			_slideContentArr = value;
+			rollTo(_targetIndex, 0);
+			superTrace("");
 		}
 	
 	}

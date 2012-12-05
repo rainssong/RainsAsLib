@@ -3,7 +3,9 @@
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Loader;
 	import flash.display.MovieClip;
+	import flash.net.URLRequest;
 	
 	import flash.display.Sprite;
 	import me.rainssong.display.MyMovieClip;
@@ -22,12 +24,52 @@
 		protected var _isLeftRollOutEnabled:Boolean = true;
 		protected var _isRightRollOutEnabled:Boolean = true;
 		protected var _isLocked:Boolean = false;
+		protected var _loader:Loader;
+		protected var _example:*;
 		
-		public function Slide() 
+		public function Slide(value:*=null) 
 		{
 			super();
-			
+			_loader = new Loader();
+			if(value!=null)
+				reload(value);
 		}
+
+		public function reload(value:*):void
+		{
+			unload();
+			
+			if (value is String)
+			{
+				_loader.load(new URLRequest(value))
+				addChild(_loader);
+			}
+			if (value is Class)
+			{
+				_example = new value();
+				addChild(_example);
+			}
+		}
+
+public function unload():void
+		{
+			
+			_loader.unloadAndStop();
+			if (_loader.parent)
+				_loader.parent.removeChild(_loader);
+			try
+			{
+				removeChild(_example);
+				_example = null;
+			}
+			catch (e:Error)
+			{
+				
+			}
+		}
+
+		
+
 		
 		public function lock():void
 		{
@@ -48,13 +90,16 @@
 		override public function enable():void 
 		{
 			super.enable();
-			play();
+			
+			if (_example is MovieClip)
+				_example.play();
 		}
 		
 		override public function disable():void 
 		{
 			super.disable();
-			gotoAndStop(1);
+			if (_example is MovieClip)
+				_example.gotoAnsStop(1);
 		}
 		
 		public function get isLeftRollInEnabled():Boolean 
