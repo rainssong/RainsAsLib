@@ -1,0 +1,159 @@
+//----------------------------------------------------------------------------------------------------
+// Sequencer class
+//  Copyright (c) 2009 keim All rights reserved.
+//  Distributed under BSD-style license (see org.si.license.txt).
+//----------------------------------------------------------------------------------------------------
+
+
+package org.si.sound.base {
+    import org.si.sion.*;
+    import org.si.sion.utils.Scale;
+    import org.si.sion.sequencer.SiMMLTrack;
+    import org.si.sion.sequencer.SiMMLSequencer;
+    import org.si.sion.sequencer.base.MMLSequence;
+    import org.si.sound.synthesizers._synthesizer_internal;
+    
+    
+    /** The Sequencer class contains a set of methods that you can use to create note sequences.  */
+    public class Sequencer
+    {
+    // variables
+    //----------------------------------------
+        /** mml text. */
+        protected var _mml:String;
+        
+        /** sequence data. */
+        protected var _data:SiONData;
+        
+        /** flag that mml text is compiled to data */
+        protected var _compiled:Boolean
+        
+        /** Current constructing sequence */
+        protected var _currentConstructingSequence:MMLSequence;
+        
+        /** Current pitch index. */
+        protected var _currentPitchIndex:Number;
+        /** Current clock. */
+        protected var _currentClock:int;
+        
+        
+        
+    // properties
+    //----------------------------------------
+        /** MML text */
+        public function get mml() : String { return _mml; }
+        public function set mml(str:String) : void {
+            _mml = str || "";
+            _compiled = false;
+            _compile();
+        }
+        
+        /** sequence data */
+        public function get data() : SiONData { return _data; }
+        
+        
+        
+        
+    // constructor
+    //----------------------------------------
+        /** constructor. ussualy you should not call this. */
+        function Sequencer() 
+        {
+            _data = new SiONData();
+            _mml = "";
+            _compiled = true;
+            _currentConstructingSequence = null; 
+        }
+        
+        
+        
+        
+    // operations
+    //----------------------------------------
+        /** Clear sequence */
+        public function clear() : Sequencer
+        {
+            _data.clear();
+            return this;
+        }
+        
+        
+        /** Specifies a head of simple note sequence that subsequent calls to other Sequencer methods use when create sequence. 
+         *  @param voice 
+         *  @param volume 
+         *  @param scale 
+         */
+        public function beginFill(voice:SiONVoice=null, volume:Number=0, scale:Scale=null) : Sequencer
+        {
+            _currentConstructingSequence = _data.appendNewSequence();
+            _currentPitchIndex = 0;
+            _currentClock = 0;
+            return this;
+        }
+        
+        
+        /** Specifies a tail of note sequence. */
+        public function endFill() : Sequencer
+        {
+            if (_currentConstructingSequence == null) throw _errorNoBeginFill();
+            return this;
+        }
+        
+        
+        /** Specifies melody line style. */
+        public function lineStyle() : Sequencer
+        {
+            return this;
+        }
+        
+        
+        
+        
+    // drawing score
+    //----------------------------------------
+        /** Move current melody line drawing position. 
+         *  @param pitchIndex 
+         *  @param length 
+         */
+        public function moveTo(pitchIndex:Number, length:Number) : Sequencer
+        {
+            return this;
+        }
+        
+        
+        /** Draw melody line from current position.
+         *  @param pitchIndex 
+         *  @param length 
+         */
+        public function lineTo(pitchIndex:Number, length:Number) : Sequencer
+        {
+            return this;
+        }
+        
+        
+        
+        
+    // internal
+    //----------------------------------------
+        /** call this after the update mml */
+        protected function _compile() : void {
+            if (!SiONDriver.mutex || _compiled) return;
+            if (_mml != "") {
+                SiONDriver.mutex.compile(_mml, _data);
+            } else {
+                _data.clear();
+            }
+            _compiled = true;
+        }
+        
+        
+        
+        
+    // error
+    //----------------------------------------
+        /** Call endFill() without beginFill(). */
+        protected function _errorNoBeginFill() : Error {
+            return new Error("Sequencer; Call endFill() without beginFill().");
+        }
+    }
+}
