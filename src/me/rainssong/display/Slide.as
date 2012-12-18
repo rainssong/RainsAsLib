@@ -24,48 +24,40 @@
 		protected var _isLeftRollOutEnabled:Boolean = true;
 		protected var _isRightRollOutEnabled:Boolean = true;
 		protected var _isLocked:Boolean = false;
-		protected var _loader:Loader;
-		protected var _example:*;
+		protected var _example:DisplayObject;
 		
 		public function Slide(value:*=null) 
 		{
 			super();
-			_loader = new Loader();
+			
 			if(value!=null)
 				reload(value);
+			
+			
 		}
 
 		public function reload(value:*):void
 		{
 			unload();
 			
-			if (value is String)
-			{
-				_loader.load(new URLRequest(value))
-				addChild(_loader);
-			}
-			if (value is Class)
-			{
-				_example = new value();
-				addChild(_example);
-			}
+			addChild(_example=DisplayObjectTransfer.transfer(value));
 		}
 
-public function unload():void
+		public function unload():void
 		{
+			if (_example is Loader)
+			Loader(_example).unloadAndStop();
+			else if (_example is MovieClip)
+			MovieClip(_example).stop();
+			else if (_example is Bitmap)
+			Bitmap(_example).bitmapData.dispose();
 			
-			_loader.unloadAndStop();
-			if (_loader.parent)
-				_loader.parent.removeChild(_loader);
-			try
+			if (_example && _example.parent)
 			{
 				removeChild(_example);
 				_example = null;
 			}
-			catch (e:Error)
-			{
-				
-			}
+			
 		}
 
 		
@@ -92,14 +84,25 @@ public function unload():void
 			super.enable();
 			
 			if (_example is MovieClip)
-				_example.play();
+				MovieClip(_example).play();
 		}
 		
 		override public function disable():void 
 		{
 			super.disable();
 			if (_example is MovieClip)
-				_example.gotoAnsStop(1);
+				MovieClip(_example).gotoAndStop(1);
+		}
+		
+		override public function destroy():void 
+		{
+			unload();
+			super.destroy();
+		}
+		
+		public function get hasContent():Boolean
+		{
+			return _example?true: false;
 		}
 		
 		public function get isLeftRollInEnabled():Boolean 

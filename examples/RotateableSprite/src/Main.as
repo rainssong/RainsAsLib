@@ -3,7 +3,8 @@ package
 	import flash.display.GradientType;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import me.rainssong.display.RotatableSprite;
+	import me.rainssong.display.MouseRotatableSprite;
+
 	
 	/**
 	 * ...
@@ -23,7 +24,7 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
 			
-			var temp:RotatableSprite = new RotatableSprite();
+			var temp:TargetRotatableSprite = new TargetRotatableSprite(4);
 			temp.x = 200;
 			temp.y = 200;
 			temp.graphics.beginGradientFill(GradientType.LINEAR, [0xFF0000, 0x00FF00], [1, 1], [0, 255]);

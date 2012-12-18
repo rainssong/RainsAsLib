@@ -12,7 +12,7 @@
 	 */
 	public class MyMovieClip extends MovieClip implements IView 
 	{
-		public var autoDestroy:Boolean = true;
+		private var _autoDestroy:Boolean = true;
 		public var autoDisable:Boolean = true;
 		private var _listenerArr:Vector.<Array>;
 		private var _isEnable:Boolean = true;
@@ -131,6 +131,22 @@
 			return _isEnable;
 		}
 		
+		public function get autoDestroy():Boolean
+		{
+			return _autoDestroy; 
+		}
+		
+		public function set autoDestroy(value:Boolean):void 
+		{
+			_autoDestroy = value;
+			var i:int = this.numChildren - 1;
+			for (i; i >= 0; i--)
+			{
+				var child:* = this.getChildAt(i);
+				try{child.autoDestroy = value }
+				catch (e:Error) { };
+			}
+		}
 	}
 
 }

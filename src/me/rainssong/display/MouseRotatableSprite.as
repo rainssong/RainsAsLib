@@ -16,12 +16,12 @@
 	 * ...
 	 * @author rainssong
 	 */
-	public class RotatableSprite extends AbstructDragableSprite implements IDragableView
+	public class MouseRotatableSprite extends AbstructDragableSprite implements IDragableView
 	{
 		//private var _downX:Number;
 		//private var _downY:Number;
-		private var _lastAngle:Number;
-		private var _startAngle:Number
+		protected var _lastAngle:Number;
+		protected var _startAngle:Number
 		
 		//private var _currentAngle:Number
 		
@@ -30,10 +30,10 @@
 		/**
 		 * speed of rotation as angle
 		 */
-		private var _speedAngle:Number = 0;
+		protected var _speedAngle:Number = 0;
 	
 		
-		public function RotatableSprite()
+		public function MouseRotatableSprite()
 		{
 			super();
 			this._damping = 0.95;
@@ -58,12 +58,12 @@
 			_lastAngle = angle(stage.mouseX,stage.mouseY);
 			//_startAngle =  angle(stage.mouseX,stage.mouseY)-this.rotation;
 			_startAngle =  angle(stage.mouseX,stage.mouseY)-this.rotation;
-			super.startDragging(stageX,stageY);
+			super.startDragging(stageX,stageX);
 		}
 		
 		override public function onDragging():void
 		{
-			_speedAngle *= 0.6;
+			//_speedAngle *= 0.6;
 			this.rotation = angle(stage.mouseX,stage.mouseY)-_startAngle;
 			var angleDistance:Number = angle(stage.mouseX,stage.mouseY) - _lastAngle;
 			
@@ -73,26 +73,10 @@
 				angleDistance = 360 + angleDistance;
 			
 			_lastAngle = angle(stage.mouseX, stage.mouseY);
-			_speedAngle += angleDistance;
+			_speedAngle = angleDistance;
 		}
 		
-		override public function offDragging():void
-		{
-			super.offDragging();
-			
-			//_speedAngle *= this._damping;
-			//
-			//
-			//this.rotation += _speedAngle;
-			//
-			//
-			//if (Math.abs(_speedAngle) < 0.1 && _speedAngle!=0)
-			//{
-				//_speedAngle = 0
-				//onMoveEnd();
-				//dispatchEvent(new DragEvent(DragEvent.MOVE_END));
-			//}
-		}
+		
 		
 		
 		public function angle(stageX:Number,stageY:Number ):Number

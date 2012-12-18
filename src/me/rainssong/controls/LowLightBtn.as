@@ -7,18 +7,19 @@
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.display.MovieClip;
-	import me.rainssong.display.MySprite;
+	import me.rainssong.display.MyMovieClip;
 	
 	/**
 	 * ...
 	 * @author rainssong
 	 */
-	public class LowLightBtn extends MySprite
+	public class LowLightBtn extends MyMovieClip
 	{
 		private const colorTrans:ColorTransform = new ColorTransform();
 		public function LowLightBtn() 
 		{
 			super();
+			this.mouseChildren=false;
 		}
 		
 		override protected function onAdd(evt:Event=null):void 

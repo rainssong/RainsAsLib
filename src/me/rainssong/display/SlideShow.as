@@ -1,15 +1,13 @@
 ﻿package me.rainssong.display
 
-
 {
 	import com.greensock.TweenMax;
 	import com.ObjectPool.ObjectPool;
+	import flash.display.Shape;
 	import flash.errors.IOError;
 	import me.rainssong.events.SlideEvent;
 	import me.rainssong.utils.superTrace;
-	
-
-	
+	Slide
 	import me.rainssong.events.MyEvent;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -36,10 +34,12 @@
 		private var mpoint:Point = new Point();
 		private var isDrag:Boolean = false;
 		
-		
 		private var _slideWidth:Number;
 		private var _slideHeight:Number;
 		
+		private var _mask:Shape
+		
+		//不允许删除当前页
 		public function SlideShow(slideWidth:Number = 1024, slideHeight:Number = 768)
 		{
 			_slideWidth = slideWidth;
@@ -47,52 +47,64 @@
 			_slideContainer = new MySprite();
 			_slideArr = new Array();
 			addChild(_slideContainer);
+			
+			_slideContainer.addEventListener(SlideEvent.ROLL_NEXT, rollNext);
+			_slideContainer.addEventListener(SlideEvent.ROLL_PREV, rollPrev);
+			_slideContainer.addEventListener(SlideEvent.PUSH_SLIDE, onPushSlide);
+			
+			
 		}
 		
-		override public function startDragging(stageX:Number,stageY:Number):void
+		private function onPushSlide(e:SlideEvent):void 
 		{
-			super.startDragging(stageX, stageY);
+			_slideContentArr = _slideContentArr.concat(e.data as Array);
+			rollTo(currentIndex);
+		}
+		
+		override public function startDragging(stageX:Number, stageY:Number):void
+		{
+			
 			//这里判断锁
 			if (isLocked)
 			{
 				trace("锁定");
+				
 				return;
 			}
-			
+			super.startDragging(stageX, stageY);
 			mpoint.x = _slideContainer.x;
 			mpoint.y = _slideContainer.y;
 		}
-
-		
-		
 		
 		override public function stopDragging():void
 		{
 			super.stopDragging();
 			
 			if (_speedX < -50)
-			rollNext();
-			if (_speedX > 50)
-			rollPrev();
+				rollNext();
+			else if (_speedX > 50)
+				rollPrev();
+			else
+				rollTo(currentIndex);
 			//if (_slideContainer.x != (speedX / 0.5 + _slideContainer.x) / -_slideWidth)
 			//{
-				//dispatchEvent(new Event(SWIPE_LEFT));
-				//var result:int = Math.round((speedX / 0.5 + _slideContainer.x) / -_slideWidth);
-				//if (result > _targetIndex)
-				//{
-					//rollNext();
-				//}
-				//else if (result < _targetIndex)
-				//{
-					//rollPrev();
-				//}
-				//else
-				//{
-					//rollTo(_targetIndex)
-				//}
-				//
+			//dispatchEvent(new Event(SWIPE_LEFT));
+			//var result:int = Math.round((speedX / 0.5 + _slideContainer.x) / -_slideWidth);
+			//if (result > _targetIndex)
+			//{
+			//rollNext();
 			//}
-			if (_speedY < -30 && Math.abs(_speedX)<25)
+			//else if (result < _targetIndex)
+			//{
+			//rollPrev();
+			//}
+			//else
+			//{
+			//rollTo(_targetIndex)
+			//}
+			//
+			//}
+			if (_speedY < -30 && Math.abs(_speedX) < 25)
 			{
 				if (!isLocked)
 					dispatchEvent(new MyEvent(SWIPE_UP));
@@ -101,52 +113,67 @@
 			_speedY = 0;
 		}
 		
-		override public function onDragging():void 
+		override public function onDragging():void
 		{
 			super.onDragging();
-				
-				//忽略细微移动
-				//if (_speedX ^ 0 != 0 && _slideContainer.mouseChildren)
-				//{
-					//_slideContainer.mouseChildren = _slideContainer.mouseEnabled = false;
-				//}
-				//
-				//var targetX:int = mpoint.x + stage.mouseX - _startX;
-				//
-				//if (targetX < -_slideWidth*_targetIndex && !rightRollAble)
-				//{
-					//targetX = -_slideWidth * _targetIndex;
-					//_speedX = 0;
-					//
-				//}
-				//if (targetX > -_slideWidth*_targetIndex && !leftRollAble )
-				//{
-					//targetX = -_slideWidth * _targetIndex;
-					//_speedX = 0;
-				//}
-				//
-				//_slideContainer.x = targetX;
+		
+			//忽略细微移动
+			if (_speedX ^ 0 != 0 && _slideContainer.mouseChildren)
+			{
+			_slideContainer.mouseChildren = _slideContainer.mouseEnabled = false;
+			}
 			
+			var targetX:int = mpoint.x + stage.mouseX - _startX;
+			
+			if (targetX < -_slideWidth*_targetIndex && !rightRollAble)
+			{
+			targetX = -_slideWidth * _targetIndex;
+			//_speedX = 0;
+			
+			}
+			if (targetX > -_slideWidth*_targetIndex && !leftRollAble )
+			{
+			targetX = -_slideWidth * _targetIndex;
+			//_speedX = 0;
+			}
+			
+			_slideContainer.x = targetX;
+		
 		}
 		
 		public function rollTo(index:int, time:Number = 0.5):void
 		{
 			//if (currentIndex == _targetIndex) return;
 			//TweenMax.killTweensOf(_slideContainer);
-			index = index < 0 ? 0 : index;
-			index = index >= _slideContentArr.length ? _slideContentArr.length - 1 : index;
-			trace("rollTo",index)
+			
+			if (index < 0)
+			{
+				index = 0;
+				if (!isLocked)
+					dispatchEvent(new SlideEvent(SlideEvent.ALREADY_FIRST_PAGE,null,true));
+			}
+			if (index >= _slideContentArr.length)
+			{
+				index = _slideContentArr.length - 1;
+				if (!isLocked)
+					dispatchEvent(new SlideEvent(SlideEvent.ALREADY_LAST_PAGE,null,true));
+			}
+			
+			//index = index >= _slideContentArr.length ? _slideContentArr.length - 1 : index;
+			trace("rollTo", index)
 			_targetIndex = index;
 			dispatchEvent(new SlideEvent(SlideEvent.START_ROLL));
 			TweenMax.to(_slideContainer, time, {x: -_slideWidth * _targetIndex, onUpdate: rollUpdateHandler, onComplete: TweenXComplete, onCompleteParams: [index != currentIndex ? true : false]});
 		}
 		
-		public function rollNext():void
-		{
+		public function rollNext(e:SlideEvent=null):void
+		{	
+			
+			
 			rollTo(_targetIndex + 1);
 		}
 		
-		public function rollPrev():void
+		public function rollPrev(e:SlideEvent=null):void
 		{
 			
 			rollTo(_targetIndex - 1);
@@ -156,7 +183,7 @@
 		{
 			for (var i:int = 0; i < _slideContentArr.length; i++)
 			{
-				if (i == currentIndex && !_slideArr[i].isEnable )
+				if (i == currentIndex && !_slideArr[i].isEnable)
 				{
 					_slideArr[i].enable();
 				}
@@ -168,41 +195,121 @@
 			
 			//if (isSwiped)
 			//{
-				dispatchEvent(new SlideEvent(SlideEvent.ROLL_COMPLETE));
-				
+			dispatchEvent(new SlideEvent(SlideEvent.ROLL_COMPLETE));
+			
 			//}
 			_slideContainer.mouseChildren = _slideContainer.mouseEnabled = true;
 		}
 		
 		private function rollUpdateHandler():void
 		{
-			destroySlide(currentIndex - 2);
+			//moveSlide(currentIndex - 1);
+			//moveSlide(currentIndex + 1);
+			//addSlide(currentIndex);
+			//addSlide(currentIndex + 1);
+			//addSlide(currentIndex - 1);
+			
 			destroySlide(currentIndex + 2);
+			destroySlide(currentIndex - 2);
 			addSlide(currentIndex);
 			addSlide(currentIndex + 1);
 			addSlide(currentIndex - 1);
+		
+		}
+		
+		
+		public function refreash():void
+		{
+			destroySlide(currentIndex + 1);
+			destroySlide(currentIndex - 1);
+			destroySlide(currentIndex);
+			addSlide(currentIndex);
+			addSlide(currentIndex + 1);
+			addSlide(currentIndex - 1);
+		}
+		
+		private function updateSlide(index:int):void
+		{
+			//if (index < 0 || index >= _slideContentArr.length)
+			//return;
 			
+			
+			if (!_slideArr[index])
+			{
+				_slideArr[index] = new Slide();
+				_slideContainer.addChild(_slideArr[index]);
+				_slideArr[index].x = _slideWidth * index;
+			}
+			
+			var point:Point = _slideArr[index].parent.localToGlobal(new Point(_slideArr[index].x, _slideArr[index].y));
+			if ((point.x <= -_slideWidth*2 || point.x >= _slideWidth*2))
+			{
+				if (_slideArr[index].hasContent)
+					_slideArr[index].unload();
+			}
+			else 
+			{
+				if (!_slideArr[index].hasContent && _slideContentArr[index])
+				{
+					_slideArr[index].reload(_slideContentArr[index]);
+					superTrace("读取资源:"+_slideContentArr[index])
+					
+				}
+			}
+		}
+		
+		private function moveSlide(index:int):void
+		{
+			if (_slideArr[index]==null)
+				return;
+				
+				
+			var point:Point = _slideArr[index].parent.localToGlobal(new Point(_slideArr[index].x, _slideArr[index].y));
+			if (point.x < -_slideWidth)
+			{
+				_slideArr[index].x = _slideWidth * (currentIndex + 2);
+				_slideArr[currentIndex + 2] = _slideArr[index];
+				_slideArr[index].unload();
+				_slideArr[index] = null;
+			}
+			if (point.x > _slideWidth)
+			{
+				_slideArr[index].x = _slideWidth * (currentIndex - 2);
+				_slideArr[currentIndex - 2] = _slideArr[index];
+				_slideArr[index].unload()
+				_slideArr[index] = null;
+			}
+		//
+		
+			
+			
+			
+			//if (index == 1)
+			//{
+				//superTrace("moveSlide2",_slideArr[index].x);
+			//}
 		}
 		
 		//public function load(slideContentArr:Array):void
 		//{
-			//_slideContentArr = slideClassArr;
-			//_slideArr = new Array(_slideContentArr.length);
-			//
-			//rollTo(_targetIndex,0);
-			//
-			//_slideArr[_targetIndex].enable();
-			//
-			//dispatchEvent(new Event(SlideShow.SWIPE_COMPLETE));
+		//_slideContentArr = slideClassArr;
+		//_slideArr = new Array(_slideContentArr.length);
+		//
+		//rollTo(_targetIndex,0);
+		//
+		//_slideArr[_targetIndex].enable();
+		//
+		//dispatchEvent(new Event(SlideShow.SWIPE_COMPLETE));
 		//}
 		
-		override public function destroy():void 
+		override public function destroy():void
 		{
-			for (var i:int = 0; i < _slideArr.length ; i++ )
+			for (var i:int = 0; i < _slideArr.length; i++)
 			{
 				destroySlide(i);
 			}
 			_slideArr = null;
+			TweenMax.killTweensOf(_slideContainer);
 			_slideContentArr = null;
 			removeChild(_slideContainer);
 			_slideContainer = null;
@@ -212,14 +319,23 @@
 		
 		private function addSlide(index:int):void
 		{
-			if (_slideArr[index]!=null || index < 0 || index >= _slideContentArr.length)
+			if (_slideArr[index] != null || index < 0 || index >= _slideContentArr.length)
 				return;
+			//var point:Point = _slideArr[index].localToGlobal(new Point(_slideArr[index].x, _slideArr[index].y));
+			
 			_slideArr[index] = new Slide(_slideContentArr[index]);
+			
 			_slideContainer.addChild(_slideArr[index]);
 			//
+			
 			_slideArr[index].x = _slideWidth * index;
 			_slideArr[index].disable();
-			superTrace(index);
+			
+			var _mask:Shape = new Shape();
+			_mask.graphics.beginFill(0xFFFFFF,0);
+			_mask.graphics.drawRect(0, 0, _slideWidth, _slideHeight);
+			_slideArr[index].mask = _mask;
+		
 		}
 		
 		private function destroySlide(index:int):void
@@ -230,16 +346,19 @@
 			_slideArr[index].destroy();
 			_slideArr[index] = null;
 			
-			superTrace(index);
+			
 		}
 		
 		public function get currentIndex():int
 		{
+			
+			
 			var index:int = -Math.round(_slideContainer.x / _slideWidth);
-			if (index > _slideContentArr.length-1)
-			index = _slideContentArr.length-1 ; 
+			if (index > slideContentArr.length - 1)
+				index = slideContentArr.length - 1;
 			if (index < 0)
-			index = 0;
+				index = 0;
+			
 			return index;
 		}
 		
@@ -257,34 +376,52 @@
 		{
 			
 			if (_targetIndex == 0)
-			return false;
+				return false;
 			
-			var rollAble:Boolean = !_slideArr[_targetIndex].isLocked && _slideArr[_targetIndex].isLeftRollOutEnabled && _slideArr[_targetIndex-1].isRightRollInEnabled ;
-
-			return  rollAble;
+			var rollAble:Boolean = !_slideArr[_targetIndex].isLocked && _slideArr[_targetIndex].isLeftRollOutEnabled && _slideArr[_targetIndex - 1].isRightRollInEnabled;
+			
+			return rollAble;
 		}
 		
 		public function get rightRollAble():Boolean
 		{
-			if (_targetIndex == _slideContentArr.length-1)
-			return false;
+			if (_targetIndex == _slideContentArr.length - 1)
+				return false;
 			
-			var rollAble:Boolean = !_slideArr[_targetIndex].isLocked && _slideArr[_targetIndex].isRightRollOutEnabled && _slideArr[_targetIndex+1].isLeftRollInEnabled ;
-
-			return  rollAble;
+			var rollAble:Boolean = !_slideArr[_targetIndex].isLocked && _slideArr[_targetIndex].isRightRollOutEnabled && _slideArr[_targetIndex + 1].isLeftRollInEnabled;
+			
+			return rollAble;
 		}
 		
-		public function get slideContentArr():Array 
+		public function get slideContentArr():Array
 		{
+			_slideContentArr ||= [];
 			return _slideContentArr;
 		}
 		
-		public function set slideContentArr(value:Array):void 
+		public function set slideContentArr(value:Array):void
 		{
+			destroySlide(currentIndex + 2);
+			destroySlide(currentIndex - 2);
+			destroySlide(currentIndex);
+			destroySlide(currentIndex+1);
+			destroySlide(currentIndex-1);
+			addSlide(currentIndex);
+			addSlide(currentIndex + 1);
+			addSlide(currentIndex - 1);
+			
 			_slideContentArr = value;
-			rollTo(_targetIndex, 0);
-			superTrace("");
+			if (_targetIndex > _slideContentArr.length - 1)_targetIndex = _slideContentArr.length - 1;
+			rollTo(_targetIndex, 0.5);
+			superTrace("更新ContentArr");
 		}
+		
+		public function get slideArr():Array 
+		{
+			return _slideArr;
+		}
+		
+		
 	
 	}
 

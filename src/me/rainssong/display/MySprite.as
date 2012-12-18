@@ -12,7 +12,7 @@
 	 */
 	public class MySprite extends Sprite implements IView
 	{
-		public var autoDestroy:Boolean = true;
+		private var _autoDestroy:Boolean = true;
 		public var autoDisable:Boolean = true;
 		private var _listenerArr:Vector.<Array>;
 		
@@ -117,7 +117,6 @@
 					child.stop();
 				this.removeChild(child);
 			}
-		
 		}
 		
 		private function removeListeners():void
@@ -129,6 +128,25 @@
 				removeEventListener(temp[0], temp[1], temp[2]);
 			}
 		}
+		
+		public function get autoDestroy():Boolean
+		{
+			return _autoDestroy; 
+		}
+		
+		public function set autoDestroy(value:Boolean):void 
+		{
+			_autoDestroy = value;
+			var i:int = this.numChildren - 1;
+			for (i; i >= 0; i--)
+			{
+				var child:* = this.getChildAt(i);
+				try{child.autoDestroy = value }
+				catch (e:Error) { };
+			}
+		}
+		
+		
 	
 	}
 

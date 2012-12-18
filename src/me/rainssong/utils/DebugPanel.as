@@ -51,22 +51,31 @@ package me.rainssong.utils
 			print(INFORMATION);
 		}
 		
-		public static function print(...arg):void
+		public static function print(... arg):void
 		{
 			if (!_instance || !_isWorking)
 				return;
 			
 			var caller:String = "[" + new Error().getStackTrace().match(/[\w\/$]*\(\)/g)[1] + "]";
-			if (_traceIt) trace(caller, arg);
+			if (_traceIt)
+				trace(caller, arg);
 			_textField.appendText(arg.toString() + "\n");
 			
 			if (_textField.numLines > _maxLine)
 			{
-				_textField.replaceText(0, _textField.getLineOffset(_textField.numLines - _maxLine+1), "");
+				_textField.replaceText(0, _textField.getLineOffset(_textField.numLines - _maxLine + 1), "");
 			}
 			
 			_textField.height = _textField.textHeight + 6;
 			_textField.width = _textField.textWidth + 6;
+		}
+		
+		public static function replace(... arg):void
+		{
+			if (!_instance || !_isWorking)
+				return;
+			clear();
+			print(arg);
 		}
 		
 		private function onAdd(e:Event):void
@@ -76,19 +85,19 @@ package me.rainssong.utils
 			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		}
 		
-		private function onMouseUp(e:MouseEvent):void 
+		private function onMouseUp(e:MouseEvent):void
 		{
 			stopDrag()
 			removeEventListener(MouseEvent.CLICK, onClick);
 		}
 		
-		private function onMouseDown(e:MouseEvent):void 
+		private function onMouseDown(e:MouseEvent):void
 		{
 			startDrag();
 			removeEventListener(MouseEvent.CLICK, onClick);
 		}
 		
-		private function onClick(e:MouseEvent):void 
+		private function onClick(e:MouseEvent):void
 		{
 			_isWorking = !_isWorking;
 		}
@@ -104,14 +113,21 @@ package me.rainssong.utils
 					_isWorking = !_isWorking;
 					break;
 				case Keyboard.F5: 
-					_textField.text = "";
-					_textField.height = 0;
-					_textField.width = 0;
+					clear();
 					break;
 				case Keyboard.F6: 
 					this.mouseEnabled = _instance.visible = !_instance.visible;
 					break;
 			}
+		}
+		
+		static public function clear():void
+		{
+			if (!_instance || !_isWorking)
+				return;
+			_textField.text = "";
+			_textField.height = 0;
+			_textField.width = 0;
 		}
 	
 	}

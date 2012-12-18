@@ -9,7 +9,7 @@ package me.rainssong.math
 		* @param arr Array or Vector
 		* @return randomedVector
 		*/
-		public static function getRandomArray(arr:Array):Array
+		public static function getRandomizedArray(arr:Array):Array
 		{
 			var outputArr:Array = arr.slice();
 			var i:int = outputArr.length;
@@ -46,6 +46,13 @@ package me.rainssong.math
 				startInt++;
 			}
 			return outArr;
+		}
+		
+		public static function getRangedNumber(number:Number, min:Number, max:Number):Number
+		{
+			if (number > max) number = max;
+			if (number < min) number = min;
+			return number;
 		}
 	
 	}

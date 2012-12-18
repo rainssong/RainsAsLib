@@ -1,5 +1,6 @@
 package me.rainssong.application
 {
+	
 	import flash.display.Sprite;
 	import flash.net.URLLoader;
 	import flash.utils.getDefinitionByName;
@@ -17,6 +18,7 @@ package me.rainssong.application
 		
 		private static var _version:String = "1.0";
 		public static var edition:String = NORMAL_EDITION;
+		
 		
 		public static function get DEBUG_MODE():Boolean
 		{
