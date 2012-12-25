@@ -1,7 +1,9 @@
 package me.rainssong.application
 {
 	
+	import flash.desktop.NativeApplication;
 	import flash.display.Sprite;
+	import flash.net.SharedObject;
 	import flash.net.URLLoader;
 	import flash.utils.getDefinitionByName;
 
@@ -17,8 +19,18 @@ package me.rainssong.application
 		static public const TEST_EDITION:String = "testEdition";
 		
 		private static var _version:String = "1.0";
+		private static var _lastVersion:String = "0.1";
 		public static var edition:String = NORMAL_EDITION;
 		
+		static private var inited:Boolean = false;
+		
+		
+		private static function init():void
+		{
+			var _lastVersion:Strin ||== SharedObject.getLocal(NativeApplication.nativeApplication.applicationID).version;
+			
+		}
+		public static function get shardObject():SharedObject
 		
 		public static function get DEBUG_MODE():Boolean
 		{
@@ -36,6 +48,11 @@ package me.rainssong.application
 		public static function get RELEAS_MODE():Boolean
 		{
 			return !DEBUG_MODE;
+		}
+		
+		static public function get lastVersion():String 
+		{
+			return _lastVersion;
 		}
 		
 		static public function get version():String 

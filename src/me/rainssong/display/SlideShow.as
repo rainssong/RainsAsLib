@@ -317,7 +317,7 @@
 			super.destroy();
 		}
 		
-		private function addSlide(index:int):void
+		protected function addSlide(index:int):void
 		{
 			if (_slideArr[index] != null || index < 0 || index >= _slideContentArr.length)
 				return;
@@ -338,7 +338,7 @@
 		
 		}
 		
-		private function destroySlide(index:int):void
+		protected function destroySlide(index:int):void
 		{
 			if (_slideArr[index] == null)
 				return;
