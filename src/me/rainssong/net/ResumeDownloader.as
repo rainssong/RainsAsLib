@@ -17,6 +17,7 @@ package me.rainssong.net
 	import flash.utils.ByteArray;
 	import com.vsdevelop.net.SharedManage;
 	import flash.utils.getDefinitionByName;
+	import me.rainssong.utils.DebugPanel;
 	
 	/**
 	 * ...
@@ -51,6 +52,8 @@ package me.rainssong.net
 		public function download(sourceUrl:String, targetUrl:String, autoStart:Boolean = true, isCover:Boolean = false):void
 		{
 			_sourceUrl = sourceUrl;
+			
+			
 			_targetUrl = targetUrl;
 			_autoStart = autoStart;
 			_isCover = isCover;
@@ -87,6 +90,7 @@ package me.rainssong.net
 			
 			var loader:URLLoader = new URLLoader();
 			loader.load(new URLRequest(sourceUrl));
+			loader.addEventListener(IOErrorEvent.IO_ERROR, loaderErrorHandler);
 			loader.addEventListener(ProgressEvent.PROGRESS, loaderProgressHandler);
 		}
 		

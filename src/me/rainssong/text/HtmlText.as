@@ -1,4 +1,4 @@
-﻿package com.assist.view
+﻿package me.rainssong.text
 {
 
     public class HtmlText extends Object
@@ -17,59 +17,59 @@
             return;
         }// end function
 
-        public static function yellow(param1:String) : String
+        public static function yellow(content:String) : String
         {
-            return format(param1, Yellow);
+            return format(content, Yellow);
         }// end function
 
-        public static function red(param1:String) : String
+        public static function red(content:String) : String
         {
-            return format(param1, Red);
+            return format(content, Red);
         }// end function
 
-        public static function white(param1:String) : String
+        public static function white(content:String) : String
         {
-            return format(param1, White);
+            return format(content, White);
         }// end function
 
-        public static function green(param1:String) : String
+        public static function green(content:String) : String
         {
-            return format(param1, Green);
+            return format(content, Green);
         }// end function
 
-        public static function blue(param1:String) : String
+        public static function blue(content:String) : String
         {
-            return format(param1, Blue);
+            return format(content, Blue);
         }// end function
 
-        public static function orange(param1:String) : String
+        public static function orange(content:String) : String
         {
-            return format(param1, Orange);
+            return format(content, Orange);
         }// end function
 
-        public static function blue2(param1:String) : String
+        public static function blue2(content:String) : String
         {
-            return format(param1, Blue2);
+            return format(content, Blue2);
         }// end function
 
-        public static function yellow2(param1:String) : String
+        public static function yellow2(content:String) : String
         {
-            return format(param1, Yellow2);
+            return format(content, Yellow2);
         }// end function
 
-        public static function format(param1:String, param2:uint = 0, param3:uint = 12, param4:String = "宋体", param5:Boolean = false, param6:Boolean = false, param7:Boolean = false, param8:String = null, param9:String = null) : String
+        public static function format(content:String, param2:uint = 0, param3:uint = 12, param4:String = "宋体", param5:Boolean = false, param6:Boolean = false, param7:Boolean = false, param8:String = null, param9:String = null) : String
         {
             if (param5)
             {
-                param1 = "<b>" + param1 + "</b>";
+                content = "<b>" + content + "</b>";
             }// end if
             if (param6)
             {
-                param1 = "<i>" + param1 + "</i>";
+                content = "<i>" + content + "</i>";
             }// end if
             if (param7)
             {
-                param1 = "<u>" + param1 + "</u>";
+                content = "<u>" + content + "</u>";
             }// end if
             var _loc_10:String;
             if (param4)
@@ -81,16 +81,16 @@
                 _loc_10 = _loc_10 + (" size=\"" + param3 + "\"");
             }// end if
             _loc_10 = _loc_10 + (" color=\"#" + param2.toString(16) + "\"");
-            param1 = "<font" + _loc_10 + ">" + param1 + "</font>";
+            content = "<font" + _loc_10 + ">" + content + "</font>";
             if (param8)
             {
-                param1 = "<a href=\"" + param8 + "\" target=\"_blank\">" + param1 + "</a>";
+                content = "<a href=\"" + param8 + "\" target=\"_blank\">" + content + "</a>";
             }// end if
             if (param9)
             {
-                param1 = "<p align=\"" + param9 + "\">" + param1 + "</p>";
+                content = "<p align=\"" + param9 + "\">" + content + "</p>";
             }// end if
-            return param1;
+            return content;
         }// end function
 
     }

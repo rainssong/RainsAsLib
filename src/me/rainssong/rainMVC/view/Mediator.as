@@ -15,36 +15,42 @@ package me.rainssong.rainMVC.view
 		{
 			_name = name;
 			_viewComponent = viewComponent;
-			_viewComponent.addEventListener(Event.ADDED_TO_STAGE, onAdd);
+			
 			onRegister();
 		}
 		
 		public function onRegister():void
 		{
+			if (_viewComponent.stage)
+			onAdd();
+			else
+			_viewComponent.addEventListener(Event.ADDED_TO_STAGE, onAdd);
 			
+			
+			_viewComponent.addEventListener(Event.REMOVED_FROM_STAGE, onRemove);
 		}
 		
-		private function onAdd(e:Event):void 
+		public function onAdd(e:Event=null):void 
 		{
-			removeEventListener(Event.ADDED_TO_STAGE, onAdd);
+			_viewComponent.removeEventListener(Event.ADDED_TO_STAGE, onAdd);
 			
 		}
 		
 		
-		public function onRemove():void
+		public function onRemove(e:Event=null):void
 		{
 			
 		}
 		
 		public function destroy():void
 		{
-			
+			_viewComponent.removeEventListener(Event.REMOVED_FROM_STAGE, onRemove);
 		}
 		
 		
 		public function getViewComponent():DisplayObject
 		{
-			return viewComponent;
+			return _viewComponent;
 		}
 		
 		public function get name():String 

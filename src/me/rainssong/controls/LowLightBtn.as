@@ -1,10 +1,13 @@
 ﻿package me.rainssong.controls
 {
 	
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.filters.ColorMatrixFilter;
 	import flash.geom.ColorTransform;
 	import flash.display.MovieClip;
 	import me.rainssong.display.MyMovieClip;
@@ -16,19 +19,22 @@
 	public class LowLightBtn extends MyMovieClip
 	{
 		private const colorTrans:ColorTransform = new ColorTransform();
-		public function LowLightBtn() 
+		private var _grayBitmap:Bitmap;
+		
+		public function LowLightBtn()
 		{
 			super();
-			this.mouseChildren=false;
+			this.mouseChildren = false;
 		}
 		
-		override protected function onAdd(evt:Event=null):void 
+		override protected function onAdd(evt:Event = null):void
 		{
 			super.onAdd(evt);
 			this.addEventListener(MouseEvent.MOUSE_DOWN, downHandler);
+			_grayBitmap = new Bitmap();
 		}
 		
-		private function downHandler(e:MouseEvent):void 
+		private function downHandler(e:MouseEvent):void
 		{
 			gotoDownFrame();
 			stage.addEventListener(MouseEvent.MOUSE_UP, upHandler);
@@ -41,13 +47,28 @@
 			this.transform.colorTransform = temp;
 		}
 		
-		private function upHandler(e:MouseEvent):void 
+		private function upHandler(e:MouseEvent):void
 		{
 			this.transform.colorTransform = colorTrans;
 		}
 		
+		override public function disable():void
+		{
+			super.disable();
+			
+			this.filters=[ new ColorMatrixFilter([.33,.33,.33,0,0,.33,.33,.33,0,0,.33,.33,.33,0,0,0,0,0,1,0])]
+			
+			this.mouseEnabled = false;
+		}
 		
+		override public function enable():void
+		{
+			super.enable();
+			this.filters = [];
+			this.mouseEnabled = true;
 		
+		}
+	
 		//private function removeAt():void 
 //		{
 //			stage.removeEventListener(MouseEvent.MOUSE_UP, upHandler);
@@ -55,8 +76,7 @@
 //			
 //			super.removeAt();
 //		}
-		
-		
+	
 	}
 
 }

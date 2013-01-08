@@ -17,6 +17,7 @@ package  me.rainssong.events
 		static public const ALREADY_LAST_PAGE:String = "alreadyLastPage";
 		static public const ALREADY_FIRST_PAGE:String = "alreadyFirstPage";
 		static public const PUSH_SLIDE:String = "pushSlide";
+		static public const CLICK_SLIDE:String = "clickSlide";
 		
 		public function SlideEvent(type:String, data:*=null,bubbles:Boolean=false,cancelable:Boolean=false) 
 		{

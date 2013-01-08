@@ -1,7 +1,9 @@
 package me.rainssong.application
 {
 	
-	import flash.desktop.NativeApplication;
+	
+	//import flash.desktop.NativeApplication;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.net.SharedObject;
 	import flash.net.URLLoader;
@@ -19,18 +21,41 @@ package me.rainssong.application
 		static public const TEST_EDITION:String = "testEdition";
 		
 		private static var _version:String = "1.0";
-		private static var _lastVersion:String = "0.1";
+		private static var _appName:String = "application";
+		private static var _lastVersion:String = "0.0";
 		public static var edition:String = NORMAL_EDITION;
 		
 		static private var inited:Boolean = false;
 		
 		
-		private static function init():void
+		private static function init(appName:String):void
 		{
-			var _lastVersion:Strin ||== SharedObject.getLocal(NativeApplication.nativeApplication.applicationID).version;
+			_lastVersion ||= shardObject.data.version;
+			_appName = appName;
+			shardObject.data.version = shardObject.data.version;
+			shardObject.flush();
 			
 		}
+		
 		public static function get shardObject():SharedObject
+		{
+			//var NativeApplication:Class = getDefinitionByName("flash.desktop.NativeApplication") as Class;
+			//try
+			//{
+				//_appName = NativeApplication.nativeApplication.applicationID;
+				//
+			//}
+			//catch (e:Error)
+			//{
+			//
+			//}
+			return SharedObject.getLocal(_appName);
+		}
+		
+		public static function get isDifferentVersion():Boolean
+		{
+			return _lastVersion != version;
+		}
 		
 		public static function get DEBUG_MODE():Boolean
 		{
@@ -58,9 +83,13 @@ package me.rainssong.application
 		static public function get version():String 
 		{
 			var NativeApplication:Class = getDefinitionByName("flash.desktop.NativeApplication") as Class;
+			
 			try
 			{
-				_version = NativeApplication.nativeApplication.applicationDescriptor.version.toString();
+				var appDescriptor:XML = NativeApplication.nativeApplication.applicationDescriptor;
+				var ns:Namespace = appDescriptor.namespace();
+				
+				_version = appDescriptor.ns::versionNumber;
 			}
 			catch (e:Error)
 			{
@@ -72,6 +101,8 @@ package me.rainssong.application
 		static public function set version(value:String):void 
 		{
 			_version = value;
+			shardObject.data.version = value;
+			shardObject.flush();
 		}
 	}
 }

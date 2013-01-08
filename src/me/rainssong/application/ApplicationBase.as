@@ -33,13 +33,16 @@ package me.rainssong.application
 			else _instance = this;
 			
 			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init);
+			else 
+			addEventListener(Event.ADDED_TO_STAGE, init);
+			
 		}
 		
 		public function init(e:Event=null):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
+			ApplicationManager
 			_bgLayer = new MySprite();
 			_sceneLayer = new MySprite();
 			_mainLayer = new MySprite();

@@ -51,8 +51,6 @@
 			_slideContainer.addEventListener(SlideEvent.ROLL_NEXT, rollNext);
 			_slideContainer.addEventListener(SlideEvent.ROLL_PREV, rollPrev);
 			_slideContainer.addEventListener(SlideEvent.PUSH_SLIDE, onPushSlide);
-			
-			
 		}
 		
 		private function onPushSlide(e:SlideEvent):void 
@@ -118,10 +116,14 @@
 			super.onDragging();
 		
 			//忽略细微移动
-			if (_speedX ^ 0 != 0 && _slideContainer.mouseChildren)
+			if (_slideContainer.x-mpoint.x >5 && _slideContainer.mouseChildren)
 			{
-			_slideContainer.mouseChildren = _slideContainer.mouseEnabled = false;
+				_slideContainer.mouseChildren = _slideContainer.mouseEnabled = false;
 			}
+			//else
+			//{
+				//
+			//}
 			
 			var targetX:int = mpoint.x + stage.mouseX - _startX;
 			
@@ -167,9 +169,7 @@
 		}
 		
 		public function rollNext(e:SlideEvent=null):void
-		{	
-			
-			
+		{
 			rollTo(_targetIndex + 1);
 		}
 		
@@ -179,7 +179,7 @@
 			rollTo(_targetIndex - 1);
 		}
 		
-		private function TweenXComplete(isSwiped:Boolean = false):void
+		protected function TweenXComplete(isSwiped:Boolean = false):void
 		{
 			for (var i:int = 0; i < _slideContentArr.length; i++)
 			{
@@ -203,11 +203,7 @@
 		
 		private function rollUpdateHandler():void
 		{
-			//moveSlide(currentIndex - 1);
-			//moveSlide(currentIndex + 1);
-			//addSlide(currentIndex);
-			//addSlide(currentIndex + 1);
-			//addSlide(currentIndex - 1);
+			
 			
 			destroySlide(currentIndex + 2);
 			destroySlide(currentIndex - 2);
@@ -331,12 +327,17 @@
 			_slideArr[index].x = _slideWidth * index;
 			_slideArr[index].disable();
 			
+			//_slideArr[index].addEventListener(MouseEvent.CLICK,onSlideClick)
+			
 			var _mask:Shape = new Shape();
 			_mask.graphics.beginFill(0xFFFFFF,0);
 			_mask.graphics.drawRect(0, 0, _slideWidth, _slideHeight);
+			_slideArr[index].addChild(_mask);
 			_slideArr[index].mask = _mask;
 		
 		}
+		
+	
 		
 		protected function destroySlide(index:int):void
 		{
@@ -351,8 +352,6 @@
 		
 		public function get currentIndex():int
 		{
-			
-			
 			var index:int = -Math.round(_slideContainer.x / _slideWidth);
 			if (index > slideContentArr.length - 1)
 				index = slideContentArr.length - 1;

@@ -1,4 +1,4 @@
-package mvc.model.VO 
+package me.rainssong.quest.VO 
 {
 	/**
 	 * ...

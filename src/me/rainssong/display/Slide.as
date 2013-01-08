@@ -32,8 +32,6 @@
 			
 			if(value!=null)
 				reload(value);
-			
-			
 		}
 
 		public function reload(value:*):void

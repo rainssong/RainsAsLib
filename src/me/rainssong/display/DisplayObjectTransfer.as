@@ -12,6 +12,12 @@ package me.rainssong.display
 	public class DisplayObjectTransfer
 	{
 		static private var _loader:Loader;
+		
+		/**
+		 * String->Loader Class->new Class() BitmapData->Bitmap
+		 * @param	value
+		 * @return
+		 */
 		static public function transfer(value:*):DisplayObject
 		{
 			if (value is DisplayObject)
@@ -24,8 +30,11 @@ package me.rainssong.display
 			}
 			else if (value is Class)
 			{
-				
-				return new value();
+				var temp:* =  new value();
+				if(temp is DisplayObject)
+				return temp;
+				else
+				throw Error("can't transfer "+value);
 			}
 			else if (value is BitmapData)
 			{
@@ -33,7 +42,7 @@ package me.rainssong.display
 			}
 			else
 			{
-				throw Error("can't transfer"+value);
+				throw Error("can't transfer "+value);
 			}
 		}
 		
