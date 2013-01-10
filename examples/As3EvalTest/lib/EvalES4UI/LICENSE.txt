@@ -1,0 +1,4 @@
+Pretend this is still in the HTTP headers, k?
+
+Location: http://www.mozilla.org/MPL/MPL-1.1.html
+

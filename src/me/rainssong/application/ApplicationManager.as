@@ -28,9 +28,10 @@ package me.rainssong.application
 		static private var inited:Boolean = false;
 		
 		
-		private static function init(appName:String):void
+		private static function init(appName:String,version:String):void
 		{
 			_lastVersion ||= shardObject.data.version;
+			shardObject.data.version = version;
 			_appName = appName;
 			shardObject.data.version = shardObject.data.version;
 			shardObject.flush();

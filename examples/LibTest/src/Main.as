@@ -7,6 +7,7 @@ package
 	import flash.display.StageScaleMode;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
+	import me.rainssong.application.ApplicationBase;
 	import me.rainssong.application.ApplicationManager;
 	
 	/**

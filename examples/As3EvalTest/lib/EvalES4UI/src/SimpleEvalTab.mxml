@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	label="Simple Eval"
+	width="100%" height="100%"
+	implements="com.hurlant.test.ILogger"
+	initialize="init()">
+	<mx:Script>
+		<![CDATA[
+			import com.hurlant.util.Hex;
+			import com.hurlant.eval.CompiledESC;
+			import com.hurlant.eval.ByteLoader;
+			import com.hurlant.eval.Evaluator;
+			import com.hurlant.eval.Debug;
+
+			private var esc:CompiledESC = new CompiledESC;
+			
+			private function init():void {
+				Debug.logger = this;
+				Util.logger = this;
+
+			}
+
+			private function eval():void {
+				
+				init();
+				var src:String = input.text;
+				
+				if (as3port.selected) {
+			    	var evaluator:Evaluator = new Evaluator
+    	        	var bytes:ByteArray = evaluator.eval(src);
+    			} else {
+	    	        bytes = esc.eval(src);
+	    	    }
+	    	    trace("bytes.length = "+bytes.length);
+	    	    trace(Hex.dump(bytes));
+    	        
+				ByteLoader.loadBytes(bytes);
+			}
+
+			public function print(str:String):void {
+				output.text += str + "\n";
+			}
+
+		]]>
+	</mx:Script>
+	<mx:HBox horizontalAlign="right" width="100%">
+		<mx:Label text="Pick a compiler version to use:"/>
+		<mx:RadioButtonGroup id="compilerType"/>
+		<mx:RadioButton groupName="compilerType"
+			selected="true" toolTip="This uses binary .abc versions of esc as made available on tamarin-central."
+			id="abcesc" label="Binary ES4"/> 
+		<mx:RadioButton groupName="compilerType"
+			toolTip="This is an old manual port from esc's source."
+			id="as3port" label="Old AS3 Port"/>
+	</mx:HBox>
+	<mx:VDividedBox left="0" top="20" bottom="0" right="0" resizeToContent="true">
+		<mx:HBox width="100%" height="250" verticalAlign="middle">
+			<mx:TextArea id="input" width="100%" height="100%">
+				<mx:text>
+				<![CDATA[
+function loop():String {
+  var [i,s,v]=[10,'',0];
+  while (i-->0) {
+  	s+=i+"+";
+  	v+=i;
+  }
+  return s.substr(0,s.length-1)+"="+v;
+}
+Util.print(loop());
+dynamic class dummy extends Array {
+  function dummy() {
+    this.push("World!");
+    this.unshift("Hello");
+    Util.print(this.join(", "));
+  }
+}
+new dummy;
+				]]>
+				</mx:text>
+			</mx:TextArea>
+			<mx:Button height="60" label="Eval" click="eval()"/>
+		</mx:HBox>
+		<mx:TextArea id="output" width="100%" height="100%"/>
+	</mx:VDividedBox>
+</mx:Canvas>

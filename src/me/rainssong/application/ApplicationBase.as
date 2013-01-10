@@ -29,20 +29,14 @@ package me.rainssong.application
 		
 		public function ApplicationBase() 
 		{
-			if (_instance) throw Error("singleton");
-			else _instance = this;
-			
-			if (stage) init();
-			else 
-			addEventListener(Event.ADDED_TO_STAGE, init);
-			
+			super();
 		}
 		
-		public function init(e:Event=null):void
+		override protected function onAdd(e:Event = null):void 
 		{
+			super.onAdd(e);
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
-			ApplicationManager
 			_bgLayer = new MySprite();
 			_sceneLayer = new MySprite();
 			_mainLayer = new MySprite();
@@ -86,13 +80,6 @@ package me.rainssong.application
 			}
 		}
 		
-		
-		private function getInstance():ApplicationBase
-		{
-			if (!_instance)_instance = new ApplicationBase();
-			return _instance as ApplicationBase;
-		}
-		
 		public function get bgLayer():MySprite 
 		{
 			return _bgLayer;
@@ -116,11 +103,6 @@ package me.rainssong.application
 		public function get warningLayer():MySprite 
 		{
 			return _warningLayer;
-		}
-		
-		public static function get stage():Stage
-		{
-			return stage;
 		}
 	}
 

@@ -1,0 +1,16 @@
+As Eval Library
+
+- 1.2
+  - updated binaries in CompiledESC with recent Tamarin drops.
+  - switch compiled ESC as the default compiler.
+
+- 1.1
+  - CompiledESC: Wrapper for compiled .abc esc files taken from tamarin-central/.../esc/bin
+  - Test UI exposes checkboxes to pick which compiler to use 
+
+- Initial Release (0.1)
+  - Ported esc to as3. (taken from tamarin-central's tip on 12/31/07) 
+  - Fixed a few tiny things (some support for "extends", slightly less verbose bytecode, ...)
+  - ByteLoader class, to load ABC files into the flash VM
+  - Demo UI and test case framework, ripped from as3crypto
+

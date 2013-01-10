@@ -11,9 +11,9 @@ package me.rainssong.rainMVC.view
 		private var _name:String;
 		protected var _viewComponent:DisplayObject;
 		
-		public function Mediator(name:String,viewComponent:DisplayObject) 
+		public function Mediator(viewComponent:DisplayObject) 
 		{
-			_name = name;
+			//_name = name;
 			_viewComponent = viewComponent;
 			
 			onRegister();

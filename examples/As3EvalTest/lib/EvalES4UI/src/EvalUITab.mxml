@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	label="Eval UI" width="100%" height="100%"
+	implements="com.hurlant.test.ILogger"
+	initialize="init()"
+	>
+	<mx:Script>
+		<![CDATA[
+			import com.hurlant.eval.CompiledESC;
+			import com.hurlant.eval.ByteLoader;
+			import com.hurlant.eval.dump.ABCDump;
+			import com.hurlant.util.Hex;
+			import com.hurlant.eval.Debug;
+			import com.hurlant.eval.Evaluator;
+			
+			private var esc:CompiledESC = new CompiledESC;
+			
+			private function init():void {
+				Debug.logger = this;
+				Util.logger = this;
+			}
+			
+			private function compile():void {
+				init();
+				var src:String = input.text;
+				
+				if (as3port.selected) {
+			    	var evaluator:Evaluator = new Evaluator
+	    	        var bytes:ByteArray = evaluator.eval(src);
+	   			} else {
+	   				bytes = esc.eval(src);
+	   			}
+	   			
+    	        output.text = Hex.dump(bytes);
+			}
+			
+			private function eval():void {
+				init();
+				compile();
+				load();
+			}
+			
+			public function print(str:String):void {
+				debug.text += str + "\n";
+			}
+			
+			public function dump():void {
+				init();
+				var bytes:ByteArray = Hex.undump(output.text);
+				Debug.print(ABCDump.dump(bytes));
+			}
+			
+			public function clear():void {
+				debug.text = "";
+			}
+			
+			public function wrap():void {
+				var bytes:ByteArray = Hex.undump(output.text);
+				bytes = ByteLoader.wrapInSWF([bytes]);
+				output.text = Hex.dump(bytes);
+			}
+			
+			public function load():void {
+				init();
+				var bytes:ByteArray = Hex.undump(output.text);
+				ByteLoader.loadBytes(bytes);
+			}
+		]]>
+	</mx:Script>
+	<mx:HBox horizontalAlign="right" width="100%">
+		<mx:Label text="Pick a compiler version to use:"/>
+		<mx:RadioButtonGroup id="compilerType"/>
+		<mx:RadioButton groupName="compilerType"
+			selected="true" toolTip="This uses binary .abc versions of esc as made available on tamarin-central."
+			id="abcesc" label="Binary ES4"/> 
+		<mx:RadioButton groupName="compilerType"
+			toolTip="This is an old manual port from esc's source."
+			id="as3port" label="Old AS3 Port"/>
+	</mx:HBox>
+	<mx:HDividedBox x="0" y="20" width="100%" height="100%">
+		<mx:VDividedBox width="100%" height="100%">
+			<mx:VBox width="100%" height="100%">
+				<mx:HBox>
+					<mx:Text text="Input:" width="64"/>
+					<mx:Button label="Compile" click="compile()" toolTip="parse and compile the program into bytecodes"/>
+					<mx:Button label="Run" click="eval()" toolTip="compile then run the program"/>
+				</mx:HBox>
+				<mx:TextArea id="input" width="100%" height="100%" >
+<mx:text><![CDATA[
+// most of as3 is there
+public class LookAClass {
+	public function LookAClass() {
+		Util.print("in LookAClass's constructor");
+		Util.print(doStuff());
+	}
+	private function doStuff():String {
+		return "In private method.";
+	}
+}
+new LookAClass;
+
+// some es4 beyond as3
+var val = {value:new Date};
+function check({value:v}):String {
+  switch type (v) {
+    case (s: String) { return "v is a string "; }
+    case (d: Date) {  return "v is a date "; }
+  }
+}
+function square(n) n*n;
+var [x,y,z] = [1,check(val),square(3.14)];
+Util.print(y+z);
+
+// access other objects. packages are namespaces. soylent green is people.
+namespace fu = "flash.utils"; use namespace fu; // think of this as "import flash.utils.*", except with fu.
+var b:ByteArray = new ByteArray;
+var src:String = "BlahBlahBlahBlahBlahBlahBlah";
+b.writeUTFBytes(src);
+b.compress();
+Util.print(src.length + " => " +b.length);
+
+]]></mx:text>
+				</mx:TextArea>
+			</mx:VBox>
+			<mx:VBox width="100%" height="100%">
+				<mx:HBox>
+					<mx:Label text="Binary Output (or Input, for Dump.):"/>
+					<mx:Button label="Dump" click="dump()" toolTip="disassemble the bytecode into the Console"/>
+					<mx:Button label="Wrap in SWF" click="wrap()" toolTip="wrap ABC bytecode into a valid SWF file"/>
+					<mx:Button label="Load" click="load()" toolTip="run the bytecode within the flash player"/>
+				</mx:HBox>
+				<mx:TextArea id="output" width="100%" height="100%" />
+			</mx:VBox>
+		</mx:VDividedBox>
+		<mx:VBox width="100%" height="100%">
+			<mx:HBox>
+				<mx:Label text="Console:"/>
+				<mx:Button label="Clear" click="clear()" toolTip="Clear Console"/>
+			</mx:HBox>
+			<mx:TextArea id="debug" width="100%" height="100%">
+			</mx:TextArea>
+		</mx:VBox>
+			
+	</mx:HDividedBox>
+</mx:Canvas>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * EvalDemo
+ * 
+ * A quick MXML UI to showcase the AS3 Eval library.
+ * Copyright (c) 2007 Henri Torgemane
+ * 
+ * See LICENSE.txt for full license information.
+ */
+-->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:ns1="*"
+	viewSourceURL="srcview/index.html">
+	<mx:Label text="AS3 Eval Demo page" left="10" top="10"/>
+	<mx:TabNavigator left="10" top="36" bottom="10" right="10">
+		<ns1:SimpleEvalTab/>
+		<ns1:EvalUITab/>
+		<ns1:UnitTestTab/>
+	</mx:TabNavigator>
+	<mx:LinkButton label="Eval.hurlant.com" right="10" top="8" click="navigateToURL(new URLRequest('http://eval.hurlant.com/'))"/>
+	
+</mx:Application>
+
