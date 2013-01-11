@@ -703,6 +703,7 @@ driver.play("t100 l8 [ ccggaag4 ffeeddc4 | [ggffeed4]2 ]2");
          */
         public function play(data:*=null, resetEffector:Boolean=true) : SoundChannel
         {
+			
             try {
                 if (_isPaused) {
                     _isPaused = false;
