@@ -17,7 +17,7 @@ package  me.rainssong.utils
 	public function functionTiming(fun:Function,forTime:int=1,params:Array=null,thisArg:*=null):int
 	{
 		var time:int = getTimer();
-		while(forTime)
+		while(forTime>0)
 		{
 			fun.apply(thisArg,params);
 			forTime--;

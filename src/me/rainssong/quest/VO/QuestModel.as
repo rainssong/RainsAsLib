@@ -14,12 +14,10 @@ package me.rainssong.quest.VO
 		private var _answerIndex:int;
 		private var _index:int;
 		private var _randomOrder:Boolean;
-		private var _realIndex:int;
 		private var _rightAnswer:String;
-		public function QuestModel(index:int,realIndex:int, title:String,rightAnswer:String, options:Vector.<String>, isLast:Boolean = false, minChoose:int = 1, maxChoose:int = 1,randomOrder:Boolean=false ) 
+		public function QuestModel(index:int, title:String,rightAnswer:String, options:Vector.<String>,  minChoose:int = 1, maxChoose:int = 1,randomOrder:Boolean=false ) 
 		{
 			_index = index;
-			_realIndex = realIndex;
 			_title = title;
 			_rightAnswer = rightAnswer;
 			_options = options;
@@ -79,15 +77,6 @@ package me.rainssong.quest.VO
 		{
 			return _rightAnswer;
 		}
-		
-		/**
-		 * 0->n-1
-		 */
-		public function get realIndex():int 
-		{
-			return _realIndex;
-		}
-		
 		
 		
 	

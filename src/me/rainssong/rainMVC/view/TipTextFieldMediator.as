@@ -25,7 +25,7 @@ package me.rainssong.rainMVC.view
 			super(view);
 		}
 		
-		override public function onRegister():void
+		override protected function onRegister():void
 		{
 			super.onRegister();
 			myTextField.addEventListener(FocusEvent.FOCUS_IN, focusInHandler);
