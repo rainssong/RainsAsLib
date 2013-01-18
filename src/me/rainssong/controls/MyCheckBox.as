@@ -9,7 +9,7 @@
 
 
 
-	public class MyCheckBox extends MovieClip
+	public class MyCheckBox extends MovieClip implements IToggleBtn
 	{
 
 
@@ -53,9 +53,14 @@
 		}
 
 
-		public function set selected(value:Boolean):void
+		public function select():void
 		{
-			gotoAndStop(int(value) + 1);
+			gotoAndStop(2);
+		}
+		
+		public function unselect():void
+		{
+			gotoAndStop(1);
 		}
 
 		public function get selected():Boolean

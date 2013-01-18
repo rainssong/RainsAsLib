@@ -34,7 +34,7 @@
 		{
 			if (MyRadioButtonGroup.selection != this)
 			{
-				unSelect();
+				unselect();
 			}
 		}
 		
@@ -45,7 +45,7 @@
 				select();
 			}
 			else
-			unSelect();
+			unselect();
 		}
 		
 		public function select():void
@@ -55,7 +55,7 @@
 			MyRadioButtonGroup.dispatcher.dispatchEvent(new Event(MyRadioButtonGroup.Selected));
 		}
 		
-		public function unSelect():void
+		public function unselect():void
 		{
 			this.gotoAndStop(1);
 		}
