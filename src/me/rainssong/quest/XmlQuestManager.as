@@ -1,7 +1,8 @@
-package me.rainssong.quest.VO 
+package me.rainssong.quest 
 {
 
 	import me.rainssong.math.MathCore;
+	import me.rainssong.quest.VO.QuestModel;
 	
 	/**
 	 * ...
@@ -26,7 +27,7 @@ package me.rainssong.quest.VO
 			_randomOrderArr = MathCore.getRandomizedObject((MathCore.getIntVector(0, _questArr.length - 1))) as Vector.<int>;
 		}
 		
-		private function createQuests():void 
+		protected function createQuests():void 
 		{
 			for (var i:int = 0; i < _xml.quest.length(); i++ )
 			{
@@ -35,7 +36,7 @@ package me.rainssong.quest.VO
 		}
 		
 		//todo:自动排错——答案排序，大小写等
-		private function createQuest(index:int):QuestModel 
+		protected  function createQuest(index:int):QuestModel 
 		{
 			if (!_xml.quest[index]) return null;
 			var title:String = _xml.quest[index].title;
