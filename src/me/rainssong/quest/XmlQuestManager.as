@@ -53,7 +53,6 @@ package me.rainssong.quest
 			return questModel;
 		}
 		
-		
 		public function getQuest(index:int):QuestModel
 		{
 			return _questArr[index];

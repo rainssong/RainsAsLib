@@ -23,7 +23,7 @@ package me.rainssong.utils
 		{
 			var resortArr:Array = str.split("");
 			superTrace("old resortArr:" + resortArr);
-			resortArr.sort(args);
+			resortArr.sort.apply(null,args);
 			superTrace("new resortArr:" + resortArr);
 			return String(resortArr);
 		}
