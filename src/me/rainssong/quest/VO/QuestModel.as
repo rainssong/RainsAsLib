@@ -78,6 +78,11 @@ package me.rainssong.quest.VO
 			return _rightAnswer;
 		}
 		
+		public function get index():int 
+		{
+			return _index;
+		}
+		
 		
 	
 		
