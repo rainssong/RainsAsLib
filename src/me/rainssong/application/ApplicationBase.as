@@ -16,7 +16,6 @@ package me.rainssong.application
 	{
 		private var _instance:ApplicationBase;
 		private var _bgLayer:MySprite;
-		private var _sceneLayer:MySprite;
 		private var _mainLayer:MySprite;
 		private var _uiLayer:MySprite;
 		private var _warningLayer:MySprite
@@ -35,15 +34,15 @@ package me.rainssong.application
 		override protected function onAdd(e:Event = null):void 
 		{
 			super.onAdd(e);
-			removeEventListener(Event.ADDED_TO_STAGE, init);
+			
 			
 			_bgLayer = new MySprite();
-			_sceneLayer = new MySprite();
+			
 			_mainLayer = new MySprite();
 			_uiLayer = new MySprite();
 			_warningLayer = new MySprite();
 			addChild(_bgLayer);
-			addChild(_sceneLayer);
+			
 			addChild(_mainLayer);
 			addChild(_uiLayer);
 			addChild(_warningLayer);
@@ -85,10 +84,6 @@ package me.rainssong.application
 			return _bgLayer;
 		}
 		
-		public function get sceneLayer():MySprite 
-		{
-			return _sceneLayer;
-		}
 		
 		public function get mainLayer():MySprite 
 		{

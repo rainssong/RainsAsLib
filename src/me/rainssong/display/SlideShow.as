@@ -44,6 +44,14 @@
 		{
 			_slideWidth = slideWidth;
 			_slideHeight = slideHeight;
+			super();
+			
+		}
+		
+		override protected function onRegister():void 
+		{
+			super.onRegister();
+			
 			_slideContainer = new MySprite();
 			_slideArr = new Array();
 			addChild(_slideContainer);
@@ -84,24 +92,7 @@
 				rollPrev();
 			else
 				rollTo(currentIndex);
-			//if (_slideContainer.x != (speedX / 0.5 + _slideContainer.x) / -_slideWidth)
-			//{
-			//dispatchEvent(new Event(SWIPE_LEFT));
-			//var result:int = Math.round((speedX / 0.5 + _slideContainer.x) / -_slideWidth);
-			//if (result > _targetIndex)
-			//{
-			//rollNext();
-			//}
-			//else if (result < _targetIndex)
-			//{
-			//rollPrev();
-			//}
-			//else
-			//{
-			//rollTo(_targetIndex)
-			//}
-			//
-			//}
+		
 			if (_speedY < -30 && Math.abs(_speedX) < 25)
 			{
 				if (!isLocked)
@@ -203,14 +194,11 @@
 		
 		private function rollUpdateHandler():void
 		{
-			
-			
 			destroySlide(currentIndex + 2);
 			destroySlide(currentIndex - 2);
 			addSlide(currentIndex);
 			addSlide(currentIndex + 1);
 			addSlide(currentIndex - 1);
-		
 		}
 		
 		

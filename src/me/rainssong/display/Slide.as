@@ -5,7 +5,10 @@
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Loader;
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	import flash.net.URLRequest;
+	import me.rainssong.events.SlideEvent;
+	import me.rainssong.utils.superTrace;
 	
 	import flash.display.Sprite;
 	import me.rainssong.display.MyMovieClip;
@@ -38,7 +41,10 @@
 		{
 			unload();
 			
-			addChild(_example=DisplayObjectTransfer.transfer(value));
+			addChild(_example = DisplayObjectTransfer.transfer(value));
+			_example.addEventListener(SlideEvent.LOCK, lock);
+			_example.addEventListener(SlideEvent.UNLOCK, unlock);
+			
 		}
 
 		public function unload():void
@@ -55,26 +61,16 @@
 				removeChild(_example);
 				_example = null;
 			}
-			
 		}
-
 		
-
-		
-		public function lock():void
+		public function lock(e:SlideEvent=null):void
 		{
 			_isLocked = true;
-			
-			//mouseEnabled = true;
-			//mouseChildren = true;
 		}
 		
-		public function unlock():void
+		public function unlock(e:SlideEvent=null):void
 		{
 			_isLocked = false;
-			
-			//mouseEnabled = false;
-			//mouseChildren = false;
 		}
 		
 		override public function enable():void 

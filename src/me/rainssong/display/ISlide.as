@@ -1,5 +1,6 @@
 package  me.rainssong.display
 {
+	import me.rainssong.events.SlideEvent;
 	
 	/**
 	 * ...
@@ -7,8 +8,8 @@ package  me.rainssong.display
 	 */
 	public interface ISlide
 	{
-		function lock():void
-		function unlock():void
+		function lock(e:SlideEvent=null):void
+		function unlock(e:SlideEvent=null):void
 		function get isLeftRollInEnabled():Boolean
 		function get isRightRollInEnabled():Boolean
 		function get isLeftRollOutEnabled():Boolean
