@@ -334,8 +334,11 @@
 			
 			_slideArr[index].destroy();
 			_slideArr[index] = null;
-			
-			
+		}
+		
+		public function get numOfSlide():int
+		{
+			return slideContentArr.length;
 		}
 		
 		public function get currentIndex():int
