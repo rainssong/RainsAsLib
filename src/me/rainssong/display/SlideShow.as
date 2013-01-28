@@ -199,6 +199,7 @@
 			addSlide(currentIndex);
 			addSlide(currentIndex + 1);
 			addSlide(currentIndex - 1);
+			dispatchEvent(new SlideEvent(SlideEvent.ROLLING));
 		}
 		
 		

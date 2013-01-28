@@ -20,6 +20,7 @@ package  me.rainssong.events
 		static public const CLICK_SLIDE:String = "clickSlide";
 		static public const LOCK:String = "lock";
 		static public const UNLOCK:String = "unlock";
+		static public const ROLLING:String = "rolling";
 		
 		public function SlideEvent(type:String, data:*=null,bubbles:Boolean=false,cancelable:Boolean=false) 
 		{
