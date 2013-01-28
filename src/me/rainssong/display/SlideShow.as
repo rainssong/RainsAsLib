@@ -7,7 +7,6 @@
 	import flash.errors.IOError;
 	import me.rainssong.events.SlideEvent;
 	import me.rainssong.utils.superTrace;
-	Slide
 	import me.rainssong.events.MyEvent;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -209,6 +208,7 @@
 			destroySlide(currentIndex - 1);
 			destroySlide(currentIndex);
 			addSlide(currentIndex);
+			slideArr[currentIndex].enable();
 			addSlide(currentIndex + 1);
 			addSlide(currentIndex - 1);
 		}
