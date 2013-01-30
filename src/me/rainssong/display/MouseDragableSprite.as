@@ -25,13 +25,13 @@ package me.rainssong.display
 			
 		}
 		
-		private function onMouseDown(e:MouseEvent):void 
+		protected function onMouseDown(e:MouseEvent):void 
 		{
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			startDragging(e.stageX, e.stageY);
 		}
 		
-		private function onMouseUp(e:MouseEvent):void 
+		protected function onMouseUp(e:MouseEvent):void 
 		{
 			if(stage)
  			{

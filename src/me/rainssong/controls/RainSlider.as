@@ -12,8 +12,8 @@
 	public class RainSlider extends MySprite
 	{
 		
-		private var _maximum:int = 100;
-		private var _minimum:int = 0;
+		private var _max:int = 100;
+		private var _min:int = 0;
 		private var  _value:int = 0;
 		
 		private var _snapInterval:int = 1;
@@ -31,14 +31,14 @@
 		}
 		
 		
-		public function RainSlider(maximum:int = 100, minimum:int = 0, value:int = 0, snapInterval:int = 1)
+		public function RainSlider(max:int = 100, min:int = 0, value:int = 0, snapInterval:int = 1)
 		{
 			// constructor code
 			sliderThumb.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 			
 			
-			_maximum = maximum;
-			_minimum = minimum;
+			_max = max;
+			_min = min;
 			_value = value;
 			_sliderWidth = 500;
 			_snapInterval = MathCore.getRangedNumber(snapInterval, 1);
@@ -59,15 +59,15 @@
 		private function mouseMoveHandler(e:MouseEvent)
 		{
 			var i:int;
-			var unitWidth:Number = ( _sliderWidth / (maximum - minimum)) ;
+			var unitWidth:Number = ( _sliderWidth / (max - min)) ;
 			
-			i = Math.round(mouseX / unitWidth/_snapInterval)*_snapInterval + _minimum;
+			i = Math.round(mouseX / unitWidth/_snapInterval)*_snapInterval + _min;
 			
-			i = MathCore.getRangedNumber(i, _minimum, _maximum);
-			//i = Math.round((mouseX - sliderMask.x) / ( _sliderWidth / (maximum - minimum)))*_snapInterval + _minimum;
-			//i=Math.round(mouseX/( _sliderWidth / (maximum - minimum)*_snapInterval)+ _minimum;
+			//i = MathCore.getRangedNumber(i, _min, _max);
+			
+			//i = Math.round((mouseX - sliderMask.x) / ( _sliderWidth / (max - min)))*_snapInterval + _min;
+			//i=Math.round(mouseX/( _sliderWidth / (max - min)*_snapInterval)+ _min;
 			moveTo(i);
-			
 		}
 		
 		private function mouseUpHandler(e:MouseEvent)
@@ -89,21 +89,24 @@
 			sliderThumb.removeEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
-		
 		}
 		
 		
 		
 		public function moveTo(i:int)
 		{
-			_value = MathCore.getRangedNumber(i,1);
+			i = MathCore.getRangedNumber(i,min,max);
 			
-			sliderMask.width = sliderThumb.x = _sliderWidth / (maximum - minimum)*(_value - _minimum);
+			sliderMask.width = sliderThumb.x = _sliderWidth / (max - min)*(i - _min);
 			
+			_value = i;
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
-		
+		public function get percent():Number
+		{
+			return (value-min) / (max - min);
+		}
 		
 		
 		public function get snapInterval():int 
@@ -111,21 +114,36 @@
 			return _snapInterval;
 		}
 		
-		public function get minimum():int 
+	
+		public function get max():int 
 		{
-			return _minimum;
+			return _max;
 		}
 		
-		public function get maximum():int 
+		public function set max(value:int):void 
 		{
-			return _maximum;
+			_max = value;
 		}
 		
+		public function get min():int 
+		{
+			return _min;
+		}
 		
+		public function set min(value:int):void 
+		{
+			_min = value;
+		}
 		
+		public function set snapInterval(value:int):void 
+		{
+			_snapInterval = value;
+		}
 		
-		
-		
+		public function get value():int 
+		{
+			return _value;
+		}
 	}
 
 }
