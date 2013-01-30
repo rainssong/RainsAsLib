@@ -18,6 +18,7 @@ package me.rainssong.events
 		static public const SHOW_HIGH_SCORE:String = "showHighScore";
 		static public const LOAD:String = "load";
 		static public const SAVE:String = "save";
+		static public const RESET:String = "reset";
 	
 		
 		public function GameEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
