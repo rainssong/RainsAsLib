@@ -3,6 +3,7 @@ package me.rainssong.display
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import me.rainssong.display.AbstructDragableSprite;
+	import me.rainssong.events.DragEvent;
 	import me.rainssong.utils.superTrace;
 	
 	/**
@@ -29,6 +30,7 @@ package me.rainssong.display
 		{
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			startDragging(e.stageX, e.stageY);
+			
 		}
 		
 		protected function onMouseUp(e:MouseEvent):void 
@@ -48,6 +50,7 @@ package me.rainssong.display
 		
 		override public function startDragging(stageX:Number, stageY:Number):void 
 		{
+			
 			super.startDragging(stageX, stageY);
 			_speedX = 0;
 			_speedY = 0;
@@ -59,12 +62,15 @@ package me.rainssong.display
 			_speedY = stage.mouseY - _lastY;
 			_lastX = stage.mouseX ;
 			_lastY = stage.mouseY;
+			//this.x += _speedX;
+			//this.y += _speedY;
 		}
 		
 		override public function stopDragging():void 
 		{
 			super.stopDragging();
 			stage.removeEventListener(MouseEvent.MOUSE_UP, stopDragging);
+		
 		}
 		
 		

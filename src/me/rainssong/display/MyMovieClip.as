@@ -10,7 +10,7 @@
 	 * ...
 	 * @author Rainssong
 	 */
-	public class MyMovieClip extends MovieClip implements IView 
+	dynamic public class MyMovieClip extends MovieClip implements IView 
 	{
 		private var _autoDestroy:Boolean = true;
 		public var autoDisable:Boolean = true;
