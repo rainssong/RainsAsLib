@@ -17,8 +17,6 @@ package me.rainssong.utils
 		buffer.position = 0;
 		var result:Object = buffer.readObject();
 		return result;
-		
-		Sprite().hitTestObject
 	}
 	
 	

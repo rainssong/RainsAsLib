@@ -22,13 +22,13 @@
 		{
 			super();
 			_listenerArr = new Vector.<Array>;
-			onRgister();
+			onRegister();
 			
 		}
 		
 		/* INTERFACE rainssong.display.IView */
 		
-		public function onRgister():void 
+		public function onRegister():void 
 		{
 			if(stage)
 				onAdd()
