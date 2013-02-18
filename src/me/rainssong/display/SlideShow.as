@@ -57,7 +57,13 @@
 			
 			_slideContainer.addEventListener(SlideEvent.ROLL_NEXT, rollNext);
 			_slideContainer.addEventListener(SlideEvent.ROLL_PREV, rollPrev);
+			_slideContainer.addEventListener(SlideEvent.ROLL_TO, onRollTo);
 			_slideContainer.addEventListener(SlideEvent.PUSH_SLIDE, onPushSlide);
+		}
+		
+		private function onRollTo(e:SlideEvent):void 
+		{
+			rollTo(e.data);
 		}
 		
 		private function onPushSlide(e:SlideEvent):void 
@@ -85,12 +91,12 @@
 		{
 			super.stopDragging();
 			
-			if (_speedX < -50)
+			if (_speedX < -50 && rightRollAble)
 				rollNext();
-			else if (_speedX > 50)
+			else if (_speedX > 50 && leftRollAble)
 				rollPrev();
 			else
-				rollTo(currentIndex);
+				rollTo(_targetIndex);
 		
 			if (_speedY < -30 && Math.abs(_speedX) < 25)
 			{
@@ -308,7 +314,8 @@
 				return;
 			//var point:Point = _slideArr[index].localToGlobal(new Point(_slideArr[index].x, _slideArr[index].y));
 			
-			_slideArr[index] = new Slide(_slideContentArr[index]);
+			
+			_slideArr[index] = new _slideContentArr[index]() as Slide;
 			
 			_slideContainer.addChild(_slideArr[index]);
 			//
@@ -376,7 +383,7 @@
 		
 		public function get rightRollAble():Boolean
 		{
-			if (_targetIndex == _slideContentArr.length - 1)
+			if (_targetIndex == _slideContentArr.length - 1 || !_slideArr.length)
 				return false;
 			
 			var rollAble:Boolean = !_slideArr[_targetIndex].isLocked && _slideArr[_targetIndex].isRightRollOutEnabled && _slideArr[_targetIndex + 1].isLeftRollInEnabled;
@@ -411,6 +418,8 @@
 		{
 			return _slideArr;
 		}
+		
+	
 		
 		
 	
