@@ -5,6 +5,7 @@
 	import com.ObjectPool.ObjectPool;
 	import flash.display.Shape;
 	import flash.errors.IOError;
+	import flash.geom.Rectangle;
 	import me.rainssong.events.SlideEvent;
 	import me.rainssong.utils.superTrace;
 	import me.rainssong.events.MyEvent;
@@ -199,20 +200,32 @@
 		
 		private function rollUpdateHandler():void
 		{
-			destroySlide(currentIndex + 2);
-			destroySlide(currentIndex - 2);
-			addSlide(currentIndex);
-			addSlide(currentIndex + 1);
-			addSlide(currentIndex - 1);
+			//destroySlide(currentIndex + 2);
+			//destroySlide(currentIndex - 2);
+			//addSlide(currentIndex);
+			//addSlide(currentIndex + 1);
+			//addSlide(currentIndex - 1);
+			
+			for (var i:int = 0; i < _slideContentArr.length;i++ )
+			{
+				if (i == currentIndex || i == currentIndex + 1 || i == currentIndex -1 )
+				addSlide(i);
+				else
+				destroySlide(i);
+			}
 			dispatchEvent(new SlideEvent(SlideEvent.ROLLING));
 		}
 		
 		
 		public function refreash():void
 		{
-			destroySlide(currentIndex + 1);
-			destroySlide(currentIndex - 1);
-			destroySlide(currentIndex);
+			for (var i:int = 0; i < _slideContentArr.length;i++ )
+			{
+				destroySlide(i);
+			}
+			//destroySlide(currentIndex + 1);
+			//destroySlide(currentIndex - 1);
+			//destroySlide(currentIndex);
 			addSlide(currentIndex);
 			slideArr[currentIndex].enable();
 			addSlide(currentIndex + 1);
@@ -315,7 +328,7 @@
 			//var point:Point = _slideArr[index].localToGlobal(new Point(_slideArr[index].x, _slideArr[index].y));
 			
 			
-			_slideArr[index] = new _slideContentArr[index]() as Slide;
+			_slideArr[index] = new Slide(_slideContentArr[index]);
 			
 			_slideContainer.addChild(_slideArr[index]);
 			//
@@ -325,11 +338,12 @@
 			
 			//_slideArr[index].addEventListener(MouseEvent.CLICK,onSlideClick)
 			
-			var _mask:Shape = new Shape();
-			_mask.graphics.beginFill(0xFFFFFF,0);
-			_mask.graphics.drawRect(0, 0, _slideWidth, _slideHeight);
-			_slideArr[index].addChild(_mask);
-			_slideArr[index].mask = _mask;
+			//var _mask:Shape = new Shape();
+			//_mask.graphics.beginFill(0xFFFFFF,0);
+			//_mask.graphics.drawRect(0, 0, _slideWidth, _slideHeight);
+			//_slideArr[index].addChild(_mask);
+			//_slideArr[index].mask = _mask;
+			_slideArr[index].scrollRect=new Rectangle(0, 0, _slideWidth, _slideHeight);
 		
 		}
 		
@@ -340,6 +354,7 @@
 			if (_slideArr[index] == null)
 				return;
 			
+			_slideContainer.removeChild(_slideArr[index]);
 			_slideArr[index].destroy();
 			_slideArr[index] = null;
 		}
@@ -373,7 +388,7 @@
 		public function get leftRollAble():Boolean
 		{
 			
-			if (_targetIndex == 0)
+			if (_targetIndex == 0 || !_slideArr[_targetIndex] ||  !_slideArr[_targetIndex - 1])
 				return false;
 			
 			var rollAble:Boolean = !_slideArr[_targetIndex].isLocked && _slideArr[_targetIndex].isLeftRollOutEnabled && _slideArr[_targetIndex - 1].isRightRollInEnabled;
@@ -383,7 +398,7 @@
 		
 		public function get rightRollAble():Boolean
 		{
-			if (_targetIndex == _slideContentArr.length - 1 || !_slideArr.length)
+			if (_targetIndex == _slideContentArr.length - 1 || !_slideArr.length || !_slideArr[_targetIndex] || !_slideArr[_targetIndex + 1])
 				return false;
 			
 			var rollAble:Boolean = !_slideArr[_targetIndex].isLocked && _slideArr[_targetIndex].isRightRollOutEnabled && _slideArr[_targetIndex + 1].isLeftRollInEnabled;
@@ -399,16 +414,11 @@
 		
 		public function set slideContentArr(value:Array):void
 		{
-			destroySlide(currentIndex + 2);
-			destroySlide(currentIndex - 2);
-			destroySlide(currentIndex);
-			destroySlide(currentIndex+1);
-			destroySlide(currentIndex-1);
-			addSlide(currentIndex);
-			addSlide(currentIndex + 1);
-			addSlide(currentIndex - 1);
+			
 			
 			_slideContentArr = value;
+			refreash();
+			
 			if (_targetIndex > _slideContentArr.length - 1)_targetIndex = _slideContentArr.length - 1;
 			rollTo(_targetIndex, 0.5);
 			superTrace("更新ContentArr");
