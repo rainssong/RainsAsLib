@@ -92,9 +92,9 @@
 		{
 			super.stopDragging();
 			
-			if (_speedX < -50 && rightRollAble)
+			if (_speedX*10+(stage.mouseX-_startX) < -_slideWidth/2 && rightRollAble)
 				rollNext();
-			else if (_speedX > 50 && leftRollAble)
+			else if (_speedX*10+(stage.mouseX-_startX) > _slideWidth/2 && leftRollAble)
 				rollPrev();
 			else
 				rollTo(_targetIndex);
@@ -126,14 +126,13 @@
 			
 			if (targetX < -_slideWidth*_targetIndex && !rightRollAble)
 			{
-			targetX = -_slideWidth * _targetIndex;
-			//_speedX = 0;
-			
+				targetX = -_slideWidth * _targetIndex;
+				//_speedX = 0;
 			}
 			if (targetX > -_slideWidth*_targetIndex && !leftRollAble )
 			{
-			targetX = -_slideWidth * _targetIndex;
-			//_speedX = 0;
+				targetX = -_slideWidth * _targetIndex;
+				//_speedX = 0;
 			}
 			
 			_slideContainer.x = targetX;
@@ -327,8 +326,10 @@
 				return;
 			//var point:Point = _slideArr[index].localToGlobal(new Point(_slideArr[index].x, _slideArr[index].y));
 			
-			
-			_slideArr[index] = new Slide(_slideContentArr[index]);
+			if (_slideContentArr[index] is Class && (new _slideContentArr[index]()) is Slide)
+				_slideArr[index] = new _slideContentArr[index]();
+			else
+				_slideArr[index] = new Slide(_slideContentArr[index]);
 			
 			_slideContainer.addChild(_slideArr[index]);
 			//

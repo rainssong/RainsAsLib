@@ -1,11 +1,14 @@
 package me.rainssong.utils
 {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.events.TransformGestureEvent;
 	import flash.text.TextField;
 	import flash.ui.Keyboard;
+	import flash.utils.setTimeout;
 	
 	/**
 	 * ...
@@ -20,8 +23,14 @@ package me.rainssong.utils
 		private static var _isWorking:Boolean;
 		public static const VERSION:String = "1.1";
 		private static const INFORMATION:String = "DebugText" + VERSION + "\nF1:Help\nF4:Run/Stop\nF5:Refreash\nF6:Hide/Show";
+		private static var _contentVec:Vector.<String> = new Vector.<String>();
 		
-		public function DebugPanel(maxLine:int = 5, traceIt:Boolean = false)
+		/**
+		 * 
+		 * @param	maxLine 最大行数
+		 * @param	traceIt 是否同步Trace
+		 */
+		public function DebugPanel(maxLine:int = 10, traceIt:Boolean = false)
 		{
 			super();
 			
@@ -38,17 +47,32 @@ package me.rainssong.utils
 			_traceIt = traceIt;
 			
 			_textField.height = 0;
+			_textField.multiline = true;
 			_textField.background = true;
-			_textField.backgroundColor = 0x000000;
-			_textField.alpha = 0.5;
+			_textField.backgroundColor = 0x444444;
+			_textField.alpha = 0.6;
 			_textField.textColor = 0xFFFFFF;
 			_textField.selectable = false;
+			
+			addEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
 			addEventListener(Event.ADDED_TO_STAGE, onAdd);
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			addEventListener(MouseEvent.MOUSE_OUT, onMouseUp);
 			addEventListener(MouseEvent.CLICK, onClick);
 			print(INFORMATION);
+		}
+		
+		private function onZoom(e:TransformGestureEvent):void
+		{
+			var target:DisplayObject = e.target as DisplayObject;
+		
+			
+			target.scaleX *= e.scaleX;
+			target.scaleX = target.scaleX < 0.3 ? 0.3 : target.scaleX;
+			target.scaleY *= e.scaleY;
+			target.scaleY = target.scaleY < 0.3 ? 0.3 : target.scaleY;
+			resize();
 		}
 		
 		public static function print(... arg):void
@@ -59,15 +83,61 @@ package me.rainssong.utils
 			var caller:String = "[" + new Error().getStackTrace().match(/[\w\/$]*\(\)/g)[1] + "]";
 			if (_traceIt)
 				trace(caller, arg);
-			_textField.appendText(arg.toString() + "\n");
 			
-			if (_textField.numLines > _maxLine)
+			_contentVec.push(arg.toString() + "\n");
+			if (_contentVec.length > _maxLine)
+				_contentVec.shift();
+			_textField.htmlText = "";
+			
+			for (var i:int = 0; i < _contentVec.length; i++)
 			{
-				_textField.replaceText(0, _textField.getLineOffset(_textField.numLines - _maxLine + 1), "");
+				_textField.htmlText = _textField.htmlText.concat(_contentVec[i]);
 			}
+			//if (_textField.numLines > _maxLine)
+			//{
+			//_textField.replaceText(0, _textField.getLineOffset(_textField.numLines - _maxLine + 1), "");
+			//_textField.setSelection(0, _textField.getLineOffset(_textField.numLines - _maxLine + 1));
+			//
+			//
+			//_textField.text = _textField.text.substr(_textField.text.indexOf(_textField.getLineText(2)));
+			//
+			//}
 			
+			resize();
+		}
+		
+		/**
+		 * 自动调整宽高位置
+		 */
+		static protected function resize():void
+		{
+			
+			
+			_textField.wordWrap = false;
+			if (_instance.stage && _textField.textWidth >= _instance.stage.stageWidth)
+			{
+				_textField.width = _instance.stage.stageWidth;
+				_textField.wordWrap = true;
+			}
+			//else if (_instance.stage && _textField.textWidth < _instance.stage.stageWidth - 20)
+			//{
+			//_textField.wordWrap = false;
+			//}
 			_textField.height = _textField.textHeight + 6;
-			_textField.width = _textField.textWidth + 6;
+			_textField.width = Math.max(_textField.textWidth + 6);
+			
+			if (!_instance.stage)
+				return;
+			if (_instance.x + _instance.width < 0)
+				_instance.x = 0;
+			if (_instance.x > _instance.stage.stageWidth)
+				_instance.x = _instance.stage.stageWidth-_instance.width;
+			if (_instance.y + _instance.height < 0)
+				_instance.y = 0;
+			if (_instance.y >_instance.stage.stageHeight)
+				_instance.y = _instance.stage.stageHeight-_instance.height;
+			
+			
 		}
 		
 		public static function replace(... arg):void
