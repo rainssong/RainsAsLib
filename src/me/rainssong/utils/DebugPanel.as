@@ -21,8 +21,8 @@ package me.rainssong.utils
 		private static var _maxLine:int;
 		private static var _traceIt:Boolean
 		private static var _isWorking:Boolean;
-		public static const VERSION:String = "1.1";
-		private static const INFORMATION:String = "DebugText" + VERSION + "\nF1:Help\nF4:Run/Stop\nF5:Refreash\nF6:Hide/Show";
+		public static const VERSION:String = "1.2";
+		private static const INFORMATION:String = "DebugPanel" + VERSION + "\nF1:Help\nF4:Run/Stop\nF5:Refreash\nF6:Hide/Show";
 		private static var _contentVec:Vector.<String> = new Vector.<String>();
 		
 		/**
