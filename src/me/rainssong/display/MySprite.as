@@ -3,8 +3,11 @@
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.net.URLLoader;
+	import flash.utils.Timer;
 	
 	/**
 	 * ...
@@ -73,9 +76,10 @@
 		
 		public function destroy():void
 		{
-			deleteVars();
+			
 			removeListeners();
 			removeChildren();
+			deleteVars();
 			//remove();
 			if (!autoDestroy && parent)
 				parent.removeChild(this);
@@ -91,6 +95,13 @@
 		{
 			for (var v:String in this)
 			{
+				if (this[v] is URLLoader)
+					URLLoader(this[v]).close();
+				if (this[v] is Loader)
+					Loader(this[v]).unloadAndStop();
+				if (this[v] is Timer)
+					Timer(this[v]).stop();
+				
 				delete this[v];
 			}
 		}
