@@ -29,6 +29,7 @@ package me.rainssong.display
 		protected function onMouseDown(e:MouseEvent):void 
 		{
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			stage.addEventListener(MouseEvent.ROLL_OUT, onMouseUp);
 			startDragging(e.stageX, e.stageY);
 			
 		}
@@ -45,6 +46,7 @@ package me.rainssong.display
 		override protected function onRemove(e:Event):void 
 		{
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			stage.removeEventListener(MouseEvent.ROLL_OUT, onMouseUp);
 			super.onRemove(e);
 		}
 		
