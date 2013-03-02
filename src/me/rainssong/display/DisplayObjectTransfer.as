@@ -14,9 +14,9 @@ package me.rainssong.display
 		static private var _loader:Loader;
 		
 		/**
-		 * String->Loader Class->new Class() BitmapData->Bitmap
+		 * DisplayObject->DisplayObject;String->Loader;Class->new Class();BitmapData->Bitmap;
 		 * @param	value
-		 * @return
+		 * @return	DisplayObject
 		 */
 		static public function transfer(value:*):DisplayObject
 		{

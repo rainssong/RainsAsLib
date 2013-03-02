@@ -6,11 +6,11 @@ package  me.rainssong.events
 	 * ...
 	 * @author rainssong
 	 */
-	public class MyEvent extends Event 
+	public class DataEvent extends Event 
 	{
 		public var  data:*;
 		
-		public function MyEvent(type:String, data:*=null,bubbles:Boolean=false,cancelable:Boolean=false) 
+		public function DataEvent(type:String, data:*=null,bubbles:Boolean=false,cancelable:Boolean=false) 
 		{
 			super(type,bubbles,cancelable);
 			this.data = data;
