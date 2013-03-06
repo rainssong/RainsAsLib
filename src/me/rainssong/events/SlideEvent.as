@@ -1,4 +1,4 @@
-package  me.rainssong.events
+﻿package  me.rainssong.events
 {
 	import flash.events.Event;
 	
@@ -6,7 +6,7 @@ package  me.rainssong.events
 	 * ...
 	 * @author rainssong
 	 */
-	public class SlideEvent extends MyEvent 
+	public class SlideEvent extends DataEvent 
 	{
 		
 		static public const ROLL_TO:String = "rollTo";

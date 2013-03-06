@@ -6,9 +6,10 @@
 	import flash.display.Shape;
 	import flash.errors.IOError;
 	import flash.geom.Rectangle;
+	import me.rainssong.events.DataEvent;
 	import me.rainssong.events.SlideEvent;
 	import me.rainssong.utils.superTrace;
-	import me.rainssong.events.MyEvent;
+
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -102,7 +103,7 @@
 			if (_speedY < -30 && Math.abs(_speedX) < 25)
 			{
 				if (!isLocked)
-					dispatchEvent(new MyEvent(SWIPE_UP));
+					dispatchEvent(new DataEvent(SWIPE_UP));
 			}
 			_speedX = 0;
 			_speedY = 0;
