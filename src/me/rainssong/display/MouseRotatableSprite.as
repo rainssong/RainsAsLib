@@ -58,7 +58,7 @@
 			_lastAngle = angle(stage.mouseX,stage.mouseY);
 			//_startAngle =  angle(stage.mouseX,stage.mouseY)-this.rotation;
 			_startAngle =  angle(stage.mouseX,stage.mouseY)-this.rotation;
-			super.startDragging(stageX,stageX);
+			super.startDragging(stageX, stageX);
 		}
 		
 		override public function onDragging():void

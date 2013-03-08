@@ -2,6 +2,7 @@
 {
 	import flash.events.Event;
 	import me.rainssong.events.DataEvent;
+	import me.rainssong.quest.VO.QuestModel;
 	
 	/**
 	 * ...
@@ -10,17 +11,18 @@
 	public class QuestEvent extends Event 
 	{
 		static public const COMPLETE:String = "complete";
-		private var _isRight:Boolean;
+
+		private var _questModel:QuestModel;
 		
-		public function QuestEvent(type:String,isRight:Boolean=false, bubbles:Boolean=false, cancelable:Boolean=false) 
+		public function QuestEvent(type:String,questModel:QuestModel, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{ 
 			super(type, bubbles, cancelable);
-			_isRight = isRight;
+			_questModel = questModel;
 		} 
 		
 		public override function clone():Event 
 		{ 
-			return new QuestEvent(type,isRight, bubbles, cancelable);
+			return new QuestEvent(type,_questModel, bubbles, cancelable);
 		} 
 		
 		public override function toString():String 
@@ -28,9 +30,9 @@
 			return formatToString("QuestEvent", "type", "bubbles", "cancelable", "eventPhase"); 
 		}
 		
-		public function get isRight():Boolean 
+		public function get questModel():QuestModel 
 		{
-			return _isRight;
+			return _questModel;
 		}
 		
 	}

@@ -15,6 +15,7 @@ package me.rainssong.quest.VO
 		private var _index:int;
 		private var _randomOrder:Boolean;
 		private var _rightAnswer:String;
+		private var _userAnswer:String;
 		public function QuestModel(index:int, title:String,rightAnswer:String, options:Vector.<String>,  minChoose:int = 1, maxChoose:int = 1,randomOrder:Boolean=false ) 
 		{
 			_index = index;
@@ -83,6 +84,31 @@ package me.rainssong.quest.VO
 			return _index;
 		}
 		
+		public function get userAnswer():String 
+		{
+			return _userAnswer;
+		}
+		
+		public function set userAnswer(value:String):void 
+		{
+			_userAnswer = formatResult(value);
+		}
+		
+		public function formatResult(str:String):String
+		{
+			var resortArr:Array = str.split("");
+			trace("old resortArr:" + resortArr);
+			resortArr.sort();
+			trace("new resortArr:" + resortArr);
+			return String(resortArr);
+		}
+		
+		private function checkAnswer(resultString:String):Boolean
+		{
+			trace(this + "标准结果" + rightAnswer + "用户答案" + formatResult(_userAnswer),_userAnswer == formatResult(rightAnswer)?true: false);
+			var isRight:Boolean=_userAnswer == formatResult(rightAnswer)?true: false;
+			return isRight;
+		}
 		
 	
 		
