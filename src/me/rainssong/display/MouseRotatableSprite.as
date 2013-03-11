@@ -58,11 +58,12 @@
 			_lastAngle = angle(stage.mouseX,stage.mouseY);
 			//_startAngle =  angle(stage.mouseX,stage.mouseY)-this.rotation;
 			_startAngle =  angle(stage.mouseX,stage.mouseY)-this.rotation;
-			super.startDragging(stageX, stageX);
+			super.startDragging(stageX, stageY);
 		}
 		
 		override public function onDragging():void
 		{
+			super.onDragging();
 			//_speedAngle *= 0.6;
 			this.rotation = angle(stage.mouseX,stage.mouseY)-_startAngle;
 			var angleDistance:Number = angle(stage.mouseX,stage.mouseY) - _lastAngle;
@@ -93,7 +94,7 @@
 		{
 			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			//stage.addEventListener(MouseEvent.MOUSE_OUT, onMouseUp);
-			startDragging(e.stageX,e.stageX);
+			startDragging(e.stageX,e.stageY);
 		}
 		
 		private function onMouseUp(e:MouseEvent):void
