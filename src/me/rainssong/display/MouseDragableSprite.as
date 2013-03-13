@@ -29,8 +29,7 @@ package me.rainssong.display
 		
 		protected function onMouseDown(e:MouseEvent):void 
 		{
-			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-			stage.addEventListener(MouseEvent.ROLL_OUT, onMouseUp);
+			
 			startDragging(e.stageX, e.stageY);
 			
 		}
@@ -56,6 +55,8 @@ package me.rainssong.display
 		{
 			
 			super.startDragging(stageX, stageY);
+			stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			stage.addEventListener(MouseEvent.ROLL_OUT, onMouseUp);
 			_speedX = 0;
 			_speedY = 0;
 		}

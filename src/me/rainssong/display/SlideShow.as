@@ -93,22 +93,23 @@
 		{
 			
 			super.stopDragging();
-			if (_speedX != 0)
-			{
-				if (_speedX * 10 + (stage.mouseX - _startX) < -_slideWidth / 2 && rightRollAble)
-					rollNext();
-				else if (_speedX * 10 + (stage.mouseX - _startX) > _slideWidth / 2 && leftRollAble)
-					rollPrev();
-				else
-					rollTo(_targetIndex);
-			}
 			
-			if (_speedY != 0)
-				if (_speedY < -30 && Math.abs(_speedX) < 25)
-				{
-					if (!isLocked)
-						dispatchEvent(new DataEvent(SWIPE_UP));
-				}
+			
+			if(_slideContainer.x - mpoint.x!=0)
+			if (_speedX * 10 + (stage.mouseX - _startX) < -_slideWidth / 2 && rightRollAble)
+				rollNext();
+			else if (_speedX * 10 + (stage.mouseX - _startX) > _slideWidth / 2 && leftRollAble)
+				rollPrev();
+			else
+				rollTo(_targetIndex);
+				
+				
+			
+			if (_speedY < -30 && Math.abs(_speedX) < 25)
+			{
+				
+					dispatchEvent(new DataEvent(SWIPE_UP));
+			}
 			_speedX = 0;
 			_speedY = 0;
 		}
@@ -117,7 +118,9 @@
 		{
 			super.onDragging();
 			
-			//忽略细微移动
+			
+			
+			//拖动超过
 			if (_slideContainer.x - mpoint.x > 5 && _slideContainer.mouseChildren)
 			{
 				_slideContainer.mouseChildren = _slideContainer.mouseEnabled = false;
