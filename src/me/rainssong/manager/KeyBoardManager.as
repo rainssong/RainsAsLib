@@ -1,4 +1,4 @@
-package
+package me.rainssong.manager
 {
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
