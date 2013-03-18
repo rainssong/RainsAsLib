@@ -3,6 +3,7 @@ package me.rainssong.manager
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	import flash.events.EventDispatcher;
+	import flash.events.FocusEvent;
 	import flash.events.IEventDispatcher;
 	import flash.events.KeyboardEvent;
 	import flash.utils.Dictionary;
@@ -11,7 +12,7 @@ package me.rainssong.manager
 	 * ...
 	 * @author Rainssong
 	 */
-	public class KeyBoardManager
+	public class KeyboardManager
 	{
 		private static var _stage:Stage;
 		private static var _keyDictionary:Dictionary=new Dictionary();
@@ -26,6 +27,7 @@ package me.rainssong.manager
 				_stage = displayObj.stage;
 				_stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 				_stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+				_stage.addEventListener(FocusEvent.FOCUS_OUT, onFocusOut);
 			}
 			else
 			{
@@ -33,12 +35,18 @@ package me.rainssong.manager
 			}
 		}
 		
+		static private function onFocusOut(e:FocusEvent):void 
+		{
+			clear();
+		}
+		
 		public static function stopListen():void
 		{
 			_keyDictionary = new Dictionary();
 			_stage = null;
 			_stage.removeEventListener(KeyboardEvent.KEY_DOWN,onKeyDown);
-			_stage.removeEventListener(KeyboardEvent.KEY_UP,onKeyUp);
+			_stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			_stage.removeEventListener(FocusEvent.FOCUS_OUT, onFocusOut);
 		}
 		
 		public static function regFunction(fun:Function, keyCode:uint):void
@@ -46,7 +54,16 @@ package me.rainssong.manager
 			if(_funDictionary[keyCode]){
 				throw new Error("重复对"+String(keyCode)+"进行按键注册方法可能造成管理混乱，请将同一按键执行的动作放置于一个统一的方法中");
 			}
+			if (!stage)
+			{
+				throw new Error("start listen first!");
+			}
 			_funDictionary[keyCode] = fun;
+		}
+		
+		public static function unregFunction(keyCode:uint):void
+		{
+			_funDictionary[keyCode] = null;
 		}
 		
 		
@@ -68,12 +85,9 @@ package me.rainssong.manager
 			_keyDictionary[e.keyCode] = false;
 		}
 		
-		public function clear(keyCode:uint=0):void
+		public static function clear(keyCode:uint=0):void
 		{
-			if(keyCode>0)
-				_keyDictionary[keyCode] = false;
-			else
-					_keyDictionary = new Dictionary();
+			_keyDictionary = new Dictionary();
 		}
 		
 		
