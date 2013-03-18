@@ -12,6 +12,7 @@
 	/**
 	 * ...
 	 * @author Rainssong
+	 * Can self destroy when removed from stage
 	 */
 	public class MySprite extends Sprite implements IView
 	{

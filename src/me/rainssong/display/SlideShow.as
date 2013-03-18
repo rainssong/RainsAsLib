@@ -221,6 +221,8 @@
 					destroySlide(i);
 			}
 			dispatchEvent(new SlideEvent(SlideEvent.ROLLING));
+			
+			
 		}
 		
 		public function refreash():void
@@ -421,6 +423,7 @@
 			
 			if (_targetIndex > _slideContentArr.length - 1)
 				_targetIndex = _slideContentArr.length - 1;
+				
 			rollTo(_targetIndex, 0.5);
 			superTrace("更新ContentArr");
 		}
