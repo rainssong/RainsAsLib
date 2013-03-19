@@ -94,21 +94,18 @@
 			
 			super.stopDragging();
 			
-			
-			if(_slideContainer.x - mpoint.x!=0)
-			if (_speedX * 10 + (stage.mouseX - _startX) < -_slideWidth / 2 && rightRollAble)
-				rollNext();
-			else if (_speedX * 10 + (stage.mouseX - _startX) > _slideWidth / 2 && leftRollAble)
-				rollPrev();
-			else
-				rollTo(_targetIndex);
-				
-				
+			//if (_slideContainer.x - mpoint.x != 0)
+				if (_speedX * 10 + (stage.mouseX - _startX) < -_slideWidth / 2)
+					rollNext();
+				else if (_speedX * 10 + (stage.mouseX - _startX) > _slideWidth / 2)
+					rollPrev();
+				else
+					rollTo(_targetIndex);
 			
 			if (_speedY < -30 && Math.abs(_speedX) < 25)
 			{
 				
-					dispatchEvent(new DataEvent(SWIPE_UP));
+				dispatchEvent(new DataEvent(SWIPE_UP));
 			}
 			_speedX = 0;
 			_speedY = 0;
@@ -117,8 +114,6 @@
 		override public function onDragging():void
 		{
 			super.onDragging();
-			
-			
 			
 			//拖动超过
 			if (_slideContainer.x - mpoint.x > 5 && _slideContainer.mouseChildren)
@@ -221,8 +216,7 @@
 					destroySlide(i);
 			}
 			dispatchEvent(new SlideEvent(SlideEvent.ROLLING));
-			
-			
+		
 		}
 		
 		public function refreash():void
@@ -423,7 +417,7 @@
 			
 			if (_targetIndex > _slideContentArr.length - 1)
 				_targetIndex = _slideContentArr.length - 1;
-				
+			
 			rollTo(_targetIndex, 0.5);
 			superTrace("更新ContentArr");
 		}
