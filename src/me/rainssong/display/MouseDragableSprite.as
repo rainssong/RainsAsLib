@@ -39,7 +39,6 @@ package me.rainssong.display
 			super.stopDragging();
 			if(stage)
  			{
-				stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 				stopDragging();
 			}
 		}
@@ -77,8 +76,8 @@ package me.rainssong.display
 		{
 			super.stopDragging();
 			
-			stage.removeEventListener(MouseEvent.MOUSE_UP, stopDragging);
-		
+			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			stage.removeEventListener(MouseEvent.ROLL_OUT, onMouseUp);
 		}
 		
 		

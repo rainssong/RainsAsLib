@@ -1,4 +1,4 @@
-﻿package  me.rainssong.display
+﻿package me.rainssong.display
 {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
@@ -18,9 +18,8 @@
 	 * ...
 	 * @author rainssong
 	 */
-	public dynamic class Slide extends MyMovieClip implements ISlide 
+	public dynamic class Slide extends MyMovieClip implements ISlide
 	{
-		
 		
 		protected var _isLeftRollInEnabled:Boolean = true;
 		protected var _isRightRollInEnabled:Boolean = true;
@@ -28,33 +27,52 @@
 		protected var _isRightRollOutEnabled:Boolean = true;
 		protected var _isLocked:Boolean = false;
 		protected var _example:DisplayObject;
+		protected var _contentWidth:int;
+		protected var _contentHeight:int;
 		
-		public function Slide(value:*=null) 
+		public function Slide(contentWidth:int=1024, contentHeight:int=768,content:* = null )
 		{
 			super();
 			
-			if(value!=null)
-				reload(value);
+			_contentWidth = contentWidth;
+			_contentHeight = contentHeight;
+			
+			this.graphics.beginFill(0xFFFFFF);
+			this.graphics.drawRect(0, 0, width, height);
+			
+			
+			if (content != null)
+				reload(content);
 		}
-
-		public function reload(value:*):void
+		
+		public function reload(content:*):void
 		{
 			unload();
 			
-			addChild(_example = DisplayObjectTransfer.transfer(value));
+			addChild(_example = DisplayObjectTransfer.transfer(content));
 			_example.addEventListener(SlideEvent.LOCK, lock);
 			_example.addEventListener(SlideEvent.UNLOCK, unlock);
 			
+			if (_example is Bitmap)
+			{
+				Bitmap(_example).width = _contentWidth;
+				Bitmap(_example).height = _contentHeight;
+				
+				Bitmap(_example).scaleX = Bitmap(_example).scaleY = Math.min(Bitmap(_example).scaleX, Bitmap(_example).scaleY);
+				
+				Bitmap(_example).x = _contentWidth / 2 - Bitmap(_example).width / 2;
+				Bitmap(_example).y = _contentHeight / 2 - Bitmap(_example).height / 2;
+			}
 		}
-
+		
 		public function unload():void
 		{
 			if (_example is Loader)
-			Loader(_example).unloadAndStop();
+				Loader(_example).unloadAndStop();
 			else if (_example is MovieClip)
-			MovieClip(_example).stop();
+				MovieClip(_example).stop();
 			else if (_example is Bitmap)
-			Bitmap(_example).bitmapData.dispose();
+				Bitmap(_example).bitmapData.dispose();
 			
 			if (_example && _example.parent)
 			{
@@ -63,17 +81,17 @@
 			}
 		}
 		
-		public function lock(e:SlideEvent=null):void
+		public function lock(e:SlideEvent = null):void
 		{
 			_isLocked = true;
 		}
 		
-		public function unlock(e:SlideEvent=null):void
+		public function unlock(e:SlideEvent = null):void
 		{
 			_isLocked = false;
 		}
 		
-		override public function enable():void 
+		override public function enable():void
 		{
 			super.enable();
 			
@@ -81,14 +99,14 @@
 				MovieClip(_example).play();
 		}
 		
-		override public function disable():void 
+		override public function disable():void
 		{
 			super.disable();
 			if (_example is MovieClip)
 				MovieClip(_example).gotoAndStop(1);
 		}
 		
-		override public function destroy():void 
+		override public function destroy():void
 		{
 			unload();
 			super.destroy();
@@ -96,36 +114,34 @@
 		
 		public function get hasContent():Boolean
 		{
-			return _example?true: false;
+			return _example ? true : false;
 		}
 		
-		public function get isLeftRollInEnabled():Boolean 
+		public function get isLeftRollInEnabled():Boolean
 		{
 			return _isLeftRollInEnabled;
 		}
 		
-		public function get isRightRollInEnabled():Boolean 
+		public function get isRightRollInEnabled():Boolean
 		{
 			return _isRightRollInEnabled;
 		}
 		
-		public function get isLeftRollOutEnabled():Boolean 
+		public function get isLeftRollOutEnabled():Boolean
 		{
 			return _isLeftRollOutEnabled;
 		}
 		
-		public function get isRightRollOutEnabled():Boolean 
+		public function get isRightRollOutEnabled():Boolean
 		{
 			return _isRightRollOutEnabled;
 		}
 		
-		public function get isLocked():Boolean 
+		public function get isLocked():Boolean
 		{
 			return _isLocked;
 		}
-		
-		
-		
+	
 	}
 
 }
