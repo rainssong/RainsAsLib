@@ -37,8 +37,8 @@
 			_contentWidth = contentWidth;
 			_contentHeight = contentHeight;
 			
-			this.graphics.beginFill(0xFFFFFF);
-			this.graphics.drawRect(0, 0, width, height);
+			//this.graphics.beginFill(0xFFFFFF);
+			//this.graphics.drawRect(0, 0, width, height);
 			
 			
 			if (content != null)
@@ -53,16 +53,16 @@
 			_example.addEventListener(SlideEvent.LOCK, lock);
 			_example.addEventListener(SlideEvent.UNLOCK, unlock);
 			
-			if (_example is Bitmap)
-			{
-				Bitmap(_example).width = _contentWidth;
-				Bitmap(_example).height = _contentHeight;
-				
-				Bitmap(_example).scaleX = Bitmap(_example).scaleY = Math.min(Bitmap(_example).scaleX, Bitmap(_example).scaleY);
-				
-				Bitmap(_example).x = _contentWidth / 2 - Bitmap(_example).width / 2;
-				Bitmap(_example).y = _contentHeight / 2 - Bitmap(_example).height / 2;
-			}
+			//if (_example is Bitmap)
+			//{
+				//Bitmap(_example).width = _contentWidth;
+				//Bitmap(_example).height = _contentHeight;
+				//
+				//Bitmap(_example).scaleX = Bitmap(_example).scaleY = Math.min(Bitmap(_example).scaleX, Bitmap(_example).scaleY);
+				//
+				//Bitmap(_example).x = _contentWidth / 2 - Bitmap(_example).width / 2;
+				//Bitmap(_example).y = _contentHeight / 2 - Bitmap(_example).height / 2;
+			//}
 		}
 		
 		public function unload():void

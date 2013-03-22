@@ -54,7 +54,7 @@ package me.rainssong.manager
 			if(_funDictionary[keyCode]){
 				throw new Error("重复对"+String(keyCode)+"进行按键注册方法可能造成管理混乱，请将同一按键执行的动作放置于一个统一的方法中");
 			}
-			if (!stage)
+			if (!_stage)
 			{
 				throw new Error("start listen first!");
 			}
