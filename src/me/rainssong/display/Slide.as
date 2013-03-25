@@ -3,10 +3,13 @@
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Graphics;
 	import flash.display.Loader;
 	import flash.display.MovieClip;
+	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.net.URLRequest;
+	import flash.utils.setTimeout;
 	import me.rainssong.events.SlideEvent;
 	import me.rainssong.utils.superTrace;
 	
@@ -29,20 +32,23 @@
 		protected var _example:DisplayObject;
 		protected var _contentWidth:int;
 		protected var _contentHeight:int;
+		protected var _bg:Sprite=new Sprite()
 		
-		public function Slide(contentWidth:int=1024, contentHeight:int=768,content:* = null )
+		public function Slide(content:* = null, contentWidth:int = 1024, contentHeight:int = 768)
 		{
 			super();
 			
 			_contentWidth = contentWidth;
 			_contentHeight = contentHeight;
 			
-			//this.graphics.beginFill(0xFFFFFF);
-			//this.graphics.drawRect(0, 0, width, height);
+			_bg.graphics.beginFill(0xFFFFFF);
+			_bg.graphics.drawRect(0, 0, contentWidth, contentHeight);
 			
+			addChild(_bg);
 			
 			if (content != null)
 				reload(content);
+		
 		}
 		
 		public function reload(content:*):void
@@ -53,16 +59,29 @@
 			_example.addEventListener(SlideEvent.LOCK, lock);
 			_example.addEventListener(SlideEvent.UNLOCK, unlock);
 			
-			//if (_example is Bitmap)
-			//{
-				//Bitmap(_example).width = _contentWidth;
-				//Bitmap(_example).height = _contentHeight;
-				//
-				//Bitmap(_example).scaleX = Bitmap(_example).scaleY = Math.min(Bitmap(_example).scaleX, Bitmap(_example).scaleY);
-				//
-				//Bitmap(_example).x = _contentWidth / 2 - Bitmap(_example).width / 2;
-				//Bitmap(_example).y = _contentHeight / 2 - Bitmap(_example).height / 2;
-			//}
+			if (_example is Loader)
+			{
+				Loader(_example).contentLoaderInfo.addEventListener(Event.COMPLETE, resize);
+			}
+		}
+		
+		private function resize(e:Event = null):void
+		{
+			
+			DisplayObject(_example).width = _contentWidth;
+			DisplayObject(_example).height = _contentHeight;
+			
+			DisplayObject(_example).scaleX = DisplayObject(_example).scaleY = Math.min(DisplayObject(_example).scaleX, DisplayObject(_example).scaleY);
+			
+			DisplayObject(_example).x = _contentWidth / 2 - DisplayObject(_example).width / 2;
+			DisplayObject(_example).y = _contentHeight / 2 - DisplayObject(_example).height / 2;
+		
+		}
+		
+		override protected function onAdd(e:Event = null):void
+		{
+			super.onAdd(e);
+		
 		}
 		
 		public function unload():void
@@ -97,6 +116,7 @@
 			
 			if (_example is MovieClip)
 				MovieClip(_example).play();
+		
 		}
 		
 		override public function disable():void
@@ -104,6 +124,7 @@
 			super.disable();
 			if (_example is MovieClip)
 				MovieClip(_example).gotoAndStop(1);
+		
 		}
 		
 		override public function destroy():void

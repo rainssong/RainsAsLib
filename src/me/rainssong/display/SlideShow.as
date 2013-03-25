@@ -327,7 +327,7 @@
 			if (_slideContentArr[index] is Class && (new _slideContentArr[index]()) is Slide)
 				_slideArr[index] = new _slideContentArr[index]();
 			else
-				_slideArr[index] = new Slide(_slideContentArr[index]);
+				_slideArr[index] = new Slide(_slideContentArr[index],_slideWidth,_slideHeight);
 			
 			_slideContainer.addChild(_slideArr[index]);
 			//
