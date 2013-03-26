@@ -1,7 +1,7 @@
 package me.rainssong.events
 {
 	import flash.events.Event;
-	import me.rainssong.events.MyEvent;
+	import me.rainssong.events.DataEvent;
 	
 	/**
 	 * ...
@@ -24,7 +24,6 @@ package me.rainssong.events
 		public function GameEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
 		{
 			super(type, bubbles, cancelable);
-		
 		}
 		
 		public override function clone():Event
