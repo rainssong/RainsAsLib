@@ -1,6 +1,7 @@
 package me.rainssong.utils
 {
 	import flash.utils.Dictionary;
+	import me.rainssong.manager.EventBus;
 	
 	/**
 	 * ...
@@ -19,6 +20,11 @@ package me.rainssong.utils
 		{
 			_dictionary[Type] ||= new Type();
 			return _dictionary[Type] as Type;
+		}
+		
+		public static function get eventBus():EventBus
+		{
+			return getSingleton(EventBus);
 		}
 	
 	}
