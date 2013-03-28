@@ -7,6 +7,7 @@ package me.rainssong.application
 	import flash.display.Sprite;
 	import flash.net.SharedObject;
 	import flash.net.URLLoader;
+	import flash.system.Capabilities;
 	import flash.utils.getDefinitionByName;
 
 
@@ -74,6 +75,16 @@ package me.rainssong.application
 		public static function get RELEAS_MODE():Boolean
 		{
 			return !DEBUG_MODE;
+		}
+		
+		public static function get WEB_MODE():Boolean 
+		{
+			return Capabilities.playerType == "ActiveX" || Capabilities.playerType == "PlugIn";
+		}
+		
+		public static function get PLAYER_MODE():Boolean 
+		{
+			return Capabilities.playerType == "External" || Capabilities.playerType == "StandAlone";
 		}
 		
 		static public function get lastVersion():String 

@@ -5,9 +5,10 @@ package me.rainssong.utils
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
-	import flash.events.TransformGestureEvent;
+	
 	import flash.text.TextField;
 	import flash.ui.Keyboard;
+	import flash.utils.getDefinitionByName;
 	import flash.utils.setTimeout;
 	
 	/**
@@ -24,6 +25,7 @@ package me.rainssong.utils
 		public static const VERSION:String = "1.2";
 		private static const INFORMATION:String = "DebugPanel" + VERSION + "\nF1:Help\nF4:Run/Stop\nF5:Refreash\nF6:Hide/Show";
 		private static var _contentVec:Vector.<String> = new Vector.<String>();
+		public static var TransformGestureEvent:Class
 		
 		/**
 		 * 
@@ -54,6 +56,8 @@ package me.rainssong.utils
 			_textField.textColor = 0xFFFFFF;
 			_textField.selectable = false;
 			
+			TransformGestureEvent = getDefinitionByName("flash.events.TransformGestureEvent") as Class;
+			
 			addEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
 			addEventListener(Event.ADDED_TO_STAGE, onAdd);
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -63,7 +67,7 @@ package me.rainssong.utils
 			print(INFORMATION);
 		}
 		
-		private function onZoom(e:TransformGestureEvent):void
+		private function onZoom(e:*):void
 		{
 			var target:DisplayObject = e.target as DisplayObject;
 		
