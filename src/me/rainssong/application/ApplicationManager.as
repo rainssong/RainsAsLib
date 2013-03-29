@@ -80,6 +80,7 @@ package me.rainssong.application
 		public static function get WEB_MODE():Boolean 
 		{
 			return Capabilities.playerType == "ActiveX" || Capabilities.playerType == "PlugIn";
+			//return true;
 		}
 		
 		public static function get PLAYER_MODE():Boolean 
