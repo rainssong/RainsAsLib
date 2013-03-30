@@ -1,4 +1,4 @@
-package me.rainssong.utils
+package me.rainssong.manager
 {
 	import flash.utils.Dictionary;
 	import me.rainssong.manager.EventBus;
