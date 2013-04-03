@@ -4,8 +4,10 @@
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import me.rainssong.utils.superTrace;
+	import me.rainssong.display.MyMovieClip;
 	
-	public class MyRadioBtn extends MovieClip {
+	public class MyRadioBtn extends MyMovieClip {
 		
 		
 		private var _groupName:String;
@@ -32,6 +34,7 @@
 		
 		private function selectHandler(e:Event):void 
 		{
+			
 			if (MyRadioButtonGroup.selection != this)
 			{
 				unselect();

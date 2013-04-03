@@ -4,58 +4,7 @@ package me.rainssong.math
 	
 	public final class MathCore
 	{
-		/**
-		 * Randomize an Array/Vector
-		 * @param arr Array or Vector
-		 * @return Randomized Array/Vector
-		 */
 		
-		public static function getRandomizedObject(arr:Object):Object
-		{
-			var outputArr:Object = arr.slice();
-			var i:int = outputArr.length;
-			var temp:*;
-			var indexA:int;
-			var indexB:int;
-			
-			while (i)
-			{
-				indexA = i - 1;
-				indexB = Math.floor(Math.random() * i);
-				i--;
-				if (indexA == indexB)
-					continue;
-				temp = outputArr[indexA];
-				outputArr[indexA] = outputArr[indexB];
-				outputArr[indexB] = temp;
-			}
-			
-			return outputArr;
-		}
-		
-		public static function getRandomizedArray(arr:Array):Array
-		{
-			return getRandomizedObject(arr) as Array;
-		}
-		
-		public static function vectorToArray(vector:*):Array
-		{
-			var array:Array = new Array();
-			var callback:Function = function(item:*, index:int, vector:*):Boolean
-			{
-				array.push(item);
-				return true;
-			}
-			vector.every(callback);
-			return array;
-		}
-		
-
-		public static function arrayToVector(array:Array):Object
-		{
-			//vector.push.apply(null, array);
-			return { };
-		}
 		
 		public static function getRandomNumber(min:Number, max:Number):Number
 		{

@@ -16,6 +16,8 @@ package me.rainssong.quest.VO
 		private var _randomOrder:Boolean;
 		private var _rightAnswer:String;
 		private var _userAnswer:String;
+		private var _userSelection:Vector.<Boolean> 
+	
 		public function QuestModel(index:int, title:String,rightAnswer:String, options:Vector.<String>,  minChoose:int = 1, maxChoose:int = 1,randomOrder:Boolean=false ) 
 		{
 			_index = index;
@@ -26,6 +28,7 @@ package me.rainssong.quest.VO
 			_minChoose = minChoose;
 			_maxChoose = maxChoose;
 			_randomOrder = randomOrder;
+			_userSelection	= new Vector.<Boolean>(_options.length);
 		}
 		
 		public function get title():String 

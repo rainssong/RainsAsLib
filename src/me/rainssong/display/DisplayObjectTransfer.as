@@ -5,6 +5,7 @@ package me.rainssong.display
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.net.URLRequest;
+	import flash.system.LoaderContext;
 	/**
 	 * ...
 	 * @author Rainssong
@@ -25,7 +26,7 @@ package me.rainssong.display
 			else if (value is String)
 			{
 				_loader = new Loader();
-				_loader.load(new URLRequest(value))
+				_loader.load(new URLRequest(value));
 				return _loader;
 			}
 			else if (value is Class)

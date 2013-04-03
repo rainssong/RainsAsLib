@@ -16,5 +16,4 @@
 		public static var dispatcher:EventDispatcher = new EventDispatcher();
 		
 	}
-
 }

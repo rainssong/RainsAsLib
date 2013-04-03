@@ -41,7 +41,7 @@
 			_contentWidth = contentWidth;
 			_contentHeight = contentHeight;
 			
-			_bg.graphics.beginFill(0xFFFFFF);
+			_bg.graphics.beginFill(0xFFFFFF,0);
 			_bg.graphics.drawRect(0, 0, contentWidth, contentHeight);
 			
 			addChild(_bg);
@@ -70,9 +70,7 @@
 			
 			DisplayObject(_example).width = _contentWidth;
 			DisplayObject(_example).height = _contentHeight;
-			
 			DisplayObject(_example).scaleX = DisplayObject(_example).scaleY = Math.min(DisplayObject(_example).scaleX, DisplayObject(_example).scaleY);
-			
 			DisplayObject(_example).x = _contentWidth / 2 - DisplayObject(_example).width / 2;
 			DisplayObject(_example).y = _contentHeight / 2 - DisplayObject(_example).height / 2;
 		
@@ -124,7 +122,6 @@
 			super.disable();
 			if (_example is MovieClip)
 				MovieClip(_example).gotoAndStop(1);
-		
 		}
 		
 		override public function destroy():void
