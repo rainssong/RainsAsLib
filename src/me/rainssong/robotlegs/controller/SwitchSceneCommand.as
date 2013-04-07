@@ -1,9 +1,10 @@
-package cn.edoctor.ariceptEda.controller
+package me.rainssong.robotlegs.controller
 {
 	
-	import cn.edoctor.ariceptEda.events.SwitchSceneEvent;
+	
 	import com.greensock.easing.Cubic;
 	import com.greensock.TweenMax;
+	import me.rainssong.events.SwitchSceneEvent;
 	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;

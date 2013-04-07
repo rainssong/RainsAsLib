@@ -12,7 +12,7 @@ package me.rainssong.manager
 	 * ...
 	 * @author Rainssong
 	 */
-	public class KeyboardManager
+	public class KeyBoardManager
 	{
 		private static var _stage:Stage;
 		private static var _keyDictionary:Dictionary=new Dictionary();
