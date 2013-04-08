@@ -1,7 +1,7 @@
-package me.rainssong.quest 
+﻿package me.rainssong.quest 
 {
 
-	import me.rainssong.math.MathCore;
+	import me.rainssong.math.*;
 	import me.rainssong.quest.VO.QuestModel;
 	
 	/**
@@ -14,7 +14,7 @@ package me.rainssong.quest
 		private var _numQuests:int;
 		private var _questArr:Array
 		private const _isRandom:Boolean = true;
-		private var _randomOrderArr:Vector.<int>;
+		private var _randomOrderArr:Array;
 		
 		public function XmlQuestManager(xml:XML) 
 		{
@@ -24,7 +24,8 @@ package me.rainssong.quest
 			//_numQuests = xmlData.quest.length();
 			
 			createQuests();
-			_randomOrderArr = MathCore.getRandomizedObject((MathCore.getIntVector(0, _questArr.length - 1))) as Vector.<int>;
+			//_randomOrderArr = MathCore.getRandomizedArray((MathCore.getIntVector(0, _questArr.length - 1))) as Vector.<int>;
+			_randomOrderArr= ArrayCore.getRandomizedArray(ArrayCore.getIntArray(0, _questArr.length - 1));
 		}
 		
 		protected function createQuests():void 
@@ -49,7 +50,7 @@ package me.rainssong.quest
 			var maxChoose:int = _xml.quest[index].@maxChoose?_xml.quest[index].@maxChoose:1;
 			var randomOrder:Boolean=_xml.quest[index].@random=="true"?true:false;
 			var rightAnswer:String = _xml.quest[index].@key.toString();
-			var questModel:QuestModel = new QuestModel(index,title,rightAnswer, options, minChoose, maxChoose,randomOrder);
+			var questModel:QuestModel = new QuestModel(index,title, ArrayCore.vectorToArray(options),rightAnswer, minChoose, maxChoose,randomOrder);
 			return questModel;
 		}
 		

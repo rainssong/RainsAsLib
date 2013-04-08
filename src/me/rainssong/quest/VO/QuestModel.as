@@ -1,5 +1,6 @@
 package me.rainssong.quest.VO 
 {
+	import me.rainssong.math.ArrayCore;
 	/**
 	 * ...
 	 * @author rainsong
@@ -16,19 +17,21 @@ package me.rainssong.quest.VO
 		private var _randomOrder:Boolean;
 		private var _rightAnswer:String;
 		private var _userAnswer:String;
-		private var _userSelection:Vector.<Boolean> 
+		//private var _userIntactAnswer:Vector.<String>;
+		//private var _userSelection:Vector.<Boolean> ;
+		
 	
-		public function QuestModel(index:int, title:String,rightAnswer:String, options:Vector.<String>,  minChoose:int = 1, maxChoose:int = 1,randomOrder:Boolean=false ) 
+		public function QuestModel(index:int, title:String, options:Array,rightAnswer:String="" , minChoose:int = 1, maxChoose:int = 1,randomOrder:Boolean=false ) 
 		{
 			_index = index;
 			_title = title;
 			_rightAnswer = rightAnswer;
-			_options = options;
+			_options = Vector.<String>(ArrayCore.arrayToVector(options));
 			_isLast = isLast;
 			_minChoose = minChoose;
 			_maxChoose = maxChoose;
 			_randomOrder = randomOrder;
-			_userSelection	= new Vector.<Boolean>(_options.length);
+			//_userSelection	= new Vector.<Boolean>(_options.length);
 		}
 		
 		public function get title():String 
@@ -95,14 +98,27 @@ package me.rainssong.quest.VO
 		public function set userAnswer(value:String):void 
 		{
 			_userAnswer = formatResult(value);
+			
+		}
+		
+		public function get userIntactAnswer():Vector.<String>
+		{
+			var vec:Vector.<String> = new Vector.<String>();
+			for (var i:int = 0; i < _options.length; i++ )
+			{
+				if (_userAnswer.indexOf(ArrayCore.UPPER_CASE_LETTER_ARR[i]) >= 0)
+				{
+					vec.push(_options[i]);
+				}
+			}
+			
+			return vec;
 		}
 		
 		public function formatResult(str:String):String
 		{
-			var resortArr:Array = str.split("");
-			trace("old resortArr:" + resortArr);
+			var resortArr:Array = str.toUpperCase().split("");
 			resortArr.sort();
-			trace("new resortArr:" + resortArr);
 			return String(resortArr);
 		}
 		

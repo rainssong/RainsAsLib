@@ -22,7 +22,7 @@ package me.rainssong.application
 		
 		public static var rotateable:Boolean=true;
 		public static var rotateDefaultable:Boolean=true;
-		public static var rotateRigthable:Boolean=true;
+		public static var rotateRightable:Boolean=true;
 		public static var rotateLeftable:Boolean=true;
 		public static var rotateUpsideDownable:Boolean=true;
 		
@@ -68,7 +68,7 @@ package me.rainssong.application
 					if(!rotateDefaultable || !rotateable)e.preventDefault();
 					break;
 				case StageOrientation.ROTATED_RIGHT: 
-					if(!rotateRigthable || !rotateable)e.preventDefault();
+					if(!rotateRightable || !rotateable)e.preventDefault();
 					break;
 				case StageOrientation.ROTATED_LEFT:
 					if(!rotateLeftable || !rotateable)e.preventDefault();
