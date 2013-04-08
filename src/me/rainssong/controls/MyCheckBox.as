@@ -18,7 +18,7 @@
 			// constructor code
 			stop();
 			try{
-				this["labelText"].autoSize = TextFieldAutoSize.LEFT;
+				this["labelTF"].autoSize = TextFieldAutoSize.LEFT;
 			}
 			catch (e:Error) {
 				
@@ -70,9 +70,9 @@
 
 		public function get label():String
 		{
-			if (["labelText"])
+			if (["labelTF"])
 			{
-				return this["labelText"].text;
+				return this["labelTF"].text;
 			}
 			else
 			{
@@ -82,9 +82,9 @@
 
 		public function set label(content:String):void
 		{
-			if (["labelText"])
+			if (["labelTF"])
 			{
-				this["labelText"].text = content;
+				this["labelTF"].text = content;
 			}
 
 		}
