@@ -14,9 +14,18 @@ package  me.rainssong.events
 		{
 			super(type,bubbles,cancelable);
 			this.data = data;
-			
 		}
 		
+		public override function clone():Event
+		{
+			return new DataEvent(type,data, bubbles, cancelable);
+		}
+		
+		public override function toString():String
+		{
+			
+			return formatToString("DataEvent", "type","data", "bubbles", "cancelable", "eventPhase");
+		}
 	}
 
 }

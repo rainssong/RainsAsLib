@@ -58,6 +58,11 @@ package me.rainssong.math
 		{
 			return degree * Math.PI / 180;
 		}
+		
+		public static function randomSelect(...arg):*
+		{
+			return arg[int(arg.length * Math.random())];
+		}
 	
 	}
 }

@@ -7,7 +7,7 @@ package me.rainssong.events
 	 * ...
 	 * @author Rainssong
 	 */
-	public class GameEvent extends Event
+	public class GameEvent extends ApplicationEvent
 	{
 		static public const GAME_START:String = "gameStart";
 		
@@ -21,19 +21,19 @@ package me.rainssong.events
 		static public const RESET:String = "reset";
 	
 		
-		public function GameEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
+		public function GameEvent(type:String,data:*=null, bubbles:Boolean = false, cancelable:Boolean = false)
 		{
-			super(type, bubbles, cancelable);
+			super(type,data, bubbles, cancelable);
 		}
 		
 		public override function clone():Event
 		{
-			return new GameEvent(type, bubbles, cancelable);
+			return new GameEvent(type,data, bubbles, cancelable);
 		}
 		
 		public override function toString():String
 		{
-			return formatToString("GameEvent", "type", "bubbles", "cancelable", "eventPhase");
+			return formatToString("GameEvent","data", "type", "bubbles", "cancelable", "eventPhase");
 		}
 	
 	}

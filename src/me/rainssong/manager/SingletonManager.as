@@ -1,6 +1,8 @@
 package me.rainssong.manager
 {
 	import br.com.stimuli.loading.BulkLoader;
+	import com.vsdevelop.net.SharedManage;
+	import flash.net.SharedObject;
 	import flash.utils.Dictionary;
 	import me.rainssong.manager.EventBus;
 	
@@ -31,6 +33,13 @@ package me.rainssong.manager
 		public static function get bulkLoader():BulkLoader
 		{
 			return getSingleton(BulkLoader) as BulkLoader;
+		}
+		
+		public static function get sharedObject():SharedObject
+		{
+			return SharedObject.getLocal("");
+			
+			
 		}
 	
 	}

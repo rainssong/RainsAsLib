@@ -6,7 +6,7 @@ package me.rainssong.events
 	 * ...
 	 * @author Rainssong
 	 */
-	public class ApplicationEvent extends Event 
+	public class ApplicationEvent extends DataEvent 
 	{
 		
 		static public const INIT:String = "init";
@@ -14,9 +14,20 @@ package me.rainssong.events
 		static public const LOGOUT:String = "Logout";
 		static public const EXIT:String = "exit";
 		
-		public function ApplicationEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) 
+		public function ApplicationEvent(type:String,data:*=null, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{
-			super(type, bubbles, cancelable);
+			super(type,data, bubbles, cancelable);
+		}
+		
+		public override function clone():Event
+		{
+			return new ApplicationEvent(type,data, bubbles, cancelable);
+		}
+		
+		public override function toString():String
+		{
+			
+			return formatToString("ApplicationEvent", "type","data", "bubbles", "cancelable", "eventPhase");
 		}
 		
 	}
