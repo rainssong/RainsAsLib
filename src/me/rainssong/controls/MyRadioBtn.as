@@ -70,16 +70,16 @@
 		
 		public function get label():String
 		{
-			if(this["labelText"])
-			return this["labelText"].text;
+			if(this["labelTF"])
+			return this["labelTF"].text;
 			
 			return "";
 		}
 		
 		public function set label(content:String):void
 		{
-			if(this["labelText"])
-			this["labelText"].text=content;
+			if(this["labelTF"])
+			this["labelTF"].text=content;
 		}
 	}
 	

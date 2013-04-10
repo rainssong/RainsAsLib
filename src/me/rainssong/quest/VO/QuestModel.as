@@ -119,7 +119,8 @@ package me.rainssong.quest.VO
 		{
 			var resortArr:Array = str.toUpperCase().split("");
 			resortArr.sort();
-			return String(resortArr);
+			
+			return resortArr.join("");
 		}
 		
 		private function checkAnswer(resultString:String):Boolean
