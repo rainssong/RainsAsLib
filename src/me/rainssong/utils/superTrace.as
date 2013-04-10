@@ -1,5 +1,6 @@
 package me.rainssong.utils
 {
+	import flash.system.Capabilities;
 	/**
 	 * ...
 	 * @author Rainssong
@@ -7,15 +8,11 @@ package me.rainssong.utils
 	
 	public function superTrace(... args):void
 	{
-		try
+		if (Capabilities.isDebugger)
 		{
 			var e:Error = new Error();
 			var caller:String = "[" + e.getStackTrace().match(/[\w\/$]*\(\)/g)[1] + "]";
 			trace(caller, args);
-		}
-		catch (e:Error)
-		{
-			
 		}
 	}
 }

@@ -23,7 +23,7 @@ package  me.rainssong.system
 		
 		static public function get isIOS():Boolean
 		{
-			if (Capabilities.os.match("iPhone"))
+			if (Capabilities.os.match("iPhone") || Capabilities.os.match("iPad") )
 				return true;
 			else return false;
 			
