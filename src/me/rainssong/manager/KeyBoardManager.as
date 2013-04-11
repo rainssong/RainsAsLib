@@ -6,6 +6,7 @@ package me.rainssong.manager
 	import flash.events.FocusEvent;
 	import flash.events.IEventDispatcher;
 	import flash.events.KeyboardEvent;
+	import flash.ui.Keyboard;
 	import flash.utils.Dictionary;
 	
 	/**
@@ -37,7 +38,7 @@ package me.rainssong.manager
 		
 		static private function onFocusOut(e:FocusEvent):void 
 		{
-			clear();
+			allKeyUp();
 		}
 		
 		public static function stopListen():void
@@ -65,16 +66,30 @@ package me.rainssong.manager
 		{
 			_funDictionary[keyCode] = null;
 		}
+		public static function unregAllFunction():void
+		{
+			_funDictionary = new Dictionary();
+		}
 		
 		
 		public static function keyIsDown(keyCode:uint):Boolean
 		{
 			return _keyDictionary[keyCode]?true:false;
-			
+		}
+		
+		public static function keyUp(keyCode:uint):void
+		{
+			_keyDictionary[keyCode] = false;
+		}
+		
+		public static function allKeyUp():void
+		{
+			_keyDictionary = new Dictionary();
 		}
 		
 		private static function onKeyDown(e:KeyboardEvent):void
 		{
+			
 			_keyDictionary[e.keyCode] = true;
 			if (_funDictionary[e.keyCode])
 				_funDictionary[e.keyCode]();
@@ -85,10 +100,7 @@ package me.rainssong.manager
 			_keyDictionary[e.keyCode] = false;
 		}
 		
-		public static function clear(keyCode:uint=0):void
-		{
-			_keyDictionary = new Dictionary();
-		}
+		
 		
 		
 	
