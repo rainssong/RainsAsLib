@@ -36,18 +36,16 @@
 			// constructor code
 			this["sliderThumb"].addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 			
-			
 			_max = max;
 			_min = min;
 			moveTo(value);
 			_sliderWidth = 500;
 			_snapInterval = MathCore.getRangedNumber(snapInterval, 1);
-			refreash();
 		}
 		
 		public function refreash():void
 		{
-			moveTo(_value);
+			this["sliderMask"].width = this["sliderThumb"].x = _sliderWidth / (max - min)*(value - _min);
 		}
 		
 		private function mouseDownHandler(e:MouseEvent):void
@@ -85,15 +83,18 @@
 		public function moveTo(i:int):void
 		{
 			if (value == i)
-				return;
+			{
+				refreash();
+			}
+			else
+			{
 			
+				i = MathCore.getRangedNumber(i, min, max);
+				_value = i;
+				
+				dispatchEvent(new Event(Event.CHANGE));
+			}
 			
-			i = MathCore.getRangedNumber(i,min,max);
-			
-			this["sliderMask"].width = this["sliderThumb"].x = _sliderWidth / (max - min)*(i - _min);
-			
-			_value = i;
-			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		public function get percent():Number
