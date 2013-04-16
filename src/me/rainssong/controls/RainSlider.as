@@ -82,18 +82,15 @@
 		
 		public function moveTo(i:int):void
 		{
-			if (value == i)
+			if (value != i)
 			{
-				refreash();
-			}
-			else
-			{
-			
 				i = MathCore.getRangedNumber(i, min, max);
 				_value = i;
 				
 				dispatchEvent(new Event(Event.CHANGE));
+			
 			}
+			refreash();
 			
 		}
 		
