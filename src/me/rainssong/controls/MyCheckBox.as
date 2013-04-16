@@ -25,9 +25,12 @@
 			}
 
 			this.addEventListener(MouseEvent.CLICK, onClick);
+			
 			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemove);
 
 		}
+		
+		
 
 		protected function onClick(e:MouseEvent):void
 		{

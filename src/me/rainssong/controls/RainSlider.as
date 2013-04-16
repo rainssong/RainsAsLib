@@ -34,12 +34,12 @@
 		public function RainSlider(max:int = 100, min:int = 0, value:int = 0, snapInterval:int = 1)
 		{
 			// constructor code
-			sliderThumb.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
+			this["sliderThumb"].addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 			
 			
 			_max = max;
 			_min = min;
-			_value = value;
+			moveTo(value);
 			_sliderWidth = 500;
 			_snapInterval = MathCore.getRangedNumber(snapInterval, 1);
 			refreash();
@@ -50,54 +50,47 @@
 			moveTo(_value);
 		}
 		
-		private function mouseDownHandler(e:MouseEvent)
+		private function mouseDownHandler(e:MouseEvent):void
 		{
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
 			stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
 		}
 		
-		private function mouseMoveHandler(e:MouseEvent)
+		private function mouseMoveHandler(e:MouseEvent):void
 		{
 			var i:int;
 			var unitWidth:Number = ( _sliderWidth / (max - min)) ;
 			
 			i = Math.round(mouseX / unitWidth/_snapInterval)*_snapInterval + _min;
 			
-			//i = MathCore.getRangedNumber(i, _min, _max);
-			
-			//i = Math.round((mouseX - sliderMask.x) / ( _sliderWidth / (max - min)))*_snapInterval + _min;
-			//i=Math.round(mouseX/( _sliderWidth / (max - min)*_snapInterval)+ _min;
 			moveTo(i);
 		}
 		
-		private function mouseUpHandler(e:MouseEvent)
+		private function mouseUpHandler(e:MouseEvent):void
 		{
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
 		}
-		
-		
-		
-		
-		
-		
 		
 		override public function destroy():void 
 		{
 			super.destroy();
 		
-			sliderThumb.removeEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
+			this["sliderThumb"].removeEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
 			stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
 		}
 		
 		
-		
-		public function moveTo(i:int)
+		public function moveTo(i:int):void
 		{
+			if (value == i)
+				return;
+			
+			
 			i = MathCore.getRangedNumber(i,min,max);
 			
-			sliderMask.width = sliderThumb.x = _sliderWidth / (max - min)*(i - _min);
+			this["sliderMask"].width = this["sliderThumb"].x = _sliderWidth / (max - min)*(i - _min);
 			
 			_value = i;
 			dispatchEvent(new Event(Event.CHANGE));
