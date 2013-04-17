@@ -1,0 +1,7 @@
+InteractiveSprite(手势响应，点击拖动计算)->DragableSprite->RestoreLocationSprite
+				->InertialSprite
+				->TargetSprite
+UI Library
+DetalingShow
+
+平均速度计算
