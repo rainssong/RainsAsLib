@@ -41,5 +41,4 @@ package me.rainssong.display
 			return _isInteracting; 
 		}
 	}
-
 }
