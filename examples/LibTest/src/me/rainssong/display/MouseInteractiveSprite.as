@@ -11,7 +11,7 @@ package me.rainssong.display
 	
 	/**
 	 * 主动侦听鼠标事件，滑动手势，记录拖动状态
-	 * 原来的拖动可以完全被代替
+	 * 
 	 * @author Rainssong
 	 */
 	public class MouseInteractiveSprite extends SmartSprite
