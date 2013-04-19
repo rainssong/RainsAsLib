@@ -4,7 +4,7 @@ package me.rainssong.display
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	/**
-	 * ...
+	 * 
 	 * @author Rainssong
 	 */
 	public class MouseDragSprite extends MouseInteractiveSprite 
