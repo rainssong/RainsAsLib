@@ -10,12 +10,15 @@ package me.rainssong.display
 	import me.rainssong.utils.Directions;
 	
 	/**
-	 * 主动侦听鼠标事件，滑动手势，记录拖动状态
+	 * 主动侦听鼠标事件，滑动手势，记录速度
 	 * 
 	 * @author Rainssong
 	 */
 	public class MouseInteractiveSprite extends SmartSprite
 	{
+		private var _isDragging:Boolean;
+		private var _lockCenter:Boolean;
+		private var _dragBounds:Rectangle=null;
 		
 		protected var _isInteracting:Boolean = false;
 		protected var _speedX:Number = 0;
@@ -110,6 +113,11 @@ package me.rainssong.display
 			_speedY = stage.mouseY - _lastY;
 			_lastX = stage.mouseX;
 			_lastY = stage.mouseY;
+			if (_isdragging)
+			{
+				this.x += _speedX;
+				this.y += _speedY;
+			}
 		}
 		
 		//public function offDrag():void 
@@ -122,28 +130,27 @@ package me.rainssong.display
 		//
 		//}
 		
-		//override public function startDrag(lockCenter:Boolean = false, bounds:Rectangle = null):void
-		//{
-		//
-		//_isDragging = true;
-		//
-		//
-		//}
-		//
-		//override public function stopDrag():void
-		//{
-		//super.stopDrag();
-		//_isDragging = false;
-		//}
+		override public function startDrag(lockCenter:Boolean = false, bounds:Rectangle = null):void
+		{
+			_lockCenter = lockCenter;
+			_dragBounds = bounds;
+			_isDragging = true;
+		}
 		
-		//public function get isDragging():Boolean
-		//{
-		//return _isDragging;
-		//}
+		override public function stopDrag():void
+		{
+			_isDragging = false;
+		}
+		
 		
 		public function get isInteracting():Boolean
 		{
 			return _isInteracting;
+		}
+		
+		public function get isDragging():Boolean 
+		{
+			return _isDragging;
 		}
 	
 	}
