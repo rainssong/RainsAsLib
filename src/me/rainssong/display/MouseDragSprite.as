@@ -19,20 +19,19 @@ package me.rainssong.display
 		override public function onMouseDown(e:MouseEvent):void 
 		{
 			super.onMouseDown(e);
-			//startDrag();
+			startDrag();
 		}
 		
 		override public function onMouseUp(e:MouseEvent):void 
 		{
 			super.onMouseUp(e);
-			//stopDrag();
+			stopDrag();
 		}
 		
 		override protected function onInteracting():void 
 		{
 			super.onInteracting();
-			this.x += _speedX;
-			this.y += _speedY;
+		
 		}
 		
 		

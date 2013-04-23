@@ -57,8 +57,9 @@ package me.rainssong.utils
 			_textField.selectable = false;
 			
 			TransformGestureEvent = getDefinitionByName("flash.events.TransformGestureEvent") as Class;
-			
-			addEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
+			if(TransformGestureEvent)
+				addEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
+				
 			addEventListener(Event.ADDED_TO_STAGE, onAdd);
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
