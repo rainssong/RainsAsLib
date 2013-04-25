@@ -4,20 +4,22 @@
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import me.rainssong.display.SmartMovieClip;
 	import me.rainssong.utils.superTrace;
-	import me.rainssong.display.MyMovieClip;
 	
-	public class MyRadioBtn extends MyMovieClip {
+	
+	public class MyRadioBtn extends SmartMovieClip {
 		
 		
-		private var _groupName:String;
+		private var _groupName:String="default";
 		public function MyRadioBtn() {
 			// constructor code
+			super();
 			stop();
 			
 			this.addEventListener(MouseEvent.CLICK, clickHandler);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemove);
-			MyRadioButtonGroup.dispatcher.addEventListener(MyRadioButtonGroup.Selected, selectHandler);
+			
+		
 		}
 		
 		private function clickHandler(e:MouseEvent):void 
@@ -25,11 +27,9 @@
 			select();
 		}
 		
-		private function onRemove(e:Event):void 
+		override protected function onRemove(e:Event):void 
 		{
-			removeEventListener(MouseEvent.CLICK, clickHandler);
-			removeEventListener(Event.REMOVED_FROM_STAGE, onRemove);
-			MyRadioButtonGroup.dispatcher.removeEventListener(MyRadioButtonGroup.Selected, selectHandler);
+			super.onRemove(e);
 		}
 		
 		private function selectHandler(e:Event):void 
@@ -55,7 +55,7 @@
 		{
 			this.gotoAndStop(2);
 			MyRadioButtonGroup.selection = this;
-			MyRadioButtonGroup.dispatcher.dispatchEvent(new Event(MyRadioButtonGroup.Selected));
+			
 		}
 		
 		public function unselect():void
@@ -66,6 +66,12 @@
 		public function get selected():Boolean
 		{
 			return this.currentFrame==2;
+		}
+		
+		public function set selected(value:Boolean):void
+		{
+			if (value) select();
+			else unselect();
 		}
 		
 		public function get label():String

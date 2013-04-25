@@ -31,18 +31,26 @@
 		
 		protected function onRegister():void
 		{
-			if(stage)
+			if (stage)
 				onAdd()
 			else
+			{
 				addEventListener(Event.ADDED_TO_STAGE, onAdd);
+				addEventListener(Event.RESIZE, onResize);
+			}
 		}
 		
-		protected function onAdd(e:Event=null):void
+		
+		private function onResize(e:Event):void 
+		{
+			
+		}
+		
+		protected function onAdd(e:Event = null):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAdd);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemove);
 		}
-		
 		
 		public function show():void
 		{
@@ -86,11 +94,7 @@
 				parent.removeChild(this);
 		}
 		
-		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
-		{
-			_listenerArr.push([type, listener, useCapture]);
-			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
-		}
+		
 		
 		private function deleteVars():void
 		{
@@ -105,6 +109,12 @@
 				
 				delete this[v];
 			}
+		}
+		
+		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
+		{
+			_listenerArr.push([type, listener, useCapture]);
+			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
 		
 		override public function removeChildren(beginIndex:int = 0, endIndex:int = 2147483647):void
@@ -143,22 +153,26 @@
 		
 		public function get autoDestroy():Boolean
 		{
-			return _autoDestroy; 
+			return _autoDestroy;
 		}
 		
-		public function set autoDestroy(value:Boolean):void 
+		public function set autoDestroy(value:Boolean):void
 		{
 			_autoDestroy = value;
 			var i:int = this.numChildren - 1;
 			for (i; i >= 0; i--)
 			{
 				var child:* = this.getChildAt(i);
-				try{child.autoDestroy = value }
-				catch (e:Error) { };
+				try
+				{
+					child.autoDestroy = value
+				}
+				catch (e:Error)
+				{
+				}
+				;
 			}
 		}
-		
-		
 	
 	}
 

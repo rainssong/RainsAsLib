@@ -67,7 +67,7 @@
 			this.visible = false;
 		}
 		
-		private function onRemove(e:Event):void 
+		protected function onRemove(e:Event):void 
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemove);
 			
