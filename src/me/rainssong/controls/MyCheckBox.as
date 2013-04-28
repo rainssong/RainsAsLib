@@ -70,6 +70,11 @@
 		{
 			return this.currentFrame==2;
 		}
+		
+		public function set selected(value:Boolean):void
+		{
+			gotoAndStop(value?2:1);
+		}
 
 		public function get label():String
 		{

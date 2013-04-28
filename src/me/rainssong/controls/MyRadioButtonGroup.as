@@ -17,20 +17,20 @@
 		
 		protected static var buttons:Array = [];
 		
-		public static var addBtn(btn:MyRadioBtn):void
+		public static function addBtn(btn:MyRadioBtn):void
 		{
 			buttons.push(btn);
-			if (radioButton.selected) { selection = btn; }
+			if (btn.selected) { selection = btn; }
 		
 		}
 		
 		public static function removeBtn(btn:MyRadioBtn):void 
 		{
-			var i:int = getRadioButtonIndex(btn);
+			var i:int = buttons.indexOf(btn);
 			if (i != -1) {
 				buttons.splice(i, 1);
 			}
-			if (_selection == radioButton) { _selection = null; }
+			if (_selection == btn) { _selection = null; }
 		}
 		
 		protected static function clear(btn:MyRadioBtn):void

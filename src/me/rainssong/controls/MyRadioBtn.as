@@ -16,7 +16,7 @@
 			// constructor code
 			super();
 			stop();
-			
+			MyRadioButtonGroup.addBtn(this);
 			this.addEventListener(MouseEvent.CLICK, clickHandler);
 			
 		
@@ -86,6 +86,11 @@
 		{
 			if(this["labelTF"])
 			this["labelTF"].text=content;
+		}
+		
+		public function get groupName():String 
+		{
+			return _groupName;
 		}
 	}
 	
