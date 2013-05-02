@@ -5,26 +5,22 @@ package me.rainssong.application
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.utils.getDefinitionByName;
-	import me.rainssong.display.MySprite;
+	import me.rainssong.display.SmartSprite;
 	import mx.core.Singleton;
 	
 	/**
 	 * ...
 	 * @author Rainssong
 	 */
-	public class ApplicationBase extends MySprite 
+	public class ApplicationBase extends SmartSprite 
 	{
 		private var _instance:ApplicationBase;
-		private var _bgLayer:MySprite;
-		private var _mainLayer:MySprite;
-		private var _uiLayer:MySprite;
-		private var _warningLayer:MySprite
+		private var _bgLayer:SmartSprite;
+		private var _mainLayer:SmartSprite;
+		private var _uiLayer:SmartSprite;
+		private var _warningLayer:SmartSprite
 		
-		public static var rotateable:Boolean=true;
-		public static var rotateDefaultable:Boolean=true;
-		public static var rotateRightable:Boolean=true;
-		public static var rotateLeftable:Boolean=true;
-		public static var rotateUpsideDownable:Boolean=true;
+		
 		
 		public function ApplicationBase() 
 		{
@@ -36,11 +32,11 @@ package me.rainssong.application
 			super.onAdd(e);
 			
 			
-			_bgLayer = new MySprite();
+			_bgLayer = new SmartSprite();
 			
-			_mainLayer = new MySprite();
-			_uiLayer = new MySprite();
-			_warningLayer = new MySprite();
+			_mainLayer = new SmartSprite();
+			_uiLayer = new SmartSprite();
+			_warningLayer = new SmartSprite();
 			addChild(_bgLayer);
 			
 			addChild(_mainLayer);
@@ -59,43 +55,43 @@ package me.rainssong.application
 		}
 		
 		
-		private function onOrientationChange(e:*):void
+		protected function onOrientationChange(e:*):void
 		{
-			var StageOrientation:Class = getDefinitionByName("StageOrientation") as Class;
-			switch (e.afterOrientation)
-			{
-				case StageOrientation.DEFAULT: 
-					if(!rotateDefaultable || !rotateable)e.preventDefault();
-					break;
-				case StageOrientation.ROTATED_RIGHT: 
-					if(!rotateRightable || !rotateable)e.preventDefault();
-					break;
-				case StageOrientation.ROTATED_LEFT:
-					if(!rotateLeftable || !rotateable)e.preventDefault();
-					break;
-				case StageOrientation.UPSIDE_DOWN: 
-					if(!rotateUpsideDownable || !rotateable)e.preventDefault();
-					break;
-			}
+			//var StageOrientation:Class = getDefinitionByName("StageOrientation") as Class;
+			//switch (e.afterOrientation)
+			//{
+				//case StageOrientation.DEFAULT: 
+					//if(!rotateDefaultable || !rotateable)e.preventDefault();
+					//break;
+				//case StageOrientation.ROTATED_RIGHT: 
+					//if(!rotateRightable || !rotateable)e.preventDefault();
+					//break;
+				//case StageOrientation.ROTATED_LEFT:
+					//if(!rotateLeftable || !rotateable)e.preventDefault();
+					//break;
+				//case StageOrientation.UPSIDE_DOWN: 
+					//if(!rotateUpsideDownable || !rotateable)e.preventDefault();
+					//break;
+			//}
 		}
 		
-		public function get bgLayer():MySprite 
+		public function get bgLayer():SmartSprite 
 		{
 			return _bgLayer;
 		}
 		
 		
-		public function get mainLayer():MySprite 
+		public function get mainLayer():SmartSprite 
 		{
 			return _mainLayer;
 		}
 		
-		public function get uiLayer():MySprite 
+		public function get uiLayer():SmartSprite 
 		{
 			return _uiLayer;
 		}
 		
-		public function get warningLayer():MySprite 
+		public function get warningLayer():SmartSprite 
 		{
 			return _warningLayer;
 		}
