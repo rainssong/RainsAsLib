@@ -57,38 +57,38 @@
             return format(content, Yellow2);
         }// end function
 
-        public static function format(content:String, param2:uint = 0, param3:uint = 12, param4:String = "宋体", param5:Boolean = false, param6:Boolean = false, param7:Boolean = false, param8:String = null, param9:String = null) : String
+        public static function format(content:String, color:uint = 0, size:uint = 12, font:String = null, bold:Boolean = false, italic:Boolean = false, underline:Boolean = false, href:String = null, align:String = null) : String
         {
-            if (param5)
+            if (bold)
             {
                 content = "<b>" + content + "</b>";
             }// end if
-            if (param6)
+            if (italic)
             {
                 content = "<i>" + content + "</i>";
             }// end if
-            if (param7)
+            if (underline)
             {
                 content = "<u>" + content + "</u>";
             }// end if
-            var _loc_10:String;
-            if (param4)
+            var config:String="";
+            if (font)
             {
-                _loc_10 = _loc_10 + (" font=\"" + param4 + "\"");
+                config = config + (" font=\"" + font + "\"");
             }// end if
-            if (param3 > 0)
+            if (size > 0)
             {
-                _loc_10 = _loc_10 + (" size=\"" + param3 + "\"");
+                config = config + (" size=\"" + size + "\"");
             }// end if
-            _loc_10 = _loc_10 + (" color=\"#" + param2.toString(16) + "\"");
-            content = "<font" + _loc_10 + ">" + content + "</font>";
-            if (param8)
+            config = config + (" color=\"#" + color.toString(16) + "\"");
+            content = "<font" + config + ">" + content + "</font>";
+            if (href)
             {
-                content = "<a href=\"" + param8 + "\" target=\"_blank\">" + content + "</a>";
+                content = "<a href=\"" + href + "\" target=\"_blank\">" + content + "</a>";
             }// end if
-            if (param9)
+            if (align)
             {
-                content = "<p align=\"" + param9 + "\">" + content + "</p>";
+                content = "<p align=\"" + align + "\">" + content + "</p>";
             }// end if
             return content;
         }// end function

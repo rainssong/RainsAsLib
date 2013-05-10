@@ -26,7 +26,7 @@ package   me.rainssong.math
 		}
 		
 		/**
-		 * Randomize an Array/Vector
+		 * Make Copy And Randomize an Array/Vector
 		 * @param arr Array or Vector
 		 * @return Randomized Array
 		 */
@@ -54,9 +54,43 @@ package   me.rainssong.math
 			return outputArr;
 		}
 		
+	
+		public static function switchElements(arr:Array, index1:int, index2:int):void
+		{
+			var elementA:Object = arr[index1];
+			arr[index1]=arr[index2];
+			arr[index2] = elementA;
+		}
+		
+		public static function sum(arr:Array):Number {
+      var nSum:Number = 0;
+      for(var i:Number = 0; i < arr.length; i++) {
+        if(typeof(arr[i]) == "number") {
+          nSum += arr[i];
+        }
+      }
+      return nSum;
+    }
+		
+		public static function max(arr:Array):Number
+		{
+			var aCopy:Array = arr.concat();
+			aCopy.sort(Array.NUMERIC);
+			var nMaximum:Number = Number(aCopy.pop());
+			return nMaximum;
+		}
+		
+		public static function min(arr:Array):Number {
+			var aCopy:Array = arr.concat();
+			aCopy.sort(Array.NUMERIC);
+			var nMinimum:Number = Number(aCopy.shift());
+			return nMinimum;
+		}
 		
 		public static function vectorToArray(vector:*):Array
 		{
+			
+			
 			var array:Array = new Array();
 			var callback:Function = function(item:*, index:int, vector:*):Boolean
 			{

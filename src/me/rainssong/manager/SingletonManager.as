@@ -40,9 +40,6 @@
 		{
 			return SharedObject.getLocal("");
 		}
-		
-		
-	
 	}
 
 }

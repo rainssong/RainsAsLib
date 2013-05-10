@@ -45,12 +45,6 @@
 			//_currentAngle = this.rotation;
 		}
 		
-		override protected function onAdd(e:Event = null):void
-		{
-			super.onAdd(e);
-			//addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-		}
-		
 		override public function stopDragging():void
 		{
 			super.stopDragging();
