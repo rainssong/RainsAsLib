@@ -1,5 +1,6 @@
 package me.rainssong.math
 {
+	import com.adobe.utils.IntUtil;
 	import flash.display.SimpleButton;
 	
 	public final class MathCore
@@ -9,6 +10,11 @@ package me.rainssong.math
 		public static function getRandomNumber(min:Number, max:Number):Number
 		{
 			return Math.random() * (max - min) + min;
+		}
+		
+		public static function getRandomInt(min:int, max:int):int
+		{
+			return Math.round(Math.random() * (max - min) + min);
 		}
 		
 		/**
