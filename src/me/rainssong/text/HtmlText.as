@@ -57,7 +57,7 @@
             return format(content, Yellow2);
         }// end function
 
-        public static function format(content:String, color:uint = 0, size:uint = 12, font:String = null, bold:Boolean = false, italic:Boolean = false, underline:Boolean = false, href:String = null, align:String = null) : String
+        public static function format(content:String, color:uint = 0, size:uint = 12, font:String = null,align:String = null, bold:Boolean = false, italic:Boolean = false, underline:Boolean = false, href:String = null) : String
         {
             if (bold)
             {

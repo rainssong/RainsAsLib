@@ -20,24 +20,12 @@
 	public class MouseTargetScrollableSprite extends MouseDragableSprite implements IDragableView
 	{
 		
-		//private var _downX:Number;
-		//private var _downY:Number;
-		
-		
-		//private var _currentAngle:Number
-		
-		//private var _lastRotation:Number;
-		//private var _r:Number
-		/**
-		 * speed of rotation as angle
-		 */
 		public var xScorllable:Boolean=true;
 		public var yScorllable:Boolean=true;;
 		public var partWidth:Number = 100;
 		public var partHeight:Number = 100;
 		private var _rect:Rectangle = new Rectangle(0, 0, 1000, 1000);
-		public var a:Number = 60;
-		
+			
 		public function MouseTargetScrollableSprite()
 		{
 			super();
@@ -68,7 +56,7 @@
 		override public function startDragging(stageX:Number,stageY:Number):void
 		{
 			super.startDragging(stageX, stageY);
-			TweenLite.killTweensOf(this)
+			TweenLite.killTweensOf(this);
 		}
 		
 		override public function onDragging():void
@@ -81,6 +69,8 @@
 			//this.y += _speedY;
 			
 		}
+		
+
 		
 		override public function offDragging():void 
 		{

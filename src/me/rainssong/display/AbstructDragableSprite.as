@@ -75,10 +75,8 @@
 		
 		public function onDragging():void 
 		{
-			
 			if (Point.distance(new Point(_startX, _startY), new Point(stage.mouseX, stage.mouseY)) > 5)
 			{
-				
 				this.mouseChildren=false;
 			}
 		}
@@ -107,11 +105,9 @@
 		public function stopDragging():void
 		{
 			_isDragging = false;
-			//_lastY = NaN;
-			//_lastX = NaN;
+			
 			this.mouseChildren=true;
-			//stage.removeEventListener(MouseEvent.MOUSE_UP, stopDragging);
-			//stage.removeEventListener(MouseEvent.MOUSE_OUT, stopDragging);
+			
 			dispatchEvent(new DragEvent(DragEvent.STOP_DRAG));
 		}
 		
