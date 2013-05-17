@@ -42,8 +42,8 @@
 			
 			var tergetIndexX:int = currentIndexX;
 			var tergetIndexY:int = currentIndexY;
-			if (xScorllable)	tergetIndexX= (currentIndexX+Math.floor(Math.abs(_speedX*30) * _speedX / a/partWidth));
-			if (yScorllable) 	tergetIndexY= (currentIndexY+Math.floor(Math.abs(_speedY*30) * _speedY / a/partHeight));
+			if (xScorllable)	tergetIndexX= (currentIndexX+Math.floor(Math.abs(_speedX*30) * _speedX /partWidth));
+			if (yScorllable) 	tergetIndexY= (currentIndexY+Math.floor(Math.abs(_speedY*30) * _speedY /partHeight));
 			//var tergetY:Number = MathCore.getRangedNumber(Math.round(Math.abs(_speedY*30) * _speedY / a/partWidth)*partWidth,rect.y,rect.y+rect.height);
 			//var tx:Number = (tergetX - this.x) / _speedX/30;
 			var targetX:Number = MathCore.getRangedNumber(tergetIndexX * partWidth + rect.x, rect.x, rect.x + rect.width);
