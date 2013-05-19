@@ -83,6 +83,8 @@
 		}
 		public static function destroy():void{
 			clearAll();
+			_stage.addEventListener(MouseEvent.MOUSE_DOWN,mouseDown);
+			_stage.addEventListener(MouseEvent.MOUSE_UP,mouseUp);
 		}
 		private static function mouseMove(evt:Event):void{
 			mouseMC.x = _stage.mouseX;
