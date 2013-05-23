@@ -181,8 +181,8 @@
 		public static const LightYellow:uint = 0xFFFFE0, 浅黄色:uint = LightYellow
 		/** * 纯黄 */
 		public static const Yellow:uint = 0xFFFF00, 纯黄:uint = Yellow
-		/** * 橄榄 */
-		public static const Olive:uint = 0x808000, 橄榄:uint = Olive
+		/** * 橄榄色 */
+		public static const Olive:uint = 0x808000, 橄榄色:uint = Olive
 		/** * 暗黄褐色 */
 		public static const DarkKhaki:uint = 0xBDB76B, 暗黄褐色:uint = DarkKhaki
 		/** * 柠檬绸 */
