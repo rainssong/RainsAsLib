@@ -19,6 +19,7 @@
 		public static const NAVY:uint = 0x000080;
 		public static const FUCHSIA:uint = 0xff00ff;
 		public static const PURPLE:uint = 0x800080;
+		static public const ORANGE:uint = 0xFF7F00;
 		
 		public function HtmlText()
 		{
@@ -53,16 +54,6 @@
 		public static function orange(content:String):String
 		{
 			return format(content, ORANGE);
-		} // end function
-		
-		public static function blue2(content:String):String
-		{
-			return format(content, Blue2);
-		} // end function
-		
-		public static function yellow2(content:String):String
-		{
-			return format(content, YELLOW2);
 		} // end function
 		
 		public static function format(content:String, color:int = -1, size:uint = 12, font:String = null, align:String = null, bold:Boolean = false, italic:Boolean = false, underline:Boolean = false, href:String = null):String
