@@ -1,4 +1,4 @@
-package me.rainssong.application 
+﻿package me.rainssong.application 
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -6,7 +6,6 @@ package me.rainssong.application
 	import flash.events.Event;
 	import flash.utils.getDefinitionByName;
 	import me.rainssong.display.SmartSprite;
-	import mx.core.Singleton;
 	
 	/**
 	 * ...
