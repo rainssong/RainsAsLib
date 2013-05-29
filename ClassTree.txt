@@ -1,0 +1,1265 @@
+文件夹 PATH 列表
+卷序列号为 D070-E6EE
+D:.
+│  .gitattributes
+│  .gitignore
+│  1.txt
+│  CodePlan.txt
+│  readme.txt
+│  
+├─examples
+│  ├─LibTest
+│  │  │  AIR_Android_readme.txt
+│  │  │  AIR_iOS_readme.txt
+│  │  │  application.xml
+│  │  │  ClearUp.bat
+│  │  │  LibTest.as3proj
+│  │  │  PackageApp.bat
+│  │  │  Run.bat
+│  │  │  
+│  │  ├─bat
+│  │  │      CreateCertificate.bat
+│  │  │      ExcludeFiles.txt
+│  │  │      InstallAirRuntime.bat
+│  │  │      InstallApp.bat
+│  │  │      Packager.bat
+│  │  │      SetupApplication.bat
+│  │  │      SetupSDK.bat
+│  │  │      UpdateResource.bat
+│  │  │      
+│  │  ├─bin
+│  │  │  │  Default-Landscape.png
+│  │  │  │  Default-Portrait.png
+│  │  │  │  Default.png
+│  │  │  │  Default@2x.png
+│  │  │  │  LibTest.swf
+│  │  │  │  
+│  │  │  ├─assets
+│  │  │  │      noavatar_middle.gif
+│  │  │  │      
+│  │  │  └─icons
+│  │  │          Icon-72.png
+│  │  │          Icon-72@2x.png
+│  │  │          Icon-Small-50.png
+│  │  │          Icon-Small-50@2x.png
+│  │  │          Icon-Small.png
+│  │  │          Icon-Small@2x.png
+│  │  │          Icon.png
+│  │  │          Icon@2x.png
+│  │  │          
+│  │  ├─cert
+│  │  │      edoctor.p12
+│  │  │      Rainssong.mobileprovision
+│  │  │      
+│  │  ├─dist
+│  │  ├─ext-folder
+│  │  ├─lib
+│  │  ├─obj
+│  │  │      LibTestConfig.old
+│  │  │      LibTestConfig.xml
+│  │  │      
+│  │  └─src
+│  │      │  Default-Landscape.png
+│  │      │  Default-Portrait.png
+│  │      │  Default.png
+│  │      │  Default@2x.png
+│  │      │  Main.as
+│  │      │  
+│  │      ├─assets
+│  │      │      noavatar_middle.gif
+│  │      │      
+│  │      ├─game
+│  │      │      GameBasic.as
+│  │      │      IGame.as
+│  │      │      
+│  │      ├─icons
+│  │      │      Icon-72.png
+│  │      │      Icon-72@2x.png
+│  │      │      Icon-Small-50.png
+│  │      │      Icon-Small-50@2x.png
+│  │      │      Icon-Small.png
+│  │      │      Icon-Small@2x.png
+│  │      │      Icon.png
+│  │      │      Icon@2x.png
+│  │      │      
+│  │      └─me
+│  │          └─rainssong
+│  │              ├─display
+│  │              │      MouseDragSprite.as
+│  │              │      MouseInteractiveSprite.as
+│  │              │      
+│  │              └─events
+│  │                      ApplicationEvent.as
+│  │                      MouseInteractiveEvent.as
+│  │                      
+│  ├─ResumeDownload
+│  │  │  AIR_Android_readme.txt
+│  │  │  AIR_iOS_readme.txt
+│  │  │  application.xml
+│  │  │  ClearUp.bat
+│  │  │  ExcludeFiles.txt
+│  │  │  PackageApp.bat
+│  │  │  ResumeDownload.as3proj
+│  │  │  Run.bat
+│  │  │  UpdateResource.bat
+│  │  │  
+│  │  ├─bat
+│  │  │      CreateCertificate.bat
+│  │  │      InstallAirRuntime.bat
+│  │  │      Packager.bat
+│  │  │      SetupApplication.bat
+│  │  │      SetupSDK.bat
+│  │  │      
+│  │  ├─bin-debug
+│  │  │  │  1.zip
+│  │  │  │  Default-Landscape.png
+│  │  │  │  Default-Portrait.png
+│  │  │  │  Default.png
+│  │  │  │  Default@2x.png
+│  │  │  │  Main.swf
+│  │  │  │  
+│  │  │  └─icons
+│  │  │          icon_114.png
+│  │  │          icon_48.png
+│  │  │          icon_512.png
+│  │  │          icon_57.png
+│  │  │          icon_72.png
+│  │  │          
+│  │  ├─bin-release
+│  │  ├─cert
+│  │  │      edoctor.p12
+│  │  │      Rainssong.mobileprovision
+│  │  │      
+│  │  ├─lib
+│  │  ├─obj
+│  │  │      ResumeDownloadConfig.old
+│  │  │      ResumeDownloadConfig.xml
+│  │  │      
+│  │  └─src
+│  │      │  Default-Landscape.png
+│  │      │  Default-Portrait.png
+│  │      │  Default.png
+│  │      │  Default@2x.png
+│  │      │  IObject.as
+│  │      │  Main.as
+│  │      │  MyObject.as
+│  │      │  
+│  │      └─icons
+│  │              icon_114.png
+│  │              icon_48.png
+│  │              icon_512.png
+│  │              icon_57.png
+│  │              icon_72.png
+│  │              
+│  ├─RotateableSprite
+│  │  │  .gitattributes
+│  │  │  .gitignore
+│  │  │  ClearUp.bat
+│  │  │  RotateableSprite.as3proj
+│  │  │  
+│  │  ├─bat
+│  │  │      ExcludeFiles.txt
+│  │  │      UpdateResource.bat
+│  │  │      
+│  │  ├─bin
+│  │  │  │  expressInstall.swf
+│  │  │  │  index.html
+│  │  │  │  RotateableSprite.swf
+│  │  │  │  
+│  │  │  └─js
+│  │  │          swfobject.js
+│  │  │          
+│  │  ├─lib
+│  │  ├─obj
+│  │  │      RotateableSpriteConfig.old
+│  │  │      RotateableSpriteConfig.xml
+│  │  │      
+│  │  └─src
+│  │          Main.as
+│  │          SpeedRotatableSprite.as
+│  │          TargetRotatableSprite.as
+│  │          
+│  ├─SlideShowExample
+│  │  │  .gitattributes
+│  │  │  .gitignore
+│  │  │  AIR_Android_readme.txt
+│  │  │  AIR_iOS_readme.txt
+│  │  │  application.xml
+│  │  │  ClearUp.bat
+│  │  │  PackageApp.bat
+│  │  │  Run.bat
+│  │  │  SlideShowExample.as3proj
+│  │  │  
+│  │  ├─bat
+│  │  │      CreateCertificate.bat
+│  │  │      ExcludeFiles.txt
+│  │  │      InstallAirRuntime.bat
+│  │  │      InstallApp.bat
+│  │  │      Packager.bat
+│  │  │      SetupApplication.bat
+│  │  │      SetupSDK.bat
+│  │  │      UpdateResource.bat
+│  │  │      
+│  │  ├─bin
+│  │  │  │  Default-Landscape.png
+│  │  │  │  Default-Portrait.png
+│  │  │  │  Default.png
+│  │  │  │  Default@2x.png
+│  │  │  │  SlideShowExample.swf
+│  │  │  │  
+│  │  │  └─icons
+│  │  │          Icon-72.png
+│  │  │          Icon-72@2x.png
+│  │  │          Icon-Small-50.png
+│  │  │          Icon-Small-50@2x.png
+│  │  │          Icon-Small.png
+│  │  │          Icon-Small@2x.png
+│  │  │          Icon.png
+│  │  │          Icon@2x.png
+│  │  │          
+│  │  ├─bin-release
+│  │  │      SlideShowExample-test-interpreter1.0.ipa
+│  │  │      
+│  │  ├─cert
+│  │  │      RainssongDev.mobileprovision
+│  │  │      rainssong_dev.p12
+│  │  │      rainssong_dist.p12
+│  │  │      
+│  │  ├─dist
+│  │  ├─ext-folder
+│  │  │      readme.txt
+│  │  │      
+│  │  ├─lib
+│  │  │      readme.txt
+│  │  │      
+│  │  ├─obj
+│  │  │      SlideShowExampleConfig.old
+│  │  │      SlideShowExampleConfig.xml
+│  │  │      
+│  │  └─src
+│  │      │  Default-Landscape.png
+│  │      │  Default-Portrait.png
+│  │      │  Default.png
+│  │      │  Default@2x.png
+│  │      │  Main.as
+│  │      │  
+│  │      └─icons
+│  │              Icon-72.png
+│  │              Icon-72@2x.png
+│  │              Icon-Small-50.png
+│  │              Icon-Small-50@2x.png
+│  │              Icon-Small.png
+│  │              Icon-Small@2x.png
+│  │              Icon.png
+│  │              Icon@2x.png
+│  │              
+│  └─WorldDemo
+│      │  .gitattributes
+│      │  .gitignore
+│      │  ClearUp.bat
+│      │  WorldDemo.as3proj
+│      │  
+│      ├─bat
+│      │      ExcludeFiles.txt
+│      │      UpdateResource.bat
+│      │      
+│      ├─bin
+│      │  │  expressInstall.swf
+│      │  │  index.html
+│      │  │  
+│      │  └─js
+│      │          swfobject.js
+│      │          
+│      ├─lib
+│      └─src
+│          │  Main.as
+│          │  
+│          └─world
+│              ├─controller
+│              ├─model
+│              │  ├─creature
+│              │  │      CreatureModel.as
+│              │  │      
+│              │  ├─element
+│              │  └─entity
+│              └─view
+├─lib
+│      D.eval-1.1.swc
+│      MonsterDebugger.swc
+│      
+└─src
+    ├─ascb
+    │  ├─display
+    │  │      DraggableSprite.as
+    │  │      
+    │  ├─drawing
+    │  │      Pen.as
+    │  │      
+    │  ├─filters
+    │  │      ColorMatrixArrays.as
+    │  │      ConvolutionMatrixArrays.as
+    │  │      
+    │  ├─play
+    │  │      Cards.as
+    │  │      
+    │  ├─units
+    │  │      Converter.as
+    │  │      Unit.as
+    │  │      
+    │  └─util
+    │          ArrayUtilities.as
+    │          DateFormat.as
+    │          DateUtilities.as
+    │          DisplayObjectUtilities.as
+    │          Locale.as
+    │          NumberFormat.as
+    │          NumberUtilities.as
+    │          StringUtilities.as
+    │          Tween.as
+    │          
+    ├─assets
+    │      pf_ronda_seven.swf
+    │      pf_ronda_seven.ttf
+    │      
+    ├─br
+    │  └─com
+    │      └─stimuli
+    │          └─loading
+    │              │  BulkLoader.as
+    │              │  BulkProgressEvent.as
+    │              │  
+    │              ├─lazyloaders
+    │              │      LazyBulkLoader.as
+    │              │      LazyJSONLoader.as
+    │              │      LazyXMLLoader.as
+    │              │      
+    │              ├─loadingtypes
+    │              │      BinaryItem.as
+    │              │      ImageItem.as
+    │              │      JSONItem.as
+    │              │      LoadingItem.as
+    │              │      SoundItem.as
+    │              │      URLItem.as
+    │              │      VideoItem.as
+    │              │      XMLItem.as
+    │              │      
+    │              └─utils
+    │                      SmartURL.as
+    │                      
+    ├─cn
+    │  └─flashk
+    │      │  API.as
+    │      │  
+    │      ├─asset
+    │      │      AssetFactory.as
+    │      │      AssetString.as
+    │      │      LoadingAsset.as
+    │      │      
+    │      ├─components
+    │      ├─controls
+    │      │  │  Accordion.as
+    │      │  │  Alert.as
+    │      │  │  Button.as
+    │      │  │  CheckBox.as
+    │      │  │  ClickAbleAlphaBitmap.as
+    │      │  │  ColorPickerPanel.as
+    │      │  │  ComboBox.as
+    │      │  │  DataGrid.as
+    │      │  │  HScrollBar.as
+    │      │  │  Image.as
+    │      │  │  LinkText.as
+    │      │  │  List.as
+    │      │  │  Menu.as
+    │      │  │  MenuBar.as
+    │      │  │  NumericStepper.as
+    │      │  │  Panel.as
+    │      │  │  RadioButton.as
+    │      │  │  Slider.as
+    │      │  │  TabBar.as
+    │      │  │  TextArea.as
+    │      │  │  TextInput.as
+    │      │  │  TileList.as
+    │      │  │  ToggleButton.as
+    │      │  │  ToolRadioButton.as
+    │      │  │  ToolTip.as
+    │      │  │  Tree.as
+    │      │  │  VScrollBar.as
+    │      │  │  Window.as
+    │      │  │  
+    │      │  ├─colors
+    │      │  │      ColorSetDisplay.as
+    │      │  │      ColorSetDisplay1.as
+    │      │  │      ColorSetDisplay10.as
+    │      │  │      ColorSetDisplay11.as
+    │      │  │      ColorSetDisplay12.as
+    │      │  │      ColorSetDisplay13.as
+    │      │  │      ColorSetDisplay14.as
+    │      │  │      ColorSetDisplay15.as
+    │      │  │      ColorSetDisplay16.as
+    │      │  │      ColorSetDisplay17.as
+    │      │  │      ColorSetDisplay2.as
+    │      │  │      ColorSetDisplay3.as
+    │      │  │      ColorSetDisplay4.as
+    │      │  │      ColorSetDisplay5.as
+    │      │  │      ColorSetDisplay6.as
+    │      │  │      ColorSetDisplay7.as
+    │      │  │      ColorSetDisplay8.as
+    │      │  │      ColorSetDisplay9.as
+    │      │  │      
+    │      │  ├─events
+    │      │  │      AlertCloseEvent.as
+    │      │  │      ClickAbleAlphaBitmapEvent.as
+    │      │  │      ColorPickEvent.as
+    │      │  │      DataChangeEvent.as
+    │      │  │      DataChangeType.as
+    │      │  │      DataGridChangeEvent.as
+    │      │  │      MenuEvent.as
+    │      │  │      TabCloseEvent.as
+    │      │  │      UIComponentEvent.as
+    │      │  │      
+    │      │  ├─interfaces
+    │      │  │      IListItemRender.as
+    │      │  │      ITileListItemRender.as
+    │      │  │      
+    │      │  ├─layout
+    │      │  ├─managers
+    │      │  │      ComponentsManager.as
+    │      │  │      DefaultStyle.as
+    │      │  │      SkinLoader.as
+    │      │  │      SkinManager.as
+    │      │  │      SourceSkinLinkDefine.as
+    │      │  │      StyleManager.as
+    │      │  │      ThemesSet.as
+    │      │  │      
+    │      │  ├─modeStyles
+    │      │  │      ButtonMode.as
+    │      │  │      ButtonStyle.as
+    │      │  │      LayoutStyle.as
+    │      │  │      TextInputStyle.as
+    │      │  │      
+    │      │  ├─proxy
+    │      │  │      DataProvider.as
+    │      │  │      
+    │      │  ├─skin
+    │      │  │  │  ActionDrawSkin.as
+    │      │  │  │  ButtonSkin.as
+    │      │  │  │  CheckBoxSkin.as
+    │      │  │  │  ComboBoxSkin.as
+    │      │  │  │  IconsSet.as
+    │      │  │  │  ImageSkin.as
+    │      │  │  │  ListSkin.as
+    │      │  │  │  MotionSkinControl.as
+    │      │  │  │  RadioButtonSkin.as
+    │      │  │  │  SimpleItemBackground.as
+    │      │  │  │  SkinThemeColor.as
+    │      │  │  │  SliderSkin.as
+    │      │  │  │  TabBarSkin.as
+    │      │  │  │  TextAreaSkin.as
+    │      │  │  │  TextInputSkin.as
+    │      │  │  │  TitleSkin.as
+    │      │  │  │  ToggleButtonSkin.as
+    │      │  │  │  ToggleDrawSkin.as
+    │      │  │  │  ToolRadioButtonSkin.as
+    │      │  │  │  ToolTipSkin.as
+    │      │  │  │  VScrollBarSkin.as
+    │      │  │  │  
+    │      │  │  └─sourceSkin
+    │      │  │          ButtonSourceSkin.as
+    │      │  │          CheckBoxSourceSkin.as
+    │      │  │          ComboBoxSourceSkin.as
+    │      │  │          ImageSourceSkin.as
+    │      │  │          ListItemSourceSkin.as
+    │      │  │          ListSourceSkin.as
+    │      │  │          MenuBarSourceSkin.as
+    │      │  │          PanelSourceSkin.as
+    │      │  │          RadioButtonSourceSkin.as
+    │      │  │          SliderSourceSkin.as
+    │      │  │          SourceSkin.as
+    │      │  │          TabSourceSkin.as
+    │      │  │          TextInputSourceSkin.as
+    │      │  │          ToggleButtonSourceSkin.as
+    │      │  │          ToolRadioButtonSourceSkin.as
+    │      │  │          VScrollBarSourceSkin.as
+    │      │  │          
+    │      │  └─support
+    │      │          BaseButton.as
+    │      │          BitmapDataText.as
+    │      │          CheckBoxItemRender.as
+    │      │          ComboBoxItemRender.as
+    │      │          DataGridItemRender.as
+    │      │          DataGridTitle.as
+    │      │          ItemsSelectControl.as
+    │      │          ListItemRender.as
+    │      │          MenuItemRender.as
+    │      │          RadioButtonGroup.as
+    │      │          RoundRectAdvancedDraw.as
+    │      │          Scale9GridBitmap.as
+    │      │          SWFDefinition.as
+    │      │          Tab.as
+    │      │          TextFieldItemRender.as
+    │      │          TileListThumbnail.as
+    │      │          TreeItemRender.as
+    │      │          UIComponent.as
+    │      │          
+    │      ├─conversion
+    │      │      ColorConversion.as
+    │      │      ColorMatrix.as
+    │      │      
+    │      ├─core
+    │      │      Config.as
+    │      │      Core.as
+    │      │      DisplayRefs.as
+    │      │      Language.as
+    │      │      
+    │      ├─debug
+    │      │      Debug.as
+    │      │      DebugExternal.as
+    │      │      
+    │      ├─display
+    │      │      BitmapScale9GridMovieClip.as
+    │      │      BitmapScale9GridSprite.as
+    │      │      
+    │      ├─eventManager
+    │      │      EventCenter.as
+    │      │      EventRadio.as
+    │      │      
+    │      ├─events
+    │      │      CoreEvent.as
+    │      │      LoaderManagerEvent.as
+    │      │      MovieEvent.as
+    │      │      
+    │      ├─image
+    │      │      AnimationGridBitmap.as
+    │      │      BitmapTool.as
+    │      │      DisplayObjectDrawScale9GridBitmap.as
+    │      │      GridBitmap.as
+    │      │      ImageDecode.as
+    │      │      LessPNG.as
+    │      │      
+    │      ├─layout
+    │      │      Align.as
+    │      │      
+    │      ├─map
+    │      │  │  Background.as
+    │      │  │  BackgroundEffectLayer.as
+    │      │  │  DynamicLayer.as
+    │      │  │  EffectLayer.as
+    │      │  │  MapEngine.as
+    │      │  │  ObjectDisplay.as
+    │      │  │  SkyWeather.as
+    │      │  │  
+    │      │  ├─effect
+    │      │  │      Shake.as
+    │      │  │      
+    │      │  └─move
+    │      │          AStar.as
+    │      │          AutoRoad.as
+    │      │          IMapTileModel.as
+    │      │          MapTileModel.as
+    │      │          MoveClick.as
+    │      │          
+    │      ├─modules
+    │      │  ├─avatarChose
+    │      │  │      AvatarChose.as
+    │      │  │      
+    │      │  ├─bag
+    │      │  └─chat
+    │      ├─motion
+    │      ├─movie
+    │      │      AdvancedPlayMovieClip.as
+    │      │      
+    │      ├─net
+    │      │      LoaderManager.as
+    │      │      Loading.as
+    │      │      StartFilesLoader.as
+    │      │      
+    │      ├─role
+    │      │  ├─avatar
+    │      │  │      Avatar.as
+    │      │  │      AvatarFileReader.as
+    │      │  │      AvatarPlay.as
+    │      │  │      FrameIndexs.as
+    │      │  │      
+    │      │  ├─effect
+    │      │  │      ParticleMoveBitmap.as
+    │      │  │      RoleShadow.as
+    │      │  │      
+    │      │  └─player
+    │      │          Player.as
+    │      │          PlayerSelf.as
+    │      │          TextAntiAliasing.as
+    │      │          
+    │      ├─server
+    │      │      IServer.as
+    │      │      Server.as
+    │      │      SocketServer.as
+    │      │      XMLSocketServer.as
+    │      │      
+    │      ├─test
+    │      │      MapTest.as
+    │      │      
+    │      ├─ui
+    │      │      UserMouse.as
+    │      │      
+    │      ├─video
+    │      │      VideoConnecter.as
+    │      │      VideoDisplay.as
+    │      │      
+    │      └─zipPack
+    │              FileTxtZiperDecoder.as
+    │              
+    ├─com
+    │  ├─bit101
+    │  │  ├─charts
+    │  │  │      BarChart.as
+    │  │  │      Chart.as
+    │  │  │      LineChart.as
+    │  │  │      PieChart.as
+    │  │  │      
+    │  │  ├─components
+    │  │  │      Accordion.as
+    │  │  │      Calendar.as
+    │  │  │      CheckBox.as
+    │  │  │      ColorChooser.as
+    │  │  │      ComboBox.as
+    │  │  │      Component.as
+    │  │  │      FPSMeter.as
+    │  │  │      HBox.as
+    │  │  │      HRangeSlider.as
+    │  │  │      HScrollBar.as
+    │  │  │      HSlider.as
+    │  │  │      HUISlider.as
+    │  │  │      IndicatorLight.as
+    │  │  │      InputText.as
+    │  │  │      Knob.as
+    │  │  │      Label.as
+    │  │  │      List.as
+    │  │  │      ListItem.as
+    │  │  │      Meter.as
+    │  │  │      NumericStepper.as
+    │  │  │      Panel.as
+    │  │  │      ProgressBar.as
+    │  │  │      PushButton.as
+    │  │  │      RadioButton.as
+    │  │  │      RangeSlider.as
+    │  │  │      RotarySelector.as
+    │  │  │      ScrollBar.as
+    │  │  │      ScrollPane.as
+    │  │  │      Slider.as
+    │  │  │      Style.as
+    │  │  │      Text.as
+    │  │  │      TextArea.as
+    │  │  │      UISlider.as
+    │  │  │      VBox.as
+    │  │  │      VRangeSlider.as
+    │  │  │      VScrollBar.as
+    │  │  │      VSlider.as
+    │  │  │      VUISlider.as
+    │  │  │      WheelMenu.as
+    │  │  │      Window.as
+    │  │  │      
+    │  │  └─utils
+    │  │          MinimalConfigurator.as
+    │  │          
+    │  ├─flashdynamix
+    │  │  └─utils
+    │  │          SWFProfiler.as
+    │  │          
+    │  ├─kglad
+    │  │      MT.as
+    │  │      
+    │  ├─oaxoa
+    │  │  └─fx
+    │  │          Lightning.as
+    │  │          LightningFadeType.as
+    │  │          
+    │  └─reintroducing
+    │      │  .DS_Store
+    │      │  
+    │      └─sound
+    │              SoundManager.as
+    │              
+    ├─me
+    │  └─rainssong
+    │      ├─air
+    │      │      AirManager.as
+    │      │      
+    │      ├─application
+    │      │      ApplicationBase.as
+    │      │      ApplicationManager.as
+    │      │      
+    │      ├─controls
+    │      │      IToggleBtn.as
+    │      │      LowLightBtn.as
+    │      │      MyCheckBox.as
+    │      │      MyRadioBtn.as
+    │      │      MyRadioButtonGroup.as
+    │      │      RainCheckBox.as
+    │      │      RainSlider.as
+    │      │      ZoomBtn.as
+    │      │      
+    │      ├─decorators
+    │      ├─display
+    │      │      AbstructDragableSprite.as
+    │      │      BitmapDataCore.as
+    │      │      DisplayObjectTransfer.as
+    │      │      IDragableView.as
+    │      │      ISlide.as
+    │      │      IView.as
+    │      │      LCDRender.as
+    │      │      MouseDragableSprite.as
+    │      │      MouseDragSprite.as
+    │      │      MouseInteractiveSprite.as
+    │      │      MouseRotatableSprite.as
+    │      │      MouseScrollableSprite.as
+    │      │      MouseTargetScrollableSprite.as
+    │      │      MyMovieClip.as
+    │      │      MySprite.as
+    │      │      RestoreLocationSprite.as
+    │      │      Scale9BitmapSprite.as
+    │      │      Scale9SimpleStateButton.as
+    │      │      Slide.as
+    │      │      SlideShow.as
+    │      │      SmartMovieClip.as
+    │      │      SmartSprite.as
+    │      │      SpeedRotatableSprite.as
+    │      │      TargetRotatableSprite.as
+    │      │      ToolTip.as
+    │      │      
+    │      ├─error
+    │      ├─events
+    │      │      ApplicationEvent.as
+    │      │      DataEvent.as
+    │      │      DragEvent.as
+    │      │      GameEvent.as
+    │      │      MouseInteractiveEvent.as
+    │      │      ObjectEvent.as
+    │      │      QuestEvent.as
+    │      │      SlideEvent.as
+    │      │      StaticEventDispatcher.as
+    │      │      SwitchSceneEvent.as
+    │      │      
+    │      ├─fileSystem
+    │      ├─filters
+    │      ├─font
+    │      │      FontLibrary.as
+    │      │      MSYH.as
+    │      │      
+    │      ├─manager
+    │      │      EventBus.as
+    │      │      KeyboardManager.as
+    │      │      MouseManager.as
+    │      │      SingletonManager.as
+    │      │      
+    │      ├─math
+    │      │      ArrayCore.as
+    │      │      BitmapHitTestPlus.as
+    │      │      HitTest.as
+    │      │      MathCore.as
+    │      │      
+    │      ├─media
+    │      │      RainStageWebView.as
+    │      │      
+    │      ├─net
+    │      │      ResumeDownloader.as
+    │      │      
+    │      ├─quest
+    │      │  │  XmlQuestManager.as
+    │      │  │  
+    │      │  └─VO
+    │      │          QuestModel.as
+    │      │          
+    │      ├─rainMVC
+    │      │  ├─controller
+    │      │  ├─model
+    │      │  │      Model.as
+    │      │  │      Proxy.as
+    │      │  │      RangeNumberModel.as
+    │      │  │      
+    │      │  └─view
+    │      │          Mediator.as
+    │      │          TipTextFieldMediator.as
+    │      │          
+    │      ├─rainSlideShow
+    │      │      IRainSlide.as
+    │      │      RainSlide.as
+    │      │      RainSlideShow.as
+    │      │      
+    │      ├─robotlegs
+    │      │  └─controller
+    │      │          SwitchSceneCommand.as
+    │      │          
+    │      ├─sound
+    │      │      SoundPlayer.as
+    │      │      
+    │      ├─system
+    │      │      SystemManager.as
+    │      │      
+    │      ├─text
+    │      │      HtmlText.as
+    │      │      
+    │      ├─tools
+    │      ├─utils
+    │      │      Color.as
+    │      │      DebugPanel.as
+    │      │      deepCopy.as
+    │      │      Directions.as
+    │      │      functionTiming.as
+    │      │      LocalTimer.as
+    │      │      Locations.as
+    │      │      Logger.as
+    │      │      StringCore.as
+    │      │      superTrace.as
+    │      │      timeoutTrace.as
+    │      │      
+    │      ├─video
+    │      └─world
+    ├─net
+    │  └─hires
+    │      └─debug
+    │              Stats.as
+    │              Stats.hx
+    │              
+    └─org
+        ├─as3commons
+        │  └─ui
+        │      ├─focus
+        │      │      FocusAdapter.as
+        │      │      FocusManager.as
+        │      │      
+        │      ├─framework
+        │      │  ├─core
+        │      │  │      as3commons_ui.as
+        │      │  │      
+        │      │  └─uiservice
+        │      │      │  AbstractUIAdapter.as
+        │      │      │  AbstractUIService.as
+        │      │      │  
+        │      │      └─errors
+        │      │              AdapterAlreadyRegisteredError.as
+        │      │              AdapterNotRegisteredError.as
+        │      │              ObjectAlreadyRegisteredError.as
+        │      │              ServiceAlreadyStartedError.as
+        │      │              ServiceDisposedError.as
+        │      │              ServiceNotStartedError.as
+        │      │              
+        │      ├─layer
+        │      │  │  Placement.as
+        │      │  │  PopUpManager.as
+        │      │  │  ToolTipManager.as
+        │      │  │  
+        │      │  ├─placement
+        │      │  │      AbstractPlacement.as
+        │      │  │      PlacementAnchor.as
+        │      │  │      PlacementUtils.as
+        │      │  │      UsedPlacement.as
+        │      │  │      
+        │      │  ├─popup
+        │      │  │      DefaultModalOverlay.as
+        │      │  │      PopUpData.as
+        │      │  │      
+        │      │  └─tooltip
+        │      │          AllSelector.as
+        │      │          IToolTipSelector.as
+        │      │          ToolTipAdapter.as
+        │      │          
+        │      ├─layout
+        │      │  │  CellConfig.as
+        │      │  │  Display.as
+        │      │  │  DynTable.as
+        │      │  │  HGroup.as
+        │      │  │  HLayout.as
+        │      │  │  Table.as
+        │      │  │  VGroup.as
+        │      │  │  VLayout.as
+        │      │  │  
+        │      │  ├─constants
+        │      │  │      Align.as
+        │      │  │      
+        │      │  ├─debugger
+        │      │  │      LayoutDebugger.as
+        │      │  │      
+        │      │  ├─framework
+        │      │  │  │  IDisplay.as
+        │      │  │  │  IDynTable.as
+        │      │  │  │  IGroupLayout.as
+        │      │  │  │  IHLayout.as
+        │      │  │  │  ILayout.as
+        │      │  │  │  ILayoutItem.as
+        │      │  │  │  IMultilineLayout.as
+        │      │  │  │  ITable.as
+        │      │  │  │  IVLayout.as
+        │      │  │  │  
+        │      │  │  └─core
+        │      │  │      │  AbstractGroupLayout.as
+        │      │  │      │  AbstractLayout.as
+        │      │  │      │  AbstractLayoutItem.as
+        │      │  │      │  AbstractMultilineLayout.as
+        │      │  │      │  LayoutLock.as
+        │      │  │      │  
+        │      │  │      ├─cell
+        │      │  │      │      AbstractCell.as
+        │      │  │      │      DisplayCell.as
+        │      │  │      │      ICell.as
+        │      │  │      │      ILayoutCell.as
+        │      │  │      │      LayoutCell.as
+        │      │  │      │      
+        │      │  │      ├─config
+        │      │  │      │      CellConfigCollection.as
+        │      │  │      │      CellConfigMerge.as
+        │      │  │      │      RenderConfig.as
+        │      │  │      │      
+        │      │  │      ├─init
+        │      │  │      │      AbstractLayoutItemInitializer.as
+        │      │  │      │      CellConfigInitObject.as
+        │      │  │      │      DisplayInitializer.as
+        │      │  │      │      LayoutInitializer.as
+        │      │  │      │      
+        │      │  │      ├─parser
+        │      │  │      │      AbstractGroupLayoutParser.as
+        │      │  │      │      AbstractLayoutParser.as
+        │      │  │      │      AbstractMultilineLayoutParser.as
+        │      │  │      │      DynTableParser.as
+        │      │  │      │      HGroupParser.as
+        │      │  │      │      HLayoutParser.as
+        │      │  │      │      ILayoutParser.as
+        │      │  │      │      SingleRowTableParser.as
+        │      │  │      │      TableParser.as
+        │      │  │      │      VGroupParser.as
+        │      │  │      │      VLayoutParser.as
+        │      │  │      │      
+        │      │  │      ├─row
+        │      │  │      │      AbstractRow.as
+        │      │  │      │      AbstractRowDirection.as
+        │      │  │      │      AbstractRowItem.as
+        │      │  │      │      HRow.as
+        │      │  │      │      IRow.as
+        │      │  │      │      IRowItem.as
+        │      │  │      │      RowConfig.as
+        │      │  │      │      VRow.as
+        │      │  │      │      
+        │      │  │      └─sizeitem
+        │      │  │              ISizeItem.as
+        │      │  │              SizeItem.as
+        │      │  │              
+        │      │  └─shortcut
+        │      │          cellconfig.as
+        │      │          display.as
+        │      │          dyntable.as
+        │      │          hgroup.as
+        │      │          hlayout.as
+        │      │          table.as
+        │      │          vgroup.as
+        │      │          vlayout.as
+        │      │          
+        │      └─lifecycle
+        │          ├─i10n
+        │          │  │  I10N.as
+        │          │  │  I10NAdapter.as
+        │          │  │  II10N.as
+        │          │  │  II10NAdapter.as
+        │          │  │  
+        │          │  ├─core
+        │          │  │      I10NAdapterComparator.as
+        │          │  │      I10NPhase.as
+        │          │  │      
+        │          │  └─errors
+        │          │          NoValidationPhaseError.as
+        │          │          PhaseAlreadyExistsError.as
+        │          │          PhaseDoesNotExistError.as
+        │          │          ValidateNowInRunningCycleError.as
+        │          │          
+        │          └─lifecycle
+        │              │  ILifeCycle.as
+        │              │  ILifeCycleAdapter.as
+        │              │  LifeCycle.as
+        │              │  LifeCycleAdapter.as
+        │              │  LifeCycleView.as
+        │              │  
+        │              ├─core
+        │              │      LifeCycleI10NAdapter.as
+        │              │      
+        │              └─errors
+        │                      InvalidationNotAllowedHereError.as
+        │                      
+        ├─bytearray
+        │  ├─.svn
+        │  │  │  all-wcprops
+        │  │  │  entries
+        │  │  │  format
+        │  │  │  
+        │  │  ├─prop-base
+        │  │  ├─props
+        │  │  ├─text-base
+        │  │  └─tmp
+        │  │      ├─prop-base
+        │  │      ├─props
+        │  │      └─text-base
+        │  └─micrecorder
+        │      │  IEncoder.as
+        │      │  MicRecorder.as
+        │      │  
+        │      ├─.svn
+        │      │  │  all-wcprops
+        │      │  │  entries
+        │      │  │  format
+        │      │  │  
+        │      │  ├─prop-base
+        │      │  ├─props
+        │      │  ├─text-base
+        │      │  │      IEncoder.as.svn-base
+        │      │  │      MicRecorder.as.svn-base
+        │      │  │      
+        │      │  └─tmp
+        │      │      ├─prop-base
+        │      │      ├─props
+        │      │      └─text-base
+        │      ├─encoder
+        │      │  │  WaveEncoder.as
+        │      │  │  
+        │      │  └─.svn
+        │      │      │  all-wcprops
+        │      │      │  entries
+        │      │      │  format
+        │      │      │  
+        │      │      ├─prop-base
+        │      │      ├─props
+        │      │      ├─text-base
+        │      │      │      WaveEncoder.as.svn-base
+        │      │      │      
+        │      │      └─tmp
+        │      │          ├─prop-base
+        │      │          ├─props
+        │      │          └─text-base
+        │      └─events
+        │          │  RecordingEvent.as
+        │          │  
+        │          └─.svn
+        │              │  all-wcprops
+        │              │  entries
+        │              │  format
+        │              │  
+        │              ├─prop-base
+        │              ├─props
+        │              ├─text-base
+        │              │      RecordingEvent.as.svn-base
+        │              │      
+        │              └─tmp
+        │                  ├─prop-base
+        │                  ├─props
+        │                  └─text-base
+        ├─phpz
+        │  └─data
+        │          SQLData.as
+        │          
+        └─si
+            │  license.txt
+            │  
+            ├─sion
+            │  │  SiONData.as
+            │  │  SiONDriver.as
+            │  │  SiONVoice.as
+            │  │  
+            │  ├─effector
+            │  │      SiCompositeEffector.as
+            │  │      SiCtrlFilterBase.as
+            │  │      SiCtrlFilterHighPass.as
+            │  │      SiCtrlFilterLowPass.as
+            │  │      SiEffectAutoPan.as
+            │  │      SiEffectBase.as
+            │  │      SiEffectCompressor.as
+            │  │      SiEffectDistortion.as
+            │  │      SiEffectDownSampler.as
+            │  │      SiEffectEqualiser.as
+            │  │      SiEffectModule.as
+            │  │      SiEffectSpeakerSimulator.as
+            │  │      SiEffectStereoChorus.as
+            │  │      SiEffectStereoDelay.as
+            │  │      SiEffectStereoExpander.as
+            │  │      SiEffectStereoReverb.as
+            │  │      SiEffectStream.as
+            │  │      SiEffectTable.as
+            │  │      SiEffectWaveShaper.as
+            │  │      SiFilterAllPass.as
+            │  │      SiFilterBandPass.as
+            │  │      SiFilterBase.as
+            │  │      SiFilterHighBoost.as
+            │  │      SiFilterHighPass.as
+            │  │      SiFilterLowBoost.as
+            │  │      SiFilterLowPass.as
+            │  │      SiFilterNotch.as
+            │  │      SiFilterPeak.as
+            │  │      SiFilterVowel.as
+            │  │      
+            │  ├─events
+            │  │      SiONEvent.as
+            │  │      SiONMIDIEvent.as
+            │  │      SiONTrackEvent.as
+            │  │      
+            │  ├─midi
+            │  │      MIDIModule.as
+            │  │      MIDIModuleChannel.as
+            │  │      MIDIModuleOperator.as
+            │  │      SiONDataConverterSMF.as
+            │  │      SMFData.as
+            │  │      SMFEvent.as
+            │  │      SMFExecutor.as
+            │  │      SMFTrack.as
+            │  │      
+            │  ├─module
+            │  │  │  ISiOPMWaveInterface.as
+            │  │  │  SiOPMChannelParam.as
+            │  │  │  SiOPMModule.as
+            │  │  │  SiOPMOperatorParam.as
+            │  │  │  SiOPMStream.as
+            │  │  │  SiOPMTable.as
+            │  │  │  SiOPMWaveBase.as
+            │  │  │  SiOPMWavePCMData.as
+            │  │  │  SiOPMWavePCMTable.as
+            │  │  │  SiOPMWaveSamplerData.as
+            │  │  │  SiOPMWaveSamplerTable.as
+            │  │  │  SiOPMWaveTable.as
+            │  │  │  _siopm_module_internal.as
+            │  │  │  
+            │  │  └─channels
+            │  │          SiOPMChannelBase.as
+            │  │          SiOPMChannelFM.as
+            │  │          SiOPMChannelKS.as
+            │  │          SiOPMChannelManager.as
+            │  │          SiOPMChannelPCM.as
+            │  │          SiOPMChannelSampler.as
+            │  │          SiOPMOperator.as
+            │  │          
+            │  ├─namespaces
+            │  │      _sion_internal.as
+            │  │      
+            │  ├─sequencer
+            │  │  │  SiMMLChannelSetting.as
+            │  │  │  SiMMLData.as
+            │  │  │  SiMMLEnvelopTable.as
+            │  │  │  SiMMLSequencer.as
+            │  │  │  SiMMLTable.as
+            │  │  │  SiMMLTrack.as
+            │  │  │  SiMMLVoice.as
+            │  │  │  
+            │  │  └─base
+            │  │          BeatPerMinutes.as
+            │  │          MMLData.as
+            │  │          MMLEvent.as
+            │  │          MMLExecutor.as
+            │  │          MMLExecutorConnector.as
+            │  │          MMLParser.as
+            │  │          MMLParserSetting.as
+            │  │          MMLSequence.as
+            │  │          MMLSequenceGroup.as
+            │  │          MMLSequencer.as
+            │  │          _sion_sequencer_internal.as
+            │  │          
+            │  └─utils
+            │      │  BPMAnalyzer.as
+            │      │  Chord.as
+            │      │  Fader.as
+            │      │  PCMSample.as
+            │      │  PeakDetector.as
+            │      │  Scale.as
+            │      │  SiONPresetVoice.as
+            │      │  SiONUtil.as
+            │      │  SoundClass.as
+            │      │  Translator.as
+            │      │  
+            │      ├─soundfont
+            │      │      SiONSoundFont.as
+            │      │      SiONSoundFontContainer.as
+            │      │      SiONSoundFontLoader.as
+            │      │      
+            │      └─soundloader
+            │              SoundLoader.as
+            │              SoundLoaderFileData.as
+            │              
+            ├─sound
+            │  │  Arpeggiator.as
+            │  │  BassSequencer.as
+            │  │  ChordPad.as
+            │  │  DrumMachine.as
+            │  │  FlashSoundPlayer.as
+            │  │  MMLPlayer.as
+            │  │  MonophonicSynthesizer.as
+            │  │  MultiTrackSoundObject.as
+            │  │  PatternSequencer.as
+            │  │  PolyphonicSynthesizer.as
+            │  │  SoundObject.as
+            │  │  SoundObjectContainer.as
+            │  │  
+            │  ├─core
+            │  │      EffectChain.as
+            │  │      
+            │  ├─events
+            │  │      FlashSoundPlayerEvent.as
+            │  │      SoundObjectEvent.as
+            │  │      
+            │  ├─mdx
+            │  │      MDXData.as
+            │  │      MDXEvent.as
+            │  │      MDXExecutor.as
+            │  │      MDXFORM.TXT
+            │  │      mdxplayer.as.txt
+            │  │      MDXTrack.as
+            │  │      PDXData.as
+            │  │      PDXDataStorage.as
+            │  │      
+            │  ├─namespaces
+            │  │      _sound_object_internal.as
+            │  │      
+            │  ├─nsf
+            │  │      APU.as
+            │  │      CPU.as
+            │  │      Mapper.as
+            │  │      MapperNSF.as
+            │  │      MMU.as
+            │  │      NES.as
+            │  │      NESconfig.as
+            │  │      NSFData.as
+            │  │      PAD.as
+            │  │      PPU.as
+            │  │      ROM.as
+            │  │      
+            │  ├─patterns
+            │  │      BassSequencerPresetPattern.as
+            │  │      DrumMachinePresetPattern.as
+            │  │      Note.as
+            │  │      PMLParser.as
+            │  │      Scaler.as
+            │  │      Sequencer.as
+            │  │      
+            │  ├─smf
+            │  │      moved.txt
+            │  │      
+            │  ├─synthesizers
+            │  │      AnalogSynth.as
+            │  │      BasicSynth.as
+            │  │      DrumMachinePresetVoice.as
+            │  │      FMSynth.as
+            │  │      FMSynthOperator.as
+            │  │      IFlashSoundOperator.as
+            │  │      NESSynth.as
+            │  │      PCMSynth.as
+            │  │      PMGuitarSynth.as
+            │  │      PresetVoiceLoader.as
+            │  │      PSGSynth.as
+            │  │      SamplerSynth.as
+            │  │      VoiceReference.as
+            │  │      WaveTableSynth.as
+            │  │      _synthesizer_internal.as
+            │  │      
+            │  └─_preserved
+            │          Sequencer.as.txt
+            │          
+            └─utils
+                    AbstructLoader.as
+                    ByteArrayExt.as
+                    FFT.as
+                    FFT_original.as
+                    SLLint.as
+                    SLLNumber.as
+                    timer.as
+                    
