@@ -41,7 +41,7 @@
 		}
 		
 		
-		private function onResize(e:Event):void 
+		protected function onResize(e:Event=null):void 
 		{
 			
 		}

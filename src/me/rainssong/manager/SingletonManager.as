@@ -31,15 +31,18 @@
 			return getSingleton(EventBus);
 		}
 		
+		
 		public static function get bulkLoader():BulkLoader
 		{
 			return getSingleton(BulkLoader) as BulkLoader;
 		}
 		
+		
 		public static function get sharedObject():SharedObject
 		{
 			return SharedObject.getLocal("");
 		}
+		
 	}
 
 }
