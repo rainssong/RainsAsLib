@@ -1,14 +1,13 @@
 package me.rainssong.utils
 {
-	import flash.system.Capabilities;
 	/**
-	 * ...
+	 * 旧版不再更新，推荐使用powerTrace
 	 * @author Rainssong
+	 * 2013-6-4
 	 */
 	
 	public function superTrace(... args):void
 	{
-		//if (Capabilities.isDebugger)
 		try
 		{
 			var e:Error = new Error();
