@@ -13,11 +13,11 @@
 	 */
 	public class ApplicationBase extends SmartSprite 
 	{
-		private var _instance:ApplicationBase;
-		private var _bgLayer:SmartSprite;
-		private var _mainLayer:SmartSprite;
-		private var _uiLayer:SmartSprite;
-		private var _warningLayer:SmartSprite
+		protected var _instance:ApplicationBase;
+		protected var _bgLayer:SmartSprite;
+		protected var _mainLayer:SmartSprite;
+		protected var _uiLayer:SmartSprite;
+		protected var _warningLayer:SmartSprite
 		
 		
 		
