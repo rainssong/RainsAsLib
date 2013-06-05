@@ -85,7 +85,7 @@ me.rainssong.*:
 +---quest
 |  |  XmlQuestManager.as
 |  |  
-|  ©¸---VO
+|  \---VO
 |          QuestModel.as
 |          
 +---rainMVC
@@ -95,7 +95,7 @@ me.rainssong.*:
 |  |      Proxy.as
 |  |      RangeNumberModel.as
 |  |      
-|  ©¸---view
+|  \---view
 |          Mediator.as
 |          TipTextFieldMediator.as
 |          
@@ -105,7 +105,7 @@ me.rainssong.*:
 |      RainSlideShow.as:Powerful Slide Show
 |      
 +---robotlegs
-|  ©¸---controller
+|  \---controller
 |          SwitchSceneCommand.as
 |          
 +---sound
