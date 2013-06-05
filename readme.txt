@@ -8,7 +8,6 @@ me.rainssong.*:
 
 +---air
 |      AirManager.as
-
 |      
 +---application
 |      ApplicationBase.as
