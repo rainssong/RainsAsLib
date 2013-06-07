@@ -27,7 +27,5 @@ package me.rainssong.utils
 			superTrace("new resortArr:" + resortArr);
 			return String(resortArr);
 		}
-		
 	}
-
 }
