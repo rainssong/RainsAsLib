@@ -3,7 +3,7 @@ package me.rainssong.utils
 	import flash.utils.flash_proxy;
 	import flash.utils.Proxy;
 	
-	public class VarWatcher extends Proxy
+	public dynamic  class VarWatcher extends Proxy
 	{
 		private var _watchHashTable:Object = {};
 		private var _obj:Object;
