@@ -83,7 +83,13 @@ package me.rainssong.application
 			//return true;
 		}
 		
-		public static function get PLAYER_MODE():Boolean 
+		public static function get WEB_PLAYER():Boolean 
+		{
+			return Capabilities.playerType == "ActiveX" || Capabilities.playerType == "PlugIn";
+			//return true;
+		}
+		
+		public static function get STANDALONE_PLAYER():Boolean 
 		{
 			return Capabilities.playerType == "External" || Capabilities.playerType == "StandAlone";
 		}
