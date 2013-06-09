@@ -67,12 +67,12 @@
 		
 		private function resize(e:Event = null):void
 		{
-			
+			if (!_example) return;
 			DisplayObject(_example).width = _contentWidth;
 			DisplayObject(_example).height = _contentHeight;
 			DisplayObject(_example).scaleX = DisplayObject(_example).scaleY = Math.min(DisplayObject(_example).scaleX, DisplayObject(_example).scaleY);
 			DisplayObject(_example).x = _contentWidth / 2 - DisplayObject(_example).width / 2;
-			DisplayObject(_example).y = _contentHeight / 2 - DisplayObject(_example).height / 2;
+			//DisplayObject(_example).y = _contentHeight / 2 - DisplayObject(_example).height / 2;
 		
 		}
 		
@@ -85,7 +85,10 @@
 		public function unload():void
 		{
 			if (_example is Loader)
+			{
 				Loader(_example).unloadAndStop();
+				Loader(_example).contentLoaderInfo.removeEventListener(Event.COMPLETE, resize);
+			}
 			else if (_example is MovieClip)
 				MovieClip(_example).stop();
 			else if (_example is Bitmap)
