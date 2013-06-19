@@ -63,8 +63,8 @@ package me.rainssong.robotlegs.controller
 					TweenMax.to(switchSceneEvent.sourceScene, 0.5, {y: -_parent.stage.stageHeight, onComplete: destroyScene, onCompleteParams: [switchSceneEvent.sourceScene], ease: Cubic.easeInOut});
 					break;
 				case Directions.DOWN: 
-					TweenMax.from(switchSceneEvent.targetScene, 0.5, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut});
-					TweenMax.to(switchSceneEvent.sourceScene, 0.5, {y: -_parent.stage.stageHeight, onComplete: destroyScene, onCompleteParams: [switchSceneEvent.sourceScene], ease: Cubic.easeInOut});
+					TweenMax.from(switchSceneEvent.targetScene, 0.5, {y: -_parent.stage.stageHeight, ease: Cubic.easeInOut});
+					TweenMax.to(switchSceneEvent.sourceScene, 0.5, {y: _parent.stage.stageHeight, onComplete: destroyScene, onCompleteParams: [switchSceneEvent.sourceScene], ease: Cubic.easeInOut});
 					
 					break;
 			}

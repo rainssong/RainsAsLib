@@ -1,5 +1,10 @@
 package me.rainssong.utils
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.GradientType;
+	import flash.display.Sprite;
+	import flash.geom.Matrix;
 	
 	public class Draw
 	{

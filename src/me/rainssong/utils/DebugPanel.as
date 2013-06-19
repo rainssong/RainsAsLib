@@ -1,5 +1,7 @@
 package me.rainssong.utils
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -21,18 +23,19 @@ package me.rainssong.utils
 		private static var _textField:TextField;
 		private static var _maxLine:int;
 		private static var _traceIt:Boolean
-		private static var _isWorking:Boolean;
+	
 		public static const VERSION:String = "1.2";
 		private static const INFORMATION:String = "DebugPanel" + VERSION + "\nF1:Help\nF4:Run/Stop\nF5:Refreash\nF6:Hide/Show";
 		private static var _contentVec:Vector.<String> = new Vector.<String>();
-		public static var TransformGestureEvent:Class
+		//public static var TransformGestureEvent:Class
+		private static var _bg:Bitmap = new Bitmap(new BitmapData(100, 100, false, 0x00000000));
 		
 		/**
-		 * 
+		 *
 		 * @param	maxLine 最大行数
 		 * @param	traceIt 是否同步Trace
 		 */
-		public function DebugPanel(maxLine:int = 10, traceIt:Boolean = false)
+		public function DebugPanel(maxLine:int = 10, traceIt:Boolean = false,width:Number=200)
 		{
 			super();
 			
@@ -40,38 +43,45 @@ package me.rainssong.utils
 				return;
 			
 			_instance = this;
-			this.mouseChildren = false;
+			//this.mouseChildren = false;
 			_textField = new TextField();
 			
-			addChild(_textField);
 			_maxLine = maxLine;
-			_isWorking = true;
 			_traceIt = traceIt;
+			//_isWorking = true;
 			
-			_textField.height = 0;
+			//addChild(_bg);
+			//_bg.alpha = 0.6;
+			addChild(_textField);
 			_textField.multiline = true;
+			_textField.wordWrap = true
 			_textField.background = true;
 			_textField.backgroundColor = 0x444444;
 			_textField.alpha = 0.6;
 			_textField.textColor = 0xFFFFFF;
 			_textField.selectable = false;
+			_textField.mouseEnabled = false;
+			_textField.height = Number(_textField.defaultTextFormat.size) * (_maxLine-1)+4;
+			_textField.width = width;
 			
-			TransformGestureEvent = getDefinitionByName("flash.events.TransformGestureEvent") as Class;
-			if(TransformGestureEvent)
-				addEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
-				
+			
+			
 			addEventListener(Event.ADDED_TO_STAGE, onAdd);
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			addEventListener(MouseEvent.MOUSE_OUT, onMouseUp);
-			addEventListener(MouseEvent.CLICK, onClick);
+		
 			print(INFORMATION);
+		
+			resize();
+			//TransformGestureEvent = getDefinitionByName("flash.events.TransformGestureEvent") as Class;
+			//if(TransformGestureEvent)
+			//addEventListener(TransformGestureEvent.GESTURE_ZOOM, onZoom);
 		}
 		
 		private function onZoom(e:*):void
 		{
 			var target:DisplayObject = e.target as DisplayObject;
-		
 			
 			target.scaleX *= e.scaleX;
 			target.scaleX = target.scaleX < 0.3 ? 0.3 : target.scaleX;
@@ -82,32 +92,18 @@ package me.rainssong.utils
 		
 		public static function print(... arg):void
 		{
-			if (!_instance || !_isWorking)
+			if (!_instance)
 				return;
 			
-			var caller:String = "[" + new Error().getStackTrace().match(/[\w\/$]*\(\)/g)[1] + "]";
 			if (_traceIt)
-				trace(caller, arg);
+				trace(_instance, arg);
 			
-			_contentVec.push(arg.toString() + "\n");
-			if (_contentVec.length > _maxLine)
-				_contentVec.shift();
-			_textField.htmlText = "";
 			
-			for (var i:int = 0; i < _contentVec.length; i++)
+			for (var i:int = 0; i < arg.length; i++)
 			{
-				_textField.htmlText = _textField.htmlText.concat(_contentVec[i]);
+				_textField.htmlText = _textField.htmlText.concat(arg[i]);
 			}
-			//if (_textField.numLines > _maxLine)
-			//{
-			//_textField.replaceText(0, _textField.getLineOffset(_textField.numLines - _maxLine + 1), "");
-			//_textField.setSelection(0, _textField.getLineOffset(_textField.numLines - _maxLine + 1));
-			//
-			//
-			//_textField.text = _textField.text.substr(_textField.text.indexOf(_textField.getLineText(2)));
-			//
-			//}
-			
+			_textField.scrollV = _textField.numLines;
 			resize();
 		}
 		
@@ -117,37 +113,25 @@ package me.rainssong.utils
 		static protected function resize():void
 		{
 			
-			
-			_textField.wordWrap = false;
-			if (_instance.stage && _textField.textWidth >= _instance.stage.stageWidth)
-			{
-				_textField.width = _instance.stage.stageWidth;
-				_textField.wordWrap = true;
-			}
-			//else if (_instance.stage && _textField.textWidth < _instance.stage.stageWidth - 20)
-			//{
-			//_textField.wordWrap = false;
-			//}
-			_textField.height = _textField.textHeight + 6;
-			_textField.width = Math.max(_textField.textWidth + 6);
-			
 			if (!_instance.stage)
 				return;
+			
+			//_bg.width = _textField.textWidth;
+			//_bg.height = Math.min(_textField.textHeight, _textField.height);
+			
 			if (_instance.x + _instance.width < 0)
 				_instance.x = 0;
 			if (_instance.x > _instance.stage.stageWidth)
-				_instance.x = _instance.stage.stageWidth-_instance.width;
+				_instance.x = _instance.stage.stageWidth - _instance.width;
 			if (_instance.y + _instance.height < 0)
 				_instance.y = 0;
-			if (_instance.y >_instance.stage.stageHeight)
-				_instance.y = _instance.stage.stageHeight-_instance.height;
-			
-			
+			if (_instance.y > _instance.stage.stageHeight)
+				_instance.y = _instance.stage.stageHeight - _instance.height;
 		}
 		
 		public static function replace(... arg):void
 		{
-			if (!_instance || !_isWorking)
+			if (!_instance)
 				return;
 			clear();
 			print(arg);
@@ -158,23 +142,19 @@ package me.rainssong.utils
 			removeEventListener(Event.ADDED_TO_STAGE, onAdd);
 			this.stage.addChild(_instance);
 			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			
 		}
 		
 		private function onMouseUp(e:MouseEvent):void
 		{
 			stopDrag()
-			removeEventListener(MouseEvent.CLICK, onClick);
+			
 		}
 		
 		private function onMouseDown(e:MouseEvent):void
 		{
 			startDrag();
-			removeEventListener(MouseEvent.CLICK, onClick);
-		}
-		
-		private function onClick(e:MouseEvent):void
-		{
-			_isWorking = !_isWorking;
+			
 		}
 		
 		private function onKeyDown(e:KeyboardEvent):void
@@ -183,9 +163,6 @@ package me.rainssong.utils
 			{
 				case Keyboard.F1: 
 					print(INFORMATION);
-					break;
-				case Keyboard.F4: 
-					_isWorking = !_isWorking;
 					break;
 				case Keyboard.F5: 
 					clear();
@@ -198,11 +175,10 @@ package me.rainssong.utils
 		
 		static public function clear():void
 		{
-			if (!_instance || !_isWorking)
+			if (!_instance)
 				return;
 			_textField.text = "";
-			_textField.height = 0;
-			_textField.width = 0;
+		
 		}
 	
 	}

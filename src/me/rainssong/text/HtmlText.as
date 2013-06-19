@@ -56,7 +56,7 @@
 			return format(content, ORANGE);
 		} // end function
 		
-		public static function format(content:String, color:int = -1, size:uint = 12, font:String = null, align:String = null, bold:Boolean = false, italic:Boolean = false, underline:Boolean = false, href:String = null):String
+		public static function format(content:String, color:int = -1, size:uint = -1, font:String = null, align:String = null, bold:Boolean = false, italic:Boolean = false, underline:Boolean = false, href:String = null):String
 		{
 			if (bold)
 			{
