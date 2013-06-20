@@ -23,7 +23,7 @@
 @ignore
 */
  
-package lt.uza.ui
+package me.rainssong.controls
 {
 	import flash.display.BitmapData;
 	import flash.display.Sprite;

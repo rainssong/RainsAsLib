@@ -6,6 +6,8 @@ Contains my as3 collection and my own lib (me.rainssong.*)
 
 me.rainssong.*:
 
+powerTrace.as		//You will love it
+
 ---air
 AirManager.as //Empty
 
@@ -22,35 +24,36 @@ MyRadioButtonGroup.as
 RainCheckBox.as
 RainSlider.as:		//Sprite as RadioBtn
 ZoomBtn.as：		//Auto Zoom
+Scale9SimpleStateButton.as	//
 
 ---display
-AbstructDragableSprite.as		//dont create instant
+AbstructDragableSprite.as	//dont instantiate this
 BitmapDataCore.as:		//Opration BMD
 DisplayObjectTransfer.as	//Get display instant by url|ClassName|Class
 IDragableView.as		
 ISlide.as		
 IView.as
 LCDRender.as
-MouseDragableSprite.as
-MouseDragSprite.as
-MouseInteractiveSprite.as
-MouseRotatableSprite.as
-MouseScrollableSprite.as
-MouseTargetScrollableSprite.as
+MouseDragableSprite.as		//
+MouseDragSprite.as		//Start drag when mouseDown
+MouseInteractiveSprite.as	//Save dragSpeed,dispatch MouseInteractiveEvent.Swipe
+MouseRotatableSprite.as		//Rotate when drag
+MouseScrollableSprite.as	//
+MouseTargetScrollableSprite.as	//
 MyMovieClip.as			//Out-of-date
 MySprite.as			//Out-of-date
 RestoreLocationSprite.as	//AutoRestoreLocation
-Scale9BitmapSprite.as
-Scale9SimpleStateButton.as
+Scale9BitmapSprite.as		
+
 Slide.as			//Out-of-date
 SlideShow.as			//Out-of-date
 SmartMovieClip.as		//Auto destroy, listen add/resize
 SmartSprite.as:			//Auto destroy, listen add/resize
 SpeedRotatableSprite.as
 TargetRotatableSprite.as
-ToolTip.as
+ToolTip.as			//
 ---events
-ApplicationEvent.as
+ApplicationEvent.as		//Login/Logout Init/Exit
 DataEvent.as			//Out-of-date,ObjectEvent instead
 DragEvent.as			//
 GameEvent.as			
@@ -66,7 +69,7 @@ FontLibrary.as
 MSYH.as
 
 ---manager
-EventBus.as
+EventBus.as			//Global EventDispatcher
 KeyboardManager.as:		//Manage Keyboard event
 MouseManager.as			//
 SingletonManager.as:		//Get singleton
@@ -86,19 +89,19 @@ ResumeDownloader.as
 ---quest
 XmlQuestManager.as
 
----VO
-QuestModel.as
+	---VO
+	QuestModel.as		//Save Quest Here
 
 ---rainMVC
 ---controller
 ---model
-Model.as
-Proxy.as
-RangeNumberModel.as
+Model.as			//Developing
+Proxy.as			//Developing
+RangeNumberModel.as		
 
 ---view
-Mediator.as
-TipTextFieldMediator.as
+Mediator.as			//Developing
+TipTextFieldMediator.as		
 
 ---rainSlideShow
 IRainSlide.as

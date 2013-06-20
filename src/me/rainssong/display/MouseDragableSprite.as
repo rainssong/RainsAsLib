@@ -8,7 +8,7 @@ package me.rainssong.display
 	import me.rainssong.utils.superTrace;
 	
 	/**
-	 * ...
+	 * Out-of-date
 	 * @author Rainssong
 	 */
 	public class MouseDragableSprite extends AbstructDragableSprite 
