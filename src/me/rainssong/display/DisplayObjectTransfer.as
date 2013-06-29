@@ -34,6 +34,8 @@ package me.rainssong.display
 				var temp:* =  new value();
 				if(temp is DisplayObject)
 				return temp;
+				else if (temp is BitmapData)
+				return new Bitmap(temp);
 				else
 				throw Error("can't transfer "+value);
 			}
