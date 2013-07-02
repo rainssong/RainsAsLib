@@ -45,6 +45,34 @@ package  me.rainssong.display
 			return result;
 		}
 		
+		public static function bmdToArr(bmd:BitmapData):Array
+		{
+			var arr:Array=[]
+			for (var i:int = 0; i < bmd.height; i++ )
+			{
+				arr[i] = [];
+				for (var j:int = 0; j < bmd.width; j++ )
+				{
+					arr[i][j] = bmd.getPixel32(i, j);
+				}
+			}
+			return arr;
+		}
+		
+		
+		public static function arrToBmd(arr:Array):BitmapData
+		{
+			var bmd:BitmapData = new BitmapData(arr.length - 1, arr[0].length - 1, true);
+			for (var i:int = 0; i < bmd.height; i++ )
+			{
+				for (var j:int = 0; j < bmd.width; j++ )
+				{
+					bmd.setPixel(i, j,arr[i][j]);
+				}
+			}
+			return bmd;
+		}
+		
 	}
 
 }
