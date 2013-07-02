@@ -54,6 +54,28 @@ package   me.rainssong.math
 			return outputArr;
 		}
 		
+		/**
+		 * 冒泡乱序，轻度打乱数组
+		 * @param	arr
+		 * @param	times
+		 * @return
+		 */
+		public static function getLightRandomizedArray(arr:Array, times:int = 1):Array
+		{
+			var outputArr:Array = arr.slice();
+			var length:int=outputArr.length
+			for (var i:int = 0; i < length-1; i++ )
+			{
+				if (Math.random() > 0.5)
+				{
+					var temp:*= outputArr[i];
+					outputArr[i] = outputArr[i + 1];
+					outputArr[i + 1]=temp;
+				}
+			}
+			return outputArr;
+		}
+		
 	
 		public static function switchElements(arr:Array, index1:int, index2:int):void
 		{
