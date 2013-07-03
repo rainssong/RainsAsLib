@@ -1,6 +1,7 @@
 package  me.rainssong.display
 {
 	import flash.display.BitmapData;
+	import flash.geom.Matrix;
 	/**
 	 * ...
 	 * @author Rainssong
@@ -67,7 +68,7 @@ package  me.rainssong.display
 			{
 				for (var j:int = 0; j < bmd.width; j++ )
 				{
-					bmd.setPixel(i, j,arr[i][j]);
+					bmd.setPixel32(i, j,arr[i][j]);
 				}
 			}
 			return bmd;
