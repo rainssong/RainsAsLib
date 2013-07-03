@@ -1,7 +1,8 @@
-package org.superkaka.kakalib.events 
+﻿package org.superkaka.kakalib.events 
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+
 	
 	/**
 	 * 像素级交互的鼠标事件
