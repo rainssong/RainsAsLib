@@ -40,10 +40,9 @@
 			}
 		}
 		
-		
-		protected function onResize(e:Event=null):void 
+		protected function onResize(e:Event = null):void
 		{
-			
+		
 		}
 		
 		protected function onAdd(e:Event = null):void
@@ -88,27 +87,27 @@
 			
 			removeListeners();
 			removeChildren();
-			deleteVars();
+			//deleteVars();
 			//remove();
 			if (!autoDestroy && parent)
 				parent.removeChild(this);
 		}
 		
-		
-		
 		private function deleteVars():void
 		{
-			for (var v:String in this)
-			{
-				if (this[v] is URLLoader)
-					URLLoader(this[v]).close();
-				if (this[v] is Loader)
-					Loader(this[v]).unloadAndStop();
-				if (this[v] is Timer)
-					Timer(this[v]).stop();
-				
-				delete this[v];
-			}
+			//for (var v:String in this)
+			//{
+			//powerTrace(v);
+			//
+			//if (this[v] is URLLoader)
+			//URLLoader(this[v]).close();
+			//if (this[v] is Loader)
+			//Loader(this[v]).unloadAndStop();
+			//if (this[v] is Timer)
+			//Timer(this[v]).stop();
+			//
+			//delete this[v];
+			//}
 		}
 		
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
@@ -133,11 +132,18 @@
 			for (i; i >= beginIndex; i--)
 			{
 				var child:* = this.getChildAt(i);
-				if (child is Bitmap && (child as Bitmap).bitmapData)
-					child.bitmapData.dispose();
-				if (child is flash.display.MovieClip)
-					child.stop();
+				
 				this.removeChild(child);
+				
+				if (autoDestroy)
+				{
+					if (child is Bitmap && (child as Bitmap).bitmapData)
+						child.bitmapData.dispose();
+					if (child is flash.display.MovieClip)
+						child.stop();
+					if (child is Loader)
+						Loader(child).unloadAndStop();
+				}
 			}
 		}
 		

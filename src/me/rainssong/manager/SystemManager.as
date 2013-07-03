@@ -48,10 +48,9 @@ package  me.rainssong.manager
 		public static function get isWebPlayer():Boolean 
 		{
 			return Capabilities.playerType == "ActiveX" || Capabilities.playerType == "PlugIn";
-			//return true;
 		}
 		
-		public static function get isStandlonePlayer():Boolean 
+		public static function get isStandAlonePlayer():Boolean 
 		{
 			return Capabilities.playerType == "External" || Capabilities.playerType == "StandAlone";
 		}
