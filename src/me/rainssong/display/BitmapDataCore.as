@@ -54,7 +54,7 @@ package  me.rainssong.display
 				arr[i] = [];
 				for (var j:int = 0; j < bmd.width; j++ )
 				{
-					arr[i][j] = bmd.getPixel32(i, j);
+					arr[i][j] = bmd.getPixel32(j, i);
 				}
 			}
 			return arr;
@@ -63,12 +63,13 @@ package  me.rainssong.display
 		
 		public static function arrToBmd(arr:Array):BitmapData
 		{
-			var bmd:BitmapData = new BitmapData(arr.length - 1, arr[0].length - 1, true);
+			var bmd:BitmapData = new BitmapData(arr[0].length, arr.length, true);
 			for (var i:int = 0; i < bmd.height; i++ )
 			{
 				for (var j:int = 0; j < bmd.width; j++ )
 				{
-					bmd.setPixel32(i, j,arr[i][j]);
+					if(arr[i][j])
+						bmd.setPixel32(j, i,arr[i][j]);
 				}
 			}
 			return bmd;

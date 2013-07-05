@@ -17,11 +17,10 @@ package   me.rainssong.math
 		public static function getIntArray(start:int=0, end:int=100):Array
 		{
 			var arr:Array = [];
-			for (var i:int = start; i <= end; i++ )
+			for (var i:int = start; i <= end; start<end?i++:i++ )
 			{
 				arr.push(i)
 			}
-			
 			return arr;
 		}
 		
@@ -60,6 +59,8 @@ package   me.rainssong.math
 		 * @param	times
 		 * @return
 		 */
+		
+		 
 		public static function getLightRandomizedArray(arr:Array, times:int = 1):Array
 		{
 			var outputArr:Array = arr.slice();
@@ -76,7 +77,6 @@ package   me.rainssong.math
 			return outputArr;
 		}
 		
-	
 		public static function switchElements(arr:Array, index1:int, index2:int):void
 		{
 			var elementA:Object = arr[index1];
@@ -84,15 +84,18 @@ package   me.rainssong.math
 			arr[index2] = elementA;
 		}
 		
-		public static function sum(arr:Array):Number {
-      var nSum:Number = 0;
-      for(var i:Number = 0; i < arr.length; i++) {
-        if(typeof(arr[i]) == "number") {
-          nSum += arr[i];
-        }
-      }
-      return nSum;
-    }
+		public static function sum(arr:Array):Number 
+		{
+			var nSum:Number = 0;
+			for (var i:Number = 0; i < arr.length; i++) 
+			{
+				if (typeof(arr[i]) == "number")
+				{
+				nSum += arr[i];
+				}
+			}
+			return nSum;
+		}
 		
 		public static function max(arr:Array):Number
 		{
@@ -111,8 +114,6 @@ package   me.rainssong.math
 		
 		public static function vectorToArray(vector:*):Array
 		{
-			
-			
 			var array:Array = new Array();
 			var callback:Function = function(item:*, index:int, vector:*):Boolean
 			{
@@ -121,6 +122,27 @@ package   me.rainssong.math
 			}
 			vector.every(callback);
 			return array;
+		}
+		
+		public static  function getCode(obj:*):String
+		{
+			var result:String = "";
+			
+			switch (typeof(obj)) 
+			{
+				case :
+					
+				break;
+				default:
+			}
+			for (var i:int = 0; i < arr .length;i++ )
+			{
+				if(arr[i] is Array)
+					result += arr[i] + "\r";
+				else
+					result += arr[i] .toString();
+			}
+			return result;
 		}
 		
 
