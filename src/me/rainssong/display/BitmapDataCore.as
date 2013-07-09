@@ -1,6 +1,7 @@
 package  me.rainssong.display
 {
 	import flash.display.BitmapData;
+	import flash.display.IBitmapDrawable;
 	import flash.geom.Matrix;
 	/**
 	 * ...
@@ -44,6 +45,13 @@ package  me.rainssong.display
 				}
 			}
 			return result;
+		}
+		
+		public static function getBmd(source:IBitmapDrawable):BitmapData
+		{
+			var bmd:BitmapData = new BitmapData(source["width"], source["height"],true,0x00FFFFFF);
+			bmd.draw(source);
+			return bmd;
 		}
 		
 		public static function bmdToArr(bmd:BitmapData):Array

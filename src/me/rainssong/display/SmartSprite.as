@@ -36,13 +36,7 @@
 			else
 			{
 				addEventListener(Event.ADDED_TO_STAGE, onAdd);
-				addEventListener(Event.RESIZE, onResize);
 			}
-		}
-		
-		protected function onResize(e:Event = null):void
-		{
-		
 		}
 		
 		protected function onAdd(e:Event = null):void
@@ -165,18 +159,6 @@
 		public function set autoDestroy(value:Boolean):void
 		{
 			_autoDestroy = value;
-			var i:int = this.numChildren - 1;
-			for (i; i >= 0; i--)
-			{
-				var child:* = this.getChildAt(i);
-				try
-				{
-					child.autoDestroy = value
-				}
-				catch (e:Error)
-				{
-				}
-			}
 		}
 	
 	}

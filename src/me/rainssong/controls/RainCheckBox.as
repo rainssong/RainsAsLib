@@ -1,30 +1,28 @@
 ﻿package me.rainssong.controls
 {
-
-
-	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
+	
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.IBitmapDrawable;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.text.TextFieldAutoSize;
-	import me.rainssong.display.SmartSprite;
-
-
-
+	
 	public class RainCheckBox extends Sprite implements IToggleBtn
 	{
-		private var _unselectView:DisplayObject;
-		private var _selectView:DisplayObject;
+		private var _unselectView:Bitmap
+		private var _selectView:Bitmap
 		private var _selected:Boolean = false;
 		
-		
-		
-		public function RainCheckBox(unselectView:DisplayObject,selectView:DisplayObject,selected:Boolean=false)
+		public function RainCheckBox(unselectView:IBitmapDrawable, selectView:IBitmapDrawable, selected:Boolean = false)
 		{
 			// constructor code
-			_unselectView = unselectView;
-			_selectView = selectView;
+			var bmd1:BitmapData = new BitmapData(unselectView["width"], unselectView["height"],true,0x00FFFFFF);
+			bmd1.draw(unselectView)
+			var bmd2:BitmapData = new BitmapData(selectView["width"], selectView["height"],true,0x00FFFFFF);
+			bmd2.draw(selectView)
+			_unselectView = new Bitmap(bmd1);
+			_selectView = new Bitmap(bmd2);
 			addChild(_unselectView);
 			addChild(_selectView);
 			
@@ -33,16 +31,14 @@
 			this.addEventListener(MouseEvent.CLICK, onClick);
 			
 			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemove);
-
+		
 		}
 		
-		
-
 		protected function onClick(e:MouseEvent):void
 		{
 			switchStatus();
 		}
-
+		
 		protected function onRemove(e:Event):void
 		{
 			_unselectView = null;
@@ -50,13 +46,12 @@
 			this.removeEventListener(Event.REMOVED_FROM_STAGE, onRemove);
 			this.removeEventListener(MouseEvent.CLICK, onClick);
 		}
-
+		
 		public function switchStatus():void
 		{
 			selected = !_selected;
 		}
-
-
+		
 		public function select():void
 		{
 			selected = true;
@@ -66,7 +61,7 @@
 		{
 			selected = false;
 		}
-
+		
 		public function get selected():Boolean
 		{
 			return _selected;
@@ -78,7 +73,7 @@
 			_selectView.visible = value;
 			_unselectView.visible = !value;
 		}
-
+		
 		public function get label():String
 		{
 			if (["labelTF"])
@@ -90,17 +85,16 @@
 				return "";
 			}
 		}
-
+		
 		public function set label(content:String):void
 		{
 			if (["labelTF"])
 			{
 				this["labelTF"].text = content;
 			}
-
+		
 		}
-
-
+	
 	}
 
 }

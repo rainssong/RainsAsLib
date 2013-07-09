@@ -1,5 +1,6 @@
 package   me.rainssong.math
 {
+	import flash.utils.getQualifiedClassName;
 	/**
 	 * ...
 	 * @author Rainssong
@@ -17,7 +18,7 @@ package   me.rainssong.math
 		public static function getIntArray(start:int=0, end:int=100):Array
 		{
 			var arr:Array = [];
-			for (var i:int = start; i <= end; start<end?i++:i++ )
+			for (var i:int = start; start<end?(i <= end):(i>=end); start<end?i++:i-- )
 			{
 				arr.push(i)
 			}
@@ -59,8 +60,6 @@ package   me.rainssong.math
 		 * @param	times
 		 * @return
 		 */
-		
-		 
 		public static function getLightRandomizedArray(arr:Array, times:int = 1):Array
 		{
 			var outputArr:Array = arr.slice();
@@ -124,33 +123,17 @@ package   me.rainssong.math
 			return array;
 		}
 		
-		public static  function getCode(obj:*):String
+		public static function isVector(obj:*):Boolean
 		{
-			var result:String = "";
-			
-			switch (typeof(obj)) 
-			{
-				case :
-					
-				break;
-				default:
-			}
-			for (var i:int = 0; i < arr .length;i++ )
-			{
-				if(arr[i] is Array)
-					result += arr[i] + "\r";
-				else
-					result += arr[i] .toString();
-			}
-			return result;
+			return obj.constructor.toString().search("Vector") >= 0;
 		}
+		
+		
 		
 
 		public static function arrayToVector(array:Array):Vector.<*>
 		{
-			var vec:Vector.<*>=new Vector.<*>();
-			vec.push.apply(null, array);
-			return vec;
+			return Vector.<*>(array);
 		}
 	}
 
