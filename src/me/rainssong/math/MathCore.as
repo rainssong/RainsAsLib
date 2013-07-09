@@ -1,6 +1,5 @@
 package me.rainssong.math
 {
-	import com.adobe.utils.IntUtil;
 	import flash.display.SimpleButton;
 	
 	public final class MathCore

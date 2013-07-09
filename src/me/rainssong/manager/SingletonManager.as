@@ -1,7 +1,6 @@
 ﻿package me.rainssong.manager
 {
 	import br.com.stimuli.loading.BulkLoader;
-	import com.vsdevelop.net.SharedManage;
 	import flash.net.SharedObject;
 	import flash.utils.Dictionary;
 	
