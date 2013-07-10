@@ -18,7 +18,6 @@ package me.rainssong.utils
 		var result:String = "";
 		var i:*;
 		
-		
 		if (obj is Number ||  obj is Boolean )
 		{
 			result += obj ;
@@ -32,7 +31,7 @@ package me.rainssong.utils
 			result +="[";
 			for (i in obj)
 			{
-				result+=getCode(obj[i])+",";
+				result+=arguments.callee(obj[i])+",";
 			}
 			if (result.slice( -1) == ",") result = result.slice(0, -1);
 			result +="]\r";
@@ -42,7 +41,7 @@ package me.rainssong.utils
 			result +=className+"([";
 			for (i in obj)
 			{
-				result+=getCode(obj[i])+",";
+				result+=arguments.callee(obj[i])+",";
 			}
 			if (result.slice( -1) == ",") result = result.slice(0, -1);
 			result += "])\r";
@@ -53,7 +52,7 @@ package me.rainssong.utils
 			
 			for (i in obj)
 			{
-				result += i + ":" +getCode(obj[i]) + ",";
+				result += i + ":" +arguments.callee(obj[i]) + ",";
 			}
 			if (result.slice( -1) == ",") result = result.slice(0, -1);
 			result +=  "}";
@@ -65,7 +64,7 @@ package me.rainssong.utils
 			
 			for (i in obj)
 			{
-				result += i + ":" +getCode(obj[i]) + ",";
+				result += i + ":" +arguments.callee(obj[i]) + ",";
 			}
 			if (result.slice( -1) == ",") result = result.slice(0, -1);
 			result +=  ")";

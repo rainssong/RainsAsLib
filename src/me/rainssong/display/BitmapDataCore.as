@@ -17,9 +17,8 @@ package  me.rainssong.display
 		
 		public static function resize(source:BitmapData,width:Number = 8, height:Number=8):BitmapData
 		{
-			var newData:BitmapData = new BitmapData(width,height);
+			var newData:BitmapData = new BitmapData(width,height,true,0);
 			var matrix:Matrix = new Matrix();
-			//缩小至 8x8
 			matrix.scale(newData.width/source.width, newData.height/source.height);
 			newData.draw(source,matrix);
  
@@ -71,7 +70,7 @@ package  me.rainssong.display
 		
 		public static function arrToBmd(arr:Array):BitmapData
 		{
-			var bmd:BitmapData = new BitmapData(arr[0].length, arr.length, true);
+			var bmd:BitmapData = new BitmapData(arr[0].length, arr.length, true,0);
 			for (var i:int = 0; i < bmd.height; i++ )
 			{
 				for (var j:int = 0; j < bmd.width; j++ )

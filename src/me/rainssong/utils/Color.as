@@ -340,12 +340,29 @@
 				//纯值排序
 				if (a.color == b.color)
 				{
-					return a.name < b.name ? -1 : 1;
+				return a.name < b.name ? -1 : 1;
 				}
 				return a.color > b.color ? -1 : 1;
+			
 			}
 			
 			return spr;
+			
+			function isRed(color:*):Boolean
+			{
+				return getRed(color) > getGreen(color) && getRed(color) > getBlue(color);
+			}
+			
+			function isGreen(color:*):Boolean
+			{
+				return getGreen(color) > getBlue(color) && getGreen(color) > getRed(color);
+			}
+			
+			function isBlue(color:*):Boolean
+			{
+				return getBlue(color) > getRed(color) && getBlue(color) > getGreen(color);
+			}
+		
 		}
 		
 		/** Returns the alpha part of an ARGB color (0 - 255). */
