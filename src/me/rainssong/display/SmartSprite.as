@@ -6,6 +6,7 @@
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	import flash.net.URLLoader;
 	import flash.utils.Timer;
 	
@@ -139,6 +140,11 @@
 						Loader(child).unloadAndStop();
 				}
 			}
+		}
+		
+		public function getBoundsOnParent():Rectangle 
+		{
+			return super.getBounds(this.parent);
 		}
 		
 		private function removeListeners():void

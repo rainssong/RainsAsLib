@@ -46,7 +46,7 @@ package  me.rainssong.display
 			return result;
 		}
 		
-		public static function getBmd(source:IBitmapDrawable):BitmapData
+		public static function drawBmd(source:IBitmapDrawable):BitmapData
 		{
 			var bmd:BitmapData = new BitmapData(source["width"], source["height"],true,0x00FFFFFF);
 			bmd.draw(source);
