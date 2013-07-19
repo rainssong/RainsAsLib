@@ -211,7 +211,9 @@
 			for (var i:int = 0; i < _slideContentArr.length; i++)
 			{
 				if (i == currentIndex || i == currentIndex + 1 || i == currentIndex - 1)
-					addSlide(i);
+				{
+					addSlide(i); 
+				}
 				else
 					destroySlide(i);
 			}
@@ -323,7 +325,7 @@
 			if (_slideArr[index] != null || index < 0 || index >= _slideContentArr.length)
 				return;
 			//var point:Point = _slideArr[index].localToGlobal(new Point(_slideArr[index].x, _slideArr[index].y));
-			
+			powerTrace(index);
 			if (_slideContentArr[index] is Class && (new _slideContentArr[index]()) is Slide)
 				_slideArr[index] = new _slideContentArr[index]();
 			else
@@ -336,7 +338,6 @@
 			_slideArr[index].disable();
 			
 			//_slideArr[index].addEventListener(MouseEvent.CLICK,onSlideClick)
-			
 			//var _mask:Shape = new Shape();
 			//_mask.graphics.beginFill(0xFFFFFF,0);
 			//_mask.graphics.drawRect(0, 0, _slideWidth, _slideHeight);
@@ -350,7 +351,7 @@
 		{
 			if (_slideArr[index] == null)
 				return;
-			
+			powerTrace(index);
 			_slideContainer.removeChild(_slideArr[index]);
 			_slideArr[index].destroy();
 			_slideArr[index] = null;

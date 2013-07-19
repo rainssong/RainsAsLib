@@ -73,11 +73,11 @@ package me.rainssong.net
 			
 			//.substring(0, targetUrl.lastIndexOf("."))
 			_tempFileUrl = targetUrl + "." + EXTENSION;
-			trace(_tempFileUrl);
+			powerTrace(_tempFileUrl);
 			//_tempFile =new File("/"+_tempFileUrl);
 			_tempFile = new File(_tempFileUrl);
 			_tempFile.parent.createDirectory();
-			trace(_tempFile.exists);
+			powerTrace(_tempFile.exists);
 			
 			try
 			{

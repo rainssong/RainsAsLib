@@ -2,7 +2,8 @@
 {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
-	import flash.display.MovieClip
+	import flash.display.MovieClip;
+	import flash.display.Loader;
 	import flash.events.Event;
 	import me.rainssong.display.IView;
 	
@@ -109,8 +110,15 @@
 				 {
 					 return;
 				 }
-				if (child is Bitmap && (child as Bitmap).bitmapData) child.bitmapData.dispose();
-				if (child is flash.display.MovieClip ) child.stop();
+				if (autoDestroy)
+				{
+					if (child is Bitmap && (child as Bitmap).bitmapData)
+						child.bitmapData.dispose();
+					if (child is flash.display.MovieClip)
+						child.stop();
+					if (child is Loader)
+						Loader(child).unloadAndStop();
+				}
 				this.removeChild(child);
 		   }
 		   

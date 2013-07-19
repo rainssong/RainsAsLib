@@ -17,11 +17,12 @@ package me.rainssong.display
 		
 		}
 		
-		public static function resize(source:BitmapData, width:Number = 8, height:Number = 8):BitmapData
+		public static function drawResizeBmd(source:IBitmapDrawable, width:int = 8, height:int = 8):BitmapData
 		{
+			
 			var newData:BitmapData = new BitmapData(width, height, true, 0);
 			var matrix:Matrix = new Matrix();
-			matrix.scale(newData.width / source.width, newData.height / source.height);
+			matrix.scale(newData.width / source["width"], newData.height / source["height"]);
 			newData.draw(source, matrix);
 			
 			return newData;
@@ -48,10 +49,10 @@ package me.rainssong.display
 			return result;
 		}
 		
-		public static function drawBmd(source:IBitmapDrawable):BitmapData
+		public static function drawScaleBmd(source:IBitmapDrawable,scaleX:int=1,scaleY:int=1):BitmapData
 		{
-			var bmd:BitmapData = new BitmapData(source["width"], source["height"], true, 0x00FFFFFF);
-			bmd.draw(source);
+			var bmd:BitmapData = new BitmapData(source["width"]*scaleX, source["height"]*scaleY, true, 0x00FFFFFF);
+			bmd.draw(source,new Matrix(scaleX,0,0,scaleY,0,0));
 			return bmd;
 		}
 		
