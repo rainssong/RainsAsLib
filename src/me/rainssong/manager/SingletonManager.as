@@ -39,7 +39,7 @@
 		
 		public static function get sharedObject():SharedObject
 		{
-			return SharedObject.getLocal("");
+			return SharedObject.getLocal("Default");
 		}
 		
 	}

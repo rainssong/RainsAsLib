@@ -95,12 +95,18 @@ package me.rainssong.quest.VO
 			return _userAnswer;
 		}
 		
+		/**
+		 * User ansers as abcd
+		 */
 		public function set userAnswer(value:String):void 
 		{
 			_userAnswer = formatResult(value);
 			
 		}
 		
+		/**
+		 * User ansers as content
+		 */
 		public function get userIntactAnswer():Vector.<String>
 		{
 			var vec:Vector.<String> = new Vector.<String>();
