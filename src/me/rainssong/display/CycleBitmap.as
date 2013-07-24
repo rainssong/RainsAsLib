@@ -1,4 +1,4 @@
-package
+package me.rainssong.display
 {
 	import com.greensock.BlitMask;
 	import flash.display.Bitmap;
@@ -13,26 +13,45 @@ package
 	 */
 	public class CycleBitmap extends Bitmap
 	{
+		private var _originBmd:BitmapData
 		private var _scrollX:Number = 0;
 		private var _scrollY:Number = 0;
 		
 		public function CycleBitmap(bitmapData:BitmapData = null, pixelSnapping:String = "auto", smoothing:Boolean = false)
 		{
-			var bmd:BitmapData = new BitmapData(bitmapData.width * 2, bitmapData.height * 2);
-			bmd.copyPixels(bitmapData, new Rectangle(0, 0, bitmapData.width, bitmapData.height), new Point());
-			bmd.copyPixels(bitmapData, new Rectangle(0, 0, bitmapData.width, bitmapData.height), new Point(bitmapData.width));
-			bmd.copyPixels(bitmapData, new Rectangle(0, 0, bitmapData.width, bitmapData.height), new Point(0, bitmapData.height));
-			bmd.copyPixels(bitmapData, new Rectangle(0, 0, bitmapData.width, bitmapData.height), new Point(bitmapData.width, bitmapData.height));
-			
-			super(bmd, pixelSnapping, smoothing);
-			super.scrollRect = new Rectangle(0, 0, bitmapData.width, bitmapData.height)
+			_originBmd = bitmapData;
+			super(drawBigBmd(), pixelSnapping, smoothing);
+			super.scrollRect = new Rectangle(0, 0, _originBmd.width, _originBmd.height);
 		
+		}
+		
+	
+		
+		public function drawBigBmd():BitmapData 
+		{   
+			if (!_originBmd) return null;
+			var bmd:BitmapData = new BitmapData(_originBmd.width * 2, _originBmd.height * 2);
+			bmd.copyPixels(_originBmd, new Rectangle(0, 0, _originBmd.width, _originBmd.height), new Point());
+			bmd.copyPixels(_originBmd, new Rectangle(0, 0, _originBmd.width, _originBmd.height), new Point(_originBmd.width));
+			bmd.copyPixels(_originBmd, new Rectangle(0, 0, _originBmd.width, _originBmd.height), new Point(0, _originBmd.height));
+			bmd.copyPixels(_originBmd, new Rectangle(0, 0, _originBmd.width, _originBmd.height), new Point(_originBmd.width, _originBmd.height));
+			return bmd;
 		}
 		
 		public function get scrollX():Number
 		{
 			return _scrollX;
+		}
 		
+		override public function get bitmapData():BitmapData 
+		{
+			return _originBmd;
+		}
+		
+		override public function set bitmapData(value:BitmapData):void 
+		{
+			_originBmd = value;
+			super.bitmapData=drawBigBmd();
 		}
 		
 		public function set scrollX(value:Number):void
@@ -52,17 +71,18 @@ package
 		
 		override public function get scrollRect():flash.geom.Rectangle
 		{
+			
 			return new Rectangle(_scrollX, _scrollY, super.scrollRect.width, super.scrollRect.height);
 		}
 		
 		override public function set scrollRect(value:Rectangle):void
 		{
-			value.x = value.x % (bitmapData.width >> 1);
-			value.y = value.y % (bitmapData.height >> 1);
+			value.x = value.x % _originBmd.width ;
+			value.y = value.y % _originBmd.height ;
 			if (value.x < 0)
-				value.x += (bitmapData.width >> 1);
+				value.x += _originBmd.width ;
 			if (value.y < 0)
-				value.y += (bitmapData.height >> 1);
+				value.y += _originBmd.height;
 			
 			_scrollX = value.x;
 			_scrollY = value.y;
