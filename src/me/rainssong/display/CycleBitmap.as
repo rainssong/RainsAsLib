@@ -20,9 +20,10 @@ package me.rainssong.display
 		public function CycleBitmap(bitmapData:BitmapData = null, pixelSnapping:String = "auto", smoothing:Boolean = false)
 		{
 			_originBmd = bitmapData;
-			super(drawBigBmd(), pixelSnapping, smoothing);
-			super.scrollRect = new Rectangle(0, 0, _originBmd.width, _originBmd.height);
-		
+			super(_originBmd, pixelSnapping, smoothing);
+			//super.scrollRect = new Rectangle(0, 0, _originBmd.width, _originBmd.height);
+			//if (_originBmd)
+				//scrollRect = new Rectangle(0, 0, _originBmd.width, _originBmd.height);
 		}
 		
 	
@@ -50,8 +51,19 @@ package me.rainssong.display
 		
 		override public function set bitmapData(value:BitmapData):void 
 		{
+			if (_originBmd == value) return;
+			_originBmd = value;
+			if (value == null)
+			{
+				super.bitmapData = value;
+				return;
+			}
+			
 			_originBmd = value;
 			super.bitmapData=drawBigBmd();
+			if (!scrollRect)
+				scrollRect = new Rectangle(0, 0, _originBmd.width, _originBmd.height);
+			
 		}
 		
 		public function set scrollX(value:Number):void
@@ -71,12 +83,15 @@ package me.rainssong.display
 		
 		override public function get scrollRect():flash.geom.Rectangle
 		{
-			
-			return new Rectangle(_scrollX, _scrollY, super.scrollRect.width, super.scrollRect.height);
+			if(super.scrollRect)
+				return new Rectangle(_scrollX, _scrollY, super.scrollRect.width, super.scrollRect.height);
+			else 
+				return null;
 		}
 		
 		override public function set scrollRect(value:Rectangle):void
 		{
+			
 			value.x = value.x % _originBmd.width ;
 			value.y = value.y % _originBmd.height ;
 			if (value.x < 0)
