@@ -29,6 +29,7 @@ RestoreLocationSprite.as	//AutoRestoreLocation
 Scale9BitmapSprite.as		
 SmartSprite.as:			//Auto destroy, listen add/resize
 ToolTip.as			//
+CycleBitmap.as			//Scrollable
 
 ---events
 ApplicationEvent.as		//Login/Logout Init/Exit
@@ -46,8 +47,8 @@ MSYH.as
 EventBus.as			//Global EventDispatcher
 KeyboardManager.as:		//Manage Keyboard event
 MouseManager.as			//
-SingletonManager.as:		//Get singleton of anything
-SystemManager.as
+SingletonManager.as:		//Get singleton of any class
+SystemManager.as		//Get system information
 
 ---math
 ArrayCore.as:			//Opition Array/Vector

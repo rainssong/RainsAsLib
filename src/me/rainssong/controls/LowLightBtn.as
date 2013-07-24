@@ -1,6 +1,7 @@
 ﻿package me.rainssong.controls
 {
 	
+	import cn.flashk.controls.support.BitmapDataText;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -29,7 +30,7 @@
 		{
 			super();
 			this.mouseChildren = false;
-			if (view) addChild(view);
+			if (view) addChild(new Bitmap(BitmapDataCore.drawScaleBmd(view)));
 		}
 		
 		override protected function onAdd(evt:Event = null):void
