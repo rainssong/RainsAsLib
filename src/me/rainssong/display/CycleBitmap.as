@@ -21,7 +21,7 @@ package me.rainssong.display
 		{
 			_originBmd = bitmapData;
 			super(_originBmd, pixelSnapping, smoothing);
-			//super.scrollRect = new Rectangle(0, 0, _originBmd.width, _originBmd.height);
+			super.scrollRect = new Rectangle(0, 0, _originBmd.width, _originBmd.height);
 			//if (_originBmd)
 				//scrollRect = new Rectangle(0, 0, _originBmd.width, _originBmd.height);
 		}
