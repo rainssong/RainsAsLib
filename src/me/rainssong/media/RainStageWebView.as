@@ -6,13 +6,13 @@
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.media.StageWebView;
-	import me.rainssong.display.MySprite;
+	import me.rainssong.display.SmartSprite;
 	
 	/**
 	 * ...
 	 * @author Rainssong
 	 */
-	public class RainStageWebView extends MySprite
+	public class RainStageWebView extends SmartSprite
 	{
 		
 		
@@ -22,18 +22,22 @@
 		
 		public function RainStageWebView(width:Number = 800, height:Number = 600)
 		{
-			super();
-			_webView = new StageWebView();
 			webWidth= width;
 			webHeight = height;
-			
-			addEventListener(Event.ENTER_FRAME, onEnterFrame);
+		}
+		
+		override protected function onRegister():void 
+		{
+			super.onRegister();
+			_webView = new StageWebView();
 		}
 		
 		override protected function onAdd(e:Event = null):void 
 		{
 			super.onAdd(e);
+			
 			_webView.stage = this.stage;
+			addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
 		private function onEnterFrame(e:Event):void
@@ -47,20 +51,30 @@
 			_webView.viewPort = new Rectangle(globalPoint.x, globalPoint.y, webWidth, webHeight);
 		}
 		
+		
+		override public function destroy():void
+		{
+			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+			_webView.dispose();
+			_webView.stage = null;
+			_webView = null;
+			super.destroy();
+			
+		}
+		
+		/* DELEGATE flash.media.StageWebView */
+		
+		public function loadString(text:String, mimeType:String = "text/html"):void 
+		{
+			_webView.loadString(text, mimeType);
+		}
+		
 		public function loadURL(url:String):void
 		{
 			_webView.loadURL(url);
 		}
 		
-		override public function destroy():void
-		{
-			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
-			_webView.stage = null;
-			_webView.dispose();
-			_webView = null;
-			super.destroy();
-			
-		}
+		
 	}
 
 }
