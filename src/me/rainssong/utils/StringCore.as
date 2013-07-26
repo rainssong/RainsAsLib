@@ -27,5 +27,15 @@ package me.rainssong.utils
 			superTrace("new resortArr:" + resortArr);
 			return String(resortArr);
 		}
+		
+		public static function getExtension(url:String):String
+		{
+			return url.split("." ).slice( -1)[0];
+		}
+		
+		public static function getFileName(url:String):String
+		{
+			return url.split(/[\\/] / ).slice( -1)[0];
+		}
 	}
 }
