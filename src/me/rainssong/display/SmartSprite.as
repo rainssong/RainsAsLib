@@ -70,6 +70,12 @@
 			this.visible = false;
 		}
 		
+		public function remove():void
+		{
+			if (!parent) return;
+				parent.removeChild(this);
+		}
+		
 		protected function onRemove(e:Event):void
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemove);

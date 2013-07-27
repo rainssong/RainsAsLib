@@ -3,35 +3,43 @@ package me.rainssong.display
 	
 	public class LiquidSprite extends SmartSprite
 	{
-		private var _liquidWidth:Number;
-		private var _liquidHeight:Number;
+		protected var _actualWidth:Number;
+		protected var _actualHeight:Number;
 		
 		public function LiquidSprite()
 		{
 			super();
-			_liquidWidth = super.width;
-			_liquidHeight = super.height;
+			_actualWidth = super.width;
+			_actualHeight = super.height;
+			
+		}
+		
+		public function setSize(w:Number=NaN, h:Number=NaN):void
+		{
+			if (w)w = _actualWidth;
+			if (h)h = _actualHeight;
+			
 			
 		}
 		
 		override public function get width():Number 
 		{
-			return _liquidWidth;
+			return _actualWidth;
 		}
 		
 		override public function set width(value:Number):void 
 		{
-			_liquidWidth = value;
+			setSize(value);
 		}
 		
 		override public function get height():Number 
 		{
-			return _liquidHeight;
+			return _actualHeight;
 		}
 		
 		override public function set height(value:Number):void 
 		{
-			_liquidHeight = value;
+			setSize(NaN, value);
 		}
 	}
 }
