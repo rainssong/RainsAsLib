@@ -111,7 +111,6 @@ package me.rainssong.net
 		
 		public function startDownLoad():void
 		{
-			
 			if (_tempFile.exists)
 			{
 				var fs:FileStream = new FileStream()
