@@ -28,6 +28,14 @@ package me.rainssong.display
 			return newData;
 		}
 		
+		
+		public static function drawScaleBmd(source:IBitmapDrawable,scaleX:Number=1,scaleY:Number=1):BitmapData
+		{
+			var bmd:BitmapData = new BitmapData(Math.round(source["width"]*scaleX), Math.round(source["height"]*scaleY), true, 0x00FFFFFF);
+			bmd.draw(source,new Matrix(scaleX,0,0,scaleY,0,0));
+			return bmd;
+		}
+		
 		public static function toGray(source:BitmapData):BitmapData
 		{
 			var result:BitmapData = new BitmapData(source.width, source.height);
@@ -49,12 +57,6 @@ package me.rainssong.display
 			return result;
 		}
 		
-		public static function drawScaleBmd(source:IBitmapDrawable,scaleX:int=1,scaleY:int=1):BitmapData
-		{
-			var bmd:BitmapData = new BitmapData(source["width"]*scaleX, source["height"]*scaleY, true, 0x00FFFFFF);
-			bmd.draw(source,new Matrix(scaleX,0,0,scaleY,0,0));
-			return bmd;
-		}
 		
 		public static function bmdToArr(bmd:BitmapData):Array
 		{
