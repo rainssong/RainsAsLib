@@ -5,9 +5,11 @@ package me.rainssong.manager
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.events.IOErrorEvent;
+	import flash.filesystem.File;
 	import flash.net.SharedObject;
 	import flash.utils.Dictionary;
 	import me.rainssong.net.ResumeDownloader;
+	import me.rainssong.utils.StringCore;
 	
 	/**
 	 * ...
@@ -30,8 +32,9 @@ package me.rainssong.manager
 		
 		
 		
-		public function addDownload(sourceUrl:String,targetUrl:String):void
+		public function addDownload(sourceUrl:String,targetUrl:String=null):void
 		{
+			if (!targetUrl || targetUrl = "") targetUrl = File.applicationStorageDirectory.resolvePath(StringCore.deleteProtocol(sourceUrl));
 			if (isDownloading(targetUrl))
 			{
 				trace(this +targetUrl+ "已经在下载了!");

@@ -23,9 +23,14 @@ package me.rainssong.utils
 		{
 			var resortArr:Array = str.split("");
 			superTrace("old resortArr:" + resortArr);
-			resortArr.sort.apply(null,args);
+			resortArr.sort.apply(null, args);
 			superTrace("new resortArr:" + resortArr);
 			return String(resortArr);
+		}
+		
+		public static function deleteProtocol(url:String):String
+		{
+			return url.replace(/[a-zA-z]+:\/\// , "");
 		}
 		
 		public static function getExtension(url:String):String
