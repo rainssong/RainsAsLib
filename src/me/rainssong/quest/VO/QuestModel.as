@@ -16,7 +16,7 @@ package me.rainssong.quest.VO
 		private var _index:int;
 		private var _randomOrder:Boolean;
 		private var _rightAnswer:String;
-		private var _userAnswer:String;
+		private var _userAnswer:String="";
 		//private var _userIntactAnswer:Vector.<String>;
 		//private var _userSelection:Vector.<Boolean> ;
 		
@@ -26,7 +26,7 @@ package me.rainssong.quest.VO
 			_index = index;
 			_title = title;
 			_rightAnswer = rightAnswer;
-			_options = Vector.<String>(ArrayCore.arrayToVector(options));
+			_options = Vector.<String>(options);
 			_isLast = isLast;
 			_minChoose = minChoose;
 			_maxChoose = maxChoose;
@@ -101,7 +101,6 @@ package me.rainssong.quest.VO
 		public function set userAnswer(value:String):void 
 		{
 			_userAnswer = formatResult(value);
-			
 		}
 		
 		/**
@@ -121,6 +120,19 @@ package me.rainssong.quest.VO
 			return vec;
 		}
 		
+		public function set options(value:Vector.<String>):void 
+		{
+			_options = value;
+		}
+		
+		public function set isLast(value:Boolean):void 
+		{
+			_isLast = value;
+		}
+	
+		
+	
+		
 		public function formatResult(str:String):String
 		{
 			var resortArr:Array = str.toUpperCase().split("");
@@ -131,7 +143,7 @@ package me.rainssong.quest.VO
 		
 		private function checkAnswer(resultString:String):Boolean
 		{
-			trace(this + "标准结果" + rightAnswer + "用户答案" + formatResult(_userAnswer),_userAnswer == formatResult(rightAnswer)?true: false);
+			powerTrace("标准结果" + rightAnswer + "用户答案" + formatResult(_userAnswer),_userAnswer == formatResult(rightAnswer)?true: false);
 			var isRight:Boolean=_userAnswer == formatResult(rightAnswer)?true: false;
 			return isRight;
 		}

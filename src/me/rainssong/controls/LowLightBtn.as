@@ -24,12 +24,13 @@
 	public class LowLightBtn extends SmartSprite
 	{
 		private const darkColorTrans:ColorTransform = new ColorTransform(0.7, 0.7, 0.7, 1, 0, 0, 0, 0)
-		private const normalColorTrans:ColorTransform = new ColorTransform()
+		private var normalColorTrans:ColorTransform = new ColorTransform()
 		
 		public function LowLightBtn(view:DisplayObject = null )
 		{
 			super();
 			this.mouseChildren = false;
+			
 			if (view) addChild(new Bitmap(BitmapDataCore.drawScaleBmd(view)));
 		}
 		
@@ -48,6 +49,7 @@
 		
 		public function gotoDownFrame():void
 		{
+			normalColorTrans = this.transform.colorTransform;
 			this.transform.colorTransform = darkColorTrans;
 		}
 		

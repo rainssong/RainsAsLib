@@ -1,15 +1,12 @@
 package me.rainssong.manager 
 {
-	import br.com.stimuli.loading.BulkLoader;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.events.IEventDispatcher;
-	import flash.events.IOErrorEvent;
 	import flash.filesystem.File;
-	import flash.net.SharedObject;
 	import flash.utils.Dictionary;
 	import me.rainssong.net.ResumeDownloader;
 	import me.rainssong.utils.StringCore;
+
 	
 	/**
 	 * ...
@@ -18,7 +15,6 @@ package me.rainssong.manager
 	public class DownloadManager extends EventDispatcher 
 	{
 		private var _downloaderDic:Dictionary = new Dictionary();
-		private var _cookie:Object;
 		
 		public function DownloadManager() 
 		{
@@ -30,35 +26,36 @@ package me.rainssong.manager
 			return _downloaderDic[targetUrl];
 		}
 		
-		
-		
-		public function addDownload(sourceUrl:String,targetUrl:String=null):void
+		public function addDownload(sourceUrl:String,targetUrl:String=null):ResumeDownloader
 		{
-			if (!targetUrl || targetUrl = "") targetUrl = File.applicationStorageDirectory.resolvePath(StringCore.deleteProtocol(sourceUrl));
-			if (isDownloading(targetUrl))
+			if (!targetUrl || targetUrl == "") 
+				targetUrl =StringCore.webToLocal(sourceUrl);
+			if (getDownloader(targetUrl) && getDownloader(targetUrl).isDownloading)
 			{
 				trace(this +targetUrl+ "已经在下载了!");
-				return ;
+				return getDownloader(targetUrl);
 			}
+			
 			var downloader:ResumeDownloader = new ResumeDownloader();
 			downloader.download(sourceUrl, targetUrl);
-			downloader.addEventListener(Event.COMPLETE, completeHandler);
-			downloader.addEventListener(IOErrorEvent.IO_ERROR, completeHandler);
+			downloader.addEventListener(Event.COMPLETE, onComplete);
 			_downloaderDic[targetUrl] = downloader;
+			
+			return downloader;
 			//_cookie.data.downloadUrlArr = _downloaderArr;
 		}
 		
-		private function completeHandler(e:Event=null):void 
+		private function onComplete(e:Event):void 
 		{
-			//_downloaderArr.splice(_downloaderArr.indexOf(ResumeDownloader(e.target)), 1);
-			dispatchEvent(new Event(Event.COMPLETE));
+			if (!isDownloading)
+				dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
-		public function isDownloading(targetUrl:String):Boolean 
+		public function get  isDownloading():Boolean 
 		{
-			for each (var i:ResumeDownloader in  _downloaderArr)
+			for each (var i:ResumeDownloader in  _downloaderDic)
 			{
-				if (i.targetUrl == targetUrl && !i.isFinished)
+				if (!i.isFinished)
 				{
 					return true;
 				}

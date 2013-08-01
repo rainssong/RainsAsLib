@@ -1,6 +1,8 @@
 ﻿package me.rainssong.manager
 {
 	import br.com.stimuli.loading.BulkLoader;
+	import me.rainssong.utils.construct;
+
 	import flash.net.SharedObject;
 	import flash.utils.Dictionary;
 	
@@ -19,10 +21,10 @@
 		
 		}
 		
-		public static function getSingleton(Type:Class):*
+		public static function getSingleton(Type:Class, params:Array = null):*
 		{
-			_dictionary[Type] ||= new Type();
-			return _dictionary[Type] as Type;
+			_dictionary[Type] ||=  construct( Type, params );
+			return _dictionary[Type];
 		}
 		
 		public static function get eventBus():EventBus
@@ -40,6 +42,11 @@
 		public static function get sharedObject():SharedObject
 		{
 			return SharedObject.getLocal("Default");
+		}
+		
+		public static function get downloadManager():DownloadManager
+		{
+			return SingletonManager.getSingleton(DownloadManager) as DownloadManager;
 		}
 		
 	}

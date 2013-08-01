@@ -12,14 +12,14 @@
 	{
 		private var _xml:XML;
 		private var _numQuests:int;
-		private var _questArr:Array
+		private var _questArr:Vector.<QuestModel>
 		private const _isRandom:Boolean = true;
 		private var _randomOrderArr:Array;
 		
 		public function XmlQuestManager(xml:XML) 
 		{
 			_xml = xml;
-			_questArr = [];
+			_questArr = new Vector.<QuestModel>();
 			
 			//_numQuests = xmlData.quest.length();
 			
@@ -32,7 +32,7 @@
 		{
 			for (var i:int = 0; i < _xml.quest.length(); i++ )
 			{
-				_questArr[i] = createQuest(i);
+				_questArr.push(createQuest(i));
 			}
 		}
 		
@@ -51,6 +51,7 @@
 			var randomOrder:Boolean=_xml.quest[index].@random=="true"?true:false;
 			var rightAnswer:String = _xml.quest[index].@key.toString();
 			var questModel:QuestModel = new QuestModel(index,title, ArrayCore.vectorToArray(options),rightAnswer, minChoose, maxChoose,randomOrder);
+			questModel.isLast = (index == _xml.quest.length()-1);
 			return questModel;
 		}
 		
@@ -62,6 +63,11 @@
 		public function getRandomizedQuest(index:int):QuestModel
 		{
 			return _questArr[_randomOrderArr[index]];
+		}
+		
+		public function get questArr():Vector.<QuestModel> 
+		{
+			return _questArr;
 		}
 		
 		//public function hasNext():Boolean

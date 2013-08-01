@@ -55,9 +55,11 @@
 		override public function destroy():void
 		{
 			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
-			_webView.dispose();
+			
 			_webView.stage = null;
+			_webView.dispose();
 			_webView = null;
+			
 			super.destroy();
 			
 		}
@@ -74,6 +76,10 @@
 			_webView.loadURL(url);
 		}
 		
+		public function get location():String
+		{
+			return _webView.location;
+		}
 		
 	}
 

@@ -1,5 +1,6 @@
 package me.rainssong.utils 
 {
+	import flash.filesystem.File;
 	/**
 	 * ...
 	 * @author Rainssong
@@ -38,9 +39,14 @@ package me.rainssong.utils
 			return url.split("." ).slice( -1)[0];
 		}
 		
-		public static function getFileName(url:String):String
+		static public function webToLocal(url:String):String
 		{
-			return url.split(/[\\/] / ).slice( -1)[0];
+			return File.applicationStorageDirectory.resolvePath(StringCore.deleteProtocol(url)).nativePath;
 		}
+		
+		//public static function getFileName(url:String):String
+		//{
+			//return url.split(/[\\/] / ).slice( -1)[0];
+		//}
 	}
 }

@@ -7,6 +7,8 @@
 	 */
 	public interface IToggleBtn 
 	{
+		function get name():String;
+		function set name(value:String):void
 		function select():void
 		function unselect():void
 		function get selected():Boolean

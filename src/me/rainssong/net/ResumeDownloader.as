@@ -26,7 +26,7 @@ package me.rainssong.net
 	public class ResumeDownloader extends EventDispatcher
 	{
 		private static const RANGE:int = 100000;
-		private static const EXTENSION:String = "ed";
+		private static const EXTENSION:String = "dl";
 		private var _totalLength:Number;
 		private var _sourceUrl:String;
 		private var _tempFileUrl:String;
@@ -43,6 +43,7 @@ package me.rainssong.net
 		private var _endPoint:Number;
 		
 		private var _isFinished:Boolean = false;
+		private var _isDownloading:Boolean = false;
 		
 		public function ResumeDownloader()
 		{
@@ -67,7 +68,8 @@ package me.rainssong.net
 			//如果有了就别下了。
 			if (_targetFile.exists && !isCover)
 			{
-				trace(this+"文件已存在，下载取消");
+				powerTrace(this + "文件已存在，下载取消");
+				dispatchEvent(new Event(Event.COMPLETE));
 				return;
 			}
 			
@@ -77,7 +79,7 @@ package me.rainssong.net
 			//_tempFile =new File("/"+_tempFileUrl);
 			_tempFile = new File(_tempFileUrl);
 			_tempFile.parent.createDirectory();
-			powerTrace(_tempFile.exists);
+			
 			
 			try
 			{
@@ -99,13 +101,15 @@ package me.rainssong.net
 			
 			_totalLength = URLLoader(e.target).bytesTotal; //得到文件的真实尺寸;
 			
-			trace(this + "总长度" + totalLength);
+			powerTrace( "总长度" + totalLength);
 			
 			URLLoader(e.target).close(); //停止load;
 			
 			if (_autoStart)
-				
+			{
 				startDownLoad(); //按照断点续传的方式下载;
+				
+			}
 		
 		}
 		
@@ -120,7 +124,7 @@ package me.rainssong.net
 				}
 				catch (e:Error)
 				{
-					trace(e);
+					powerTrace(e);
 				}
 				
 				if (fs)
@@ -130,6 +134,8 @@ package me.rainssong.net
 					fs.close();
 				}
 			}
+			
+			_isDownloading = true;
 			
 			if (_startPoint >= totalLength)
 			{
@@ -145,9 +151,6 @@ package me.rainssong.net
 			
 			var loader:URLLoader = new URLLoader();
 			
-				
-				
-			
 			
 			loader.addEventListener(IOErrorEvent.IO_ERROR, loaderErrorHandler);
 			
@@ -158,7 +161,7 @@ package me.rainssong.net
 		
 		private function loaderErrorHandler(e:IOErrorEvent):void 
 		{
-			trace(this + "下载错误,停止:" + e.text);
+			powerTrace( "下载错误,停止:" + e.text);
 			dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR));
 			return;
 		}
@@ -176,7 +179,7 @@ package me.rainssong.net
 			}
 			catch (e:Error)
 			{
-				trace(e);
+				powerTrace(e);
 			}
 			_startPoint = fileStream.bytesAvailable;
 			fileStream.position = _startPoint;
@@ -190,23 +193,22 @@ package me.rainssong.net
 			if (loadedPercent < 1)
 			{
 				dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS));
-				trace(loadedPercent);
+				powerTrace(_targetUrl.split("/").slice(-1),loadedPercent.toPrecision(2));
 				startDownLoad();
 			}
 			else
 			{
 				downloadFinish();
-				
-				
 			}
 		}
 		
 		private function downloadFinish():void 
 		{
+			_isDownloading = false;
 			_isFinished = true;
 			rename();
 			dispatchEvent(new Event(Event.COMPLETE));
-			trace(this+ _sourceUrl + "下载完成");
+			powerTrace(_sourceUrl + "下载完成");
 		}
 		
 		private function rename():void
@@ -240,35 +242,6 @@ package me.rainssong.net
 			return fs;
 		}
 		
-		//private function getFileStream(url:String,writeType:String="write"):FileStream
-		//{
-		//
-		//
-		//
-		//trace("是否存在", writeType, f.exists);
-		//if (writetype == "read" && f.exists == false)
-		//{
-		//return null;
-		//}
-		//try
-		//{
-		//var myClass:Class = getDefinitionByName("flash.filesystem.FileStream") as Class;
-		//var fs:* = new myClass();
-		//if (!sync)
-		//{
-		//fs.openAsync(f, writetype);
-		//}
-		//else
-		//{
-		//fs.open(f, writetype);
-		//}
-		//}
-		//catch (e:Error)
-		//{
-		//return null;
-		//}
-		//return fs;
-		//}
 		
 		public function get loadedLength():Number
 		{
@@ -318,6 +291,11 @@ package me.rainssong.net
 		public function get isFinished():Boolean 
 		{
 			return _isFinished;
+		}
+		
+		public function get isDownloading():Boolean 
+		{
+			return _isDownloading;
 		}
 		
 	
