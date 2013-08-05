@@ -117,16 +117,8 @@
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
 		
-		override public function removeChildren(beginIndex:int = 0, endIndex:int = 2147483647):void
+		/*override public function removeChildren(beginIndex:int = 0, endIndex:int = 2147483647):void
 		{
-			//while (this.numChildren)
-			//{
-			//var child:* = this.getChildAt(0);
-			//if (child is Bitmap && (child as Bitmap).bitmapData) child.bitmapData.dispose();
-			//if (child is flash.display.MovieClip ) child.stop();
-			//this.removeChild(child);
-			//this.removeChildAt(0);
-			//}
 			var i:int = this.numChildren - 1;
 			if (i > endIndex)
 				i = endIndex;
@@ -146,7 +138,7 @@
 						Loader(child).unloadAndStop();
 				}
 			}
-		}
+		}*/
 		
 		public function getBoundsOnParent():Rectangle 
 		{

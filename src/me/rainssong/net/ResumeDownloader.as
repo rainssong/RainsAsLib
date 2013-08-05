@@ -1,4 +1,4 @@
-package me.rainssong.net
+﻿package me.rainssong.net
 {
 	import avmplus.finish;
 	import com.vsdevelop.air.filesystem.FileCore;
@@ -216,7 +216,7 @@ package me.rainssong.net
 			_tempFile.moveTo(_targetFile, true);
 		}
 		
-		public function getTargetFileStream(writeType:String = "write", sync:Boolean = true):FileStream
+		public function getTargetFileStream(writeType:String = "write", sync:Boolean = true):*
 		{
 			if (!_targetFile)
 			{
