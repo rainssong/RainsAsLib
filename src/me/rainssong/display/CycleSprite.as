@@ -13,8 +13,10 @@ package   me.rainssong.display
 		private var _scrollX:Number;
 		private var _scrollY:Number;
 		
-		public function CycleSprite(bitmapData:BitmapData, width:Number=100, height:Number=100) 
+		public function CycleSprite(bitmapData:BitmapData, width:Number=0, height:Number=0) 
 		{
+			if (width <= 0) width = bitmapData.width;
+			if (height <= 0) height = bitmapData.height;
 			super(bitmapData, width, height);
 			scrollRect = new Rectangle(0, 0, width, height);
 		}

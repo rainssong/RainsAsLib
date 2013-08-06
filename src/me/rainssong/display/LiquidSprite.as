@@ -56,13 +56,12 @@ package me.rainssong.display
 		
 		public function get minScale():Number
 		{
-			return Math.min(scaleX, scaleY);
+			return scaleX > scaleY?scaleY:scaleX;
 		}
 		
 		public function get maxScale():Number
 		{
-			return Math.max(scaleX, scaleY);
+			return scaleX > scaleY?scaleX:scaleY;
 		}
-		
 	}
 }

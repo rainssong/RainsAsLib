@@ -168,6 +168,11 @@
 			return _autoDestroy;
 		}
 		
+		public function set scaleXY(value:Number):void
+		{
+			scaleX = scaleY = value;
+		}
+		
 		public function set autoDestroy(value:Boolean):void
 		{
 			_autoDestroy = value;
