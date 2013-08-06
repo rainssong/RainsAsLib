@@ -1,8 +1,7 @@
-package me.rainssong.manager 
+﻿package me.rainssong.manager 
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.filesystem.File;
 	import flash.utils.Dictionary;
 	import me.rainssong.net.ResumeDownloader;
 	import me.rainssong.utils.StringCore;

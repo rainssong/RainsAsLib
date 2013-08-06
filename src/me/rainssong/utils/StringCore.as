@@ -1,6 +1,6 @@
-package me.rainssong.utils 
+﻿package me.rainssong.utils 
 {
-	import flash.filesystem.File;
+	import com.vsdevelop.air.filesystem.FileCore;
 	/**
 	 * ...
 	 * @author Rainssong
@@ -36,12 +36,12 @@ package me.rainssong.utils
 		
 		public static function getExtension(url:String):String
 		{
-			return url.split("." ).slice( -1)[0];
+			return url.split(".").slice( -1)[0];
 		}
 		
 		static public function webToLocal(url:String):String
 		{
-			return File.applicationStorageDirectory.resolvePath(StringCore.deleteProtocol(url)).nativePath;
+			return FileCore.File?FileCore.File.applicationStorageDirectory.resolvePath(StringCore.deleteProtocol(url)).nativePath:null;
 		}
 		
 		//public static function getFileName(url:String):String
