@@ -117,7 +117,7 @@
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
 		
-		/*override public function removeChildren(beginIndex:int = 0, endIndex:int = 2147483647):void
+		override public function removeChildren(beginIndex:int = 0, endIndex:int = 2147483647):void
 		{
 			var i:int = this.numChildren - 1;
 			if (i > endIndex)
@@ -138,7 +138,7 @@
 						Loader(child).unloadAndStop();
 				}
 			}
-		}*/
+		}
 		
 		public function getBoundsOnParent():Rectangle 
 		{
