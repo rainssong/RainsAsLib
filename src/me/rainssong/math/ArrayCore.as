@@ -96,6 +96,8 @@ package   me.rainssong.math
 			return nSum;
 		}
 		
+		
+		
 		public static function max(arr:Array):Number
 		{
 			var aCopy:Array = arr.concat();
@@ -127,14 +129,104 @@ package   me.rainssong.math
 		{
 			return obj.constructor.toString().search("Vector") >= 0;
 		}
-		
-		
-		
 
 		public static function arrayToVector(array:Array):Vector.<*>
 		{
 			return Vector.<*>(array);
 		}
+		
+		/**
+		 * get common elements
+		 * @param	array1
+		 * @param	array2
+		 * @return
+		 */
+		public static function intersect( array1:Array, array2:Array ):Array 
+		{
+			var results:Array = [];
+			
+			for ( var i:int = 0, l:int = array1.length; i < l; i++ ) {
+				var item1:* = array1[i];
+				
+				for ( var ii:int = 0, ll:int = array2.length; ii < ll; ii++ ) {
+					var item2:* = array2[ii];
+					
+					if ( item1 == item2 ) {
+						results.push( item1 );
+						break;
+					}
+				}
+			}
+			
+			return results;
+		}
+		
+		/**
+		 * subtract array2 from array1
+		 * @param	array1
+		 * @param	array2
+		 * @return
+		 */
+		public static function subtract( array1:Array, array2:Array ):Array 
+		{
+			var results:Array = [];
+			
+			for ( var i:int = 0, l:int = array1.length; i < l; i++ ) {
+				var item1:* = array1[i];
+				var exist:Boolean = false;
+				
+				for ( var ii:int = 0, ll:int = array2.length; ii < ll; ii++ ) {
+					var item2:* = array2[ii];
+					
+					if ( item1 == item2 ) {
+						exist = true;
+						break;
+					}
+				}
+				
+				if ( exist ) { continue; }
+				
+				results.push( item1 );
+			}
+			
+			return results;
+		}
+		
+		/**
+		 * delete empty elements from array
+		 * @param	array
+		 * @return
+		 */
+		public static function compress( array:Array ):Array 
+		{
+			var result:Array = [];
+			
+			for ( var i:int = 0, l:int = array.length; i < l; i++ ) {
+				var item:* = array[i];
+				
+				switch ( item ) {
+					case undefined	:
+					case null		:
+					case ""			: { continue; }
+				}
+				
+				result.push( item );
+			}
+			
+			return result;
+		}
+		
+		public static function equals( array1:Array, array2:Array ):Boolean {
+			if ( array1.length != array2.length ) { return false; }
+			
+			for ( var i:int = 0, l:int = array1.length; i < l; i++ ) {
+				if ( array1[i] !== array2[i] ) { return false; }
+			}
+			
+			return true;
+		}
+		
+		
 	}
 
 }

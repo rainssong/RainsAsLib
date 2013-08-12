@@ -5,7 +5,6 @@ package me.rainssong.math
 	public final class MathCore
 	{
 		
-		
 		public static function getRandomNumber(min:Number, max:Number):Number
 		{
 			return Math.random() * (max - min) + min;
@@ -36,11 +35,19 @@ package me.rainssong.math
 		
 		public static function getRangedNumber(number:Number, min:Number, max:Number = Infinity):Number
 		{
-			if (number > max)
-				number = max;
-			if (number < min)
-				number = min;
-			return number;
+			if (min > max)
+			{
+				var tmp:Number = min;
+				min = max;
+				max = tmp;
+			}
+			
+			return Math.max(min, Math.min(number, max));
+		}
+		
+		public static function getCycledNumber(number:Number, cycle:Number):Number
+		{
+			return (number % cycle + cycle) % cycle;
 		}
 		
 		/**
@@ -64,9 +71,14 @@ package me.rainssong.math
 			return degree * Math.PI / 180;
 		}
 		
-		public static function randomSelect(...arg):*
+		public static function randomSelect(... arg):*
 		{
 			return arg[int(arg.length * Math.random())];
+		}
+		
+		public static function isEven( number:Number ):Boolean {
+			
+			return (number & 1) == 0;
 		}
 	
 	}
