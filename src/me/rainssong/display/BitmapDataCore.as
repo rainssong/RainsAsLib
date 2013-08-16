@@ -72,9 +72,9 @@ package me.rainssong.display
 			return arr;
 		}
 		
-		public static function arrToBmd(arr:Array):BitmapData
+		public static function arrToBmd(arr:Array,scale:Number=1):BitmapData
 		{
-			var bmd:BitmapData = new BitmapData(arr[0].length, arr.length, true, 0);
+			var bmd:BitmapData = new BitmapData(arr[0].length, arr.length,true, 0);
 			for (var i:int = 0; i < bmd.height; i++)
 			{
 				for (var j:int = 0; j < bmd.width; j++)
@@ -83,6 +83,7 @@ package me.rainssong.display
 						bmd.setPixel32(j, i, arr[i][j]);
 				}
 			}
+			if (scale != 1) drawScaleBmd(bmd, scale, scale);
 			return bmd;
 		}
 		
