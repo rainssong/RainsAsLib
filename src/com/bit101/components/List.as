@@ -110,7 +110,7 @@ package com.bit101.components
 			}
 
             var numItems:int = Math.ceil(_height / _listItemHeight);
-			numItems = Math.min(numItems, _items.length);
+			//numItems = Math.min(numItems, _items.length);
             numItems = Math.max(numItems, 1);
 			for(var i:int = 0; i < numItems; i++)
 			{
@@ -129,7 +129,7 @@ package com.bit101.components
         {
             var offset:int = _scrollbar.value;
             var numItems:int = Math.ceil(_height / _listItemHeight);
-			numItems = Math.min(numItems, _items.length);
+			numItems = Math.max(numItems, 1);
             for(var i:int = 0; i < numItems; i++)
             {
                 var item:ListItem = _itemHolder.getChildAt(i) as ListItem;
@@ -240,8 +240,8 @@ package com.bit101.components
 			index = Math.min(_items.length, index);
 			_items.splice(index, 0, item);
 			invalidate();
-      makeListItems();
-      fillItems();
+		makeListItems();
+		fillItems();
 		}
 		
 		/**
