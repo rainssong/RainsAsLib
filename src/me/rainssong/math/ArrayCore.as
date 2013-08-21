@@ -25,15 +25,27 @@ package   me.rainssong.math
 			return arr;
 		}
 		
+		public static function getContentArray(content:*, length:uint=0):Array
+		{
+			var arr:Array = [];
+			if (length == 0) return arr;
+			
+			for (var i:int = 0; i < length;i++ )
+			{
+				arr.push(content);
+			}
+			return arr;
+		}
+		
 		/**
 		 * Make Copy And Randomize an Array/Vector
 		 * @param arr Array or Vector
 		 * @return Randomized Array
 		 */
 		
-		public static function getRandomizedArray(arr:*):Array
+		public static function getRandomizedArray(arr:*):*
 		{
-			var outputArr:Array = arr.slice();
+			var outputArr:* = arr.slice();
 			var i:int = outputArr.length;
 			var temp:*;
 			var indexA:int;
