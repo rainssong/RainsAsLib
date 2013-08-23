@@ -8,8 +8,11 @@ package me.rainssong.utils
 	
 	public class Draw
 	{
-		static public function circle(x:Number, y:Number, width:Number, height:Number, rgbs:Array, alphas:Array, ratios:Array):Sprite
+		static public function circle(x:Number, y:Number, width:Number, height:Number, rgbs:Array, alphas:Array=null ,ratios:Array=null):Sprite
 		{
+			if (!alphas) alphas = [1];
+			if (!ratios) ratios = [0,255];
+			
 			var sp:Sprite = new Sprite();
 			var mtx:Matrix = new Matrix();
 			mtx.createGradientBox(width * 2, height * 2, 0, x - width, y - height);
