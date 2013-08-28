@@ -340,7 +340,7 @@
 				//纯值排序
 				if (a.color == b.color)
 				{
-				return a.name < b.name ? -1 : 1;
+					return a.name < b.name ? -1 : 1;
 				}
 				return a.color > b.color ? -1 : 1;
 			
@@ -401,6 +401,24 @@
 		public static function argb(alpha:int, red:int, green:int, blue:int):uint
 		{
 			return (alpha << 24) | (red << 16) | (green << 8) | blue;
+		}
+		
+		public static function isSimilar(color1:uint, color2:uint, difference:int):Boolean
+		{
+			if (Math.abs(Color.getRed(color1) - Color.getRed(color2)) < difference)
+				if (Math.abs(Color.getBlue(color1) - Color.getBlue(color2)) < difference)
+					if (Math.abs(Color.getGreen(color1) - Color.getGreen(color2)) < difference)
+						return true;
+			return false;
+		}
+		
+		public static function deviations(color1:uint, color2:uint):Number
+		{
+			var rd:Number = Math.pow(Color.getRed(color1) - Color.getRed(color2), 2);
+			var gd:Number = Math.pow(Color.getGreen(color1) - Color.getGreen(color2), 2);
+			var bd:Number = Math.pow(Color.getBlue(color1) - Color.getBlue(color2), 2);
+			
+			return Math.sqrt((rd+gd+bd)/3);
 		}
 	
 	}

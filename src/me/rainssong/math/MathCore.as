@@ -1,6 +1,7 @@
 package me.rainssong.math
 {
 	import flash.display.SimpleButton;
+	import flash.geom.Point;
 	
 	public final class MathCore
 	{
@@ -79,6 +80,19 @@ package me.rainssong.math
 		public static function isEven( number:Number ):Boolean {
 			
 			return (number & 1) == 0;
+		}
+		
+		public static function averagePoint(points:Vector.<Point>):Point
+		{	
+			var point:Point = new Point();
+			for each (var p:Point in points)
+			{
+				point.x += p.x;
+				point.y += p.y;
+			}
+			point.x /= points.length;
+			point.y /= points.length;
+			return point;
 		}
 	
 	}
