@@ -22,6 +22,8 @@ package  me.rainssong.utils
 			fun.apply(thisArg,params);
 			forTime--;
 		}
-		return getTimer() - time;
+		var totalTime:Number = getTimer() - time;
+		powerTrace(totalTime);
+		return totalTime;
 	}
 }
