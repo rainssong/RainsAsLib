@@ -1,37 +1,43 @@
 package me.rainssong.quest.VO 
 {
+	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
+	import flash.events.EventDispatcher;
 	import me.rainssong.math.ArrayCore;
 	/**
 	 * ...
 	 * @author rainsong
 	 */
-	public class QuestModel 
+	public class QuestModel extends EventDispatcher
 	{
-		private var _title:String;
-		private var _options:Vector.<String>;
-		private var _minChoose:int;
-		private var _maxChoose:int;
-		private var _isLast:Boolean;
-		private var _answerIndex:int;
-		private var _index:int;
-		private var _randomOrder:Boolean;
-		private var _rightAnswer:String;
-		private var _userAnswer:String="";
-		//private var _userIntactAnswer:Vector.<String>;
-		//private var _userSelection:Vector.<Boolean> ;
+		protected var _title:String;
+		protected var _index:int;
 		
+		/**
+		 * like "ACDF"
+		 */
+		protected var _rightAnswer:String;
+		protected var _userAnswer:Array;
+		protected var _userIntactAnswer:Vector.<String>;
+		//private var _userSelection:Vector.<Boolean> ;
+		protected var _mandatory:Boolean = true;
+		protected var _isLast:Boolean = false;
+		protected var _pics:Vector.<DisplayObject>;
 	
-		public function QuestModel(index:int, title:String, options:Array,rightAnswer:String="" , minChoose:int = 1, maxChoose:int = 1,randomOrder:Boolean=false ) 
+		/**
+		 * 
+		 * @param	title
+		 * @param	index
+		 * @param	rightAnswers
+		 * @param	mandatory
+		 */
+		public function QuestModel(title:String,index:int=0,rightAnswer:String="",mandatory:Boolean=true) 
 		{
 			_index = index;
 			_title = title;
-			_rightAnswer = rightAnswer;
+			_rightAnswer = Vector.<String>(rightAnswer);
 			_options = Vector.<String>(options);
-			_isLast = isLast;
-			_minChoose = minChoose;
-			_maxChoose = maxChoose;
-			_randomOrder = randomOrder;
-			//_userSelection	= new Vector.<Boolean>(_options.length);
+			_mandatory = mandatory;
 		}
 		
 		public function get title():String 
@@ -53,31 +59,9 @@ package me.rainssong.quest.VO
 			return _options;
 		}
 		
-		public function get minChoose():int 
-		{
-			return _minChoose;
-		}
-		
-		public function get maxChoose():int 
-		{
-			return _maxChoose;
-		}
-		
-		public function get answerIndex():int 
-		{
-			return _answerIndex;
-		}
-		
 		public function get isLast():Boolean 
 		{
 			return _isLast;
-		}
-		
-		
-		
-		public function get randomOrder():Boolean 
-		{
-			return _randomOrder;
 		}
 		
 		public function get rightAnswer():String 
@@ -90,7 +74,7 @@ package me.rainssong.quest.VO
 			return _index;
 		}
 		
-		public function get userAnswer():String 
+		public function get userAnswer():Array
 		{
 			return _userAnswer;
 		}
@@ -98,9 +82,27 @@ package me.rainssong.quest.VO
 		/**
 		 * User ansers as abcd
 		 */
-		public function set userAnswer(value:String):void 
+		public function set userAnswer(value:Array):void
 		{
-			_userAnswer = formatResult(value);
+			//_userAnswer = formatResult(value);
+			_userAnswers =value;
+		}
+		
+		
+		public function get userSimpleAnswer():Vector.<String>
+		{
+			var vec:Vector.<String> = new Vector.<String>();
+			for (var i:int = 0; i < _userAnswer.length; i++ )
+			{
+				if (_userAnswer[i] === true)
+				{
+					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]);
+				}
+				else if (_userAnswer[i] is String)
+					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+":"+_userAnswer[i]);
+			}
+			
+			return vec;
 		}
 		
 		/**
@@ -109,12 +111,14 @@ package me.rainssong.quest.VO
 		public function get userIntactAnswer():Vector.<String>
 		{
 			var vec:Vector.<String> = new Vector.<String>();
-			for (var i:int = 0; i < _options.length; i++ )
+			for (var i:int = 0; i < _userAnswer.length; i++ )
 			{
-				if (_userAnswer.indexOf(ArrayCore.UPPER_CASE_LETTER_ARR[i]) >= 0)
+				if (_userAnswer[i] === true)
 				{
-					vec.push(_options[i]);
+					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+"."+options[i]);
 				}
+				else if (_userAnswers[i] is String)
+					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+"."+options[i]+":"+_userAnswer[i]);
 			}
 			
 			return vec;
@@ -129,26 +133,17 @@ package me.rainssong.quest.VO
 		{
 			_isLast = value;
 		}
-	
 		
-	
-		
-		public function formatResult(str:String):String
+		private function get isRight():Boolean
 		{
-			var resortArr:Array = str.toUpperCase().split("");
-			resortArr.sort();
-			
-			return resortArr.join("");
+			powerTrace("标准结果" + rightAnswesr + "用户答案" + userSimpleAnswer.join(""));
+			return rightAnswesr==userSimpleAnswer.join("");
 		}
 		
-		private function checkAnswer(resultString:String):Boolean
+		public function get pics():Vector.<DisplayObject> 
 		{
-			powerTrace("标准结果" + rightAnswer + "用户答案" + formatResult(_userAnswer),_userAnswer == formatResult(rightAnswer)?true: false);
-			var isRight:Boolean=_userAnswer == formatResult(rightAnswer)?true: false;
-			return isRight;
+			return _pics;
 		}
-		
-	
 		
 	}
 

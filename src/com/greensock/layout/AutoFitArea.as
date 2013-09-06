@@ -1,8 +1,8 @@
 /**
- * VERSION: 2.54
- * DATE: 2011-04-26
+ * VERSION: 1.56
+ * DATE: 2010-06-25
  * AS3
- * UPDATES AND DOCS AT: http://www.greensock.com/autofitarea/
+ * UPDATES AND DOCUMENTATION AT: http://www.greensock.com/autofitarea/
  **/
 package com.greensock.layout {
 	import flash.display.BitmapData;
@@ -50,8 +50,8 @@ import com.greensock.layout.~~;
 //create a 300x100 rectangular area at x:50, y:70 that stretches when the stage resizes (as though its top left and bottom right corners are pinned to their corresponding PinPoints on the stage)
 var area:AutoFitArea = new AutoFitArea(this, 50, 70, 300, 100);
 
-//attach a "myImage" Sprite to the area and set its ScaleMode to PROPORTIONAL_OUTSIDE and crops the extra content that spills over the edges
-area.attach(myImage, {scaleMode:ScaleMode.PROPORTIONAL_OUTSIDE, crop:true});
+//attach a "myImage" Sprite to the area and set its ScaleMode to PROPORTIONAL_INSIDE and horizontally and vertically align it in the center of the area
+area.attach(myImage, ScaleMode.PROPORTIONAL_INSIDE, AlignMode.CENTER, AlignMode.CENTER);
 
 //if you'd like to preview the area visually, set preview to true (by default previewColor is red)
 area.preview = true;
@@ -68,13 +68,13 @@ var area:AutoFitArea = AutoFitArea.createAround(myImage);
 </listing>
  *
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the license that came with your Club GreenSock membership and is <b>ONLY</b> to be used by corporate or "Shockingly Green" Club GreenSock members. To learn more about Club GreenSock, visit <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a>.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the license that came with your Club GreenSock membership and is <b>ONLY</b> to be used by corporate or "Shockingly Green" Club GreenSock members. To learn more about Club GreenSock, visit <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a>.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	 
 	public class AutoFitArea extends Shape {
 		/** @private **/
-		public static const version:Number = 2.54;
+		public static const version:Number = 1.56;
 		
 		/** @private **/
 		private static var _bd:BitmapData;
@@ -128,44 +128,22 @@ var area:AutoFitArea = AutoFitArea.createAround(myImage);
 		 * the target DisplayObject immediately.
 		 * 
 		 * @param target The target DisplayObject whose position and dimensions the AutoFitArea should match initially.
-		 * @param vars An object used for defining various optional parameters (see below for list) - this is more readable and concise than defining 11 or more normal arguments. 
-		 * 			   For example, <code>createAround(mc, {scaleMode:"proportionalOutside", crop:true});</code> instead of <code>createAround(mc, "proportionalOutside", "center", "center", true, 0, 99999999, 0, 99999999, false, NaN, false);</code>.
-		 * 			   The following optional parameters are recognized:
-		 * 				<ul>
-		 * 					<li><b>scaleMode : String</b> - Determines how the target should be scaled to fit the area. Use the ScaleMode class constants: <code>STRETCH, PROPORTIONAL_INSIDE, PROPORTIONAL_OUTSIDE, NONE, WIDTH_ONLY,</code> or <code>HEIGHT_ONLY</code></li>
-		 * 					<li><b>hAlign : String</b> - Horizontal alignment of the target inside the area. Use the AlignMode class constants: <code>LEFT</code>, <code>CENTER</code>, and <code>RIGHT</code>.</li>
-		 * 					<li><b>vAlign : String</b> - Vertical alignment of the target inside the area. Use the AlignMode class constants: <code>TOP</code>, <code>CENTER</code>, and <code>BOTTOM</code>.</li>
-		 * 					<li><b>crop : Boolean</b> - If true, a mask will be created and added to the display list so that the target will be cropped wherever it exceeds the bounds of the AutoFitArea.</li>
-		 * 					<li><b>roundPosition : Boolean</b> - To force the target's x/y position to snap to whole pixel values, set <code>roundPosition</code> to <code>true</code> (it is <code>false</code> by default).</li>
-		 * 					<li><b>customBoundsTarget : DisplayObject</b> - A DisplayObject that AutoFitArea/LiquidArea should use when measuring bounds instead of the <code>target</code>. For example, maybe the target contains 3 boxes arranged next to each other, left-to-right and instead of fitting ALL of those boxes into the area, you only want the center one fit into the area. In this case, you can define the customBoundsTarget as that center box so that the AutoFitArea/LiquidArea only uses it when calculating bounds. Make sure that the object is in the display list (its <code>visible</code> property can be set to false if you want to use an invisible object to define custom bounds).</li>
-		 * 					<li><b>minWidth : Number</b> - Minimum width to which the target is allowed to scale</li>
-		 * 					<li><b>maxWidth : Number</b> - Maximum width to which the target is allowed to scale</li>
-		 * 					<li><b>minHeight : Number</b> - Minimum height to which the target is allowed to scale</li>
-		 * 					<li><b>maxHeight : Number</b> - Maximum height to which the target is allowed to scale</li>
-		 * 					<li><b>calculateVisible : Boolean</b> - If true, only the visible portions of the target will be taken into account when determining its position and scale which can be useful for objects that have masks applied (otherwise, Flash reports their width/height and getBounds() values including the masked portions). Setting <code>calculateVisible</code> to <code>true</code> degrades performance, so only use it when absolutely necessary.</li>
-		 * 					<li><b>customAspectRatio : Number</b> - Normally if you set the <code>scaleMode</code> to <code>PROPORTIONAL_INSIDE</code> or <code>PROPORTIONAL_OUTSIDE</code>, its native (unscaled) dimensions will be used to determine the proportions (aspect ratio), but if you prefer to define a custom width-to-height ratio, use <code>customAspectRatio</code>. For example, if an item is 100 pixels wide and 50 pixels tall at its native size, the aspect ratio would be 100/50 or 2. If, however, you want it to be square (a 1-to-1 ratio), the <code>customAspectRatio</code> would be 1. </li>
-		 * 					<li><b>previewColor : uint</b> - The preview color of the AutoFitArea (default is 0xFF0000). To preview, you must set the AutoFitArea's <code>visible</code> property to true (it is false by default).</li>
-		 * 				</ul>
+		 * @param scaleMode Determines how the target should be scaled to fit the AutoFitArea. ScaleMode choices are: <code>STRETCH, PROPORTIONAL_INSIDE, PROPORTIONAL_OUTSIDE, NONE, WIDTH_ONLY,</code> or <code>HEIGHT_ONLY</code>.
+		 * @param hAlign Horizontal alignment of the target inside the AutoFitArea. AlignMode choices are: <code>LEFT</code>, <code>CENTER</code>, and <code>RIGHT</code>.
+		 * @param vAlign Vertical alignment of the target inside the AutoFitArea. AlignMode choices are: <code>TOP</code>, <code>CENTER</code>, and <code>BOTTOM</code>.
+		 * @param crop If true, a mask will be created so that the target will be cropped wherever it exceeds the bounds of the AutoFitArea.
+		 * @param minWidth Minimum width to which the target is allowed to scale
+		 * @param minHeight Minimum height to which the target is allowed to scale
+		 * @param maxWidth Maximum width to which the target is allowed to scale
+		 * @param maxHeight Maximum height to which the target is allowed to scale
+		 * @param previewColor color of the AutoFitArea (which won't be seen unless you set preview to true or manually add it to the display list with addChild())
+		 * @param calculateVisible If true, only the visible portions of the target will be taken into account when determining its position and scale which can be useful for objects that have masks applied (otherwise, Flash reports their width/height and getBounds() values including the masked portions). Setting <code>calculateVisible</code> to <code>true</code> degrades performance, so only use it when absolutely necessary.
 		 * @return An AutoFitArea instance
 		 */
-		public static function createAround(target:DisplayObject, vars:Object=null, ...args):AutoFitArea {
-			if (vars == null || typeof(vars) == "string") {
-				//sensed old method - parse the params for backwards compatibility
-				vars = {scaleMode:vars || "proportionalInside",
-						hAlign:args[0] || "center",
-						vAlign:args[1] || "center",
-						crop:Boolean(args[2]),
-						minWidth:args[3] || 0,
-						maxWidth:(isNaN(args[4]) ? 999999999 : args[4]),
-						minHeight:args[5] || 0,
-						maxHeight:(isNaN(args[6]) ? 999999999 : args[6]),
-						calculateVisible:Boolean(args[8])};
-			}
-			var boundsTarget:DisplayObject = (vars.customBoundsTarget is DisplayObject) ? vars.customBoundsTarget : target;
-			var previewColor:uint = isNaN(args[7]) ? (("previewColor" in vars) ? uint(vars.previewColor) : 0xFF0000) : args[7];
-			var bounds:Rectangle = (vars.calculateVisible == true) ? getVisibleBounds(boundsTarget, target.parent) : boundsTarget.getBounds(target.parent);
+		public static function createAround(target:DisplayObject, scaleMode:String="proportionalInside", hAlign:String="center", vAlign:String="center", crop:Boolean=false, minWidth:Number=0, minHeight:Number=0, maxWidth:Number=999999999, maxHeight:Number=999999999, previewColor:uint=0xFF0000, calculateVisible:Boolean=false):AutoFitArea {
+			var bounds:Rectangle = (calculateVisible) ? getVisibleBounds(target, target.parent) : target.getBounds(target.parent);
 			var afa:AutoFitArea = new AutoFitArea(target.parent, bounds.x, bounds.y, bounds.width, bounds.height, previewColor);
-			afa.attach(target, vars);
+			afa.attach(target, scaleMode, hAlign, vAlign, crop, minWidth, maxWidth, minHeight, maxHeight, calculateVisible);
 			return afa;
 		}
 		
@@ -176,46 +154,24 @@ var area:AutoFitArea = AutoFitArea.createAround(myImage);
 		 * When the area resizes, all attached DisplayObjects will automatically be moved/scaled accordingly.
 		 * 
 		 * @param target The DisplayObject to attach and scale/stretch to fit within the area.
-		 * @param vars An object used for defining various optional parameters (see below for list) - this is more readable and concise than defining 11 or more normal arguments. 
-		 * 			   For example, <code>attach(mc, {scaleMode:"proportionalOutside", crop:true});</code> instead of <code>attach(mc, "proportionalOutside", "center", "center", true, 0, 99999999, 0, 99999999, false, NaN, false);</code>.
-		 * 			   The following optional parameters are recognized:
-		 * 				<ul>
-		 * 					<li><b>scaleMode : String</b> - Determines how the target should be scaled to fit the area. Use the ScaleMode class constants: <code>STRETCH, PROPORTIONAL_INSIDE, PROPORTIONAL_OUTSIDE, NONE, WIDTH_ONLY,</code> or <code>HEIGHT_ONLY</code></li>
-		 * 					<li><b>hAlign : String</b> - Horizontal alignment of the target inside the area. Use the AlignMode class constants: <code>LEFT</code>, <code>CENTER</code>, and <code>RIGHT</code>.</li>
-		 * 					<li><b>vAlign : String</b> - Vertical alignment of the target inside the area. Use the AlignMode class constants: <code>TOP</code>, <code>CENTER</code>, and <code>BOTTOM</code>.</li>
-		 * 					<li><b>crop : Boolean</b> - If true, a mask will be created and added to the display list so that the target will be cropped wherever it exceeds the bounds of the AutoFitArea.</li>
-		 * 					<li><b>roundPosition : Boolean</b> - To force the target's x/y position to snap to whole pixel values, set <code>roundPosition</code> to <code>true</code> (it is <code>false</code> by default).</li>
-		 * 					<li><b>customBoundsTarget : DisplayObject</b> - A DisplayObject that AutoFitArea/LiquidArea should use when measuring bounds instead of the <code>target</code>. For example, maybe the target contains 3 boxes arranged next to each other, left-to-right and instead of fitting ALL of those boxes into the area, you only want the center one fit into the area. In this case, you can define the customBoundsTarget as that center box so that the AutoFitArea/LiquidArea only uses it when calculating bounds. Make sure that the object is in the display list (its <code>visible</code> property can be set to false if you want to use an invisible object to define custom bounds).</li>
-		 * 					<li><b>minWidth : Number</b> - Minimum width to which the target is allowed to scale</li>
-		 * 					<li><b>maxWidth : Number</b> - Maximum width to which the target is allowed to scale</li>
-		 * 					<li><b>minHeight : Number</b> - Minimum height to which the target is allowed to scale</li>
-		 * 					<li><b>maxHeight : Number</b> - Maximum height to which the target is allowed to scale</li>
-		 * 					<li><b>calculateVisible : Boolean</b> - If true, only the visible portions of the target will be taken into account when determining its position and scale which can be useful for objects that have masks applied (otherwise, Flash reports their width/height and getBounds() values including the masked portions). Setting <code>calculateVisible</code> to <code>true</code> degrades performance, so only use it when absolutely necessary.</li>
-		 * 					<li><b>customAspectRatio : Number</b> - Normally if you set the <code>scaleMode</code> to <code>PROPORTIONAL_INSIDE</code> or <code>PROPORTIONAL_OUTSIDE</code>, its native (unscaled) dimensions will be used to determine the proportions (aspect ratio), but if you prefer to define a custom width-to-height ratio, use <code>customAspectRatio</code>. For example, if an item is 100 pixels wide and 50 pixels tall at its native size, the aspect ratio would be 100/50 or 2. If, however, you want it to be square (a 1-to-1 ratio), the <code>customAspectRatio</code> would be 1. </li>
-		 * 				</ul>
+		 * @param scaleMode Determines how the target should be scaled to fit the area. ScaleMode choices are: <code>STRETCH, PROPORTIONAL_INSIDE, PROPORTIONAL_OUTSIDE, NONE, WIDTH_ONLY,</code> or <code>HEIGHT_ONLY</code>.
+		 * @param hAlign Horizontal alignment of the target inside the area. AlignMode choices are: <code>LEFT</code>, <code>CENTER</code>, and <code>RIGHT</code>.
+		 * @param vAlign Vertical alignment of the target inside the area. AlignMode choices are: <code>TOP</code>, <code>CENTER</code>, and <code>BOTTOM</code>.
+		 * @param crop If true, a mask will be created and added to the display list so that the target will be cropped wherever it exceeds the bounds of the AutoFitArea.
+		 * @param minWidth Minimum width to which the target is allowed to scale
+		 * @param maxWidth Maximum width to which the target is allowed to scale
+		 * @param minHeight Minimum height to which the target is allowed to scale
+		 * @param maxHeight Maximum height to which the target is allowed to scale
+		 * @param calculateVisible If true, only the visible portions of the target will be taken into account when determining its position and scale which can be useful for objects that have masks applied (otherwise, Flash reports their width/height and getBounds() values including the masked portions). Setting <code>calculateVisible</code> to <code>true</code> degrades performance, so only use it when absolutely necessary.
+		 * @param customAspectRatio Normally if you set the <code>scaleMode</code> to <code>PROPORTIONAL_INSIDE</code> or <code>PROPORTIONAL_OUTSIDE</code>, its native (unscaled) dimensions will be used to determine the proportions (aspect ratio), but if you prefer to define a custom width-to-height ratio, use <code>customAspectRatio</code>. For example, if an item is 100 pixels wide and 50 pixels tall at its native size, the aspect ratio would be 100/50 or 2. If, however, you want it to be square (a 1-to-1 ratio), the <code>customAspectRatio</code> would be 1. 
 		 */
-		public function attach(target:DisplayObject, vars:Object=null, ...args):void { 
+		public function attach(target:DisplayObject, scaleMode:String="proportionalInside", hAlign:String="center", vAlign:String="center", crop:Boolean=false, minWidth:Number=0, maxWidth:Number=999999999, minHeight:Number=0, maxHeight:Number=999999999, calculateVisible:Boolean=false, customAspectRatio:Number=NaN):void {
 			if (target.parent != _parent) {
 				throw new Error("The parent of the DisplayObject " + target.name + " added to AutoFitArea " + this.name + " doesn't share the same parent.");
 			}
-			if (vars == null || typeof(vars) == "string") {
-				//sensed old method - parse the params for backwards compatibility
-				vars = {scaleMode:vars || "proportionalInside",
-						hAlign:args[0] || "center",
-						vAlign:args[1] || "center",
-						crop:Boolean(args[2]),
-						minWidth:args[3] || 0,
-						maxWidth:(isNaN(args[4]) ? 999999999 : args[4]),
-						minHeight:args[5] || 0,
-						maxHeight:(isNaN(args[6]) ? 999999999 : args[6]),
-						calculateVisible:Boolean(args[7]),
-						customAspectRatio:Number(args[8]),
-						roundPosition:Boolean(args[9])};
-			}
-			
 			release(target);
-			_rootItem = new AutoFitItem(target, vars, _rootItem);
-			if (vars != null && vars.crop == true) {
+			_rootItem = new AutoFitItem(target, scaleMode, hAlign, vAlign, minWidth, maxWidth, minHeight, maxHeight, calculateVisible, customAspectRatio, _rootItem);
+			if (crop) {
 				var shape:Shape = new Shape();
 				var bounds:Rectangle = this.getBounds(this);
 				shape.graphics.beginFill(_previewColor, 1);
@@ -259,8 +215,6 @@ var area:AutoFitArea = AutoFitArea.createAround(myImage);
 				_rootItem = item.next;
 			}
 			item.next = item.prev = null;
-			item.boundsTarget = null;
-			item.target = null;
 			return true;
 		}
 		
@@ -306,29 +260,15 @@ var area:AutoFitArea = AutoFitArea.createAround(myImage);
 			var matrix:Matrix = this.transform.matrix;
 			
 			var item:AutoFitItem = _rootItem;
-			var w:Number, h:Number, tx:Number, ty:Number, target:DisplayObject, innerBounds:Rectangle, outerBounds:Rectangle, tRatio:Number, scaleMode:String, ratio:Number, angle:Number, sin:Number, cos:Number, m:Matrix, wScale:Number, hScale:Number, mPrev:Matrix;
+			var w:Number, h:Number, target:DisplayObject, bounds:Rectangle, tRatio:Number, scaleMode:String, ratio:Number, angle:Number, sin:Number, cos:Number, m:Matrix, mScale:Number, mPrev:Matrix;
 			while (item) {
 				target = item.target;
 				scaleMode = item.scaleMode;
 				
 				if (scaleMode != ScaleMode.NONE) {
 					
-					//if the width or height is zero, we cannot effectively scale using multiplication/division, so make sure that the target is at least 1 pixel tall/wide before proceeding. Remember, it'll get adjusted back to what it should be later.
-					if (scaleMode != ScaleMode.HEIGHT_ONLY && target.width == 0) {
-						target.width = 1; 
-					} 
-					if (scaleMode != ScaleMode.WIDTH_ONLY && target.height == 0) {
-						target.height = 1;
-					}
-					
-					if (item.calculateVisible) {
-						innerBounds = item.bounds = getVisibleBounds(item.boundsTarget, target);
-						outerBounds = getVisibleBounds(item.boundsTarget, _parent);
-					} else {
-						innerBounds = item.boundsTarget.getBounds(target);
-						outerBounds =  item.boundsTarget.getBounds(_parent);
-					}
-					tRatio = (item.hasCustomRatio) ? item.aspectRatio : innerBounds.width / innerBounds.height;
+					bounds = (item.calculateVisible) ? (item.bounds = getVisibleBounds(target, target)) : target.getBounds(target);
+					tRatio = (item.hasCustomRatio) ? item.aspectRatio : bounds.width / bounds.height;
 					
 					m = target.transform.matrix;
 					if (m.b != 0 || m.a == 0 || m.d == 0) {
@@ -370,9 +310,7 @@ var area:AutoFitArea = AutoFitArea.createAround(myImage);
 					
 					if ((tRatio < ratio && scaleMode == ScaleMode.PROPORTIONAL_INSIDE) || (tRatio > ratio && scaleMode == ScaleMode.PROPORTIONAL_OUTSIDE)) {
 						w = h * tRatio;
-						if (w == 0) {
-							h = 0;
-						} else if (w > item.maxWidth) {
+						if (w > item.maxWidth) {
 							w = item.maxWidth;
 							h = w / tRatio;
 						} else if (w < item.minWidth) {
@@ -390,79 +328,50 @@ var area:AutoFitArea = AutoFitArea.createAround(myImage);
 							w = h * tRatio;
 						}
 					}
-					
-					if (w != 0 && h != 0) {
-						wScale = w / outerBounds.width;
-						hScale = h / outerBounds.height;
-					} else {
-						wScale = hScale = 0;
-					}
-					
 					if (scaleMode != ScaleMode.HEIGHT_ONLY) {
 						if (item.calculateVisible) {
-							item.scaleVisibleWidth(wScale);
+							item.setVisibleWidth(w);
 						} else if (m.b != 0) {
-							m.a *= wScale;
-							m.c *= wScale;
+							mScale = w / target.width;
+							m.a *= mScale;
+							m.c *= mScale;
 							target.transform.matrix = m;
 						} else {
-							target.width *= wScale;
+							target.width = w;
 						}
 					}
 					if (scaleMode != ScaleMode.WIDTH_ONLY) {
 						if (item.calculateVisible) {
-							item.scaleVisibleHeight(hScale);
+							item.setVisibleHeight(h);
 						} else if (m.b != 0) {
-							m.d *= hScale;
-							m.b *= hScale;
+							mScale = h / target.height;
+							m.d *= mScale;
+							m.b *= mScale;
 							target.transform.matrix = m;
 						} else {
-							target.height *= hScale;
+							target.height = h;
 						}
 					}
 					
-				}
+				} 
 				
-				if (item.hasDrawNow) { //some components incorrectly report getBounds() until after we drawNow()
-					Object(target).drawNow();
-				}
+				bounds = (item.calculateVisible) ? getVisibleBounds(target, _parent) : target.getBounds(_parent);
 				
-				if (scaleMode != ScaleMode.NONE && innerBounds.x == 0 && innerBounds.y == 0) { //for optimization
-					if (scaleMode != ScaleMode.HEIGHT_ONLY) {
-						outerBounds.width = w;
-					}
-					if (scaleMode != ScaleMode.WIDTH_ONLY) {
-						outerBounds.height = h;
-					}
-				} else {
-					outerBounds = (item.calculateVisible) ? getVisibleBounds(item.boundsTarget, _parent) : item.boundsTarget.getBounds(_parent);
-				}
-				
-				tx = target.x;
-				ty = target.y;
 				if (item.hAlign == AlignMode.LEFT) {
-					tx += (x - outerBounds.x);
+					target.x += (x - bounds.x);
 				} else if (item.hAlign == AlignMode.CENTER) {
-					tx += (x - outerBounds.x) + ((width - outerBounds.width) * 0.5);
-				} else if (item.hAlign == AlignMode.RIGHT) {
-					tx += (x - outerBounds.x) + (width - outerBounds.width);
+					target.x += (x - bounds.x) + ((width - target.width) * 0.5);
+				} else {
+					target.x += (x - bounds.x) + (width - target.width);
 				}
 				
 				if (item.vAlign == AlignMode.TOP) {
-					ty += (y - outerBounds.y);
+					target.y += (y - bounds.y);
 				} else if (item.vAlign == AlignMode.CENTER) {
-					ty += (y - outerBounds.y) + ((height - outerBounds.height) * 0.5);
-				} else if (item.vAlign == AlignMode.BOTTOM) {
-					ty += (y - outerBounds.y) + (height - outerBounds.height);
+					target.y += (y - bounds.y) + ((height - target.height) * 0.5);
+				} else {
+					target.y += (y - bounds.y) + (height - target.height);
 				}
-				
-				if (item.roundPosition) {
-					tx = (tx + 0.5) >> 0; //much faster than Math.round()
-					ty = (ty + 0.5) >> 0;
-				}
-				
-				target.x = tx;
-				target.y = ty;
 				
 				if (item.mask) {
 					item.mask.transform.matrix = matrix;
@@ -550,8 +459,6 @@ var area:AutoFitArea = AutoFitArea.createAround(myImage);
 			if (_bd == null) {
 				_bd = new BitmapData(2800, 2800, true, 0x00FFFFFF);
 			}
-			var msk:DisplayObject = target.mask;
-			target.mask = null;
 			_bd.fillRect(_rect, 0x00FFFFFF);
 			_matrix.tx = _matrix.ty = 0;
 			var offset:Rectangle = target.getBounds(targetCoordinateSpace);
@@ -562,7 +469,6 @@ var area:AutoFitArea = AutoFitArea.createAround(myImage);
 			var bounds:Rectangle = _bd.getColorBoundsRect(0xFF000000, 0x00000000, false);
 			bounds.x += offset.x;
 			bounds.y += offset.y;
-			target.mask = msk;
 			return bounds;
 		}
 		
@@ -684,39 +590,27 @@ internal class AutoFitItem {
 	public var mask:Shape;
 	public var matrix:Matrix;
 	public var hasCustomRatio:Boolean;
-	public var roundPosition:Boolean;
 	
 	public var next:AutoFitItem;
 	public var prev:AutoFitItem;
 	
 	public var calculateVisible:Boolean;
-	public var boundsTarget:DisplayObject;
 	public var bounds:Rectangle;
-	public var hasDrawNow:Boolean;
 	
 	/** @private **/
-	public function AutoFitItem(target:DisplayObject, vars:Object, next:AutoFitItem) {
+	public function AutoFitItem(target:DisplayObject, scaleMode:String, hAlign:String, vAlign:String, minWidth:Number, maxWidth:Number, minHeight:Number, maxHeight:Number, calculateVisible:Boolean, customAspectRatio:Number, next:AutoFitItem) {
 		this.target = target;
-		if (vars == null) {
-			vars = {};
-		}
-		this.scaleMode = 	vars.scaleMode || "proportionalInside";
-		this.hAlign = 		vars.hAlign || "center";
-		this.vAlign = 		vars.vAlign || "center";
-		this.minWidth = 	Number(vars.minWidth) || 0;
-		this.maxWidth = 	isNaN(vars.maxWidth) ? 999999999 : Number(vars.maxWidth);
-		this.minHeight = 	Number(vars.minHeight) || 0;
-		this.maxHeight = 	isNaN(vars.maxHeight) ? 999999999 : Number(vars.maxHeight);
-		this.roundPosition = Boolean(vars.roundPosition);
-		this.boundsTarget = (vars.customBoundsTarget is DisplayObject) ? vars.customBoundsTarget : this.target;
+		this.scaleMode = scaleMode;
+		this.hAlign = hAlign;
+		this.vAlign = vAlign;
+		this.minWidth = minWidth;
+		this.maxWidth = maxWidth;
+		this.minHeight = minHeight;
+		this.maxHeight = maxHeight;
 		this.matrix = target.transform.matrix;
-		this.calculateVisible = Boolean(vars.calculateVisible);
-		this.hasDrawNow = this.target.hasOwnProperty("drawNow");
-		if (this.hasDrawNow) {
-			Object(this.target).drawNow(); //just to make sure we're starting with the correct values if it's a component.
-		}
-		if (!isNaN(vars.customAspectRatio)) {
-			this.aspectRatio = vars.customAspectRatio;
+		this.calculateVisible = calculateVisible;
+		if (!isNaN(customAspectRatio)) {
+			this.aspectRatio = customAspectRatio;
 			this.hasCustomRatio = true;
 		}
 		if (next) {
@@ -762,28 +656,6 @@ internal class AutoFitItem {
 			if (value != 0) {
 				this.matrix = m;
 			}
-		}
-	}
-	
-	/** @private **/
-	public function scaleVisibleWidth(value:Number):void {
-		var m:Matrix = this.target.transform.matrix;
-		m.a *= value;
-		m.c *= value;
-		this.target.transform.matrix = m;
-		if (value != 0) {
-			this.matrix = m;
-		}
-	}
-	
-	/** @private **/
-	public function scaleVisibleHeight(value:Number):void {
-		var m:Matrix = this.target.transform.matrix;
-		m.b *= value;
-		m.d *= value;
-		this.target.transform.matrix = m;
-		if (value != 0) {
-			this.matrix = m;
 		}
 	}
 	
