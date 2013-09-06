@@ -8,7 +8,7 @@ package me.rainssong.quest.VO
 	 * ...
 	 * @author rainsong
 	 */
-	public class QuestModel extends EventDispatcher
+	dynamic public class QuestModel extends EventDispatcher
 	{
 		protected var _title:String;
 		protected var _index:int;
@@ -18,11 +18,11 @@ package me.rainssong.quest.VO
 		 */
 		protected var _rightAnswer:String;
 		protected var _userAnswer:Array;
-		protected var _userIntactAnswer:Vector.<String>;
-		//private var _userSelection:Vector.<Boolean> ;
+		
+		
 		protected var _mandatory:Boolean = true;
 		protected var _isLast:Boolean = false;
-		protected var _pics:Vector.<DisplayObject>;
+		protected var _pics:Vector.<String>;
 	
 		/**
 		 * 
@@ -35,8 +35,7 @@ package me.rainssong.quest.VO
 		{
 			_index = index;
 			_title = title;
-			_rightAnswer = Vector.<String>(rightAnswer);
-			_options = Vector.<String>(options);
+			_rightAnswer = rightAnswer;
 			_mandatory = mandatory;
 		}
 		
@@ -52,11 +51,6 @@ package me.rainssong.quest.VO
 		public function get number():int
 		{
 			return _index + 1;
-		}
-		
-		public function get options():Vector.<String> 
-		{
-			return _options;
 		}
 		
 		public function get isLast():Boolean 
@@ -85,48 +79,7 @@ package me.rainssong.quest.VO
 		public function set userAnswer(value:Array):void
 		{
 			//_userAnswer = formatResult(value);
-			_userAnswers =value;
-		}
-		
-		
-		public function get userSimpleAnswer():Vector.<String>
-		{
-			var vec:Vector.<String> = new Vector.<String>();
-			for (var i:int = 0; i < _userAnswer.length; i++ )
-			{
-				if (_userAnswer[i] === true)
-				{
-					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]);
-				}
-				else if (_userAnswer[i] is String)
-					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+":"+_userAnswer[i]);
-			}
-			
-			return vec;
-		}
-		
-		/**
-		 * User ansers as content
-		 */
-		public function get userIntactAnswer():Vector.<String>
-		{
-			var vec:Vector.<String> = new Vector.<String>();
-			for (var i:int = 0; i < _userAnswer.length; i++ )
-			{
-				if (_userAnswer[i] === true)
-				{
-					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+"."+options[i]);
-				}
-				else if (_userAnswers[i] is String)
-					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+"."+options[i]+":"+_userAnswer[i]);
-			}
-			
-			return vec;
-		}
-		
-		public function set options(value:Vector.<String>):void 
-		{
-			_options = value;
+			_userAnswer =value;
 		}
 		
 		public function set isLast(value:Boolean):void 
@@ -136,13 +89,18 @@ package me.rainssong.quest.VO
 		
 		private function get isRight():Boolean
 		{
-			powerTrace("标准结果" + rightAnswesr + "用户答案" + userSimpleAnswer.join(""));
-			return rightAnswesr==userSimpleAnswer.join("");
+			powerTrace("标准结果" + _rightAnswer + "用户答案" + _userAnswer.join(""));
+			return _rightAnswer==_userAnswer.join("");
 		}
 		
-		public function get pics():Vector.<DisplayObject> 
+		public function get pics():Vector.<String> 
 		{
 			return _pics;
+		}
+		
+		public function set pics(value:Vector.<String>):void 
+		{
+			_pics = value;
 		}
 		
 	}

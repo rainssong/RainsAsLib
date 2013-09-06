@@ -1,7 +1,9 @@
 ﻿package me.rainssong.quest 
 {
 
+	import flash.display.DisplayObject;
 	import me.rainssong.math.*;
+	import me.rainssong.quest.VO.OptionQuestModel;
 	import me.rainssong.quest.VO.QuestModel;
 	
 	/**
@@ -12,14 +14,14 @@
 	{
 		private var _xml:XML;
 		private var _numQuests:int;
-		private var _questArr:Vector.<QuestModel>
+		private var _questArr:Vector.<OptionQuestModel>
 		private const _isRandom:Boolean = true;
 		private var _randomOrderArr:Array;
 		
 		public function XmlQuestManager(xml:XML) 
 		{
 			_xml = xml;
-			_questArr = new Vector.<QuestModel>();
+			_questArr = new Vector.<OptionQuestModel>();
 			
 			//_numQuests = xmlData.quest.length();
 			
@@ -42,16 +44,26 @@
 			if (!_xml.quest[index]) return null;
 			var title:String = _xml.quest[index].title;
 			var options:Vector.<String> = new Vector.<String>;
+			var pics:Vector.<String> = new Vector.<String>;
 			for (var i:int = 0; i < _xml.quest[index].option.length(); i++ )
 			{
 				options.push(_xml.quest[index].option[i].toString())
 			}
+			for (var ii:int = 0; ii < _xml.quest[index].pic.length(); ii++ )
+			{
+				pics.push(_xml.quest[index].pic[ii].toString())
+			}
+			
 			var minChoose:int = _xml.quest[index].@minChoose?_xml.quest[index].@minChoose:1;
 			var maxChoose:int = _xml.quest[index].@maxChoose?_xml.quest[index].@maxChoose:1;
 			var randomOrder:Boolean=_xml.quest[index].@random=="true"?true:false;
 			var rightAnswer:String = _xml.quest[index].@key.toString();
-			var questModel:QuestModel = new QuestModel(index,title, ArrayCore.vectorToArray(options),rightAnswer, minChoose, maxChoose,randomOrder);
-			questModel.isLast = (index == _xml.quest.length()-1);
+			var questModel:OptionQuestModel = new OptionQuestModel(title, index, rightAnswer);
+			questModel.options = options;
+			questModel.minChoose = minChoose
+			questModel.maxChoose=maxChoose
+			questModel.isLast = (index == _xml.quest.length() - 1);
+			questModel.pics = pics;
 			return questModel;
 		}
 		
@@ -65,7 +77,7 @@
 			return _questArr[_randomOrderArr[index]];
 		}
 		
-		public function get questArr():Vector.<QuestModel> 
+		public function get questArr():Vector.<OptionQuestModel> 
 		{
 			return _questArr;
 		}

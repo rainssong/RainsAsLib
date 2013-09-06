@@ -73,16 +73,15 @@ package me.rainssong.rainMVC.view
 			}
 		}
 		
-		public function getViewComponent():DisplayObject
-		{
-			return _viewComponent;
-		
-		}
-		
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
 		{
 			_listenerArr.push([type, listener, useCapture]);
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
+		}
+		
+		public function get viewComponent():DisplayObject 
+		{
+			return _viewComponent;
 		}
 	
 		//public function get name():String 
