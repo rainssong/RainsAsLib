@@ -21,11 +21,11 @@ package me.rainssong.utils
 			return sp;
 		}
 		
-		static public function box(x:Number, y:Number, width:Number, height:Number, rgb:uint):Sprite
+		static public function box(width:Number, height:Number, rgb:uint):Sprite
 		{
 			var sp:Sprite = new Sprite();
 			sp.graphics.beginFill(rgb);
-			sp.graphics.drawRect(x, y, width, height);
+			sp.graphics.drawRect(0,0, width, height);
 			return sp;
 		}
 		
