@@ -87,7 +87,7 @@ package me.rainssong.quest.VO
 			_isLast = value;
 		}
 		
-		private function get isRight():Boolean
+		public function get isRight():Boolean
 		{
 			powerTrace("标准结果" + _rightAnswer + "用户答案" + _userAnswer.join(""));
 			return _rightAnswer==_userAnswer.join("");

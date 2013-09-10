@@ -61,6 +61,12 @@ package me.rainssong.quest.VO
 			return vec;
 		}
 		
+		override public function get isRight():Boolean
+		{
+			//powerTrace("标准结果" + _rightAnswer + "用户答案" + _userAnswer.join(""));
+			return _rightAnswer==userSimpleAnswer.join("");
+		}
+		
 		public function get options():Vector.<String> 
 		{
 			return _options;
