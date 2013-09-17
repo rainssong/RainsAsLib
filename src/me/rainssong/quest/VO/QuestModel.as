@@ -17,12 +17,12 @@ package me.rainssong.quest.VO
 		 * like "ACDF"
 		 */
 		protected var _rightAnswer:String;
-		protected var _userAnswer:Array;
-		
 		
 		protected var _mandatory:Boolean = true;
 		protected var _isLast:Boolean = false;
 		protected var _pics:Vector.<String>;
+		
+		protected var _userAnswer:String;
 	
 		/**
 		 * 
@@ -68,18 +68,9 @@ package me.rainssong.quest.VO
 			return _index;
 		}
 		
-		public function get userAnswer():Array
+		public function get userAnswer():String
 		{
 			return _userAnswer;
-		}
-		
-		/**
-		 * User ansers as abcd
-		 */
-		public function set userAnswer(value:Array):void
-		{
-			//_userAnswer = formatResult(value);
-			_userAnswer =value;
 		}
 		
 		public function set isLast(value:Boolean):void 
@@ -89,8 +80,8 @@ package me.rainssong.quest.VO
 		
 		public function get isRight():Boolean
 		{
-			powerTrace("标准结果" + _rightAnswer + "用户答案" + _userAnswer.join(""));
-			return _rightAnswer==_userAnswer.join("");
+			powerTrace("标准结果" + _rightAnswer + "用户答案" + _userAnswer);
+			return _rightAnswer==_userAnswer;
 		}
 		
 		public function get pics():Vector.<String> 
@@ -101,6 +92,11 @@ package me.rainssong.quest.VO
 		public function set pics(value:Vector.<String>):void 
 		{
 			_pics = value;
+		}
+		
+		public function set userAnswer(value:String):void 
+		{
+			_userAnswer = value;
 		}
 		
 	}

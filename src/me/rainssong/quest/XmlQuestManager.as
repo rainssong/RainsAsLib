@@ -14,14 +14,14 @@
 	{
 		private var _xml:XML;
 		private var _numQuests:int;
-		private var _questArr:Vector.<OptionQuestModel>
+		private var _questArr:Vector.<QuestModel>
 		private const _isRandom:Boolean = true;
 		private var _randomOrderArr:Array;
 		
 		public function XmlQuestManager(xml:XML) 
 		{
 			_xml = xml;
-			_questArr = new Vector.<OptionQuestModel>();
+			_questArr = new Vector.<QuestModel>();
 			
 			//_numQuests = xmlData.quest.length();
 			
@@ -77,7 +77,7 @@
 			return _questArr[_randomOrderArr[index]];
 		}
 		
-		public function get questArr():Vector.<OptionQuestModel> 
+		public function get questArr():Vector.<QuestModel> 
 		{
 			return _questArr;
 		}

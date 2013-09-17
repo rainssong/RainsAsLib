@@ -11,6 +11,7 @@ package me.rainssong.quest.VO
 		private var _minChoose:int;
 		private var _maxChoose:int;
 		private var _randomOrder:Boolean = false;
+		private var _userSelectionArr:Array=[]
 	
 		public function OptionQuestModel(title:String,index:int=0,rightAnswer:String="",mandatory:Boolean=true) 
 		{
@@ -29,14 +30,14 @@ package me.rainssong.quest.VO
 		public function get userSimpleAnswer():Vector.<String>
 		{
 			var vec:Vector.<String> = new Vector.<String>();
-			for (var i:int = 0; i < _userAnswer.length; i++ )
+			for (var i:int = 0; i < _userSelectionArr.length; i++ )
 			{
-				if (_userAnswer[i] === true)
+				if (_userSelectionArr[i] === true)
 				{
 					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]);
 				}
-				else if (_userAnswer[i] is String)
-					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+":"+_userAnswer[i]);
+				else if (_userSelectionArr[i] is String)
+					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+":"+_userSelectionArr[i]);
 			}
 			
 			return vec;
@@ -48,24 +49,25 @@ package me.rainssong.quest.VO
 		public function get userIntactAnswer():Vector.<String>
 		{
 			var vec:Vector.<String> = new Vector.<String>();
-			for (var i:int = 0; i < _userAnswer.length; i++ )
+			for (var i:int = 0; i < _userSelectionArr.length; i++ )
 			{
-				if (_userAnswer[i] === true)
+				if (_userSelectionArr[i] === true)
 				{
 					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+"."+options[i]);
 				}
-				else if (_userAnswer[i] is String)
-					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+"."+options[i]+":"+_userAnswer[i]);
+				else if (_userSelectionArr[i] is String)
+					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+"."+options[i]+":"+_userSelectionArr[i]);
 			}
 			
 			return vec;
 		}
 		
-		override public function get isRight():Boolean
+		override public function get userAnswer():String
 		{
-			//powerTrace("标准结果" + _rightAnswer + "用户答案" + _userAnswer.join(""));
-			return _rightAnswer==userSimpleAnswer.join("");
+			return userSimpleAnswer.join("");
 		}
+		
+		
 		
 		public function get options():Vector.<String> 
 		{
@@ -105,6 +107,16 @@ package me.rainssong.quest.VO
 		public function set randomOrder(value:Boolean):void 
 		{
 			_randomOrder = value;
+		}
+		
+		public function get userSelectionArr():Array 
+		{
+			return _userSelectionArr;
+		}
+		
+		public function set userSelectionArr(value:Array):void 
+		{
+			_userSelectionArr = value;
 		}
 		
 	
