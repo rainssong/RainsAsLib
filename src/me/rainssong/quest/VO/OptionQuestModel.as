@@ -119,6 +119,12 @@ package me.rainssong.quest.VO
 			_userSelectionArr = value;
 		}
 		
+		override public function clearAnswer():void 
+		{
+			super.clearAnswer();
+			_userSelectionArr = [];
+		}
+		
 	
 		
 	}

@@ -9,11 +9,14 @@ package me.rainssong.display
 		protected var _originalHeight:Number;
 		
 		
-		public function LiquidSprite()
+		public function LiquidSprite(w:Number=0,h:Number=0)
 		{
 			super();
+			
 			_originalWidth=_actualWidth = super.width;
-			_originalHeight=_actualHeight = super.height;
+			_originalHeight = _actualHeight = super.height;
+			
+			if (w || h) setSize(w, h);
 		}
 		
 		public function setSize(w:Number=NaN, h:Number=NaN):void

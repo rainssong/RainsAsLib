@@ -39,6 +39,11 @@ package me.rainssong.quest.VO
 			_mandatory = mandatory;
 		}
 		
+		public function clearAnswer():void 
+		{
+			_userAnswer = "";
+		}
+		
 		public function get title():String 
 		{
 			return _title;

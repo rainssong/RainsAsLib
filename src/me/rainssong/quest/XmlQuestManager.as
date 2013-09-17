@@ -77,6 +77,13 @@
 			return _questArr[_randomOrderArr[index]];
 		}
 		
+		public function clearAnswer():void 
+		{
+			for each(var q:QuestModel in _questArr)
+				q.clearAnswer();
+		}
+		
+		
 		public function get questArr():Vector.<QuestModel> 
 		{
 			return _questArr;

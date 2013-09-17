@@ -11,6 +11,7 @@
 	public class QuestEvent extends Event 
 	{
 		static public const COMPLETE:String = "complete";
+		static public const SKIP:String = "skip";
 
 		private var _questModel:QuestModel;
 		
