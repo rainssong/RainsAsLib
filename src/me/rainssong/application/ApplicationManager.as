@@ -123,5 +123,19 @@ package me.rainssong.application
 			shardObject.data.version = value;
 			shardObject.flush();
 		}
+		
+		public static function isNewVersion(newVer:String = "1.0", oldVer:String = null):Boolean
+		{
+			var newArr:Array = newVer.split(".").concat("0","0","0")
+			if (!oldVer) oldVer = version;
+			var oldArr:Array =	oldVer.split(".").concat("0","0","0");
+			
+			for (var i:int = 0; i < 3; i++)
+			{
+				if (Number(newArr[i]) > Number(oldArr[i]))
+					return true;
+			}
+			return false;
+		}
 	}
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <project version="2">
   <!-- Output SWF options -->
   <output>
@@ -9,7 +9,7 @@
     <movie width="1024" />
     <movie height="748" />
     <movie version="3" />
-    <movie minorVersion="5" />
+    <movie minorVersion="7" />
     <movie platform="AIR Mobile" />
     <movie background="#FFFFFF" />
   </output>
@@ -20,6 +20,7 @@
   <!-- Build options -->
   <build>
     <option accessible="False" />
+    <option advancedTelemetry="False" />
     <option allowSourcePathOverlap="False" />
     <option benchmark="False" />
     <option es="False" />
