@@ -34,12 +34,19 @@ package me.rainssong.rainMVC.view
 
 		}
 		
+		override public function destroy():void 
+		{
+			myTextField.removeEventListener(FocusEvent.FOCUS_IN, focusInHandler);
+			myTextField.removeEventListener(FocusEvent.FOCUS_OUT, focusOutHandler);
+			super.destroy();
+		}
+		
 		public function setDefaultStyle(tipContent:String = "", contentColor:uint = 0x000000, tipColor:uint = 0x999999):void
 		{
 			_tipContent = tipContent;
 			_contentColor = contentColor;
 			_tipColor = tipColor;
-			
+			myTextField.text = "";
 			refreash();
 			//if (myTextField.stage.focus == myTextField) trace("!!!");
 		}
