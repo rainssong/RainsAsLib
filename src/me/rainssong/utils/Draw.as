@@ -8,16 +8,12 @@ package me.rainssong.utils
 	
 	public class Draw
 	{
-		static public function circle(x:Number, y:Number, width:Number, height:Number, rgbs:Array, alphas:Array=null ,ratios:Array=null):Sprite
+		static public function circle(width:Number, height:Number,color:int=0xFF0000):Sprite
 		{
-			if (!alphas) alphas = [1];
-			if (!ratios) ratios = [0,255];
-			
 			var sp:Sprite = new Sprite();
-			var mtx:Matrix = new Matrix();
-			mtx.createGradientBox(width * 2, height * 2, 0, x - width, y - height);
-			sp.graphics.beginGradientFill(GradientType.RADIAL, rgbs, alphas, ratios, mtx);
-			sp.graphics.drawEllipse(x - width, y - height, width * 2, height * 2);
+			
+			sp.graphics.beginFill(color);
+			sp.graphics.drawEllipse(-width*0.5, height*0, width, height);
 			return sp;
 		}
 		

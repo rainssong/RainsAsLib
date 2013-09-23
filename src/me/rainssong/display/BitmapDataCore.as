@@ -83,7 +83,7 @@ package me.rainssong.display
 						bmd.setPixel32(j, i, arr[i][j]);
 				}
 			}
-			if (scale != 1) drawScaleBmd(bmd, scale, scale);
+			if (scale != 1) bmd=drawScaleBmd(bmd, scale, scale);
 			return bmd;
 		}
 		
