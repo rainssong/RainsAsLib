@@ -1,4 +1,4 @@
-package
+package me.rainssong.utils
 {
 	import flash.utils.Dictionary;
 	import flash.utils.flash_proxy;
