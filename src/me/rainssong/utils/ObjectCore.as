@@ -1,5 +1,11 @@
 ﻿package me.rainssong.utils
 {
+
+
+	import flash.utils.describeType;
+	import flash.utils.Dictionary;
+	import flash.utils.getQualifiedClassName;
+
 	
 	/**
 	 * ...
@@ -11,6 +17,16 @@
 		public function ObjectCore()
 		{
 		
+		}
+		
+		public static function toDictionary(obj:Object,weakKeys:Boolean=false):Dictionary
+		{
+			var dic:Dictionary = new Dictionary(weakKeys) ;
+			for (var i:String = 0 in obj)
+			{
+				dic[i] = obj[i];
+			}
+			return dic;
 		}
 		
 		public static function concatObjects(... args):Object
@@ -48,9 +64,10 @@
 			return getQualifiedClassName( target ).split( "::" ).shift();
 		}
 		
-		public static function isDynamic( target:* ):Boolean {
-			return Boolean( StringUtil.toProperType( describeType( target ).attribute( "isDynamic" ) ) );
-		}
+		//public static function isDynamic( target:* ):Boolean {
+			//return Boolean( StringUtil.toProperType( describeType( target ).attribute( "isDynamic" ) ) );
+		//
+		//}
 		
 		/**
 		 * <span lang="ja">対象のクラスに final 属性が設定されているかどうかを返します。</span>
@@ -66,9 +83,9 @@
 		 * @example <listing version="3.0">
 		 * </listing>
 		 */
-		public static function isFinal( target:* ):Boolean {
-			return Boolean( StringUtil.toProperType( describeType( target ).attribute( "isFinal" ) ) );
-		}
+		//public static function isFinal( target:* ):Boolean {
+			//return Boolean( StringUtil.toProperType( describeType( target ).attribute( "isFinal" ) ) );
+		//}
 		
 		/**
 		 * <span lang="ja">対象のインスタンスが指定されたクラスを継承しているかどうかを返します。</span>

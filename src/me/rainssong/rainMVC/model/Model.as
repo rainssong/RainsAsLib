@@ -7,7 +7,7 @@ package me.rainssong.rainMVC.model
 	 * @author rainsong
 	 */
 	[Event(name = "change", type = "flash.events.Event")]
-	public class Model  extends EventDispatcher
+	dynamic public class Model  extends EventDispatcher
 	{
 		public var data:Object;
 		

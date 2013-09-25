@@ -74,7 +74,7 @@ package me.rainssong.model {
 	 * @example <listing version="3.0">
 	 * </listing>
 	 */
-	public dynamic class Model extends Proxy implements IEventDispatcher {
+	public dynamic class XMLModel extends Proxy implements IEventDispatcher {
 		
 		/**
 		 * 
@@ -113,7 +113,11 @@ package me.rainssong.model {
 		/**
 		 * 
 		 */
+<<<<<<< HEAD
+		private var _defaultDataType:String = XMLModel.TYPE_ATTRIBUTE;
+=======
 		private var _defaultDataType:String = Model.TYPE_ATTRIBUTE;
+>>>>>>> 46f1f09736e7432355e833e838b52b16e27692f4
 		
 		/**
 		 * 列挙しないデータ名を保持するオブジェクトを取得します。
@@ -128,7 +132,11 @@ package me.rainssong.model {
 		/**
 		 * 親モデルの参照を取得します。
 		 */
+<<<<<<< HEAD
+		private var _parent:XMLModel;
+=======
 		private var _parent:Model;
+>>>>>>> 46f1f09736e7432355e833e838b52b16e27692f4
 		
 		
 		
@@ -145,7 +153,7 @@ package me.rainssong.model {
 		 * <span lang="ja">モデルデータとなる XML インスタンスです。</span>
 		 * <span lang="en"></span>
 		 */
-		public function Model( name:String, xml:XML = null ) {
+		public function XMLModel( name:String, xml:XML = null ) {
 			// クラスをコンパイルに含める
 			nium_internal;
 			
@@ -168,7 +176,7 @@ package me.rainssong.model {
 			super();
 			
 			// 継承せずにインスタンスを生成しようとしたら例外をスローする
-			if ( Object( this ).constructor == Model ) { throw new Error( Logger.getLog( L10NNiumMsg.getInstance().ERROR_010 ).toString( _classNameObj.toString() ) ); }
+			if ( Object( this ).constructor == XMLModel ) { throw new Error( Logger.getLog( L10NNiumMsg.getInstance().ERROR_010 ).toString( _classNameObj.toString() ) ); }
 			
 			// フィールドを取得する
 			var describe:XML = describeType( this );
@@ -235,11 +243,11 @@ package me.rainssong.model {
 		 * <span lang="ja">元のオブジェクトと同じプロパティ値を含む新しい Model インスタンスです。</span>
 		 * <span lang="en">A new Model object that is identical to the original.</span>
 		 */
-		public function clone():Model {
+		public function clone():XMLModel {
 			var cls:Class = getDefinitionByName( getQualifiedClassName( this ) ) as Class;
 			
 			try {
-				var model:Model = new cls() as Model;
+				var model:XMLModel = new cls() as XMLModel;
 				
 				model._name = _name;
 				
@@ -259,7 +267,7 @@ package me.rainssong.model {
 			}
 			catch ( err:Error ) {}
 			
-			return new Model( _name, toXML() );
+			return new XMLModel( _name, toXML() );
 		}
 		
 		/**
@@ -283,7 +291,7 @@ package me.rainssong.model {
 						for ( var i:int = 0, l:int = value.length; i < l; i++ ) {
 							var item:* = value[i];
 							
-							if ( item is Model ) {
+							if ( item is XMLModel ) {
 								xml.appendChild( item.toXML() );
 							}
 							else if ( item ) {
@@ -299,7 +307,7 @@ package me.rainssong.model {
 						for ( var pp:String in value ) {
 							item = value[pp];
 							
-							if ( item is Model ) {
+							if ( item is XMLModel ) {
 								xml.prependChild( item.toXML() );
 							}
 							else if ( item ) {
@@ -311,7 +319,7 @@ package me.rainssong.model {
 						}
 						break;
 					}
-					case value is Model			: { xml.appendChild( value.toXML() ); break; }
+					case value is XMLModel			: { xml.appendChild( value.toXML() ); break; }
 					default						: {
 						var dataType:String = _dataTypes[p] || _defaultDataType;
 						switch ( dataType ) {
@@ -365,7 +373,7 @@ package me.rainssong.model {
 				switch ( true ) {
 					case value is Array			:
 					case value is Dictionary	:
-					case value is Model			: { break; }
+					case value is XMLModel			: { break; }
 					default						: { args.push( p ); }
 				}
 			}
@@ -541,7 +549,7 @@ package me.rainssong.model {
 		 * <span lang="ja">親のモデルです。</span>
 		 * <span lang="en"></span>
 		 */
-		public function getParent():Model {
+		public function getParent():XMLModel {
 			return _parent;
 		}
 		
@@ -589,7 +597,7 @@ package me.rainssong.model {
 			switch ( true ) {
 				case oldData is Array		: {
 					for ( var i:int = 0, l:int = oldData.length; i < l; i++ ) {
-						var model:Model = oldData[i] as Model;
+						var model:XMLModel = oldData[i] as XMLModel;
 						
 						if ( !model ) { continue; }
 						
@@ -610,7 +618,7 @@ package me.rainssong.model {
 				}
 				case oldData is Dictionary	: {
 					for ( var p:String in oldData ) {
-						model = oldData[p] as Model;
+						model = oldData[p] as XMLModel;
 						
 						if ( !model ) { continue; }
 						
@@ -629,7 +637,7 @@ package me.rainssong.model {
 					}
 					break;
 				}
-				case oldData is Model		: {
+				case oldData is XMLModel		: {
 					// イベントを送出する
 					oldData._dispatcher.dispatchEvent( event );
 					
@@ -654,7 +662,7 @@ package me.rainssong.model {
 				switch ( true ) {
 					case newData is Array		: {
 						for ( i = 0, l = newData.length; i < l; i++ ) {
-							model = newData[i] as Model;
+							model = newData[i] as XMLModel;
 							
 							if ( !model ) { continue; }
 							
@@ -675,7 +683,7 @@ package me.rainssong.model {
 					}
 					case newData is Dictionary	: {
 						for ( var pp:String in oldData ) {
-							model = oldData[pp] as Model;
+							model = oldData[pp] as XMLModel;
 							
 							if ( !model ) { continue; }
 							
@@ -694,7 +702,7 @@ package me.rainssong.model {
 						}
 						break;
 					}
-					case newData is Model		: {
+					case newData is XMLModel		: {
 						// イベントリスナーを登録する
 						newData.addEventListener( ModelEvent.MODEL_ADDED, _dispatcher.dispatchEvent );
 						newData.addEventListener( ModelEvent.MODEL_REMOVED, _dispatcher.dispatchEvent );
