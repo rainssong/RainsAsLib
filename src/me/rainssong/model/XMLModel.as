@@ -114,7 +114,11 @@ package me.rainssong.model {
 		 * 
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		private var _defaultDataType:String = XMLModel.TYPE_ATTRIBUTE;
+=======
+		private var _defaultDataType:String = Model.TYPE_ATTRIBUTE;
+>>>>>>> 46f1f09736e7432355e833e838b52b16e27692f4
 =======
 		private var _defaultDataType:String = Model.TYPE_ATTRIBUTE;
 >>>>>>> 46f1f09736e7432355e833e838b52b16e27692f4
@@ -133,7 +137,11 @@ package me.rainssong.model {
 		 * 親モデルの参照を取得します。
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		private var _parent:XMLModel;
+=======
+		private var _parent:Model;
+>>>>>>> 46f1f09736e7432355e833e838b52b16e27692f4
 =======
 		private var _parent:Model;
 >>>>>>> 46f1f09736e7432355e833e838b52b16e27692f4
