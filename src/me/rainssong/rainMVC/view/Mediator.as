@@ -1,6 +1,7 @@
 package me.rainssong.rainMVC.view
 {
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -11,7 +12,7 @@ package me.rainssong.rainMVC.view
 	 * ...
 	 * @author Rainssong
 	 */
-	public class Mediator extends EventDispatcher
+	public class Mediator
 	{
 		private var _name:String;
 		public var autoDestroy:Boolean = true;
@@ -51,16 +52,15 @@ package me.rainssong.rainMVC.view
 		public function destroy():void
 		{
 			_viewComponent.removeEventListener(Event.REMOVED_FROM_STAGE, onRemove);
-			removeListeners();
+			removeViewListeners();
 			deleteVars();
 		}
 		
-		private function removeListeners():void
+		private function removeViewListeners():void
 		{
 			for (var i:int = 0; i < _listenerArr.length; i++)
 			{
-				
-				removeEventListener(_listenerArr[i][0], _listenerArr[i][1], _listenerArr[i][2]);
+				removeViewListener(_listenerArr[i].type,_listenerArr[i].listener, _listenerArr[i].useCapture);
 			}
 			_listenerArr = null;
 		}
@@ -73,11 +73,66 @@ package me.rainssong.rainMVC.view
 			}
 		}
 		
-		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
+		public function addViewLisenter(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
 		{
-			_listenerArr.push([type, listener, useCapture]);
-			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			var params:Object;
+			var i:int = _listenerArr.length;
+			while (i--)
+			{
+				params = _listenerArr[i];
+				if (params.type == type
+					&& params.listener == listener
+					&& params.useCapture == useCapture
+				)
+				return;
+			}
+			
+			params = {
+					type: type,
+					listener: listener,
+					useCapture: useCapture
+				};
+			_listenerArr.push(params);
+			
+			
+			_viewComponent.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
+		
+		public function removeViewListener(type:String, listener:Function, useCapture:Boolean=false):void
+		{
+		
+			var params:Object;
+			var i:int = _listenerArr.length;
+			while (i--)
+			{
+				params = _listenerArr[i];
+				if (params.type == type
+					&& params.listener == listener
+					&& params.useCapture == useCapture
+					)
+				{
+					_viewComponent.removeEventListener(type, listener, useCapture);
+					_listenerArr.splice(i, 1);
+					return;
+				}
+			}
+		}
+		
+		protected function addChild(child:DisplayObject) : DisplayObject 
+		{
+			if (_viewComponent is DisplayObjectContainer)
+			{
+				DisplayObjectContainer(_viewComponent).addChild(child);
+				return child;
+			}
+			return null;
+		}
+		
+		//override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
+		//{
+			//
+			//super.addEventListener(type, listener, useCapture, priority, useWeakReference);
+		//}
 		
 		public function get viewComponent():DisplayObject 
 		{

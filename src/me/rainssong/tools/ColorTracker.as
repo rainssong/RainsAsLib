@@ -49,7 +49,10 @@ package  me.rainssong.tools
 		public function get trackPoint():Point 
 		{
 			track();
-			return MathCore.averagePoint(_trackPoints);
+			if(_trackPoints.length>5)
+				return MathCore.averagePoint(_trackPoints);
+			else
+				return null;
 		}
 		
 		private function track():void
