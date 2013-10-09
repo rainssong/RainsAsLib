@@ -13,20 +13,21 @@ package me.rainssong.quest.VO
 		private var _randomOrder:Boolean = false;
 		private var _userSelectionArr:Array=[]
 	
-		public function OptionQuestModel(title:String,index:int=0,rightAnswer:String="",mandatory:Boolean=true) 
+		public function OptionQuestModel(title:String,options:Vector.<String>,minChoose:int=1,maxChoose:int=1,randomOrder:Boolean=false,index:int=0,rightAnswer:String="",mandatory:Boolean=true) 
 		{
 			super(title, index, rightAnswer, mandatory);
 			
-			//_options = Vector.<String>(options);
+			_options = Vector.<String>(options);
 			//
-			//_minChoose = minChoose;
-			//_maxChoose = maxChoose;
-			//_randomOrder = randomOrder;
-			//_userSelection	= new Vector.<Boolean>(_options.length);
+			_minChoose = minChoose;
+			_maxChoose = maxChoose;
+			_randomOrder = randomOrder;
 		}
 		
 	
-		
+		/**
+		 * User ansers as ABCD
+		 */
 		public function get userSimpleAnswer():Vector.<String>
 		{
 			var vec:Vector.<String> = new Vector.<String>();
@@ -66,8 +67,6 @@ package me.rainssong.quest.VO
 		{
 			return userSimpleAnswer.join("");
 		}
-		
-		
 		
 		public function get options():Vector.<String> 
 		{
@@ -121,7 +120,6 @@ package me.rainssong.quest.VO
 		
 		override public function clearAnswer():void 
 		{
-			super.clearAnswer();
 			_userSelectionArr = [];
 		}
 		

@@ -3,6 +3,7 @@
 
 	import flash.display.DisplayObject;
 	import me.rainssong.math.*;
+	import me.rainssong.quest.VO.FillQuestModel;
 	import me.rainssong.quest.VO.OptionQuestModel;
 	import me.rainssong.quest.VO.QuestModel;
 	
@@ -44,26 +45,24 @@
 			if (!_xml.quest[index]) return null;
 			var title:String = _xml.quest[index].title;
 			var options:Vector.<String> = new Vector.<String>;
-			var pics:Vector.<String> = new Vector.<String>;
+			var data:String =  _xml.quest[index].data.toString();
 			for (var i:int = 0; i < _xml.quest[index].option.length(); i++ )
 			{
 				options.push(_xml.quest[index].option[i].toString())
-			}
-			for (var ii:int = 0; ii < _xml.quest[index].pic.length(); ii++ )
-			{
-				pics.push(_xml.quest[index].pic[ii].toString())
 			}
 			
 			var minChoose:int = _xml.quest[index].@minChoose?_xml.quest[index].@minChoose:1;
 			var maxChoose:int = _xml.quest[index].@maxChoose?_xml.quest[index].@maxChoose:1;
 			var randomOrder:Boolean=_xml.quest[index].@random=="true"?true:false;
 			var rightAnswer:String = _xml.quest[index].@key.toString();
-			var questModel:OptionQuestModel = new OptionQuestModel(title, index, rightAnswer);
-			questModel.options = options;
-			questModel.minChoose = minChoose
-			questModel.maxChoose=maxChoose
+			var questModel:QuestModel;
+			if (_xml.quest[index].type.toString == "fill")
+				questModel = new FillQuestModel(title, index, rightAnswer);
+			else
+				questModel = new OptionQuestModel(title,options,minChoose,maxChoose,randomOrder, index, rightAnswer);
+			
 			questModel.isLast = (index == _xml.quest.length() - 1);
-			questModel.pics = pics;
+			questModel.data = data;
 			return questModel;
 		}
 		

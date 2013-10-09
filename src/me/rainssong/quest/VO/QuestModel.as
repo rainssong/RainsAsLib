@@ -18,9 +18,10 @@ package me.rainssong.quest.VO
 		 */
 		protected var _rightAnswer:String;
 		
+		//can't skip
 		protected var _mandatory:Boolean = true;
 		protected var _isLast:Boolean = false;
-		protected var _pics:Vector.<String>;
+		protected var _data:String;
 		
 		protected var _userAnswer:String;
 	
@@ -89,19 +90,20 @@ package me.rainssong.quest.VO
 			return _rightAnswer==_userAnswer;
 		}
 		
-		public function get pics():Vector.<String> 
-		{
-			return _pics;
-		}
-		
-		public function set pics(value:Vector.<String>):void 
-		{
-			_pics = value;
-		}
-		
+
 		public function set userAnswer(value:String):void 
 		{
 			_userAnswer = value;
+		}
+		
+		public function get data():String 
+		{
+			return _data;
+		}
+		
+		public function set data(value:String):void 
+		{
+			_data = value;
 		}
 		
 	}
