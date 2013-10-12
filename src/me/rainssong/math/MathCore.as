@@ -46,6 +46,12 @@ package me.rainssong.math
 			return Math.max(min, Math.min(number, max));
 		}
 		
+		/**
+		 * 值在0-circle内循环，算角度时可用
+		 * @param	number
+		 * @param	cycle
+		 * @return
+		 */
 		public static function getCycledNumber(number:Number, cycle:Number):Number
 		{
 			return (number % cycle + cycle) % cycle;
@@ -84,7 +90,9 @@ package me.rainssong.math
 		
 		public static function averagePoint(points:Vector.<Point>):Point
 		{	
+			if (!points.length) return null;
 			var point:Point = new Point();
+			
 			for each (var p:Point in points)
 			{
 				point.x += p.x;
@@ -94,6 +102,8 @@ package me.rainssong.math
 			point.y /= points.length;
 			return point;
 		}
+		
+		
 	
 	}
 }

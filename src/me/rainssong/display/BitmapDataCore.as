@@ -39,6 +39,7 @@ package me.rainssong.display
 		public static function toGray(source:BitmapData):BitmapData
 		{
 			var result:BitmapData = new BitmapData(source.width, source.height);
+			result.lock()
 			for (var i:int = 0; i < source.height; i++)
 			{
 				for (var j:uint = 0; j < source.width; j++)
@@ -54,6 +55,7 @@ package me.rainssong.display
 					result.setPixel(i, j, bwColor);
 				}
 			}
+			result.unlock();
 			return result;
 		}
 		

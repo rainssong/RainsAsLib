@@ -66,6 +66,7 @@ package me.rainssong.utils
 			{
 				result += i + ":" +arguments.callee(obj[i]) + ",";
 			}
+			
 			if (result.slice( -1) == ",") result = result.slice(0, -1);
 			result +=  ")";
 		}

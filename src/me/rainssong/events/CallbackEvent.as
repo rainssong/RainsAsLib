@@ -8,7 +8,7 @@ package  me.rainssong.events
 	 */
 	public class CallbackEvent extends Event 
 	{
-		public var  func:Function;
+		public var func:Function;
 		public var params:Array;
 		
 		public function CallbackEvent(type:String, func:Function,params:Array=null,bubbles:Boolean=false,cancelable:Boolean=false) 

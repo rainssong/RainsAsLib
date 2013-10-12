@@ -97,7 +97,7 @@ package   me.rainssong.math
 			arr[index2] = elementA;
 		}
 		
-		public static function sum(arr:Array):Number 
+		public static function sum(arr:*):Number 
 		{
 			var nSum:Number = 0;
 			for (var i:Number = 0; i < arr.length; i++) 

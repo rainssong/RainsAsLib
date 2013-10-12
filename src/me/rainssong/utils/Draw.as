@@ -3,18 +3,16 @@ package me.rainssong.utils
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.GradientType;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	
 	public class Draw
 	{
-		static public function circle(width:Number, height:Number,color:int=0xFF0000):Sprite
+		static public function ellipse(target:Shape,x:Number, y:Number, width:Number, height:Number,color:int=0xFF0000):void
 		{
-			var sp:Sprite = new Sprite();
-			
-			sp.graphics.beginFill(color);
-			sp.graphics.drawEllipse(-width*0.5, height*0, width, height);
-			return sp;
+			target.graphics.beginFill(color);
+			target.graphics.drawEllipse(x, y, width, height);
 		}
 		
 		static public function box(width:Number, height:Number, rgb:uint):Sprite
