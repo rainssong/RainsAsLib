@@ -12,11 +12,11 @@
 	 * ...
 	 * @author Rainssong
 	 */
-	public class SingletonManager
+	public class SingletonManagerAir
 	{
 		private static var _dictionary:Dictionary = new Dictionary();
 		
-		public function SingletonManager()
+		public function SingletonManagerAir()
 		{
 		
 		}
@@ -43,7 +43,11 @@
 		{
 			return SharedObject.getLocal("Default");
 		}
-	
+		
+		public static function get downloadManager():DownloadManager
+		{
+			return SingletonManager.getSingleton(DownloadManager) as DownloadManager;
+		}
 		
 	}
 
