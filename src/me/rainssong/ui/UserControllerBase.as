@@ -9,7 +9,9 @@ package me.rainssong.ui
 	import flash.utils.Dictionary;
 	
 	/**
-	 * ...
+	 * 接口：控制键是否按下，控制点的当前位置，角度（比如重力）, 当前力度
+	 * 事件：按下，抬起，移动，力度
+	 * 
 	 * @author Rainssong
 	 */
 	public class UserControllerBase extends EventDispatcher
@@ -20,9 +22,11 @@ package me.rainssong.ui
 		protected var _keyDic:Dictionary = new Dictionary();
 		//protected var _localX:Number = 0;
 		//protected var _localY:Number = 0;
-		protected var _points:Vector.<Vector3D> = new Vector.<Vector3D>();
+		protected var _points:Dictionary = new Dictionary();
 		
 		protected var _target:InteractiveObject;
+		
+		
 		
 		public function UserControllerBase(target:InteractiveObject)
 		{
@@ -40,41 +44,41 @@ package me.rainssong.ui
 			_isStopped = true;
 		}
 		
-		public function getLocalX(index:int=0):Number
+		public function getLocalX(name:String="default"):Number
 		{
-			if (_points[index])
-				return _points[index].x;
+			if (_points[name])
+				return _points[name].x;
 			else
 				return 0;
 		}
 		
-		public function getLocalY(index:int=0):Number
+		public function getLocalY(name:String="default"):Number
 		{
-			if (_points[index])
-				return _points[index].y;
+			if (_points[name])
+				return _points[name].y;
 			else
 				return 0;
 		}
 		
-		public function getLocalZ(index:int=0):Number
+		public function getLocalZ(name:String="default"):Number
 		{
-			if (_points[index])
-				return _points[index].z;
+			if (_points[name])
+				return _points[name].z;
 			else
 				return 0;
 		}
 		
-		public function getStageX(index:int=0):Number
+		public function getStageX(name:String="default"):Number
 		{
 			return 0;
 		}
 		
-		public function getStageY(index:int=0):Number
+		public function getStageY(name:String="default"):Number
 		{
 			return 0;
 		}
 		
-		public function getStageZ(index:int=0):Number
+		public function getStageZ(name:String="default"):Number
 		{
 			return 0;
 		}

@@ -13,35 +13,24 @@ ApplicationBase.as	//MutiLayerSprite
 
 ---controls
 LowLightBtn.as:		//iOS style btn
-ZoomBtn.as：		//Auto Zoom
+ZoomBtn.as：		//Auto zoom btn
 
 ---display
+SmartSprite.as:			//instead of sprite
 BitmapDataCore.as:		//Opration Bmd
 DisplayObjectTransfer.as	//Get display instant by url|ClassName|Class
 LCDRender.as			//Get LCD View From DisplayObject
-MouseDragableSprite.as		//
-MouseDragSprite.as		//Start drag when mouseDown
-MouseInteractiveSprite.as	//Save dragSpeed,dispatch MouseInteractiveEvent.Swipe
 MouseRotatableSprite.as		//Rotate when drag
-MouseScrollableSprite.as	//
-MouseTargetScrollableSprite.as	//
 RestoreLocationSprite.as	//AutoRestoreLocation
 Scale9BitmapSprite.as		
-SmartSprite.as:			//Auto destroy, listen add/resize
-ToolTip.as			//
+
+ToolTip.as
 CycleBitmap.as			//Scrollable
 
 ---events
 ApplicationEvent.as		//Login/Logout Init/Exit
-DragEvent.as			//
-GameEvent.as			//
 MouseInteractiveEvent.as	//with SwipeGesture
-ObjectEvent.as
 QuestEvent.as			//with QuestModel
-
----font
-FontLibrary.as			
-MSYH.as
 
 ---manager
 EventBus.as			//Global EventDispatcher
@@ -77,12 +66,11 @@ SoundPlayer.as
 ---text
 HtmlText.as			//Create htmltext
 
+--tweenCore
+TweenCore.as		//siwtch view
+
 ---utils
-Color.as			//140 colors
-DebugPanel.as
-deepCopy.as
-Directions.as			
-functionTiming.as		
+Color.as			//140 colors				
 LocalTimer.as			//accurate timer (local timer)
 Locations.as			
 StringCore.as			//OprationString

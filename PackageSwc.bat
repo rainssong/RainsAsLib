@@ -1,0 +1,1 @@
+compc -output bin/RainsAsLib.swc -include-sources=srr

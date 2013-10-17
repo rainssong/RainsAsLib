@@ -78,7 +78,7 @@
     <!-- example: <hidden path="..." /> -->
   </hiddenPaths>
   <!-- Executed before build -->
-  <preBuildCommand>bat\UpdateResource.bat</preBuildCommand>
+  <preBuildCommand>compc -include-sources=src  -output bin/$(ProjectName).swc</preBuildCommand>
   <!-- Executed after build -->
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->
