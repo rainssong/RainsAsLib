@@ -11,7 +11,7 @@ package me.rainssong.ui
 	/**
 	 * 接口：控制键是否按下，控制点的当前位置，角度（比如重力）, 当前力度
 	 * 事件：按下，抬起，移动，力度
-	 * 
+	 *
 	 * @author Rainssong
 	 */
 	public class UserControllerBase extends EventDispatcher
@@ -26,12 +26,12 @@ package me.rainssong.ui
 		
 		protected var _target:InteractiveObject;
 		
-		
-		
-		public function UserControllerBase(target:InteractiveObject)
+		public function UserControllerBase(target:InteractiveObject, autoStart:Boolean = true)
 		{
 			super(null);
 			_target = target;
+			if (autoStart)
+				start();
 		}
 		
 		public function start():void
@@ -44,7 +44,7 @@ package me.rainssong.ui
 			_isStopped = true;
 		}
 		
-		public function getLocalX(name:String="default"):Number
+		public function getLocalX(name:String = "default"):Number
 		{
 			if (_points[name])
 				return _points[name].x;
@@ -52,7 +52,7 @@ package me.rainssong.ui
 				return 0;
 		}
 		
-		public function getLocalY(name:String="default"):Number
+		public function getLocalY(name:String = "default"):Number
 		{
 			if (_points[name])
 				return _points[name].y;
@@ -60,7 +60,7 @@ package me.rainssong.ui
 				return 0;
 		}
 		
-		public function getLocalZ(name:String="default"):Number
+		public function getLocalZ(name:String = "default"):Number
 		{
 			if (_points[name])
 				return _points[name].z;
@@ -68,17 +68,17 @@ package me.rainssong.ui
 				return 0;
 		}
 		
-		public function getStageX(name:String="default"):Number
+		public function getStageX(name:String = "default"):Number
 		{
 			return 0;
 		}
 		
-		public function getStageY(name:String="default"):Number
+		public function getStageY(name:String = "default"):Number
 		{
 			return 0;
 		}
 		
-		public function getStageZ(name:String="default"):Number
+		public function getStageZ(name:String = "default"):Number
 		{
 			return 0;
 		}

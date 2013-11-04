@@ -1,7 +1,5 @@
 ﻿package me.rainssong.controls
 {
-	
-	import cn.flashk.controls.support.BitmapDataText;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -12,9 +10,7 @@
 	import flash.events.MouseEvent;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.ColorTransform;
-	import flash.display.MovieClip;
 	import me.rainssong.display.BitmapDataCore;
-	import me.rainssong.display.MyMovieClip;
 	import me.rainssong.display.SmartSprite;
 	
 	/**
