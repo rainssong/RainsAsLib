@@ -7,9 +7,9 @@ package me.rainssong.tween
 	import flash.sampler.NewObjectSample;
 	import me.rainssong.utils.Directions;
 	
-	public class TweenCore
+	public class AnimationCore
 	{
-		static public function switchView(oldView:DisplayObject, newView:DisplayObject, effect:String = "move", duration:Number = 0.5,x:Number=0,y:Number=0, ... arg):DisplayObject
+		static public function switchView(oldView:DisplayObject, newView:DisplayObject,effect:String="move",params:Object=null):DisplayObject
 		{
 			if (!newView || !oldView)
 			{
@@ -20,15 +20,16 @@ package me.rainssong.tween
 			if (!newView.parent)
 				_parent.addChild(newView);
 			
-			newView.x = x
-			newView.y = y;
-			//oldView.x = 0;
-			//oldView.y = 0;
+			if (params)
+			{
+				if (params.x) newView.x = params.x;
+				if (params.y) newView.y = params.y;
+			}
 			
 			switch (effect)
 			{
 				case "move": 
-					switch (arg[0])
+				switch (params["direction"])
 				{
 					case Directions.LEFT: 
 						TweenMax.from(newView, duration, {x: _parent.stage.stageWidth, ease: Cubic.easeInOut});
@@ -61,5 +62,14 @@ package me.rainssong.tween
 			if (scene.parent)
 				scene.parent.removeChild(scene);
 		}
+		
+		public function chessboardAnim(view:DisplayObjectContainer):void
+		{
+			
+		}
+		
 	}
+	
+	
+	
 }

@@ -1,4 +1,4 @@
-﻿package me.rainssong.display
+﻿package me.rainssong.rainSlideShow
 
 {
 	import com.greensock.TweenMax;
@@ -6,6 +6,7 @@
 	import flash.display.Shape;
 	import flash.errors.IOError;
 	import flash.geom.Rectangle;
+	import me.rainssong.display.MouseDragableSprite;
 	import me.rainssong.events.DataEvent;
 	import me.rainssong.events.SlideEvent;
 	import me.rainssong.utils.superTrace;

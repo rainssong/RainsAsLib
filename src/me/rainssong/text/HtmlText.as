@@ -1,6 +1,6 @@
 ﻿package me.rainssong.text
 {
-	
+	 
 	public class HtmlText extends Object
 	{
 		public static const WHITE:uint = 0xffffff;
@@ -55,40 +55,49 @@
 		{
 			return format(content, ORANGE);
 		} // end function
-		
-		public static function format(content:String, color:int = -1, size:int = -1, font:String = null, align:String = null, bold:Boolean = false, italic:Boolean = false, underline:Boolean = false, href:String = null):String
+
+		/**
+		 * 
+		 * @param	content  
+		 * @param	params  bold:Boolean  italic:Boolean underline:Boolean font:String=null size:int  color:uint href:String align:String="left"/"center"/"right"
+		 * 
+		 * @return htmlText
+		 */
+		public static function format(content:String, params:Object = null):String
 		{
-			if (bold)
+			if (!params)
+				return content;
+			if (params.bold)
 			{
 				content = "<b>" + content + "</b>";
 			} // end if
-			if (italic)
+			if (params.italic)
 			{
 				content = "<i>" + content + "</i>";
 			} // end if
-			if (underline)
+			if (params.underline)
 			{
 				content = "<u>" + content + "</u>";
 			} // end if
 			var config:String = "";
-			if (font)
+			if (params.font)
 			{
 				config = config + (" font=\"" + font + "\"");
 			} // end if
-			if (size > 0)
+			if (params.size)
 			{
 				config = config + (" size=\"" + size + "\"");
 			} // end if
-			if (color > 0)
+			if (params.color)
 			{
 				config = config + (" color=\"#" + color.toString(16) + "\"");
 			}
 			content = "<font" + config + ">" + content + "</font>";
-			if (href)
+			if (params.href)
 			{
 				content = "<a href=\"" + href + "\" target=\"_blank\">" + content + "</a>";
 			} // end if
-			if (align)
+			if (params.align)
 			{
 				content = "<p align=\"" + align + "\">" + content + "</p>";
 			} // end if
