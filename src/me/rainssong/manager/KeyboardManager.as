@@ -44,10 +44,11 @@ package me.rainssong.manager
 		public static function stopListen():void
 		{
 			_keyDictionary = new Dictionary();
-			_stage = null;
 			_stage.removeEventListener(KeyboardEvent.KEY_DOWN,onKeyDown);
 			_stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 			_stage.removeEventListener(FocusEvent.FOCUS_OUT, onFocusOut);
+			_stage = null;
+			
 		}
 		
 		public static function regFunction(fun:Function, keyCode:uint):void

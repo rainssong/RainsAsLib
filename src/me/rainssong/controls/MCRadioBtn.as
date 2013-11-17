@@ -8,11 +8,11 @@
 	import me.rainssong.utils.superTrace;
 	
 	
-	public class MyRadioBtn extends SmartMovieClip {
+	public class MCRadioBtn extends SmartMovieClip {
 		
 		
 		private var _groupName:String="default";
-		public function MyRadioBtn() {
+		public function MCRadioBtn() {
 			// constructor code
 			super();
 			stop();

@@ -9,11 +9,11 @@
 
 
 
-	public class MyCheckBox extends MovieClip implements IToggleBtn
+	public class MCCheckBox extends MovieClip implements IToggleBtn
 	{
 
 
-		public function MyCheckBox(selected:Boolean=false)
+		public function MCCheckBox(selected:Boolean=false)
 		{
 			// constructor code
 			stop();

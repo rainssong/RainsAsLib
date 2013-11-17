@@ -1,7 +1,5 @@
 ﻿package me.rainssong.controls
 {
-	
-	import cn.flashk.controls.support.BitmapDataText;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;

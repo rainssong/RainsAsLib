@@ -17,6 +17,7 @@
 		public function RainCheckBox(unselectView:IBitmapDrawable, selectView:IBitmapDrawable, selected:Boolean = false)
 		{
 			// constructor code
+			super();
 			var bmd1:BitmapData = new BitmapData(unselectView["width"], unselectView["height"],true,0x00FFFFFF);
 			bmd1.draw(unselectView)
 			var bmd2:BitmapData = new BitmapData(selectView["width"], selectView["height"],true,0x00FFFFFF);
