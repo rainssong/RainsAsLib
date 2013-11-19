@@ -1,7 +1,9 @@
 package   me.rainssong.math
 {
+	import flash.text.engine.ElementFormat;
 	import flash.utils.Dictionary;
 	import flash.utils.getQualifiedClassName;
+	import me.rainssong.utils.construct;
 	/**
 	 * ...
 	 * @author Rainssong
@@ -147,6 +149,33 @@ package   me.rainssong.math
 		public static function arrayToVector(array:Array):Vector.<*>
 		{
 			return Vector.<*>(array);
+		}
+		
+		public static function fillWith(aov:*, element:*, transfer:Boolean = true , params:Array=null ):void
+		{
+			try
+			{
+				var i:int = 0;
+				if (transfer && element is Class)
+				{
+						for (i = 0; i < aov.length; i++ )
+							aov[i] = construct(element,params);
+				}
+				else if (transfer && element is Function)
+				{
+						for (i = 0; i < aov.length; i++ )
+							aov[i] = element.apply(null,params)
+				}
+				else
+				{
+					for (i = 0; i < aov.length; i++ )
+					aov[i] = element;
+				}
+			}
+			catch (e:Error)
+			{
+				powerTrace("failed!");
+			}
 		}
 		
 		/**

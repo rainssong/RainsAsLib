@@ -12,7 +12,7 @@ package me.rainssong.rainMVC.view
 	 * ...
 	 * @author Rainssong
 	 */
-	public class Mediator
+	public class Mediator extends EventDispatcher
 	{
 		private var _name:String;
 		public var autoDestroy:Boolean = true;

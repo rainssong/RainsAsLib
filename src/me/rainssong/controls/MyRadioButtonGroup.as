@@ -2,7 +2,7 @@
 {
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
-	import me.rainssong.controls.MyRadioBtn;
+	import me.rainssong.controls.MCRadioBtn;
 
 	/**
 	 * ...
@@ -13,18 +13,18 @@
 		static public const DEFAULT_GROUP:String = "defaultGroup";
 		
 		
-		protected static var _selection:MyRadioBtn;
+		protected static var _selection:MCRadioBtn;
 		
 		protected static var buttons:Array = [];
 		
-		public static function addBtn(btn:MyRadioBtn):void
+		public static function addBtn(btn:MCRadioBtn):void
 		{
 			buttons.push(btn);
 			if (btn.selected) { selection = btn; }
 		
 		}
 		
-		public static function removeBtn(btn:MyRadioBtn):void 
+		public static function removeBtn(btn:MCRadioBtn):void 
 		{
 			var i:int = buttons.indexOf(btn);
 			if (i != -1) {
@@ -33,7 +33,7 @@
 			if (_selection == btn) { _selection = null; }
 		}
 		
-		protected static function clear(btn:MyRadioBtn):void
+		protected static function clear(btn:MCRadioBtn):void
 		{
 			for(var i:uint = 0; i < buttons.length; i++)
 			{
@@ -44,12 +44,12 @@
 			}
 		}
 		
-		static public function get selection():MyRadioBtn 
+		static public function get selection():MCRadioBtn 
 		{
 			return _selection;
 		}
 		
-		static public function set selection(value:MyRadioBtn):void 
+		static public function set selection(value:MCRadioBtn):void 
 		{
 			clear(value);
 			_selection = value;

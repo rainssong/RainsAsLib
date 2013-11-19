@@ -78,9 +78,9 @@ package me.rainssong.math
 			return degree * Math.PI / 180;
 		}
 		
-		public static function randomSelect(... arg):*
+		public static function randomSelect(aov:*):*
 		{
-			return arg[int(arg.length * Math.random())];
+			return aov[int(aov.length * Math.random())];
 		}
 		
 		public static function isEven( number:Number ):Boolean {

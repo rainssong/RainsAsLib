@@ -17,6 +17,8 @@ package me.rainssong.tween
 			}
 			var _parent:DisplayObjectContainer = oldView.parent;
 			
+			var duration:Number = 0.5;
+			var direction:String = Directions.UP;
 			if (!newView.parent)
 				_parent.addChild(newView);
 			
@@ -24,12 +26,14 @@ package me.rainssong.tween
 			{
 				if (params.x) newView.x = params.x;
 				if (params.y) newView.y = params.y;
+				if( params["duration"]) duration = params["duration"];
+				if ( params["direction"]) direction = params["direction"];
 			}
 			
 			switch (effect)
 			{
 				case "move": 
-				switch (params["direction"])
+				switch (direction)
 				{
 					case Directions.LEFT: 
 						TweenMax.from(newView, duration, {x: _parent.stage.stageWidth, ease: Cubic.easeInOut});
