@@ -13,10 +13,13 @@ package me.rainssong.display
 		{
 			super();
 			
-			_originalWidth=_actualWidth = super.width;
-			_originalHeight = _actualHeight = super.height;
-			
-			if (w || h) setSize(w, h);
+			_originalWidth = w;
+			_originalHeight = h;
+			_actualWidth =w;
+			_actualHeight = h;
+			//if (!_actualHeight)_actualHeight = super.height;
+			//if (!_actualWidth)_actualWidth = super.width;
+			//if (w || h) setSize(w, h);
 		}
 		
 		public function setSize(w:Number=NaN, h:Number=NaN):void

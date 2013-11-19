@@ -15,10 +15,10 @@ package me.rainssong.utils
 			target.graphics.drawEllipse(x, y, width, height);
 		}
 		
-		static public function box(width:Number, height:Number, rgb:uint):Sprite
+		static public function box(width:Number, height:Number, rgb:uint,alpha:Number=1):Sprite
 		{
 			var sp:Sprite = new Sprite();
-			sp.graphics.beginFill(rgb);
+			sp.graphics.beginFill(rgb,alpha);
 			sp.graphics.drawRect(0,0, width, height);
 			return sp;
 		}
