@@ -1,6 +1,6 @@
 /**
- * VERSION: 1.87
- * DATE: 2011-07-30
+ * VERSION: 1.3
+ * DATE: 2010-08-10
  * AS3
  * UPDATES AND DOCS AT: http://www.greensock.com/loadermax/
  **/
@@ -14,26 +14,26 @@ package com.greensock.loading {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.events.ProgressEvent;
 	import flash.media.SoundTransform;
 	import flash.utils.getQualifiedClassName;
-	import flash.utils.getTimer;
 	
 	/** Dispatched when any loader that the SWFLoader discovered in the subloaded swf dispatches an OPEN event. **/
-	[Event(name="childOpen", 			type="com.greensock.events.LoaderEvent")]
+	[Event(name="childOpen", type="com.greensock.events.LoaderEvent")]
 	/** Dispatched when any loader that the SWFLoader discovered in the subloaded swf dispatches a PROGRESS event. **/
-	[Event(name="childProgress", 		type="com.greensock.events.LoaderEvent")]
+	[Event(name="childProgress", type="com.greensock.events.LoaderEvent")]
 	/** Dispatched when any loader that the SWFLoader discovered in the subloaded swf dispatches a COMPLETE event. **/
-	[Event(name="childComplete", 		type="com.greensock.events.LoaderEvent")]
+	[Event(name="childComplete", type="com.greensock.events.LoaderEvent")]
 	/** Dispatched when any loader that the SWFLoader discovered in the subloaded swf dispatches a FAIL event. **/
-	[Event(name="childFail", 			type="com.greensock.events.LoaderEvent")]
+	[Event(name="childFail", type="com.greensock.events.LoaderEvent")]
 	/** Dispatched when any loader that the SWFLoader discovered in the subloaded swf dispatches a CANCEL event. **/
-	[Event(name="childCancel", 			type="com.greensock.events.LoaderEvent")]
+	[Event(name="childCancel", type="com.greensock.events.LoaderEvent")]
 	/** Dispatched when the loader is denied script access to the swf which can happen if it is loaded from another domain and there's no crossdomain.xml file in place. **/
-	[Event(name="scriptAccessDenied", 	type="com.greensock.events.LoaderEvent")]
+	[Event(name="scriptAccessDenied", type="com.greensock.events.LoaderEvent")]
 	/** Dispatched when the loader's <code>httpStatus</code> value changes. **/
-	[Event(name="httpStatus", 			type="com.greensock.events.LoaderEvent")]
+	[Event(name="httpStatus", type="com.greensock.events.LoaderEvent")]
 	/** Dispatched when the loader experiences a SECURITY_ERROR while loading or auditing its size. **/
-	[Event(name="securityError", 		type="com.greensock.events.LoaderEvent")]
+	[Event(name="securityError", type="com.greensock.events.LoaderEvent")]
 /**
  * Loads a swf file and automatically searches for active loaders in that swf that have 
  * the <code>requireWithRoot</code> vars property set to that swf's <code>root</code>. If it finds any, 
@@ -85,27 +85,6 @@ package com.greensock.loading {
  * 		<li>If possible, in the remote swf make sure you explicitly allow script access using something like <code>flash.system.Security.allowDomain("~~");</code></li>
  * </ul><br />
  * 
- * <strong>A note about garbage collection:</strong> A lot of effort has gone into making SWFLoader solve common garbage collection
- * problems related to loading and unloading swfs, but since it is impossible for SWFLoader to know all the code that will run in 
- * the child swf, it cannot automatically remove event listeners, stop NetStreams, sounds, etc., all of which could interfere
- * with garbage collection. Therefore it is considered a best practice to [whenever possible] build each subloaded swf so that 
- * it has some sort of <code>dispose()</code> method that runs cleanup code (removes event listeners, stops sounds, closes NetStreams, etc.). 
- * When the swf is loaded, you can recursively inspect the chain of parents and if a ContentDisplay object is found (it will
- * have a "loader" property), you can add an "unload" event listener so that your <code>dispose()</code> method gets called accordingly. 
- * For example, in the child swf you could use code like this: 
- * @example In the child swf:<listing version="3.0">
-var curParent:DisplayObjectContainer = this.parent;
-while (curParent) { 
-    if (curParent.hasOwnProperty("loader") &amp;&amp; curParent.hasOwnProperty("rawContent")) { //ContentDisplay objects have "loader" and "rawContent" properties. The "loader" points to the SWFLoader. Technically it would be cleaner to say if (curParent is ContentDisplay) but that would force ContentDisplay and some core LoaderMax classes to get compiled into the child swf unnecessarily, so doing it this way keeps file size down. 
-        Object(curParent).loader.addEventListener("unload", dispose, false, 0, true); 
-    }
-    curParent = curParent.parent;
-}<br />
-function dispose(event:Event):void { 
-    //do cleanup stuff here like removing event listeners, stopping sounds, closing NetStreams, etc... 
-}
-</listing>
- * 
  * <strong>OPTIONAL VARS PROPERTIES</strong><br />
  * The following special properties can be passed into the SWFLoader constructor via its <code>vars</code> 
  * parameter which can be either a generic object or an <code><a href="data/SWFLoaderVars.html">SWFLoaderVars</a></code> object:<br />
@@ -145,18 +124,15 @@ function dispose(event:Event):void {
  * 		<li><strong> alpha : Number</strong> - Sets the <code>ContentDisplay</code>'s <code>alpha</code> property.</li>
  * 		<li><strong> visible : Boolean</strong> - Sets the <code>ContentDisplay</code>'s <code>visible</code> property.</li>
  * 		<li><strong> blendMode : String</strong> - Sets the <code>ContentDisplay</code>'s <code>blendMode</code> property.</li>
- * 		<li><strong> autoPlay : Boolean</strong> - If <code>autoPlay</code> is <code>true</code> (the default), the swf will begin playing immediately when the <code>INIT</code> event fires. To prevent this behavior, set <code>autoPlay</code> to <code>false</code> which will also mute the swf until the SWFLoader completes. This only calls <code>stop()</code> on the main timeline but it does not prevent scripted animations.</li>
- * 		<li><strong> bgColor : uint </strong> - When a <code>width</code> and <code>height</code> are defined, a rectangle will be drawn inside the <code>ContentDisplay</code> Sprite immediately in order to ease the development process. It is transparent by default, but you may define a <code>bgAlpha</code> if you prefer.</li>
+ * 		<li><strong> autoPlay : Boolean</strong> - If <code>autoPlay</code> is <code>true</code> (the default), the swf will begin playing immediately when the <code>INIT</code> event fires. To prevent this behavior, set <code>autoPlay</code> to <code>false</code> which will also mute the swf until the SWFLoader completes.</li>
+ * 		<li><strong> bgColor : uint </strong> - When a <code>width</code> and <code>height</code> are defined, a rectangle will be drawn inside the <code>ContentDisplay</code> Sprite immediately in order to ease the development process. It is transparent by default, but you may define a <code>bgColor</code> if you prefer.</li>
  * 		<li><strong> bgAlpha : Number </strong> - Controls the alpha of the rectangle that is drawn when a <code>width</code> and <code>height</code> are defined.</li>
  * 		<li><strong> context : LoaderContext</strong> - To control things like the ApplicationDomain, SecurityDomain, and whether or not a policy file is checked, define a <code>LoaderContext</code> object. The default context is null when running locally and <code>new LoaderContext(true, new ApplicationDomain(ApplicationDomain.currentDomain), SecurityDomain.currentDomain)</code> when running remotely in order to avoid common security sandbox errors (see Adobe's LoaderContext documentation for details and precautions). Please make sure that if you load swfs from another domain that you have a crossdomain.xml file installed on that remote server that grants your swf access rights (see Adobe's docs for crossdomain.xml details). Again, if you want to impose security restrictions on the loaded swf, please define your own LoaderContext.</li>
- * 		<li><strong> suppressInitReparentEvents : Boolean</strong> - If <code>true</code>, the SWFLoader will suppress the <code>REMOVED_FROM_STAGE</code> and <code>ADDED_TO_STAGE</code> events that are normally dispatched when the subloaded swf is reparented into the ContentDisplay (this always happens in Flash when any DisplayObject that's in the display list gets reparented - SWFLoader just circumvents it by default initially to avoid common problems that could arise if the child swf is coded a certain way). For example, if your subloaded swf has this code: <code>addEventListener(Event.REMOVED_FROM_STAGE, disposeEverything)</code> and you set <code>suppressInitReparentEvents</code> to <code>false</code>, <code>disposeEverything()</code> would get called as soon as the swf inits (assuming the ContentDisplay is in the display list).</li>
  * 		<li><strong> integrateProgress : Boolean</strong> - By default, a SWFLoader instance will automatically look for LoaderMax loaders in the swf when it initializes. Every loader found with a <code>requireWithRoot</code> parameter set to that swf's <code>root</code> will be integrated into the SWFLoader's overall progress. The SWFLoader's <code>COMPLETE</code> event won't fire until all such loaders are also complete. If you prefer NOT to integrate the subloading loaders into the SWFLoader's overall progress, set <code>integrateProgress</code> to <code>false</code>.</li>
- * 		<li><strong> suppressUncaughtErrors : Boolean</strong> - To automatically suppress uncaught errors in the subloaded swf (errors that are thrown outside of a try...catch statement), set <code>suppressUncaughtErrors</code> to <code>true</code>, but please note that this will ONLY work if the parent swf is published to Flash Player 10.1 or later. Suppressing the UncaughtErrorEvent simply means calling its <code>preventDefault()</code> and <code>stopImmediatePropagation()</code> methods as well as preventing it from bubbling up to its parent LoaderMax/SWFLoader anscestors. If you'd rather listen for these events so that you can handle them yourself, listen for the <code>LoaderEvent.UNCAUGHT_ERROR</code> event. The original UncaughtErrorEvent instance will be stored in the LoaderEvent's <code>data</code> property.</li>
  * 		<li><strong> alternateURL : String</strong> - If you define an <code>alternateURL</code>, the loader will initially try to load from its original <code>url</code> and if it fails, it will automatically (and permanently) change the loader's <code>url</code> to the <code>alternateURL</code> and try again. Think of it as a fallback or backup <code>url</code>. It is perfectly acceptable to use the same <code>alternateURL</code> for multiple loaders (maybe a default image for various ImageLoaders for example).</li>
- * 		<li><strong> noCache : Boolean</strong> - If <code>noCache</code> is <code>true</code>, a "gsCacheBusterID" parameter will be appended to the url with a random set of numbers to prevent caching (don't worry, this info is ignored when you <code>getLoader()</code> or <code>getContent()</code> by url and when you're running locally)</li>
+ * 		<li><strong> noCache : Boolean</strong> - If <code>noCache</code> is <code>true</code>, a "cacheBusterID" parameter will be appended to the url with a random set of numbers to prevent caching (don't worry, this info is ignored when you <code>getLoader()</code> or <code>getContent()</code> by url and when you're running locally)</li>
  * 		<li><strong> estimatedBytes : uint</strong> - Initially, the loader's <code>bytesTotal</code> is set to the <code>estimatedBytes</code> value (or <code>LoaderMax.defaultEstimatedBytes</code> if one isn't defined). Then, when the swf initializes and has been analyzed enough to determine the size of any nested loaders that were found inside the swf with their <code>requireWithRoot</code> set to that swf's <code>root</code>, it will adjust the <code>bytesTotal</code> accordingly. Setting <code>estimatedBytes</code> is optional, but it provides a way to avoid situations where the <code>progress</code> and <code>bytesTotal</code> values jump around as SWFLoader recognizes nested loaders in the swf and audits their size. The <code>estimatedBytes</code> value should include all nested loaders as well, so if your swf file itself is 2000 bytes and it has 3 nested ImageLoaders, each loading a 2000-byte image, your SWFLoader's <code>estimatedBytes</code> should be 8000. The more accurate the value, the more accurate the loaders' overall progress will be.</li>
  * 		<li><strong> requireWithRoot : DisplayObject</strong> - LoaderMax supports <i>subloading</i>, where an object can be factored into a parent's loading progress. If you want LoaderMax to require this SWFLoader as part of its parent SWFLoader's progress, you must set the <code>requireWithRoot</code> property to your swf's <code>root</code>. For example, <code>var loader:SWFLoader = new SWFLoader("subload.swf", {name:"subloadSWF", requireWithRoot:this.root});</code></li>
- * 		<li><strong> allowMalformedURL : Boolean</strong> - Normally, the URL will be parsed and any variables in the query string (like "?name=test&amp;state=il&amp;gender=m") will be placed into a URLVariables object which is added to the URLRequest. This avoids a few bugs in Flash, but if you need to keep the entire URL intact (no parsing into URLVariables), set <code>allowMalformedURL:true</code>. For example, if your URL has duplicate variables in the query string like <code>http://www.greensock.com/?c=S&amp;c=SE&amp;c=SW</code>, it is technically considered a malformed URL and a URLVariables object can't properly contain all the duplicates, so in this case you'd want to set <code>allowMalformedURL</code> to <code>true</code>.</li>
  * 		<li><strong> autoDispose : Boolean</strong> - When <code>autoDispose</code> is <code>true</code>, the loader will be disposed immediately after it completes (it calls the <code>dispose()</code> method internally after dispatching its <code>COMPLETE</code> event). This will remove any listeners that were defined in the vars object (like onComplete, onProgress, onError, onInit). Once a loader is disposed, it can no longer be found with <code>LoaderMax.getLoader()</code> or <code>LoaderMax.getContent()</code> - it is essentially destroyed but its content is not unloaded (you must call <code>unload()</code> or <code>dispose(true)</code> to unload its content). The default <code>autoDispose</code> value is <code>false</code>.
  * 
  * 		<br /><br />----EVENT HANDLER SHORTCUTS----</li>
@@ -171,7 +147,6 @@ function dispose(event:Event):void {
  * 		<li><strong> onHTTPStatus : Function</strong> - A handler function for <code>LoaderEvent.HTTP_STATUS</code> events. Make sure your onHTTPStatus function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>). You can determine the httpStatus code using the LoaderEvent's <code>target.httpStatus</code> (LoaderItems keep track of their <code>httpStatus</code> when possible, although certain environments prevent Flash from getting httpStatus information).</li>
  * 		<li><strong> onSecurityError : Function</strong> - A handler function for <code>LoaderEvent.SECURITY_ERROR</code> events which onError handles as well, so you can use that as more of a catch-all whereas onSecurityError is specifically for SECURITY_ERROR events. Make sure your onSecurityError function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
  * 		<li><strong> onScriptAccessDenied : Function</strong> - A handler function for <code>LoaderMax.SCRIPT_ACCESS_DENIED</code> events which occur when the swf is loaded from another domain and no crossdomain.xml is in place to grant full script access for things like BitmapData manipulation or integration of LoaderMax data inside the swf, etc. You can also check the <code>scriptAccessDenied</code> property after the swf has loaded. Make sure your function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
- * 		<li><strong> onUncaughtError : Function</strong> - A handler function for <code>LoaderEvent.UNCAUGHT_ERROR</code> events which are dispatched when the subloaded swf encounters an UncaughtErrorEvent meaning an Error was thrown outside of a try...catch statement. This can be useful when subloading swfs from a 3rd party that may contain errors. However, UNCAUGHT_ERROR events will only be dispatched if the parent swf is published for Flash Player 10.1 or later! See SWFLoader's <code>suppressUncaughtErrors</code> special property if you'd like to have it automatically suppress these errors. The original UncaughtErrorEvent is stored in the LoaderEvent's <code>data</code> property. So, for example, if you'd like to call <code>preventDefault()</code> on that UncaughtErrorEvent, you'd do <code>myLoaderEvent.data.preventDefault()</code>.</li>
  * 		<li><strong> onChildOpen : Function</strong> - A handler function for <code>LoaderEvent.CHILD_OPEN</code> events which are dispatched each time any nested LoaderMax-related loaders (active ones that the SWFLoader found inside the subloading swf that had their <code>requireWithRoot</code> set to its <code>root</code>) begins loading. Make sure your onChildOpen function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
  * 		<li><strong> onChildProgress : Function</strong> - A handler function for <code>LoaderEvent.CHILD_PROGRESS</code> events which are dispatched each time any nested LoaderMax-related loaders (active ones that the SWFLoader found inside the subloading swf that had their <code>requireWithRoot</code> set to its <code>root</code>) dispatches a <code>PROGRESS</code> event. To listen for changes in the SWFLoader's overall progress, use the <code>onProgress</code> special property instead. You can use the LoaderEvent's <code>target.progress</code> to get the child loader's progress value or use its <code>target.bytesLoaded</code> and <code>target.bytesTotal</code>. The LoaderEvent's <code>currentTarget</code> refers to the SWFLoader, so you can check its overall progress with the LoaderEvent's <code>currentTarget.progress</code>. Make sure your onChildProgress function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
  * 		<li><strong> onChildComplete : Function</strong> - A handler function for <code>LoaderEvent.CHILD_COMPLETE</code> events which are dispatched each time any nested LoaderMax-related loaders (active ones that the SWFLoader found inside the subloading swf that had their <code>requireWithRoot</code> set to its <code>root</code>) finishes loading successfully. Make sure your onChildComplete function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
@@ -186,7 +161,7 @@ function dispose(event:Event):void {
  * <code>content</code> data type: <strong><code>com.greensock.loading.display.ContentDisplay</code></strong> (a Sprite). 
  * When the swf has finished loading, the <code>rawContent</code> will be added to the <code>ContentDisplay</code> 
  * Sprite at index 0 using <code>addChildAt()</code>. <code>rawContent</code> refers to the loaded swf's <code>root</code> 
- * unless script access is denied in which case it will be a <code>flash.display.Loader</code> (to avoid security errors).<br /><br />
+ * unless unless script access is denied in which case it will be a <code>flash.display.Loader</code> (to avoid security errors).<br /><br />
  * 
  * @example Example AS3 code:<listing version="3.0">
  import com.greensock.~~;
@@ -233,7 +208,7 @@ function dispose(event:Event):void {
  }
  </listing>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @see com.greensock.loading.data.SWFLoaderVars
  * 
@@ -242,20 +217,12 @@ function dispose(event:Event):void {
 	public class SWFLoader extends DisplayObjectLoader {
 		/** @private **/
 		private static var _classActivated:Boolean = _activateClass("SWFLoader", SWFLoader, "swf");
-		/** @private last pass-through uncaught error event. primarily for uncaughtError events - when a subloaded swf also has another swf that's subloaded by SWFLoader and that grandchild dispatches an uncaught error, we don't want to allow duplicates to travel up because both SWFLoaders (this and the child's) would be listening for uncaught errors through the _loader and sub-SWFLoader's _loader. **/
-		protected var _lastPTUncaughtError:Event;
 		/** @private **/
 		protected var _queue:LoaderMax;
 		/** @private When the INIT event is dispatched, we'll check to see if there's a runtime shared library like for TLF and we must do some backflips to accommodate it - _hasRSL will be toggled to true if we find one. **/
 		protected var _hasRSL:Boolean;
 		/** @private **/
 		protected var _rslAddedCount:uint;
-		/** @private In certain browsers, there's a bug in the Flash Player that incorrectly reports the Loader's bytesLoaded as never reaching bytesTotal even AFTER the Loader completes (only when gzip is enabled on the server). This helps us get around that bug. **/
-		protected var _loaderCompleted:Boolean;
-		/** @private in cases where we must allow a canceled loader to continue loading until it inits (to avoid garbage collection issues), if the url is changed during the time we're in stealthMode, we must remember to load() as soon as the old/bad swf inits! This is the flag we use for that. **/
-		protected var _loadOnExitStealth:Boolean;
-		/** @private if the Loader fails we must record that so that when _dump() is called, we know that the Loader isn't active anymore and we can safely dump it (as opposed to allowing it to continue loading until it inits which we normally must do in order to avoid garbage collection issues in Flash) **/
-		protected var _loaderFailed:Boolean;
 		
 		/**
 		 * Constructor
@@ -301,18 +268,15 @@ function dispose(event:Event):void {
 		 * 		<li><strong> alpha : Number</strong> - Sets the <code>ContentDisplay</code>'s <code>alpha</code> property.</li>
 		 * 		<li><strong> visible : Boolean</strong> - Sets the <code>ContentDisplay</code>'s <code>visible</code> property.</li>
 		 * 		<li><strong> blendMode : String</strong> - Sets the <code>ContentDisplay</code>'s <code>blendMode</code> property.</li>
-		 * 		<li><strong> autoPlay : Boolean</strong> - If <code>autoPlay</code> is <code>true</code> (the default), the swf will begin playing immediately when the <code>INIT</code> event fires. To prevent this behavior, set <code>autoPlay</code> to <code>false</code> which will also mute the swf until the SWFLoader completes. This only calls <code>stop()</code> on the main timeline but it does not prevent scripted animations.</li>
-		 * 		<li><strong> bgColor : uint </strong> - When a <code>width</code> and <code>height</code> are defined, a rectangle will be drawn inside the <code>ContentDisplay</code> Sprite immediately in order to ease the development process. It is transparent by default, but you may define a <code>bgAlpha</code> if you prefer.</li>
+		 * 		<li><strong> autoPlay : Boolean</strong> - If <code>autoPlay</code> is <code>true</code> (the default), the swf will begin playing immediately when the <code>INIT</code> event fires. To prevent this behavior, set <code>autoPlay</code> to <code>false</code> which will also mute the swf until the SWFLoader completes.</li>
+		 * 		<li><strong> bgColor : uint </strong> - When a <code>width</code> and <code>height</code> are defined, a rectangle will be drawn inside the <code>ContentDisplay</code> Sprite immediately in order to ease the development process. It is transparent by default, but you may define a <code>bgColor</code> if you prefer.</li>
 		 * 		<li><strong> bgAlpha : Number </strong> - Controls the alpha of the rectangle that is drawn when a <code>width</code> and <code>height</code> are defined.</li>
 		 * 		<li><strong> context : LoaderContext</strong> - To control things like the ApplicationDomain, SecurityDomain, and whether or not a policy file is checked, define a <code>LoaderContext</code> object. The default context is null when running locally and <code>new LoaderContext(true, new ApplicationDomain(ApplicationDomain.currentDomain), SecurityDomain.currentDomain)</code> when running remotely in order to avoid common security sandbox errors (see Adobe's LoaderContext documentation for details and precautions). Please make sure that if you load swfs from another domain that you have a crossdomain.xml file installed on that remote server that grants your swf access rights (see Adobe's docs for crossdomain.xml details). Again, if you want to impose security restrictions on the loaded swf, please define your own LoaderContext.</li>
-		 * 		<li><strong> suppressInitReparentEvents : Boolean</strong> - If <code>true</code>, the SWFLoader will suppress the <code>REMOVED_FROM_STAGE</code> and <code>ADDED_TO_STAGE</code> events that are normally dispatched when the subloaded swf is reparented into the ContentDisplay (this always happens in Flash when any DisplayObject that's in the display list gets reparented - SWFLoader just circumvents it by default initially to avoid common problems that could arise if the child swf is coded a certain way). For example, if your subloaded swf has this code: <code>addEventListener(Event.REMOVED_FROM_STAGE, disposeEverything)</code> and you set <code>suppressInitReparentEvents</code> to <code>false</code>, <code>disposeEverything()</code> would get called as soon as the swf inits (assuming the ContentDisplay is in the display list).</li>
 		 * 		<li><strong> integrateProgress : Boolean</strong> - By default, a SWFLoader instance will automatically look for LoaderMax loaders in the swf when it initializes. Every loader found with a <code>requireWithRoot</code> parameter set to that swf's <code>root</code> will be integrated into the SWFLoader's overall progress. The SWFLoader's <code>COMPLETE</code> event won't fire until all such loaders are also complete. If you prefer NOT to integrate the subloading loaders into the SWFLoader's overall progress, set <code>integrateProgress</code> to <code>false</code>.</li>
-		 * 		<li><strong> suppressUncaughtErrors : Boolean</strong> - To automatically suppress uncaught errors in the subloaded swf (errors that are thrown outside of a try...catch statement), set <code>suppressUncaughtErrors</code> to <code>true</code>, but please note that this will ONLY work if the parent swf is published to Flash Player 10.1 or later. Suppressing the UncaughtErrorEvent simply means calling its <code>preventDefault()</code> and <code>stopImmediatePropagation()</code> methods as well as preventing it from bubbling up to its parent LoaderMax/SWFLoader anscestors. If you'd rather listen for these events so that you can handle them yourself, listen for the <code>LoaderEvent.UNCAUGHT_ERROR</code> event. The original UncaughtErrorEvent instance will be stored in the LoaderEvent's <code>data</code> property.</li>
 		 * 		<li><strong> alternateURL : String</strong> - If you define an <code>alternateURL</code>, the loader will initially try to load from its original <code>url</code> and if it fails, it will automatically (and permanently) change the loader's <code>url</code> to the <code>alternateURL</code> and try again. Think of it as a fallback or backup <code>url</code>. It is perfectly acceptable to use the same <code>alternateURL</code> for multiple loaders (maybe a default image for various ImageLoaders for example).</li>
-		 * 		<li><strong> noCache : Boolean</strong> - If <code>noCache</code> is <code>true</code>, a "gsCacheBusterID" parameter will be appended to the url with a random set of numbers to prevent caching (don't worry, this info is ignored when you <code>getLoader()</code> or <code>getContent()</code> by url and when you're running locally)</li>
+		 * 		<li><strong> noCache : Boolean</strong> - If <code>noCache</code> is <code>true</code>, a "cacheBusterID" parameter will be appended to the url with a random set of numbers to prevent caching (don't worry, this info is ignored when you <code>getLoader()</code> or <code>getContent()</code> by url and when you're running locally)</li>
 		 * 		<li><strong> estimatedBytes : uint</strong> - Initially, the loader's <code>bytesTotal</code> is set to the <code>estimatedBytes</code> value (or <code>LoaderMax.defaultEstimatedBytes</code> if one isn't defined). Then, when the swf initializes and has been analyzed enough to determine the size of any nested loaders that were found inside the swf with their <code>requireWithRoot</code> set to that swf's <code>root</code>, it will adjust the <code>bytesTotal</code> accordingly. Setting <code>estimatedBytes</code> is optional, but it provides a way to avoid situations where the <code>progress</code> and <code>bytesTotal</code> values jump around as SWFLoader recognizes nested loaders in the swf and audits their size. The <code>estimatedBytes</code> value should include all nested loaders as well, so if your swf file itself is 2000 bytes and it has 3 nested ImageLoaders, each loading a 2000-byte image, your SWFLoader's <code>estimatedBytes</code> should be 8000. The more accurate the value, the more accurate the loaders' overall progress will be.</li>
 		 * 		<li><strong> requireWithRoot : DisplayObject</strong> - LoaderMax supports <i>subloading</i>, where an object can be factored into a parent's loading progress. If you want LoaderMax to require this SWFLoader as part of its parent SWFLoader's progress, you must set the <code>requireWithRoot</code> property to your swf's <code>root</code>. For example, <code>var loader:SWFLoader = new SWFLoader("subload.swf", {name:"subloadSWF", requireWithRoot:this.root});</code></li>
-		 * 		<li><strong> allowMalformedURL : Boolean</strong> - Normally, the URL will be parsed and any variables in the query string (like "?name=test&amp;state=il&amp;gender=m") will be placed into a URLVariables object which is added to the URLRequest. This avoids a few bugs in Flash, but if you need to keep the entire URL intact (no parsing into URLVariables), set <code>allowMalformedURL:true</code>. For example, if your URL has duplicate variables in the query string like <code>http://www.greensock.com/?c=S&amp;c=SE&amp;c=SW</code>, it is technically considered a malformed URL and a URLVariables object can't properly contain all the duplicates, so in this case you'd want to set <code>allowMalformedURL</code> to <code>true</code>.</li>
 		 * 		<li><strong> autoDispose : Boolean</strong> - When <code>autoDispose</code> is <code>true</code>, the loader will be disposed immediately after it completes (it calls the <code>dispose()</code> method internally after dispatching its <code>COMPLETE</code> event). This will remove any listeners that were defined in the vars object (like onComplete, onProgress, onError, onInit). Once a loader is disposed, it can no longer be found with <code>LoaderMax.getLoader()</code> or <code>LoaderMax.getContent()</code> - it is essentially destroyed but its content is not unloaded (you must call <code>unload()</code> or <code>dispose(true)</code> to unload its content). The default <code>autoDispose</code> value is <code>false</code>.
 		 * 
 		 * 		<br /><br />----EVENT HANDLER SHORTCUTS----</li>
@@ -327,7 +291,6 @@ function dispose(event:Event):void {
 		 * 		<li><strong> onHTTPStatus : Function</strong> - A handler function for <code>LoaderEvent.HTTP_STATUS</code> events. Make sure your onHTTPStatus function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>). You can determine the httpStatus code using the LoaderEvent's <code>target.httpStatus</code> (LoaderItems keep track of their <code>httpStatus</code> when possible, although certain environments prevent Flash from getting httpStatus information).</li>
 		 * 		<li><strong> onSecurityError : Function</strong> - A handler function for <code>LoaderEvent.SECURITY_ERROR</code> events which onError handles as well, so you can use that as more of a catch-all whereas onSecurityError is specifically for SECURITY_ERROR events. Make sure your onSecurityError function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
 		 * 		<li><strong> onScriptAccessDenied : Function</strong> - A handler function for <code>LoaderMax.SCRIPT_ACCESS_DENIED</code> events which occur when the swf is loaded from another domain and no crossdomain.xml is in place to grant full script access for things like BitmapData manipulation or integration of LoaderMax data inside the swf, etc. You can also check the <code>scriptAccessDenied</code> property after the swf has loaded. Make sure your function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
-		 * 		<li><strong> onUncaughtError : Function</strong> - A handler function for <code>LoaderEvent.UNCAUGHT_ERROR</code> events which are dispatched when the subloaded swf encounters an UncaughtErrorEvent meaning an Error was thrown outside of a try...catch statement. This can be useful when subloading swfs from a 3rd party that may contain errors. However, UNCAUGHT_ERROR events will only be dispatched if the parent swf is published for Flash Player 10.1 or later! See SWFLoader's <code>suppressUncaughtErrors</code> special property if you'd like to have it automatically suppress these errors. The original UncaughtErrorEvent is stored in the LoaderEvent's <code>data</code> property. So, for example, if you'd like to call <code>preventDefault()</code> on that UncaughtErrorEvent, you'd do <code>myLoaderEvent.data.preventDefault()</code>.</li>
 		 * 		<li><strong> onChildOpen : Function</strong> - A handler function for <code>LoaderEvent.CHILD_OPEN</code> events which are dispatched each time any nested LoaderMax-related loaders (active ones that the SWFLoader found inside the subloading swf that had their <code>requireWithRoot</code> set to its <code>root</code>) begins loading. Make sure your onChildOpen function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
 		 * 		<li><strong> onChildProgress : Function</strong> - A handler function for <code>LoaderEvent.CHILD_PROGRESS</code> events which are dispatched each time any nested LoaderMax-related loaders (active ones that the SWFLoader found inside the subloading swf that had their <code>requireWithRoot</code> set to its <code>root</code>) dispatches a <code>PROGRESS</code> event. To listen for changes in the SWFLoader's overall progress, use the <code>onProgress</code> special property instead. You can use the LoaderEvent's <code>target.progress</code> to get the child loader's progress value or use its <code>target.bytesLoaded</code> and <code>target.bytesTotal</code>. The LoaderEvent's <code>currentTarget</code> refers to the SWFLoader, so you can check its overall progress with the LoaderEvent's <code>currentTarget.progress</code>. Make sure your onChildProgress function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
 		 * 		<li><strong> onChildComplete : Function</strong> - A handler function for <code>LoaderEvent.CHILD_COMPLETE</code> events which are dispatched each time any nested LoaderMax-related loaders (active ones that the SWFLoader found inside the subloading swf that had their <code>requireWithRoot</code> set to its <code>root</code>) finishes loading successfully. Make sure your onChildComplete function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
@@ -346,10 +309,8 @@ function dispose(event:Event):void {
 		override protected function _load():void {
 			if (_stealthMode) {
 				//it's already loading, so exit stealth mode (stealth mode is entered when the SWFLoader is canceled before the Loader has dispatched the INIT event - bugs in Flash cause gc problems if we try to close() or unload() a Loader between the time it starts loading and when INIT fires...
-				_stealthMode = _loadOnExitStealth;
+				_stealthMode = false;
 			} else if (!_initted) {
-				_loader.visible = false;
-				_sprite.addChild(_loader); //to avoid null object reference errors in code inside the child swf that may reference "stage" (we'll removeChild() as soon as it inits)
 				super._load();
 			} else if (_queue != null) {
 				_changeQueueListeners(true);
@@ -358,28 +319,23 @@ function dispose(event:Event):void {
 		}
 		
 		/** @private **/
-		override protected function _refreshLoader(unloadContent:Boolean=true):void {
-			super._refreshLoader(unloadContent);
-			_loaderCompleted = false;
-		}
-		
-		/** @private **/
 		protected function _changeQueueListeners(add:Boolean):void {
 			if (_queue != null) {
 				var p:String;
 				if (add && this.vars.integrateProgress != false) {
+					_queue.addEventListener(LoaderEvent.COMPLETE, _completeHandler, false, 0, true);
+					_queue.addEventListener(LoaderEvent.PROGRESS, _progressHandler, false, 0, true);
+					_queue.addEventListener(LoaderEvent.FAIL, _failHandler, false, 0, true);
 					for (p in _listenerTypes) {
 						if (p != "onProgress" && p != "onInit") {
-							_queue.addEventListener(_listenerTypes[p], _passThroughEvent, false, -100, true);
+							_queue.addEventListener(_listenerTypes[p], _passThroughEvent, false, 0, true);
 						}
 					}
-					_queue.addEventListener(LoaderEvent.COMPLETE, _completeHandler, false, -100, true);
-					_queue.addEventListener(LoaderEvent.PROGRESS, _progressHandler, false, -100, true);
-					_queue.addEventListener(LoaderEvent.FAIL, _failHandler, false, -100, true);
 				} else {
 					_queue.removeEventListener(LoaderEvent.COMPLETE, _completeHandler);
 					_queue.removeEventListener(LoaderEvent.PROGRESS, _progressHandler);
 					_queue.removeEventListener(LoaderEvent.FAIL, _failHandler);
+					
 					for (p in _listenerTypes) {
 						if (p != "onProgress" && p != "onInit") {
 							_queue.removeEventListener(_listenerTypes[p], _passThroughEvent);
@@ -391,9 +347,8 @@ function dispose(event:Event):void {
 		
 		/** @private scrubLevel: 0 = cancel, 1 = unload, 2 = dispose, 3 = flush **/
 		override protected function _dump(scrubLevel:int=0, newStatus:int=0, suppressEvents:Boolean=false):void {
-			_loaderCompleted = false;
 			//Flash will refuse to properly unload it if the INIT event hasn't been dispatched! Technically we allow it to keep loading until _initHandler() is called where we'll unload it.
-			if (_status == LoaderStatus.LOADING && !_initted && !_loaderFailed) {
+			if (_status == LoaderStatus.LOADING && !_initted) {
 				_stealthMode = true;
 				super._dump(scrubLevel, newStatus, suppressEvents);
 				return;
@@ -403,23 +358,17 @@ function dispose(event:Event):void {
 				if (_loader.content in _rootLookup) {
 					_queue = LoaderMax(_rootLookup[_loader.content]);
 					_changeQueueListeners(false);
-					if (scrubLevel == 0) {
+					if (scrubLevel == 1) {
 						_queue.cancel();
 					} else {
-						delete _rootLookup[_loader.content];
-						_queue.dispose( Boolean(scrubLevel != 2) );
+						if (scrubLevel == 1) {
+							_queue.unload();
+						}
+						_queue.dispose();
 					}
 				}
 			}
-			if (_stealthMode) {
-				try {
-					_loader.close();
-				} catch (error:Error) {
-					
-				}
-			}
-			_loadOnExitStealth = false;
-			_stealthMode = _hasRSL = _loaderFailed = false;
+			_stealthMode = _hasRSL = false;
 			_cacheIsDirty = true;
 			if (scrubLevel >= 1) {
 				_queue = null;
@@ -465,10 +414,8 @@ function dispose(event:Event):void {
 		/** @private **/
 		override protected function _calculateProgress():void { 
 			_cachedBytesLoaded = (_stealthMode) ? 0 : _loader.contentLoaderInfo.bytesLoaded;
-			if (_loader.contentLoaderInfo.bytesTotal != 0) { //otherwise if unload() was called, bytesTotal would go back down to 0.
-				_cachedBytesTotal =  _loader.contentLoaderInfo.bytesTotal;
-			}
-			if (_cachedBytesTotal < _cachedBytesLoaded || _loaderCompleted) {
+			_cachedBytesTotal =  _loader.contentLoaderInfo.bytesTotal;
+			if (_cachedBytesTotal < _cachedBytesLoaded || _initted) {
 				//In Chrome when the file exceeds a certain size and gzip is enabled on the server, Adobe's Loader reports bytesTotal as 0!!!
 				//and in Firefox, if gzip was enabled, on very small files the Loader's bytesLoaded would never quite reach the bytesTotal even after the COMPLETE event fired!
 				_cachedBytesTotal = _cachedBytesLoaded; 
@@ -491,8 +438,8 @@ function dispose(event:Event):void {
 		
 		/** @private **/
 		protected function _checkRequiredLoaders():void {
-			if (_queue == null && this.vars.integrateProgress != false && !_scriptAccessDenied && _content != null) {
-				_queue = _rootLookup[_content];
+			if (_queue == null && this.vars.integrateProgress != false && !_scriptAccessDenied) {
+				_queue = _rootLookup[_loader.content];
 				if (_queue != null) {
 					_changeQueueListeners(true);
 					_queue.load(false);
@@ -517,10 +464,10 @@ function dispose(event:Event):void {
 			if (_content == null || _scriptAccessDenied) {
 				return null;
 			}
-			if (_content.loaderInfo.applicationDomain.hasDefinition(className)) {
-				return _content.loaderInfo.applicationDomain.getDefinition(className);
+			var result:Object = _content.loaderInfo.applicationDomain.getDefinition(className);
+			if (result != null) {
+				return result as Class;
 			} else if (_queue != null) {
-				var result:Object;
 				var loaders:Array = _queue.getChildren(true, true);
 				var i:int = loaders.length;
 				while (--i > -1) {
@@ -581,29 +528,7 @@ function dispose(event:Event):void {
 			return (loader != null) ? loader.content : null;
 		}
 		
-		/**
-		 * Returns and array of all LoaderMax-related loaders (if any) that were found inside the swf and 
-		 * had their <code>requireWithRoot</code> special vars property set to the swf's root. For example, 
-		 * if the following code was run on the first frame of the swf, it would be identified as a child
-		 * of this SWFLoader: <br /><br /><code>
-		 * 
-		 * var loader:ImageLoader = new ImageLoader("1.jpg", {requireWithRoot:this.root});<br /><br /></code>
-		 * 
-		 * Even if loaders are created later (not on frame 1), as long as their <code>requireWithRoot</code> 
-		 * points to this swf's root, the loader(s) will be considered a child of this SWFLoader and will be 
-		 * returned in the array that <code>getChildren()</code> creates. Beware, however, that by default 
-		 * child loaders are integrated into the SWFLoader's <code>progress</code>, so if the swf finishes 
-		 * loading and then a while later a loader is created inside that swf that has its <code>requireWithRoot</code>
-		 * set to the swf's root, at that point the SWFLoader's <code>progress</code> would no longer be 1 (it would
-		 * be less) but the SWFLoader's <code>status</code> remains unchanged.<br /><br />
-		 * 
-		 * No child loader can be found until the SWFLoader's INIT event is dispatched, meaning the first
-		 * frame of the swf has loaded and instantiated. 
-		 * 
-		 * @param includeNested If <code>true</code>, loaders that are nested inside child LoaderMax, XMLLoader, or SWFLoader instances will be included in the returned array as well. The default is <code>false</code>.
-		 * @param omitLoaderMaxes If <code>true</code>, no LoaderMax instances will be returned in the array; only LoaderItems like ImageLoaders, XMLLoaders, SWFLoaders, MP3Loaders, etc. The default is <code>false</code>. 
-		 * @return An array of loaders.
-		 */
+		/** @private **/
 		public function getChildren(includeNested:Boolean=false, omitLoaderMaxes:Boolean=false):Array {
 			return (_queue != null) ?  _queue.getChildren(includeNested, omitLoaderMaxes) : [];
 		}
@@ -616,11 +541,7 @@ function dispose(event:Event):void {
 			//if the SWFLoader was cancelled before _initHandler() was called, Flash will refuse to properly unload it, so we allow it to continue but check the status here and _dump() if necessary.
 			if (_stealthMode) {
 				_initted = true;
-				var awaitingLoad:Boolean = _loadOnExitStealth;
-				_dump(((_status == LoaderStatus.DISPOSED) ? 3 : 1), _status, true);
-				if (awaitingLoad) {
-					_load();
-				}
+				_dump(1, _status, true);
 				return;
 			}
 			
@@ -664,25 +585,10 @@ function dispose(event:Event):void {
 					}
 					_checkRequiredLoaders();
 				}
-				if (_loader.parent == _sprite) {
-					if (_sprite.stage != null && this.vars.suppressInitReparentEvents == true) {
-						_sprite.addEventListener(Event.ADDED_TO_STAGE, _captureFirstEvent, true, 1000, true);
-						_loader.addEventListener(Event.REMOVED_FROM_STAGE, _captureFirstEvent, true, 1000, true);
-					}
-					_sprite.removeChild(_loader); //we only added it temporarily so that if the child swf references "stage" somewhere, it could avoid errors (as long as this SWFLoader's ContentDisplay is on the stage, like if a "container" is defined in vars)
-				}
-				
 			} else {
 				_content = _loader;
-				_loader.visible = true;
 			}
 			super._initHandler(null);
-		}
-		
-		/** @private **/
-		protected function _captureFirstEvent(event:Event):void {
-			event.stopImmediatePropagation();
-			event.currentTarget.removeEventListener(event.type, _captureFirstEvent);
 		}
 		
 		/** @private Works around bug - see http://kb2.adobe.com/cps/838/cpsid_83812.html **/
@@ -706,7 +612,7 @@ function dispose(event:Event):void {
 		
 		/** @private **/
 		override protected function _passThroughEvent(event:Event):void {
-			if (!(event.type == "uncaughtError" && _suppressUncaughtError(event)) && event.target != _queue) {
+			if (event.target != _queue) {
 				super._passThroughEvent(event);
 			}
 		}
@@ -732,7 +638,6 @@ function dispose(event:Event):void {
 		
 		/** @private **/
 		override protected function _completeHandler(event:Event=null):void {
-			_loaderCompleted = true;
 			_checkRequiredLoaders();
 			_calculateProgress();
 			if (this.progress == 1) {
@@ -747,62 +652,6 @@ function dispose(event:Event):void {
 			}
 		}
 		
-		/** @private **/
-		override protected function _errorHandler(event:Event):void {
-			if (!_suppressUncaughtError(event)) {
-				super._errorHandler(event);
-			}
-		}
-		
-		protected function _suppressUncaughtError(event:Event):Boolean {
-			if (event is LoaderEvent && LoaderEvent(event).data is Event) {
-				event = LoaderEvent(event).data as Event;
-			}
-			if (event.type == "uncaughtError") {
-				if (_lastPTUncaughtError == (_lastPTUncaughtError = event)) {
-					return true;
-				} else if (this.vars.suppressUncaughtErrors == true) {
-					event.preventDefault();
-					event.stopImmediatePropagation();
-					return true;
-				}
-			}
-			return false;
-		}
-		
-		/** @private **/
-		override protected function _failHandler(event:Event, dispatchError:Boolean=true):void {
-			if ((event.type == "ioError" || event.type == "securityError") && event.target == _loader.contentLoaderInfo) {
-				_loaderFailed = true;
-				if (_loadOnExitStealth) { //could happen if the url is set to another value between the time the SWFLoader starts loading and when it fails.
-					_dump(1, _status, true);
-					_load();
-					return;
-				}
-			}
-			if (event.target == _queue) {
-				//this is a unique situation where we don't want the failure to unload the content because only one of the nested loaders failed but the swf may be perfectly good and usable. Also, we want to retain the _queue so that getChildren() works. Therefore we don't call super._failHandler();
-				_status = LoaderStatus.FAILED;
-				_time = getTimer() - _time;
-				dispatchEvent(new LoaderEvent(LoaderEvent.CANCEL, this));
-				dispatchEvent(new LoaderEvent(LoaderEvent.FAIL, this, this.toString() + " > " + (event as Object).text));
-				return;
-			}
-			super._failHandler(event, dispatchError);
-		}
-		
-		
-//---- GETTERS / SETTERS ---------------------------------------------------------------
-		
-		/** @private **/
-		override public function set url(value:String):void {
-			if (_url != value) {
-				if (_status == LoaderStatus.LOADING && !_initted && !_loaderFailed) {
-					_loadOnExitStealth = true;
-				}
-				super.url = value; //will dump() too
-			}
-		}
 		
 	}
 }

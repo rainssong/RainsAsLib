@@ -6,6 +6,8 @@
  **/
 package com.greensock.plugins {
 	import com.greensock.*;
+	
+	import flash.display.*;
 /**
  * Tweening "autoAlpha" is exactly the same as tweening an object's "alpha" except that it ensures 
  * that the object's "visible" property is true until autoAlpha reaches zero at which point it will 
@@ -22,7 +24,7 @@ package com.greensock.plugins {
  * 		TweenLite.to(mc, 2, {autoAlpha:0}); <br /><br />
  * </code>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */

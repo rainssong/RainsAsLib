@@ -1,14 +1,13 @@
 /**
- * VERSION: 0.41 (beta)
- * DATE: 2010-12-24
- * AS3
- * UPDATES AND DOCS AT: http://www.greensock.com
+ * VERSION: 0.11 (beta)
+ * DATE: 2010-05-04
+ * ACTIONSCRIPT VERSION: 3.0 
+ * UPDATES AND DOCUMENTATION AT: http://www.GreenSock.com
  **/
 package com.greensock.motionPaths {
 	import flash.display.Graphics;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
-	import flash.events.Event;
 
 /**
  * A LinePath2D defines a path (using as many Points as you want) on which a PathFollower can be 
@@ -48,7 +47,7 @@ addChild(path);
 
 //create an array containing 30 blue squares
 var boxes:Array = [];
-for (var i:int = 0; i &lt; 30; i++) {
+for (var i:int = 0; i < 30; i++) {
 	boxes.push(createSquare(10, 0x0000FF));
 }
 
@@ -68,7 +67,7 @@ TweenMax.to(path, 3, {rotation:180, x:550, y:400, ease:Back.easeOut, delay:3});
 function createSquare(size:Number, color:uint=0xFF0000):Shape {
 	var s:Shape = new Shape();
 	s.graphics.beginFill(color, 1);
-	s.graphics.drawRect(-size / 2, -size / 2, size, size);
+	s.graphics.drawRect(-size * 0.5, -size * 0.5, size, size);
 	s.graphics.endFill();
 	this.addChild(s);
 	return s;
@@ -82,7 +81,7 @@ function createSquare(size:Number, color:uint=0xFF0000):Shape {
  * 			property which will provide better performance than tweening each follower independently.</li>
  * </ul>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
@@ -259,8 +258,8 @@ function createSquare(size:Number, color:uint=0xFF0000):Shape {
 			_prevMatrix = m;
 		}
 		
-		/** @inheritDoc **/
-		override public function update(event:Event=null):void {
+		/** @private **/
+		override protected function renderAll():void {
 			if (_first == null || _points.length <= 1) {
 				return;
 			}
@@ -276,7 +275,7 @@ function createSquare(size:Number, color:uint=0xFF0000):Shape {
 					if (pp.point.x != pp.x || pp.point.y != pp.y) {
 						_organize();
 						_redrawLine = true;
-						update();
+						renderAll();
 						return;
 					}
 					pp = pp.next;
@@ -309,7 +308,7 @@ function createSquare(size:Number, color:uint=0xFF0000):Shape {
 				
 				f = f.cachedNext;
 			}
-			if (_redrawLine) {
+			if (_redrawLine && this.visible && this.parent) {
 				var g:Graphics = this.graphics;
 				g.clear();
 				g.lineStyle(_thickness, _color, _lineAlpha, _pixelHinting, _scaleMode, _caps, _joints, _miterLimit);
@@ -490,8 +489,6 @@ function createSquare(size:Number, color:uint=0xFF0000):Shape {
 		public function set points(value:Array):void {
 			_points = [];
 			insertMultiplePoints(value, 0);
-			_redrawLine = true;
-			update(null);
 		}
 		
 	}

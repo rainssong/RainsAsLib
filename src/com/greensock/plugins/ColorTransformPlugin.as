@@ -1,14 +1,13 @@
 /**
- * VERSION: 1.7
- * DATE: 2011-09-15
- * AS3
- * UPDATES AND DOCS AT: http://www.TweenMax.com
+ * VERSION: 1.52
+ * DATE: 10/2/2009
+ * ACTIONSCRIPT VERSION: 3.0 
+ * UPDATES AND DOCUMENTATION AT: http://www.TweenMax.com
  **/
 package com.greensock.plugins {
-	import com.greensock.*;
-	
 	import flash.display.*;
 	import flash.geom.ColorTransform;
+	import com.greensock.*;
 /**
  * Ever wanted to tween ColorTransform properties of a DisplayObject to do advanced effects like overexposing, altering
  * the brightness or setting the percent/amount of tint? Or maybe tween individual ColorTransform 
@@ -41,7 +40,7 @@ package com.greensock.plugins {
  * 		TweenLite.to(mc, 1, {colorTransform:{tint:0xFF0000, tintAmount:0.5}}); <br /><br />
  * </code>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */
@@ -57,16 +56,10 @@ package com.greensock.plugins {
 		
 		/** @private **/
 		override public function onInitTween(target:Object, value:*, tween:TweenLite):Boolean {
-			var start:ColorTransform, end:ColorTransform = new ColorTransform();
-			if (target is DisplayObject) {
-				_transform = DisplayObject(target).transform;
-				start = _transform.colorTransform;
-			} else if (target is ColorTransform) {
-				start = target as ColorTransform;
-			} else {
+			if (!(target is DisplayObject)) {
 				return false;
 			}
-			end.concat(start);
+			var end:ColorTransform = target.transform.colorTransform;
 			for (var p:String in value) {
 				if (p == "tint" || p == "color") {
 					if (value[p] != null) {
@@ -93,7 +86,9 @@ package com.greensock.plugins {
 				end.redMultiplier = end.greenMultiplier = end.blueMultiplier = 1 - Math.abs(value.brightness - 1);
 			}
 			
-			init(start, end);
+			_ignoreAlpha = Boolean(tween.vars.alpha != undefined && value.alphaMultiplier == undefined);
+			
+			init(target as DisplayObject, end);
 			
 			return true;
 		}

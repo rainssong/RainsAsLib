@@ -31,11 +31,9 @@ package me.rainssong.display
 		override protected function onInteracting():void 
 		{
 			super.onInteracting();
-		
 		}
 		
-		
-		public function get isDragging():Boolean
+		override public function get isDragging():Boolean
 		{
 			return _isInteracting; 
 		}

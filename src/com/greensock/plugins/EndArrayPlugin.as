@@ -1,12 +1,13 @@
 /**
- * VERSION: 1.61
- * DATE: 2010-09-18
+ * VERSION: 1.6
+ * DATE: 10/19/2009
  * ACTIONSCRIPT VERSION: 3.0 
  * UPDATES AND DOCUMENTATION AT: http://www.TweenMax.com
  **/
 package com.greensock.plugins {
 	import com.greensock.*;
 	
+	import flash.display.*;
 /**
  * Tweens numbers in an Array. <br /><br />
  * 
@@ -21,7 +22,7 @@ package com.greensock.plugins {
  * 		TweenLite.to(myArray, 1.5, {endArray:[10,20,30,40]}); <br /><br />
  * </code>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
@@ -69,11 +70,7 @@ package com.greensock.plugins {
 				while (i--) {
 					ti = _info[i];
 					val = ti.start + (ti.change * n);
-					if (val > 0) {
-						_a[ti.index] = (val + 0.5) >> 0; //4 times as fast as Math.round()
-					} else {
-						_a[ti.index] = (val - 0.5) >> 0;
-					}
+					_a[ti.index] = (val > 0) ? int(val + 0.5) : int(val - 0.5); //4 times as fast as Math.round()
 				}
 			} else {
 				while (i--) {

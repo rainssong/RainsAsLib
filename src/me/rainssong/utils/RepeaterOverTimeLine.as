@@ -15,7 +15,7 @@
  *   destroy():void
  */
 
-package 
+package me.rainssong.utils
 {
 	import flash.display.Sprite;
 	import flash.events.Event;

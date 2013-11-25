@@ -1,5 +1,8 @@
 ﻿package me.rainssong.display
 {
+
+	import com.greensock.events.TweenEvent;
+	import com.greensock.TweenLite;
 	import flash.display.*;
 	import flash.events.*;
 	import flash.filters.*;
@@ -7,9 +10,8 @@
 	import flash.text.*;
 	//import flash.utils.Timer;
 
-	import fl.transitions.Tween;
-	import fl.transitions.easing.*;
-	import fl.transitions.TweenEvent;
+
+
 
 
 	/**
@@ -47,7 +49,7 @@
 		private var _parentObject:DisplayObject;
 		private var _tf:TextField;// title field
 		private var _cf:TextField;//content field
-		private var _tween:Tween;
+		private var _tween:TweenLite;
 
 		//formats
 		private var _titleFormat:TextFormat;
@@ -308,7 +310,7 @@
 		private function animate( show:Boolean ):void
 		{
 			var end:int = show == true ? 1:0;
-			_tween = new Tween(this,"alpha",Strong.easeOut,this.alpha,end,.5,true);
+			_tween = new TweenLite(this,"alpha",Strong.easeOut,this.alpha,end,.5,true);
 			if (! show)
 			{
 				_tween.addEventListener( TweenEvent.MOTION_FINISH, onComplete );

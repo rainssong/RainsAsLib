@@ -1,8 +1,8 @@
 /**
- * VERSION: 0.5
- * DATE: 2011-01-12
- * AS3
- * UPDATES AND DOCS AT: http://www.greensock.com
+ * VERSION: 0.2 (beta)
+ * DATE: 2010-04-21
+ * ACTIONSCRIPT VERSION: 3.0 
+ * UPDATES AND DOCUMENTATION AT: http://www.GreenSock.com
  **/
 package com.greensock.motionPaths {
 /**
@@ -37,7 +37,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
  * 			property which will provide better performance than tweening each follower independently.</li>
  * </ul>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
@@ -47,8 +47,6 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 		
 		/** @private **/
 		public var cachedProgress:Number;
-		/** @private not re-interpolated between 0 and 1. We store this value and cachedProgress instead of calculating one of them on the fly in order to maximize rendering performance. **/
-		public var cachedRawProgress:Number;
 		/** @private **/
 		public var cachedNext:PathFollower;
 		/** @private **/
@@ -72,84 +70,32 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 			this.target = target;
 			this.autoRotate = autoRotate;
 			this.rotationOffset = rotationOffset;
-			this.cachedProgress = this.cachedRawProgress = 0;
+			this.cachedProgress = 0;
 		}
 		
 		/** 
-		 * Identical to <code>progress</code> except that the value doesn't get re-interpolated between 0 and 1.
-		 * <code>rawProgress</code> (and <code>progress</code>) indicates the follower's position along the motion path. 
-		 * For example, to place the object on the path at the halfway point, you could set its <code>rawProgress</code> 
-		 * to 0.5. You can tween to values that are greater than 1 or less than 0. For example, setting <code>rawProgress</code> 
-		 * to 1.2 also sets <code>progress</code> to 0.2 and setting <code>rawProgress</code> to -0.2 is the 
-		 * same as setting <code>progress</code> to 0.8. If your goal is to tween the PathFollower around a Circle2D twice 
-		 * completely, you could just add 2 to the <code>rawProgress</code> value or use a relative value in the tween, like: <br /><br /><code>
+		 * A value (typically between 0 and 1) that can be used to move all followers along the path. You can tween to
+		 * values that are greater than 1 or less than 0 but the values are simply wrapped. So, for example, setting 
+		 * <code>progress</code> to 1.2 is the same as setting it to 0.2 and -0.2 is the same as 0.8. If your goal is to
+		 * tween the PathFollower around a Circle2D twice completely, you could just add 2 to the <code>progress</code> 
+		 * value or use a relative value in the tween, like: <br /><br /><code>
 		 * 
-		 * TweenLite.to(myFollower, 5, {rawProgress:"2"}); //or myFollower.rawProgress + 2
+		 * TweenLite.to(myFollower, 5, {progress:"2"}); //or myFollower.progress + 2
 		 * 
-		 * </code><br /><br />
-		 * 
-		 * Since <code>rawProgress</code> doesn't re-interpolate values to always fitting between 0 and 1, it
-		 * can be useful if you need to find out how many times the PathFollower has wrapped.
-		 * 
-		 * @see #progress
-		 **/
-		public function get rawProgress():Number {
-			return this.cachedRawProgress;
-		}
-		public function set rawProgress(value:Number):void {
-			this.progress = value;
-		}
-		
-		/** 
-		 * A value between 0 and 1 that indicates the follower's position along the motion path. For example,
-		 * to place the object on the path at the halfway point, you would set its <code>progress</code> to 0.5.
-		 * You can tween to values that are greater than 1 or less than 0 but the values are simply wrapped. 
-		 * So, for example, setting <code>progress</code> to 1.2 is the same as setting it to 0.2 and -0.2 is the 
-		 * same as 0.8. If your goal is to tween the PathFollower around a Circle2D twice completely, you could just 
-		 * add 2 to the <code>progress</code> value or use a relative value in the tween, like: <br /><br /><code>
-		 * 
-		 * TweenLite.to(myFollower, 5, {progress:"2"}); //or myFollower.progress + 2</code><br /><br />
-		 * 
-		 * <code>progress</code> is identical to <code>rawProgress</code> except that <code>rawProgress</code> 
-		 * does not get re-interpolated between 0 and 1. For example, if <code>rawProgress</code> 
-		 * is set to -3.4, <code>progress</code> would be 0.6. <code>rawProgress</code> can be useful if 
-		 * you need to find out how many times the PathFollower has wrapped.
-		 * 
-		 * Also note that if you set <code>progress</code> to any value <i>outside</i> of the 0-1 range, 
-		 * <code>rawProgress</code> will be set to that exact value. If <code>progress</code> is
-		 * set to a value <i>within</i> the typical 0-1 range, it will only affect the decimal value of 
-		 * <code>rawProgress</code>. For example, if <code>rawProgress</code> is 3.4 and then you 
-		 * set <code>progress</code> to 0.1, <code>rawProgress</code> will end up at 3.1 (notice
-		 * the "3" integer was kept). But if <code>progress</code> was instead set to 5.1, since
-		 * it exceeds the 0-1 range, <code>rawProgress</code> would become 5.1. This behavior was 
-		 * adopted in order to deal most effectively with wrapping situations. For example, if 
-		 * <code>rawProgress</code> was tweened to 3.4 and then later you wanted to fine-tune
-		 * where things were positioned by tweening <code>progress</code> to 0.8, it still may be
-		 * important to be able to determine how many loops/wraps occurred, so <code>rawProgress</code>
-		 * should be 3.8, not reset to 0.8. Feel free to use <code>rawProgress</code> exclusively if you 
-		 * prefer to avoid any of the re-interpolation that occurs with <code>progress</code>.
-		 * 
-		 * @see #rawProgress
+		 * </code>
 		 **/
 		public function get progress():Number {
 			return this.cachedProgress;
 		}
 		public function set progress(value:Number):void {
 			if (value > 1) {
-				this.cachedRawProgress = value;
-				this.cachedProgress = value - int(value);
-				if (this.cachedProgress == 0) {
-					this.cachedProgress = 1;
-				}
+				value -= int(value);
 			} else if (value < 0) {
-				this.cachedRawProgress = value;
-				this.cachedProgress = value - (int(value) - 1);
-			} else {
-				this.cachedRawProgress = int(this.cachedRawProgress) + value;
-				this.cachedProgress = value;
+				value -= int(value) - 1;
 			}
+			this.cachedProgress = value;
 			if (this.path) {
-				this.path.renderObjectAt(this.target, this.cachedProgress, this.autoRotate, this.rotationOffset);
+				this.path.renderObjectAt(this.target, value, this.autoRotate, this.rotationOffset);
 			}
 		}
 		

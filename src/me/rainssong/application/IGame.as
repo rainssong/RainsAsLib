@@ -5,17 +5,14 @@ package   me.rainssong.application
 	 * ...
 	 * @author Rainssong
 	 */
-	public interface IGameView 
+	public interface IGame
 	{
-		public function pause():void
-		public function resume():void
-		public function gameOver():void
-		public function gameStart():void
-		public function save():void
-		public function load():void
-		
-		
-		
+		 function pause():void
+		 function resume():void
+		 function gameOver():void
+		 function gameStart():void
+		 function save():void
+		 function load():void
 		
 	}
 	

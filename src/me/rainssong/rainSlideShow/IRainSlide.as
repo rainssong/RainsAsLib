@@ -1,4 +1,4 @@
-package  me.rainssong.display
+package  me.rainssong.rainSlideShow
 {
 	import me.rainssong.events.SlideEvent;
 	
@@ -6,7 +6,7 @@ package  me.rainssong.display
 	 * ...
 	 * @author rainssong
 	 */
-	public interface ISlide
+	public interface IRainSlide
 	{
 		function lock(e:SlideEvent=null):void
 		function unlock(e:SlideEvent=null):void

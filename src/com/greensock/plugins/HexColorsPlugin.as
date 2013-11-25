@@ -5,6 +5,7 @@
  * UPDATES AND DOCUMENTATION AT: http://www.TweenMax.com
  **/
 package com.greensock.plugins {
+	import flash.display.*;
 	import com.greensock.*;
 /**
  * Although hex colors are technically numbers, if you try to tween them conventionally, 
@@ -40,7 +41,7 @@ package com.greensock.plugins {
  * }<br /><br />
  * </code>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */
@@ -97,8 +98,8 @@ package com.greensock.plugins {
 		
 		/** @private **/
 		override public function set changeFactor(n:Number):void {
-			var i:int = _colors.length, a:Array;
-			while (--i > -1) {
+			var i:int, a:Array;
+			for (i = _colors.length - 1; i > -1; i--) {
 				a = _colors[i];
 				a[0][a[1]] = ((a[2] + (n * a[3])) << 16 | (a[4] + (n * a[5])) << 8 | (a[6] + (n * a[7])));
 			}

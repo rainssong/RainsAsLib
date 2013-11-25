@@ -1,14 +1,12 @@
 /**
- * VERSION: 0.4 (beta)
- * DATE: 2010-12-22
- * AS3
- * UPDATES AND DOCS AT: http://www.GreenSock.com
+ * VERSION: 0.21 (beta)
+ * DATE: 2010-04-21
+ * ACTIONSCRIPT VERSION: 3.0 
+ * UPDATES AND DOCUMENTATION AT: http://www.GreenSock.com
  **/
 package com.greensock.motionPaths {
 	import flash.display.Graphics;
-	import flash.events.Event;
 	import flash.geom.Matrix;
-
 /**
  * A CirclePath2D defines a circular path on which a PathFollower can be placed, making it simple to tween objects
  * along a circle or oval (make an oval by altering the width/height/scaleX/scaleY properties). A PathFollower's 
@@ -64,7 +62,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
  * 			property which will provide better performance than tweening each follower independently.</li>
  * </ul>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
@@ -86,8 +84,8 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 			super.y = y;
 		}
 		
-		/** @inheritDoc**/
-		override public function update(event:Event=null):void {
+		/** @private **/
+		override protected function renderAll():void {
 			var angle:Number, px:Number, py:Number;
 			var m:Matrix = this.transform.matrix;
 			var a:Number = m.a, b:Number = m.b, c:Number = m.c, d:Number = m.d, tx:Number = m.tx, ty:Number = m.ty;
@@ -108,7 +106,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 				
 				f = f.cachedNext;
 			}
-			if (_redrawLine) {
+			if (_redrawLine && this.visible && this.parent) {
 				var g:Graphics = this.graphics;
 				g.clear();
 				g.lineStyle(_thickness, _color, _lineAlpha, _pixelHinting, _scaleMode, _caps, _joints, _miterLimit);
@@ -236,7 +234,7 @@ TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Directio
 		public function set radius(value:Number):void {
 			_radius = value;
 			_redrawLine = true;
-			update();
+			renderAll();
 		}
 		
 		

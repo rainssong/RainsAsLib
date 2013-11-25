@@ -1,4 +1,4 @@
-﻿package MPViewer
+﻿package me.rainssong.sound
 {
     import flash.events.*;
     import flash.media.*;

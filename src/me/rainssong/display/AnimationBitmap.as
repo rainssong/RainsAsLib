@@ -1,5 +1,10 @@
 package me.rainssong.display
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
+	import flash.events.Event;
 	
 	/**
 	 * 动画对象

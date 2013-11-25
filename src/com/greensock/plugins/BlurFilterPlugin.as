@@ -5,9 +5,9 @@
  * UPDATES AND DOCUMENTATION AT: http://www.TweenMax.com
  **/
 package com.greensock.plugins {
+	import flash.filters.*;
+	import flash.display.*;
 	import com.greensock.*;
-	
-	import flash.filters.BlurFilter;
 /**
  * Tweens a BlurFilter. The following properties are available (you only need to define the ones you want to tween):
  * <code>
@@ -33,7 +33,7 @@ package com.greensock.plugins {
  * 		TweenLite.to(mc, 1, {blurFilter:{blurX:10, blurY:10}}); <br /><br />
  * </code>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */

@@ -1,15 +1,15 @@
 /**
- * VERSION: 1.698
- * DATE: 2012-03-29
+ * VERSION: 1.381
+ * DATE: 2010-05-17
  * AS3 (AS2 version is also available)
- * UPDATES AND DOCS AT: http://www.greensock.com/timelinemax/
+ * UPDATES AND DOCUMENTATION AT: http://www.greensock.com/timelinemax/
  **/
 package com.greensock {
 	import com.greensock.core.*;
-	import com.greensock.OverwriteManager;
 	import com.greensock.events.TweenEvent;
 	
 	import flash.events.*;
+	import flash.utils.*;
 /**
  * 	TimelineMax extends TimelineLite, offering exactly the same functionality plus useful 
  *  (but non-essential) features like AS3 event dispatching, repeat, repeatDelay, yoyo, 
@@ -140,20 +140,20 @@ package com.greensock {
  * 	<li> TimelineMax adds about 4.9k to your SWF (not including OverwriteManager).</li>
  * </ul>
  * 
- * <b>Copyright 2012, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  **/
 	public class TimelineMax extends TimelineLite implements IEventDispatcher {
 		/** @private **/
-		public static const version:Number = 1.698;
+		public static const version:Number = 1.381;
 		
 		/** @private **/
 		protected var _repeat:int;
 		/** @private **/
 		protected var _repeatDelay:Number;
 		/** @private **/
-		protected var _cyclesComplete:int;
+		protected var _cyclesComplete:uint;
 		/** @private **/
 		protected var _dispatcher:EventDispatcher;
 		/** @private **/
@@ -433,18 +433,18 @@ package com.greensock {
 			} else if (!this.active && !this.cachedPaused) {
 				this.active = true; //so that if the user renders a tween (as opposed to the timeline rendering it), the timeline is forced to re-render and align it with the proper time/frame on the next rendering cycle. Maybe the tween already finished but the user manually re-renders it as halfway done.
 			}
-			var totalDur:Number = (this.cacheIsDirty) ? this.totalDuration : this.cachedTotalDuration, prevTime:Number = this.cachedTime, prevTotalTime:Number = this.cachedTotalTime, prevStart:Number = this.cachedStartTime, prevTimeScale:Number = this.cachedTimeScale, tween:TweenCore, isComplete:Boolean, rendered:Boolean, repeated:Boolean, next:TweenCore, dur:Number, prevPaused:Boolean = this.cachedPaused;
+			var totalDur:Number = (this.cacheIsDirty) ? this.totalDuration : this.cachedTotalDuration, prevTime:Number = this.cachedTime, prevStart:Number = this.cachedStartTime, prevTimeScale:Number = this.cachedTimeScale, tween:TweenCore, isComplete:Boolean, rendered:Boolean, repeated:Boolean, next:TweenCore, dur:Number, prevPaused:Boolean = this.cachedPaused;
 			if (time >= totalDur) {
-				if ((prevTotalTime != totalDur || this.cachedDuration == 0) && _rawPrevTime != time) {
-					this.cachedTotalTime = totalDur;
+				if (_rawPrevTime <= totalDur && _rawPrevTime != time) {
 					if (!this.cachedReversed && this.yoyo && _repeat % 2 != 0) {
-						this.cachedTime = 0;
 						forceChildrenToBeginning(0, suppressEvents);
+						this.cachedTime = 0;
 					} else {
-						this.cachedTime = this.cachedDuration;
 						forceChildrenToEnd(this.cachedDuration, suppressEvents);
+						this.cachedTime = this.cachedDuration;
 					}
-					isComplete = !this.hasPausedChild() && !this.cachedReversed;
+					this.cachedTotalTime = totalDur;
+					isComplete = !this.hasPausedChild();
 					rendered = true;
 					if (this.cachedDuration == 0 && isComplete && (time == 0 || _rawPrevTime < 0)) { //In order to accommodate zero-duration timelines, we must discern the momentum/direction of time in order to render values properly when the "playhead" goes past 0 in the forward direction or lands directly on it, and also when it moves past it in the backward direction (from a postitive time to a negative time).
 						force = true;
@@ -458,13 +458,11 @@ package com.greensock {
 						force = true;
 						isComplete = true;
 					}
-				} else if (time == 0 && !this.initted) {
-					force = true;
 				}
-				if (prevTotalTime != 0 && _rawPrevTime != time) {
+				if (_rawPrevTime >= 0 && _rawPrevTime != time) {
 					this.cachedTotalTime = 0;
-					this.cachedTime = 0;
 					forceChildrenToBeginning(0, suppressEvents);
+					this.cachedTime = 0;
 					rendered = true;
 					if (this.cachedReversed) {
 						isComplete = true;
@@ -474,21 +472,24 @@ package com.greensock {
 				this.cachedTotalTime = this.cachedTime = time;
 			}
 			_rawPrevTime = time;
-			
+				
 			if (_repeat != 0) {
 				var cycleDuration:Number = this.cachedDuration + _repeatDelay;
-				var prevCycles:int = _cyclesComplete;
-				if ((_cyclesComplete = (this.cachedTotalTime / cycleDuration) >> 0) == (this.cachedTotalTime / cycleDuration) && _cyclesComplete != 0) {
-					_cyclesComplete--; //otherwise when rendered exactly at the end time, it will act as though it is repeating (at the beginning)
-				}
-				repeated = Boolean(prevCycles != _cyclesComplete);
-				
 				if (isComplete) {
 					if (this.yoyo && _repeat % 2) {
 						this.cachedTime = 0;
 					}
 				} else if (time > 0) {
-					this.cachedTime = this.cachedTotalTime - (_cyclesComplete * cycleDuration); //originally this.cachedTotalTime % cycleDuration but floating point errors caused problems, so I normalized it. (4 % 0.8 should be 0 but Flash reports it as 0.79999999!)
+					var prevCycles:int = _cyclesComplete;
+					_cyclesComplete = int(this.cachedTotalTime / cycleDuration);
+					if (_cyclesComplete == this.cachedTotalTime / cycleDuration) {
+						_cyclesComplete--; //otherwise when rendered exactly at the end time, it will act as though it is repeating (at the beginning)
+					}
+					if (prevCycles != _cyclesComplete) {
+						repeated = true;
+					}
+					
+					this.cachedTime = ((this.cachedTotalTime / cycleDuration) - _cyclesComplete) * cycleDuration; //originally this.cachedTotalTime % cycleDuration but floating point errors caused problems, so I normalized it. (4 % 0.8 should be 0 but Flash reports it as 0.79999999!)
 					
 					if (this.yoyo && _cyclesComplete % 2) {
 						this.cachedTime = this.cachedDuration - this.cachedTime;
@@ -498,11 +499,9 @@ package com.greensock {
 					if (this.cachedTime < 0) {
 						this.cachedTime = 0;
 					}
-				} else {
-					_cyclesComplete = 0;
 				}
 				
-				if (repeated && !isComplete && (this.cachedTotalTime != prevTotalTime || force)) {
+				if (repeated && !isComplete && (this.cachedTime != prevTime || force)) {
 					
 					/*
 					  make sure children at the end/beginning of the timeline are rendered properly. If, for example, 
@@ -541,7 +540,7 @@ package com.greensock {
 				this.initted = true;
 			}
 			
-			if (prevTotalTime == 0 && this.cachedTotalTime != 0 && !suppressEvents) {
+			if (prevTime == 0 && this.cachedTotalTime != 0 && !suppressEvents) {
 				if (this.vars.onStart) {
 					this.vars.onStart.apply(null, this.vars.onStartParams);
 				}
@@ -552,7 +551,7 @@ package com.greensock {
 			
 			if (rendered) {
 				//already rendered, so ignore
-			} else if (this.cachedTime > prevTime) {
+			} else if (this.cachedTime - prevTime > 0) {
 				tween = _firstChild;
 				while (tween) {
 					next = tween.nextNode; //record it here because the value could change after rendering...
@@ -597,16 +596,15 @@ package com.greensock {
 			if (_hasUpdateListener && !suppressEvents) {
 				_dispatcher.dispatchEvent(new TweenEvent(TweenEvent.UPDATE));
 			}
-			if (repeated && !suppressEvents) {
+			if (isComplete && (prevStart == this.cachedStartTime || prevTimeScale != this.cachedTimeScale) && (totalDur >= this.totalDuration || this.cachedTime == 0)) { //if one of the tweens that was rendered altered this timeline's startTime (like if an onComplete reversed the timeline) or if it added more tweens to the timeline, we shouldn't run complete() because it probably isn't complete. If it is, don't worry, because whatever call altered the startTime would have called complete() if it was necessary at the new time. The only exception is the timeScale property.
+				complete(true, suppressEvents);
+			} else if (repeated && !suppressEvents) {
 				if (this.vars.onRepeat) {
 					this.vars.onRepeat.apply(null, this.vars.onRepeatParams);
 				}
 				if (_dispatcher) {
 					_dispatcher.dispatchEvent(new TweenEvent(TweenEvent.REPEAT));
 				}
-			}
-			if (isComplete && (prevStart == this.cachedStartTime || prevTimeScale != this.cachedTimeScale) && (totalDur >= this.totalDuration || this.cachedTime == 0)) { //if one of the tweens that was rendered altered this timeline's startTime (like if an onComplete reversed the timeline) or if it added more tweens to the timeline, we shouldn't run complete() because it probably isn't complete. If it is, don't worry, because whatever call altered the startTime would have called complete() if it was necessary at the new time. The only exception is the timeScale property.
-				complete(true, suppressEvents);
 			}
 		}
 		
@@ -636,13 +634,11 @@ package com.greensock {
 		 * @return an Array of active tweens/timelines
 		 */
 		public function getActive(nested:Boolean=true, tweens:Boolean=true, timelines:Boolean=false):Array {
-			var a:Array = [], all:Array = getChildren(nested, tweens, timelines), i:int, tween:TweenCore;
-			var l:int = all.length;
-			var cnt:int = 0;
-			for (i = 0; i < l; i += 1) {
-				tween = all[i];
-				//note: we cannot just check tween.active because timelines that contain paused children will continue to have "active" set to true even after the playhead passes their end point (technically a timeline can only be considered complete after all of its children have completed too, but paused tweens are...well...just waiting and until they're unpaused we don't know where their end point will be).
-				if (!tween.cachedPaused && tween.timeline.cachedTotalTime >= tween.cachedStartTime && tween.timeline.cachedTotalTime < tween.cachedStartTime + tween.cachedTotalDuration / tween.cachedTimeScale && !OverwriteManager.getGlobalPaused(tween.timeline)) {
+			var a:Array = [], all:Array = getChildren(nested, tweens, timelines), i:int;
+			var l:uint = all.length;
+			var cnt:uint = 0;
+			for (i = 0; i < l; i++) {
+				if (TweenCore(all[i]).active) {
 					a[cnt++] = all[i];
 				}
 			}
@@ -674,8 +670,8 @@ package com.greensock {
 				time = this.cachedTime;
 			}
 			var labels:Array = getLabelsArray();
-			var l:int = labels.length;
-			for (var i:int = 0; i < l; i += 1) {
+			var l:uint = labels.length;
+			for (var i:int = 0; i < l; i++) {
 				if (labels[i].time > time) {
 					return labels[i].name;
 				}
@@ -772,10 +768,7 @@ package com.greensock {
 		
 //---- GETTERS / SETTERS -------------------------------------------------------------------------------------------------------
 		
-		/** @inheritDoc **/
-		override public function set currentProgress(n:Number):void {
-			this.currentTime = this.duration * n;
-		}
+		
 		
 		/** 
 		 * Value between 0 and 1 indicating the overall progress of the timeline according to its <code>totalDuration</code> 
@@ -808,7 +801,7 @@ package com.greensock {
 			return this.cachedTotalDuration;
 		}
 		
-		/** @private **/
+		/** @inheritDoc **/
 		override public function set currentTime(n:Number):void {
 			if (_cyclesComplete == 0) {
 				setTotalTime(n, false);

@@ -31,6 +31,7 @@ package me.rainssong.controls
 	import flash.geom.Rectangle;
 	
 	import lt.uza.events.Scale9SimpleStateEvent;
+	import me.rainssong.display.Scale9BitmapSprite;
 	
 	/* VERSION 1.0 */
 

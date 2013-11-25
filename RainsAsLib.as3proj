@@ -4,13 +4,13 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin\RainsAsLib.swf" />
+    <movie path="bin\RainsAsLib.swc" />
     <movie fps="30" />
     <movie width="1024" />
     <movie height="748" />
-    <movie version="3" />
-    <movie minorVersion="7" />
-    <movie platform="AIR Mobile" />
+    <movie version="11" />
+    <movie minorVersion="0" />
+    <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
@@ -51,7 +51,9 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="lib\D.eval-1.1.swc" />
+    <element path="lib\MonsterDebugger.swc" />
+    <element path="lib\robotlegs-framework-v1.5.2.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -78,7 +80,7 @@
     <!-- example: <hidden path="..." /> -->
   </hiddenPaths>
   <!-- Executed before build -->
-  <preBuildCommand>compc -include-sources=src  -output bin/$(ProjectName).swc</preBuildCommand>
+  <preBuildCommand>"$(CompilerPath)\bin\compc.exe" -include-sources "$(ProjectDir)\src\me" -output "$(OutputDir)\$(OutputName)"  -external-library-path D:\Flash\FrameWork\robotlegs-framework\bin\robotlegs-framework-v1.5.2.swc -external-library-path D:\Flash\SDK\Flex4.6Air3.9\frameworks\libs\player\11.0\playerglobal.swc</preBuildCommand>
   <!-- Executed after build -->
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->

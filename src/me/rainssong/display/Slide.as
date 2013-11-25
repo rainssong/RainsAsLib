@@ -23,7 +23,6 @@
 	 */
 	public dynamic class Slide extends MyMovieClip implements ISlide
 	{
-		
 		protected var _isLeftRollInEnabled:Boolean = true;
 		protected var _isRightRollInEnabled:Boolean = true;
 		protected var _isLeftRollOutEnabled:Boolean = true;

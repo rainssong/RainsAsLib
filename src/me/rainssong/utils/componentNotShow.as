@@ -1,12 +1,16 @@
 package me.rainssong.utils
 {
+	import flash.display.DisplayObject;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
+	import flash.display.BitmapData;
 	
 	/**
 	 * 组件看不到？请使用本函数检测
 	 * @param target
 	 *
 	 */
-	public function componentsNotShow(target:DisplayObject):void
+	public function componentNotShow(target:DisplayObject):void
 	{
 		// 检查基本属性
 		if (!target.stage)

@@ -113,7 +113,7 @@ package me.rainssong.display
 			_speedY = stage.mouseY - _lastY;
 			_lastX = stage.mouseX;
 			_lastY = stage.mouseY;
-			if (_isdragging)
+			if (_isDragging)
 			{
 				this.x += _speedX;
 				this.y += _speedY;

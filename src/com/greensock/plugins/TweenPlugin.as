@@ -1,8 +1,8 @@
 /**
- * VERSION: 1.4
- * DATE: 2010-12-16
- * AS3
- * UPDATES AND DOCS AT: http://www.TweenMax.com
+ * VERSION: 1.31
+ * DATE: 10/22/2009
+ * ACTIONSCRIPT VERSION: 3.0 
+ * UPDATES AND DOCUMENTATION AT: http://www.TweenMax.com
  **/
 package com.greensock.plugins {
 	import com.greensock.*;
@@ -60,12 +60,12 @@ package com.greensock.plugins {
  * 		  See http://blog.greensock.com/club/ for details.</li>
  * </ol>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */
 	public class TweenPlugin {
-		public static const VERSION:Number = 1.4;
+		public static const VERSION:Number = 1.31;
 		/** @private If the API/Framework for plugins changes in the future, this number helps determine compatibility **/
 		public static const API:Number = 1.0; 
 		
@@ -89,9 +89,6 @@ package com.greensock.plugins {
 		
 		/** @private if the plugin actively changes properties of the target when it gets disabled (like the MotionBlurPlugin swaps out a temporary BitmapData for the target), activeDisplay should be true. Otherwise it should be false (it is much more common for it to be false). This is important because if it gets overwritten by another tween, that tween may init() with stale values - if activeDisable is true, it will force the new tween to re-init() when this plugin is overwritten (if ever). **/
 		public var activeDisable:Boolean;
-		
-		/** @private Called when the tween has finished initting all of the properties in the vars object (useful for things like roundProps which must wait for everything else to init). IMPORTANT: in order for the onInitAllProps to get called properly, you MUST set the TweenPlugin's "priority" property to a non-zero value (this is for optimization and file size purposes) **/
-		public var onInitAllProps:Function;
 		
 		/** @private Called when the tween is complete. **/
 		public var onComplete:Function;
@@ -159,18 +156,14 @@ package com.greensock.plugins {
 			var i:int = _tweens.length, pt:PropTween;
 			if (this.round) {
 				var val:Number;
-				while (--i > -1) {
+				while (i--) {
 					pt = _tweens[i];
 					val = pt.start + (pt.change * changeFactor);
-					if (val > 0) {
-						pt.target[pt.property] = (val + 0.5) >> 0; //4 times as fast as Math.round()
-					} else {
-						pt.target[pt.property] = (val - 0.5) >> 0; //4 times as fast as Math.round()
-					}
+					pt.target[pt.property] = (val > 0) ? int(val + 0.5) : int(val - 0.5); //4 times as fast as Math.round()
 				}
 				
 			} else {
-				while (--i > -1) {
+				while (i--) {
 					pt = _tweens[i];
 					pt.target[pt.property] = pt.start + (pt.change * changeFactor);
 				}
@@ -187,12 +180,13 @@ package com.greensock.plugins {
 		 * 
 		 * @param n Multiplier describing the amount of change that should be applied. It will be zero at the beginning of the tween and 1 at the end, but inbetween it could be any value based on the ease applied (for example, an Elastic tween would cause the value to shoot past 1 and back again before the end of the tween) 
 		 */
-		public function get changeFactor():Number {
-			return _changeFactor;
-		}
 		public function set changeFactor(n:Number):void {
 			updateTweens(n);
 			_changeFactor = n;
+		}
+		
+		public function get changeFactor():Number {
+			return _changeFactor;
 		}
 		
 		/**
@@ -207,13 +201,13 @@ package com.greensock.plugins {
 		 */
 		public function killProps(lookup:Object):void {
 			var i:int = this.overwriteProps.length;
-			while (--i > -1) {
+			while (i--) {
 				if (this.overwriteProps[i] in lookup) {
 					this.overwriteProps.splice(i, 1);
 				}
 			}
 			i = _tweens.length;
-			while (--i > -1) {
+			while (i--) {
 				if (PropTween(_tweens[i]).name in lookup) {
 					_tweens.splice(i, 1);
 				}
@@ -230,35 +224,37 @@ package com.greensock.plugins {
 		 * method is only for internal use inside TweenLite. It is separated into
 		 * this static method in order to minimize file size inside TweenLite.
 		 * 
-		 * @param type The type of event "onInitAllProps", "onComplete", "onEnable", or "onDisable"
+		 * @param type The type of event "onInit", "onComplete", "onEnable", or "onDisable"
 		 * @param tween The TweenLite/Max instance to which the event pertains
 		 * @return A Boolean value indicating whether or not properties of the tween's target may have changed as a result of the event
 		 */
 		private static function onTweenEvent(type:String, tween:TweenLite):Boolean {
 			var pt:PropTween = tween.cachedPT1, changed:Boolean;
-			if (type == "onInitAllProps") {
+			if (type == "onInit") {
 				//sorts the PropTween linked list in order of priority because some plugins need to render earlier/later than others, like MotionBlurPlugin applies its effects after all x/y/alpha tweens have rendered on each frame.
 				var tweens:Array = [];
-				var i:int = 0;
 				while (pt) {
-					tweens[i++] = pt;
+					tweens[tweens.length] = pt;
 					pt = pt.nextNode;
 				}
 				tweens.sortOn("priority", Array.NUMERIC | Array.DESCENDING);
-				while (--i > -1) {
+				var i:int = tweens.length;
+				while (i--) {
 					PropTween(tweens[i]).nextNode = tweens[i + 1];
 					PropTween(tweens[i]).prevNode = tweens[i - 1];
 				}
-				pt = tween.cachedPT1 = tweens[0];
-			} 
-			while (pt) {
-				if (pt.isPlugin && pt.target[type]) {
-					if (pt.target.activeDisable) {
-						changed = true;
+				tween.cachedPT1 = tweens[0];
+				
+			} else {
+				while (pt) {
+					if (pt.isPlugin && pt.target[type]) {
+						if (pt.target.activeDisable) {
+							changed = true;
+						}
+						pt.target[type]();
 					}
-					pt.target[type]();
+					pt = pt.nextNode;
 				}
-				pt = pt.nextNode;
 			}
 			return changed;
 		}

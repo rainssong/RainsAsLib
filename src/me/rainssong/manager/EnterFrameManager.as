@@ -13,6 +13,7 @@ package me.rainssong.manager
 		private var _frameCount:int = 0;
 		private var _funDic:Dictionary ;
 		private var _isPaused:Boolean ;
+		
 		public function EnterFrameManager(target:DisplayObject, autoStart:Boolean = false) 
 		{
 			init(target);
@@ -36,7 +37,7 @@ package me.rainssong.manager
 			_isPaused = false;
 		}
 		
-		public function stop():void
+		public function pause():void
 		{
 			_target.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 			_isPaused = true;
@@ -46,7 +47,6 @@ package me.rainssong.manager
 		public function onEnterFrame(e:Event):void
 		{
 			_frameCount++;
-			
 			for ( var i:* in _funDic)
 			{
 				if (_funDic[i] == 1)

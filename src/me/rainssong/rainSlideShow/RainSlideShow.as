@@ -2,7 +2,6 @@
 
 {
 	import com.greensock.TweenMax;
-	import com.ObjectPool.ObjectPool;
 	import flash.display.Shape;
 	import flash.errors.IOError;
 	import flash.geom.Rectangle;
@@ -23,7 +22,7 @@
 	 * ...
 	 * @author rainssong
 	 */
-	public class SlideShow extends MouseDragableSprite
+	public class RainSlideShow extends MouseDragableSprite
 	{
 		static public const SWIPE_UP:String = "swipeUp";
 		static public const SWIPE_COMPLETE:String = "swipeComplete";
@@ -42,7 +41,7 @@
 		private var _mask:Shape
 		
 		//不允许删除当前页
-		public function SlideShow(slideWidth:Number = 1024, slideHeight:Number = 768)
+		public function RainSlideShow(slideWidth:Number = 1024, slideHeight:Number = 768)
 		{
 			_slideWidth = slideWidth;
 			_slideHeight = slideHeight;
@@ -242,7 +241,7 @@
 			
 			if (!_slideArr[index])
 			{
-				_slideArr[index] = new Slide();
+				_slideArr[index] = new RainSlide();
 				_slideContainer.addChild(_slideArr[index]);
 				_slideArr[index].x = _slideWidth * index;
 			}
@@ -325,10 +324,10 @@
 				return;
 			//var point:Point = _slideArr[index].localToGlobal(new Point(_slideArr[index].x, _slideArr[index].y));
 			
-			if (_slideContentArr[index] is Class && (new _slideContentArr[index]()) is Slide)
+			if (_slideContentArr[index] is Class && (new _slideContentArr[index]()) is RainSlide)
 				_slideArr[index] = new _slideContentArr[index]();
 			else
-				_slideArr[index] = new Slide(_slideContentArr[index],_slideWidth,_slideHeight);
+				_slideArr[index] = new RainSlide(_slideContentArr[index],_slideWidth,_slideHeight);
 			
 			_slideContainer.addChild(_slideArr[index]);
 			//
@@ -373,7 +372,7 @@
 			return index;
 		}
 		
-		public function get currentSlide():Slide
+		public function get currentSlide():RainSlide
 		{
 			return _slideArr[currentIndex];
 		}

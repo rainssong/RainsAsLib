@@ -1,10 +1,11 @@
 /**
- * VERSION: 1.3
- * DATE: 2011-08-02
- * AS3 
- * UPDATES AND DOCS AT: http://www.TweenMax.com
+ * VERSION: 1.2
+ * DATE: 12/17/2009
+ * ACTIONSCRIPT VERSION: 3.0 
+ * UPDATES AND DOCUMENTATION AT: http://www.TweenMax.com
  **/
 package com.greensock.plugins {
+	import flash.display.*;
 	import com.greensock.*;
 /**
  * To tween any rotation property of the target object in the shortest direction, use "shortRotation" 
@@ -15,11 +16,6 @@ package com.greensock.plugins {
  * easier, like:<br /><br /><code> 
  * 		
  * 		TweenMax.to(mc, 2, {shortRotation:{rotationX:-170, rotationY:35, rotationZ:200}}); <br /><br /></code>
- * 
- * Normally shortRotation is defined in degrees, but if you prefer to have it work with radians instead,
- * simply set the <code>useRadians</code> special property to <code>true</code> like:<br /><br /><code>
- * 
- * 		TweenMax.to(myCustomObject, 2, {shortRotation:{customRotationProperty:Math.PI, useRadians:true}});</code><br /><br />
  * 
  * <b>USAGE:</b><br /><br />
  * <code>
@@ -34,7 +30,7 @@ package com.greensock.plugins {
  * 		TweenLite.to(mc, 1, {shortRotation:{rotationX:-170, rotationY:35, rotationZ:10}}); <br /><br />
  * </code>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */
@@ -54,21 +50,17 @@ package com.greensock.plugins {
 			if (typeof(value) == "number") {
 				return false;
 			}
-			var useRadians:Boolean = Boolean(value.useRadians == true); 
 			for (var p:String in value) {
-				if (p != "useRadians") {
-					initRotation(target, p, target[p], (typeof(value[p]) == "number") ? Number(value[p]) : target[p] + Number(value[p]), useRadians);
-				}
+				initRotation(target, p, target[p], (typeof(value[p]) == "number") ? Number(value[p]) : target[p] + Number(value[p]));
 			}
 			return true;
 		}
 		
 		/** @private **/
-		public function initRotation(target:Object, propName:String, start:Number, end:Number, useRadians:Boolean=false):void {
-			var cap:Number = useRadians ? Math.PI * 2 : 360;
-			var dif:Number = (end - start) % cap;
-			if (dif != dif % (cap / 2)) {
-				dif = (dif < 0) ? dif + cap : dif - cap;
+		public function initRotation(target:Object, propName:String, start:Number, end:Number):void {
+			var dif:Number = (end - start) % 360;
+			if (dif != dif % 180) {
+				dif = (dif < 0) ? dif + 360 : dif - 360;
 			}
 			addTween(target, propName, start, start + dif, propName);
 			this.overwriteProps[this.overwriteProps.length] = propName;

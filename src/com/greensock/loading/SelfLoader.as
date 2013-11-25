@@ -1,6 +1,6 @@
 /**
- * VERSION: 1.7
- * DATE: 2010-11-13
+ * VERSION: 1.3
+ * DATE: 2010-08-09
  * AS3
  * UPDATES AND DOCS AT: http://www.greensock.com/loadermax/
  **/
@@ -59,7 +59,7 @@ function errorHandler(event:LoaderEvent):void {
 }
  </listing>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
@@ -91,7 +91,7 @@ function errorHandler(event:LoaderEvent):void {
 			_loaderInfo.addEventListener(Event.COMPLETE, _completeHandler, false, 0, true);
 			_cachedBytesTotal = _loaderInfo.bytesTotal;
 			_cachedBytesLoaded = _loaderInfo.bytesLoaded;
-			_status = (_cachedBytesLoaded == _cachedBytesTotal) ? LoaderStatus.COMPLETED : LoaderStatus.LOADING;		
+			_status = LoaderStatus.LOADING;
 			_auditedSize = true;
 			_content = self;
 		}

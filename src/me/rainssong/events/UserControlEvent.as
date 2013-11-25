@@ -18,13 +18,13 @@ package  me.rainssong.events
 		static public const COMMAND_DOWN:String = "commandDown";
 		static public const COMMAND_ZOOM:String = "commandZoom";
 		static public const COMMAND_ROTATE:String = "commandRotate";
-		private var _power:Number = null;
-		private var _localX:Number=null;
-		private var _localY:Number = null;
+		private var _power:Number = NaN;
+		private var _localX:Number= NaN;
+		private var _localY:Number = NaN;
 		private var _id:String = null;
 		
 		
-		public function UserControlEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false,id:String=null, localX:Number=null, localY:Number=null,power:Number=null) 
+		public function UserControlEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false,id:String=null, localX:Number=NaN, localY:Number=NaN,power:Number=NaN) 
 		{
 			super(type, bubbles, cancelable);
 			_power = power;

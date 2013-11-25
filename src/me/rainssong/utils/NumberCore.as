@@ -15,7 +15,7 @@ package me.rainssong.utils {
 	 * <span lang="ja">NumberUtil クラスは、数値操作のためのユーティリティクラスです。</span>
 	 * <span lang="en">The NumberUtil class is an utility class for numeric operation.</span>
 	 */
-	public final class NumberUtil {
+	public final class NumberCore {
 		
 		
 		/**

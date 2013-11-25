@@ -1,1 +1,1 @@
-compc -output bin/RainsAsLib.swc -include-sources=srr
+compc -output bin/RainsAsLib.swc -include-sources=src

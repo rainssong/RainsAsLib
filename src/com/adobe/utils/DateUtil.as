@@ -356,7 +356,7 @@ package com.adobe.utils
 				}
 				
 				var date:Number = Number(dateParts.shift());
-				var month:Number = Number(DateUtil.getShortMonthIndex(dateParts.shift()));
+				var month:Number = Number(DateCore.getShortMonthIndex(dateParts.shift()));
 				var year:Number = Number(dateParts.shift());
 				var timeParts:Array = dateParts.shift().split(":");
 				var hour:Number = int(timeParts.shift());
@@ -487,7 +487,7 @@ package com.adobe.utils
 			}
 			sb += date;
 			sb += " ";
-			//sb += DateUtil.SHORT_MONTH[d.getUTCMonth()];
+			//sb += DateCore.SHORT_MONTH[d.getUTCMonth()];
 			sb += DateBase.monthNamesShort[d.getUTCMonth()];
 			sb += " ";
 			sb += d.getUTCFullYear();

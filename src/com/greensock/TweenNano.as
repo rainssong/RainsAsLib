@@ -160,7 +160,7 @@ package com.greensock {
  * 	  to members. Learn more at <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a></li>
  * </ul>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	 
@@ -398,7 +398,7 @@ package com.greensock {
 		 * @param e ENTER_FRAME Event
 		 */
 		public static function updateAll(e:Event=null):void {
-			_frame += 1;
+			_frame++;
 			_time = getTimer() * 0.001;
 			var ml:Dictionary = _masterList, a:Array, tgt:Object, i:int, t:Number, tween:TweenNano;
 			for (tgt in ml) {

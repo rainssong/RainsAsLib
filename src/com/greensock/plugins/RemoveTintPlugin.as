@@ -5,7 +5,10 @@
  * UPDATES AND DOCUMENTATION AT: http://www.TweenMax.com
  **/
 package com.greensock.plugins {
-	import com.greensock.plugins.TintPlugin;
+	import flash.display.*;
+	import flash.geom.ColorTransform;
+	import com.greensock.*;
+	import com.greensock.plugins.*;
 /**
  * Removes the tint of a DisplayObject over time. <br /><br />
  * 
@@ -19,7 +22,7 @@ package com.greensock.plugins {
  * 		TweenLite.to(mc, 1, {removeTint:true}); <br /><br />
  * </code>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */

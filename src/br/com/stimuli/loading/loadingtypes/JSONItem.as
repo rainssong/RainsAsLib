@@ -50,7 +50,7 @@ package br.com.stimuli.loading.loadingtypes {
 
             override public function onCompleteHandler(evt : Event) : void {
                 try{
-                    _content = JSON.decode(loader.data);
+                    _content = com.adobe.serialization.json.JSON.decode(loader.data);
                 }catch(e  : Error){
                     _content = null;
                     status = STATUS_ERROR;  

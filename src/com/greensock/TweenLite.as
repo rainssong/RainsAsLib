@@ -1,8 +1,8 @@
 ﻿/**
- * VERSION: 11.698
- * DATE: 2012-03-27
+ * VERSION: 11.36
+ * DATE: 2010-04-27
  * AS3 (AS2 version is also available)
- * UPDATES AND DOCS AT: http://www.greensock.com
+ * UPDATES AND DOCUMENTATION AT: http://www.TweenLite.com
  **/
 package com.greensock {
 	import com.greensock.core.*;
@@ -48,9 +48,9 @@ package com.greensock {
  * 
  * <hr />	
  * <b>SPECIAL PROPERTIES (no plugins required):</b>
- * The following special properties can be defined in the <code>vars</code> parameter which can 
- * be either a generic Object or a <code><a href="data/TweenLiteVars.html">TweenLiteVars</a></code> instance:
- * <br />
+ * <br /><br />
+ * 
+ * Any of the following special properties can optionally be passed in through the vars object (the third parameter):
  * 
  * <ul>
  * 	<li><b> delay : Number</b>			Amount of delay in seconds (or frames for frames-based tweens) before the tween should begin.</li>
@@ -122,11 +122,7 @@ package com.greensock {
  * 											<li>PREEXISTING (5) (requires OverwriteManager)</li>
  * 
  * 										</ul></li>
- * 	</ul>
- * 
- * <b>Note:</b> Using a <code><a href="data/TweenLiteVars.html">TweenLiteVars</a></code> instance 
- * instead of a generic object to define your <code>vars</code> is a bit more verbose but provides 
- * code hinting and improved debugging because it enforces strict data typing. Use whichever one you prefer.<br /><br />
+ * 	</ul>		
  * 
  * <b>PLUGINS:</b><br /><br />
  * 
@@ -164,7 +160,7 @@ package com.greensock {
  * 	  to members. Learn more at <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a></li>
  * </ul>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	 
@@ -235,7 +231,7 @@ package com.greensock {
 		}
 		
 		/** @private **/
-		public static const version:Number = 11.698;
+		public static const version:Number = 11.36;
 		/** @private When plugins are activated, the class is added (named based on the special property) to this object so that we can quickly look it up in the initTweenVals() method.**/
 		public static var plugins:Object = {}; 
 		/** @private **/
@@ -259,7 +255,7 @@ package com.greensock {
 		/** @private Drives all our ENTER_FRAME events.**/
 		private static var _shape:Shape = new Shape(); 
 		/** @private Lookup for all of the reserved "special property" keywords.**/
-		protected static var _reservedProps:Object = {ease:1, delay:1, overwrite:1, onComplete:1, onCompleteParams:1, useFrames:1, runBackwards:1, startAt:1, onUpdate:1, onUpdateParams:1, onStart:1, onStartParams:1, onInit:1, onInitParams:1, onReverseComplete:1, onReverseCompleteParams:1, onRepeat:1, onRepeatParams:1, proxiedEase:1, easeParams:1, yoyo:1, onCompleteListener:1, onUpdateListener:1, onStartListener:1, onReverseCompleteListener:1, onRepeatListener:1, orientToBezier:1, timeScale:1, immediateRender:1, repeat:1, repeatDelay:1, timeline:1, data:1, paused:1, reversed:1};
+		protected static var _reservedProps:Object = {ease:1, delay:1, overwrite:1, onComplete:1, onCompleteParams:1, useFrames:1, runBackwards:1, startAt:1, onUpdate:1, onUpdateParams:1, roundProps:1, onStart:1, onStartParams:1, onInit:1, onInitParams:1, onReverseComplete:1, onReverseCompleteParams:1, onRepeat:1, onRepeatParams:1, proxiedEase:1, easeParams:1, yoyo:1, onCompleteListener:1, onUpdateListener:1, onStartListener:1, onReverseCompleteListener:1, onRepeatListener:1, orientToBezier:1, timeScale:1, immediateRender:1, repeat:1, repeatDelay:1, timeline:1, data:1, paused:1};
 		
 		
 		/** Target object whose properties this tween affects. This can be ANY object, not just a DisplayObject. **/
@@ -274,7 +270,7 @@ package com.greensock {
 		/** @private Easing method to use which determines how the values animate over time. Examples are Elastic.easeOut and Strong.easeIn. Many are found in the fl.motion.easing package or com.greensock.easing. **/
 		protected var _ease:Function;
 		/** @private 0 = NONE, 1 = ALL, 2 = AUTO 3 = CONCURRENT, 4 = ALL_AFTER **/
-		protected var _overwrite:int;
+		protected var _overwrite:uint;
 		/** @private When other tweens overwrite properties in this tween, the properties get added to this object. Remember, sometimes properties are overwritten BEFORE the tween inits, like when two tweens start at the same time, the later one overwrites the previous one. **/
 		protected var _overwrittenProps:Object; 
 		/** @private If this tween has any TweenPlugins, we set this to true - it helps speed things up in onComplete **/
@@ -292,9 +288,6 @@ package com.greensock {
 		 */
 		public function TweenLite(target:Object, duration:Number, vars:Object) {
 			super(duration, vars);
-			if (target == null) {
-				throw new Error("Cannot tween a null object.");
-			}
 			this.target = target;
 			if (this.target is TweenCore && this.vars.timeScale) { //if timeScale is in the vars object and the target is a TweenCore, this tween's timeScale must be adjusted (in TweenCore's constructor, it was set to whatever the vars.timeScale was)
 				this.cachedTimeScale = 1;
@@ -386,7 +379,7 @@ package com.greensock {
 				
 			}
 			if (prioritize) {
-				onPluginEvent("onInitAllProps", this); //reorders the linked list in order of priority. Uses a static TweenPlugin method in order to minimize file size in TweenLite
+				onPluginEvent("onInit", this); //reorders the linked list in order of priority. Uses a static TweenPlugin method in order to minimize file size in TweenLite
 			}
 			if (this.vars.runBackwards) {
 				var pt:PropTween = this.cachedPT1;
@@ -403,7 +396,8 @@ package com.greensock {
 					this.setEnabled(false, false);
 				}
 			}
-			if (_overwrite > 1 && this.cachedPT1 && (siblings = masterList[this.target]) && siblings.length > 1) {
+			siblings = masterList[this.target];
+			if (_overwrite > 1 && this.cachedPT1 && siblings && siblings.length > 1) {
 				if (overwriteManager.manageOverwrites(this, this.propTweenLookup, siblings, _overwrite)) {
 					//one of the plugins had activeDisable set to true, so properties may have changed when it was disabled meaning we need to re-init()
 					init();
@@ -418,7 +412,7 @@ package com.greensock {
 			if (time >= this.cachedDuration) {
 				this.cachedTotalTime = this.cachedTime = this.cachedDuration;
 				this.ratio = 1;
-				isComplete = !this.cachedReversed;
+				isComplete = true;
 				if (this.cachedDuration == 0) { //zero-duration tweens are tricky because we must discern the momentum/direction of time in order to determine whether the starting values should be rendered or the ending values. If the "playhead" of its timeline goes past the zero-duration tween in the forward direction or lands directly on it, the end values should be rendered, but if the timeline's "playhead" moves past it in the backward direction (from a postitive time to a negative time), the starting values must be rendered.
 					if ((time == 0 || _rawPrevTime < 0) && _rawPrevTime != time) {
 						force = true;
@@ -431,9 +425,9 @@ package com.greensock {
 				if (time < 0) {
 					this.active = false;
 					if (this.cachedDuration == 0) { //zero-duration tweens are tricky because we must discern the momentum/direction of time in order to determine whether the starting values should be rendered or the ending values. If the "playhead" of its timeline goes past the zero-duration tween in the forward direction or lands directly on it, the end values should be rendered, but if the timeline's "playhead" moves past it in the backward direction (from a postitive time to a negative time), the starting values must be rendered.
-						if (_rawPrevTime >= 0) {
+						if (_rawPrevTime > 0) {
 							force = true;
-							isComplete = (_rawPrevTime > 0);
+							isComplete = true;
 						}
 						_rawPrevTime = time;
 					}
@@ -458,7 +452,7 @@ package com.greensock {
 			if (!this.active && !this.cachedPaused) {
 				this.active = true;  //so that if the user renders a tween (as opposed to the timeline rendering it), the timeline is forced to re-render and align it with the proper time/frame on the next rendering cycle. Maybe the tween already finished but the user manually re-renders it as halfway done.
 			}
-			if (prevTime == 0 && this.vars.onStart && (this.cachedTime != 0 || this.cachedDuration == 0) && !suppressEvents) {
+			if (prevTime == 0 && this.vars.onStart && this.cachedTime != 0 && !suppressEvents) {
 				this.vars.onStart.apply(null, this.vars.onStartParams);
 			}
 			
@@ -470,7 +464,7 @@ package com.greensock {
 			if (_hasUpdate && !suppressEvents) {
 				this.vars.onUpdate.apply(null, this.vars.onUpdateParams);
 			}
-			if (isComplete && !this.gc) { //check gc because there's a chance that kill() could be called in an onUpdate
+			if (isComplete) {
 				if (_hasPlugins && this.cachedPT1) {
 					onPluginEvent("onComplete", this);
 				}
@@ -499,9 +493,6 @@ package com.greensock {
 						pt.target.killProps(vars);
 						if (pt.target.overwriteProps.length == 0) {
 							pt.name = "";
-						}
-						if (p != pt.target.propName || pt.name == "") {
-							delete propTweenLookup[p];
 						}
 					}
 					if (pt.name != "_MULTIPLE_") {
@@ -547,7 +538,7 @@ package com.greensock {
 				var a:Array = TweenLite.masterList[this.target];
 				if (!a) {
 					TweenLite.masterList[this.target] = [this];
-				} else if (a.indexOf(this) == -1) {
+				} else {
 					a[a.length] = this;
 				}
 			}
@@ -603,9 +594,6 @@ package com.greensock {
 		 * @return TweenLite instance
 		 */
 		public static function from(target:Object, duration:Number, vars:Object):TweenLite {
-			if (vars.isGSVars) {  //to accommodate TweenMaxVars instances for strong data typing and code hinting
-				vars = vars.vars;
-			}
 			vars.runBackwards = true;
 			if (!("immediateRender" in vars)) {
 				vars.immediateRender = true;
@@ -640,7 +628,7 @@ package com.greensock {
 		 */
 		 protected static function updateAll(e:Event = null):void {
 			rootTimeline.renderTime(((getTimer() * 0.001) - rootTimeline.cachedStartTime) * rootTimeline.cachedTimeScale, false, false);
-			rootFrame += 1;
+			rootFrame++;
 			rootFramesTimeline.renderTime((rootFrame - rootFramesTimeline.cachedStartTime) * rootFramesTimeline.cachedTimeScale, false, false);
 			
 			if (!(rootFrame % 60)) { //garbage collect every 60 frames...
@@ -663,20 +651,14 @@ package com.greensock {
 		
 		
 		/**
-		 * Kills all the tweens of a particular object or delayedCalls to a particular function, optionally 
-		 * completing them first. If, for example, you want to kill all tweens of the "mc" object, you'd do:<br /><br /><code>
+		 * Kills all the tweens (or certain tweening properties) of a particular object, optionally completing them first.
+		 * If, for example, you want to kill all tweens of the "mc" object, you'd do:<br /><br /><code>
 		 * 
 		 * TweenLite.killTweensOf(mc);<br /><br /></code>
 		 * 
-		 * You can also just kill certain tweening properties of a particular object. For example, if you only want to kill all 
-		 * the "alpha" and "x" portions of mc's tweens, you'd do:<br /><br /><code>
+		 * But if you only want to kill all the "alpha" and "x" portions of mc's tweens, you'd do:<br /><br /><code>
 		 * 
 		 * TweenLite.killTweensOf(mc, false, {alpha:true, x:true});<br /><br /></code>
-		 * 
-		 * To kill all the delayedCalls that were created like <code>TweenLite.delayedCall(5, myFunction);</code>, 
-		 * you can simply call <code>TweenLite.killTweensOf(myFunction);</code> because delayedCalls are just
-		 * tweens that have their <code>target</code> and <code>onComplete</code> set to the same function (and 
-		 * a <code>delay</code> of course). <br /><br />
 		 * 
 		 * <code>killTweensOf()</code> affects tweens that haven't begun yet too. If, for example, 
 		 * a tween of object "mc" has a delay of 5 seconds and <code>TweenLite.killTweensOf(mc)</code> is called

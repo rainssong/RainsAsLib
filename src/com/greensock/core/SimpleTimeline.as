@@ -1,8 +1,8 @@
 ﻿/**
- * VERSION: 1.672
- * DATE: 2011-08-29
+ * VERSION: 1.38
+ * DATE: 2010-05-24
  * AS3 (AS2 version is also available)
- * UPDATES AND DOCS AT: http://www.greensock.com
+ * UPDATES AND DOCUMENTATION AT: http://www.TweenLite.com
  **/
 package com.greensock.core {
 /**
@@ -10,7 +10,7 @@ package com.greensock.core {
  * most basic timeline functionality and is used for the root timelines in TweenLite. It is meant
  * to be very fast and lightweight. <br /><br />
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
@@ -26,36 +26,22 @@ package com.greensock.core {
 			super(0, vars);
 		}
 		
-		/**
-		 * Inserts a TweenLite, TweenMax, TimelineLite, or TimelineMax instance into the timeline at a specific time. 
-		 * 
-		 * @param tween TweenLite, TweenMax, TimelineLite, or TimelineMax instance to insert
-		 * @param time The time in seconds (or frames for frames-based timelines) at which the tween/timeline should be inserted. For example, myTimeline.insert(myTween, 3) would insert myTween 3-seconds into the timeline.
-		 * @return TweenLite, TweenMax, TimelineLite, or TimelineMax instance that was inserted
-		 */
-		public function insert(tween:TweenCore, time:*=0):TweenCore {
-			var prevTimeline:SimpleTimeline = tween.timeline;
-			if (!tween.cachedOrphan && prevTimeline) {
-				prevTimeline.remove(tween, true); //removes from existing timeline so that it can be properly added to this one.
+		/** @private **/
+		public function addChild(tween:TweenCore):void {
+			if (!tween.cachedOrphan && tween.timeline) {
+				tween.timeline.remove(tween, true); //removes from existing timeline so that it can be properly added to this one.
 			}
 			tween.timeline = this;
-			tween.cachedStartTime = Number(time) + tween.delay;
 			if (tween.gc) {
 				tween.setEnabled(true, true);
 			}
-			if (tween.cachedPaused && prevTimeline != this) { //we only adjust the cachedPauseTime if it wasn't in this timeline already. Remember, sometimes a tween will be inserted again into the same timeline when its startTime is changed so that the tweens in the TimelineLite/Max are re-ordered properly in the linked list (so everything renders in the proper order). 
-				tween.cachedPauseTime = tween.cachedStartTime + ((this.rawTime - tween.cachedStartTime) / tween.cachedTimeScale);
-			}
-			if (_lastChild) {
-				_lastChild.nextNode = tween;
-			} else {
-				_firstChild = tween;
-			}
-			tween.prevNode = _lastChild;
-			_lastChild = tween;
-			tween.nextNode = null;
+			if (_firstChild) {
+				_firstChild.prevNode = tween;	
+			} 
+			tween.nextNode = _firstChild;
+			_firstChild = tween;
+			tween.prevNode = null;
 			tween.cachedOrphan = false;
-			return tween;
 		}
 		
 		/** @private **/
@@ -98,6 +84,7 @@ package com.greensock.core {
 				}
 				tween = next;
 			}
+			
 		}
 		
 //---- GETTERS / SETTERS ------------------------------------------------------------------------------

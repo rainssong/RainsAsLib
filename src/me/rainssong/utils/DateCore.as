@@ -12,10 +12,10 @@ package me.rainssong.utils {
 
 	
 	/**
-	 * <span lang="ja">DateUtil クラスは、日付データ操作のためのユーティリティクラスです。</span>
-	 * <span lang="en">The DateUtil class is an utility class for date data operation.</span>
+	 * <span lang="ja">DateCore クラスは、日付データ操作のためのユーティリティクラスです。</span>
+	 * <span lang="en">The DateCore class is an utility class for date data operation.</span>
 	 */
-	public final class DateUtil {
+	public final class DateCore {
 		
 		/**
 		 * <span lang="ja">1 ミリ秒をミリ秒単位で表した定数を取得します。</span>

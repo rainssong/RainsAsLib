@@ -1,4 +1,4 @@
-package mvc.model 
+package me.rainssong.rainMVC.model 
 {
 	import flash.events.EventDispatcher;
 	/**

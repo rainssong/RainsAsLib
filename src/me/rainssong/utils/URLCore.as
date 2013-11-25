@@ -9,14 +9,13 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 package me.rainssong.utils {
-	import jp.nium.core.debug.Logger;
-	import jp.nium.core.L10N.L10NNiumMsg;
+	
 	
 	/**
-	 * <span lang="ja">URLUtil クラスは、URL 操作のためのユーティリティクラスです。</span>
-	 * <span lang="en">The URLUtil class is an utility class for URL operation.</span>
+	 * <span lang="ja">URLCore クラスは、URL 操作のためのユーティリティクラスです。</span>
+	 * <span lang="en">The URLCore class is an utility class for URL operation.</span>
 	 */
-	public final class URLUtil {
+	public final class URLCore {
 		
 		/**
 		 * ウィンドウズ上のかどうかを判別する正規表現を取得します。

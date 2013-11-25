@@ -1,4 +1,4 @@
-﻿package me.rainssong.display
+﻿package me.rainssong.rainSlideShow
 {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
@@ -12,16 +12,16 @@
 	import flash.utils.setTimeout;
 	import me.rainssong.events.SlideEvent;
 	import me.rainssong.utils.superTrace;
-	
+	import me.rainssong.display.DisplayObjectTransfer;
 	import flash.display.Sprite;
 	import me.rainssong.display.MyMovieClip;
-	import me.rainssong.display.Slide;
+
 	
 	/**
 	 * ...
 	 * @author rainssong
 	 */
-	public dynamic class Slide extends MyMovieClip implements ISlide
+	public dynamic class RainSlide extends MyMovieClip implements IRainSlide
 	{
 		
 		protected var _isLeftRollInEnabled:Boolean = true;
@@ -34,7 +34,7 @@
 		protected var _contentHeight:int;
 		protected var _bg:Sprite=new Sprite()
 		
-		public function Slide(content:* = null, contentWidth:int = 1024, contentHeight:int = 768)
+		public function RainSlide(content:* = null, contentWidth:int = 1024, contentHeight:int = 768)
 		{
 			super();
 			

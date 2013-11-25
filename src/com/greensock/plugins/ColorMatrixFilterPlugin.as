@@ -5,9 +5,9 @@
  * UPDATES AND DOCUMENTATION AT: http://www.TweenMax.com
  **/
 package com.greensock.plugins {
+	import flash.display.*;
+	import flash.filters.*;
 	import com.greensock.*;
-	
-	import flash.filters.ColorMatrixFilter;
 /**
  * ColorMatrixFilter tweening offers an easy way to tween a DisplayObject's saturation, hue, contrast,
  * brightness, and colorization. The following properties are available (you only need to define the ones you want to tween):
@@ -53,7 +53,7 @@ package com.greensock.plugins {
  * 		TweenLite.to(mc, 1, {colorMatrixFilter:{colorize:0xFF0000}}); <br /><br />
  * </code>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */
@@ -214,8 +214,8 @@ package com.greensock.plugins {
 				return m2;
 			}
 			var temp:Array = [], i:int = 0, z:int = 0, y:int, x:int;
-			for (y = 0; y < 4; y += 1) {
-				for (x = 0; x < 5; x += 1) {
+			for (y = 0; y < 4; y++) {
+				for (x = 0; x < 5; x++) {
 					if (x == 4) {
 						z = m[i + 4];
 					} else {

@@ -1,12 +1,14 @@
 ﻿/**
- * VERSION: 6.1
- * DATE: 2010-12-20
+ * VERSION: 6.02
+ * DATE: 2010-04-03
  * AS3 (AS2 is also available)
- * UPDATES AND DOCS AT: http://www.greensock.com/overwritemanager/
+ * UPDATES AND DOCUMENTATION AT: http://www.greensock.com/overwritemanager/
  **/
 package com.greensock {
 	import com.greensock.core.*;
 	
+	import flash.errors.*;
+	import flash.utils.*;
 /**
  * OverwriteManager resolves conflicts between tweens and controls if (and how) existing tweens of the same
  * target are overwritten. Think of it as a referee or traffic cop for tweens. For example, let's say you have
@@ -153,13 +155,13 @@ package com.greensock {
  * 		
  * 		OverwriteManager.mode = OverwriteManager.CONCURRENT;<br /><br /></code>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	 
-	final public class OverwriteManager {
+	public class OverwriteManager {
 		/** @private **/
-		public static const version:Number = 6.1;
+		public static const version:Number = 6.02;
 		/** Won't overwrite any other tweens **/
 		public static const NONE:int 			= 0;
 		/** Overwrites all existing tweens of the same target immediately when the tween is created **/
@@ -265,7 +267,7 @@ package com.greensock {
 		 * @param defaultMode The default mode that OverwriteManager should use.
 		 **/
 		public static function init(defaultMode:int=2):int {
-			if (TweenLite.version < 11.6) {
+			if (TweenLite.version < 11.1) {
 				throw new Error("Warning: Your TweenLite class needs to be updated to work with OverwriteManager (or you may need to clear your ASO files). Please download and install the latest version from http://www.tweenlite.com.");
 			}
 			TweenLite.overwriteManager = OverwriteManager;
@@ -278,10 +280,10 @@ package com.greensock {
 		 * @private 
 		 * @return Boolean value indicating whether or not properties may have changed on the target when overwriting occurred. For example, when a motionBlur (plugin) is disabled, it swaps out a BitmapData for the target and may alter the alpha. We need to know this in order to determine whether or not the new tween should be re-initted() with the changed properties. 
 		 **/
-		public static function manageOverwrites(tween:TweenLite, props:Object, targetTweens:Array, mode:int):Boolean {
+		public static function manageOverwrites(tween:TweenLite, props:Object, targetTweens:Array, mode:uint):Boolean {
 			var i:int, changed:Boolean, curTween:TweenLite;
 			if (mode >= 4) {
-				var l:int = targetTweens.length;
+				var l:uint = targetTweens.length;
 				for (i = 0; i < l; i++) {
 					curTween = targetTweens[i];
 					if (curTween != tween) {
@@ -294,19 +296,18 @@ package com.greensock {
 				}
 				return changed;
 			}
-			
 			//NOTE: Add 0.0000000001 to overcome floating point errors that can cause the startTime to be VERY slightly off (when a tween's currentTime property is set for example)
-			var startTime:Number = tween.cachedStartTime + 0.0000000001, overlaps:Array = [], cousins:Array = [], cCount:int = 0, oCount:int = 0;
+			var startTime:Number = tween.cachedStartTime + 0.0000000001, overlaps:Array = [], cousins:Array = [], cCount:uint = 0, oCount:uint = 0;
 			i = targetTweens.length;
 			while (--i > -1) {
 				curTween = targetTweens[i];
-				if (curTween == tween || curTween.gc || (!curTween.initted && startTime - curTween.cachedStartTime <= 0.0000000002)) {
+				if (curTween == tween || curTween.gc) {
 					//ignore
 				} else if (curTween.timeline != tween.timeline) {
 					if (!getGlobalPaused(curTween)) {
 						cousins[cCount++] = curTween;
 					}
-				} else if (curTween.cachedStartTime <= startTime && curTween.cachedStartTime + curTween.totalDuration + 0.0000000001 > startTime && !curTween.cachedPaused && !(tween.cachedDuration == 0 && startTime - curTween.cachedStartTime <= 0.0000000002)) {
+				} else if (curTween.cachedStartTime <= startTime && curTween.cachedStartTime + curTween.totalDuration + 0.0000000001 > startTime && !getGlobalPaused(curTween)) {
 					overlaps[oCount++] = curTween;
 				}
 			}
@@ -366,15 +367,13 @@ package com.greensock {
 		
 		/** @private **/
 		public static function getGlobalPaused(tween:TweenCore):Boolean {
-			var paused:Boolean;
 			while (tween) {
 				if (tween.cachedPaused) {
-					paused = true; //we don't just return true immediately here because of an odd bug in Flash that could (in EXTREMELY rare circumstances) throw an error. 
-					break;
+					return true;
 				}
 				tween = tween.timeline;
 			}
-			return paused;
+			return false;
 		}
 		
 	}

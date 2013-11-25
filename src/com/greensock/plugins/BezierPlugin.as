@@ -1,6 +1,6 @@
 /**
- * VERSION: 2.22
- * DATE: 2010-09-18
+ * VERSION: 2.21
+ * DATE: 2010-06-23
  * ACTIONSCRIPT VERSION: 3.0 
  * UPDATES AND DOCUMENTATION AT: http://www.TweenMax.com
  **/
@@ -43,7 +43,7 @@ package com.greensock.plugins {
  * 		TweenLite.to(mc, 3, {bezier:[{x:250, y:50}, {x:500, y:0}]}); //makes my_mc travel through 250,50 and end up at 500,0. <br /><br />
  * </code>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2010, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */
@@ -93,7 +93,7 @@ package com.greensock.plugins {
 				_orient = true;
 			}
 			var props:Object = {}, i:int, p:String, killVarsLookup:Object;
-			for (i = 0; i < beziers.length; i += 1) {
+			for (i = 0; i < beziers.length; i++) {
 				for (p in beziers[i]) {
 					if (props[p] == undefined) {
 						props[p] = [tween.target[p]];
@@ -127,7 +127,7 @@ package com.greensock.plugins {
 		 * 
 		 * @param props Object containing a property corresponding to each one you'd like bezier paths for. Each property's value should be a single Array with the numeric point values (i.e. <code>props.x = [12,50,80]</code> and <code>props.y = [50,97,158]</code>). 
 		 * @param through If you want the paths drawn THROUGH the supplied control points, set this to true.
-		 * @return A new object with an Array of values for each property. The first element in the Array is the start value, the second is the control point, and the 3rd is the end value. (i.e. <code>returnObject.x = [[12, 32, 50], [50, 65, 80]]</code>)
+		 * @return A new object with an Array of values for each property. The first element in the Array is the start value, the second is the control point, and the 3rd is the end value. (i.e. <code>returnObject.x = [[12, 32, 50}, [50, 65, 80]]</code>)
 		 */
 		public static function parseBeziers(props:Object, through:Boolean=false):Object { 
 			var i:int, a:Array, b:Object, p:String;
@@ -138,7 +138,7 @@ package com.greensock.plugins {
 					all[p] = b = [];
 					if (a.length > 2) {
 						b[b.length] = [a[0], a[1] - ((a[2] - a[0]) / 4), a[1]];
-						for (i = 1; i < a.length - 1; i += 1) {
+						for (i = 1; i < a.length - 1; i++) {
 							b[b.length] = [a[i], a[i] + (a[i] - b[i - 1][1]), a[i + 1]];
 						}
 					} else {
@@ -151,7 +151,7 @@ package com.greensock.plugins {
 					all[p] = b = [];
 					if (a.length > 3) {
 						b[b.length] = [a[0], a[1], (a[1] + a[2]) / 2];
-						for (i = 2; i < a.length - 2; i += 1) {
+						for (i = 2; i < a.length - 2; i++) {
 							b[b.length] = [b[i - 2][2], a[i], (a[i] + a[i + 1]) / 2];
 						}
 						b[b.length] = [b[b.length - 1][2], a[a.length - 2], a[a.length - 1]];
@@ -177,7 +177,7 @@ package com.greensock.plugins {
 		
 		/** @private **/
 		override public function set changeFactor(n:Number):void {
-			var i:int, p:String, b:Object, t:Number, segments:int, val:Number;
+			var i:int, p:String, b:Object, t:Number, segments:uint, val:Number;
 			_changeFactor = n;
 			if (n == 1) { //to make sure the end values are EXACTLY what they need to be.
 				for (p in _beziers) {
@@ -192,17 +192,13 @@ package com.greensock.plugins {
 					} else if (n >= 1) {
 						i = segments - 1;
 					} else {
-						i = (segments * n) >> 0;
+						i = int(segments * n);
 					}
 					t = (n - (i * (1 / segments))) * segments;
 					b = _beziers[p][i];
 					if (this.round) {
 						val = b[0] + t * (2 * (1 - t) * (b[1] - b[0]) + t * (b[2] - b[0]));
-						if (val > 0) {
-							_target[p] = (val + 0.5) >> 0; //4 times as fast as Math.round()
-						} else {
-							_target[p] = (val - 0.5) >> 0;
-						}
+						_target[p] = (val > 0) ? int(val + 0.5) : int(val - 0.5); //4 times as fast as Math.round()
 					} else {
 						_target[p] = b[0] + t * (2 * (1 - t) * (b[1] - b[0]) + t * (b[2] - b[0]));
 					}
