@@ -1,18 +1,18 @@
-package world.model.creature 
+package world.entity.creature
 {
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
+	import world.entity.EntityModel;
 	/**
 	 * ...
 	 * @author Rainssong
 	 */
-	public class CreatureModel extends Object 
+	public class CreatureModel extends EntityModel 
 	{
 		
 		private var _isAlive:Boolean = false;
-		private var _location:Vector3D;
 		private var _lifetime:Number=0;
-		private var _hp:Number;
+		private var _hp:Number=100;
 		
 		
 		
