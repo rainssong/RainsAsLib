@@ -4,10 +4,10 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin\RainsAsLib.swc" />
+    <movie path="bin\RainsAsLib.swf" />
     <movie fps="30" />
     <movie width="1024" />
-    <movie height="748" />
+    <movie height="768" />
     <movie version="11" />
     <movie minorVersion="0" />
     <movie platform="Flash Player" />
@@ -53,7 +53,6 @@
   <libraryPaths>
     <element path="lib\D.eval-1.1.swc" />
     <element path="lib\MonsterDebugger.swc" />
-    <element path="lib\robotlegs-framework-v1.5.2.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -73,21 +72,20 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="src\Main.as" />
+    <compile path="examples\LibTest\src\Main.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
     <!-- example: <hidden path="..." /> -->
   </hiddenPaths>
   <!-- Executed before build -->
-  <preBuildCommand>"$(CompilerPath)\bin\compc.exe" -include-sources "$(ProjectDir)\src\me" -output "$(OutputDir)\$(OutputName)"  -external-library-path D:\Flash\FrameWork\robotlegs-framework\bin\robotlegs-framework-v1.5.2.swc -external-library-path D:\Flash\SDK\Flex4.6Air3.9\frameworks\libs\player\11.0\playerglobal.swc</preBuildCommand>
+  <preBuildCommand />
   <!-- Executed after build -->
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
-    <option testMovie="Custom" />
-    <option testMovieCommand="Run.bat" />
+    <option testMovie="Default" />
   </options>
   <!-- Plugin storage -->
   <storage />

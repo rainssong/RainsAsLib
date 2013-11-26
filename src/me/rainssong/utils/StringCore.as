@@ -1,6 +1,6 @@
 ﻿package me.rainssong.utils
 {
-	import com.vsdevelop.air.filesystem.FileCore;
+
 	
 	/**
 	 * ...
@@ -39,9 +39,22 @@
             return !str.length;
         }
 		
+		
+		
 		public static function deleteProtocol(url:String):String
 		{
 			return url.replace(/[a-zA-z]+:\/\//, "");
+		}
+		
+		public static function getFileName( url:String ):String {
+			// Find the location of the period.
+			var extensionIndex:Number = filename.lastIndexOf( '.' );
+			if ( extensionIndex == -1 ) {
+				// Oops, there is no period. Just return the filename.
+				return filename;
+			} else {
+				return filename.substr( 0, extensionIndex );
+			} 
 		}
 		
 		public static function getExtension(url:String):String
@@ -49,10 +62,10 @@
 			return url.split(".").slice(-1)[0];
 		}
 		
-		static public function webToLocal(url:String):String
-		{
-			return FileCore.File ? FileCore.File.applicationStorageDirectory.resolvePath(StringCore.deleteProtocol(url)).nativePath : null;
-		}
+		//static public function webToLocal(url:String):String
+		//{
+			//return FileCore.File ? FileCore.File.applicationStorageDirectory.resolvePath(StringCore.deleteProtocol(url)).nativePath : null;
+		//}
 		
 		public static function wordCount(str:String):uint
 		{
