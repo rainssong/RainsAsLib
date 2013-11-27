@@ -9,12 +9,9 @@ package world.entity.creature
 	 */
 	public class CreatureModel extends EntityModel 
 	{
-		
 		private var _isAlive:Boolean = false;
 		private var _lifetime:Number=0;
 		private var _hp:Number=100;
-		
-		
 		
 		public function CreatureModel() 
 		{

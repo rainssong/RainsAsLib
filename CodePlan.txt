@@ -1,3 +1,4 @@
+SharedObjectProxy
 GameBase
 UI Library
 DetalingShow
