@@ -20,7 +20,7 @@
 	[Event(name="offDragging",type="events.DragEvent")]
 	[Event(name="moveEnd",type="events.DragEvent")]
 	
-	public class AbstructDragableSprite extends MySprite implements IDragableView
+	public class AbstructDragableSprite extends SmartSprite implements IDragableView
 	{
 		private var _isDragging:Boolean = false;
 		

@@ -91,7 +91,6 @@ package me.rainssong.geom
 		/**
 		 * Gets / sets the angle of this vector. Changing the angle changes the x
 		   and y but retains the same length.
-		   6
 		 */
 		public function set angle(value:Number):void
 		{

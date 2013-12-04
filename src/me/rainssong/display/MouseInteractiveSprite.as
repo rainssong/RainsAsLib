@@ -152,6 +152,13 @@ package me.rainssong.display
 		{
 			return _isDragging;
 		}
+		
+		override public function destroy():void 
+		{
+			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			stage.removeEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseUp);
+			super.destroy();
+		}
 	
 	}
 

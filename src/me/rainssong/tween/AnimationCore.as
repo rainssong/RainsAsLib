@@ -20,7 +20,7 @@ package me.rainssong.tween
 			var duration:Number = 0.5;
 			var direction:String = Directions.UP;
 			if (!newView.parent)
-				_parent.addChild(newView);
+				_parent.addChildAt(newView,_parent.getChildIndex(oldView));
 			
 			if (params)
 			{
