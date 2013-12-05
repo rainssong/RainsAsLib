@@ -22,6 +22,7 @@
 		private const darkColorTrans:ColorTransform = new ColorTransform(0.7, 0.7, 0.7, 1, 0, 0, 0, 0)
 		private var normalColorTrans:ColorTransform = new ColorTransform()
 		
+		
 		public function LowLightBtn(view:DisplayObject = null )
 		{
 			super();
@@ -52,6 +53,8 @@
 		private function upHandler(e:MouseEvent):void
 		{
 			this.transform.colorTransform = normalColorTrans;
+			if(stage)
+				stage.removeEventListener(MouseEvent.MOUSE_UP, upHandler);
 		}
 		
 		override public function disable():void

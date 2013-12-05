@@ -11,14 +11,14 @@ package me.rainssong.display
 	
 	/**
 	 * 主动侦听鼠标事件，滑动手势，记录速度
-	 * 
+	 *
 	 * @author Rainssong
 	 */
 	public class MouseInteractiveSprite extends SmartSprite
 	{
 		private var _isDragging:Boolean;
 		private var _lockCenter:Boolean;
-		private var _dragBounds:Rectangle=null;
+		private var _dragBounds:Rectangle = null;
 		
 		protected var _isInteracting:Boolean = false;
 		protected var _speedX:Number = 0;
@@ -28,6 +28,8 @@ package me.rainssong.display
 		
 		protected var _startX:Number;
 		protected var _startY:Number;
+		
+		public var lockMouseChildren = true;
 		
 		/**
 		 * reduction of speed
@@ -84,7 +86,9 @@ package me.rainssong.display
 				dispatchEvent(new MouseInteractiveEvent(MouseInteractiveEvent.SWIPE, Directions.DOWN));
 			if (_speedY < -30)
 				dispatchEvent(new MouseInteractiveEvent(MouseInteractiveEvent.SWIPE, Directions.UP));
-		
+			
+			if (lockMouseChildren)
+				mouseChildren = true;
 		}
 		
 		private function onEnterFrame(e:Event):void
@@ -102,6 +106,7 @@ package me.rainssong.display
 		protected function offInteracting():void
 		{
 		
+			//|| stage.mouseY - _startY > 5
 		}
 		
 		/**
@@ -118,6 +123,9 @@ package me.rainssong.display
 				this.x += _speedX;
 				this.y += _speedY;
 			}
+			if (Math.abs(stage.mouseX - _startX) > 5 && lockMouseChildren)
+				this.mouseChildren = false;
+		
 		}
 		
 		//public function offDrag():void 
@@ -142,18 +150,17 @@ package me.rainssong.display
 			_isDragging = false;
 		}
 		
-		
 		public function get isInteracting():Boolean
 		{
 			return _isInteracting;
 		}
 		
-		public function get isDragging():Boolean 
+		public function get isDragging():Boolean
 		{
 			return _isDragging;
 		}
 		
-		override public function destroy():void 
+		override public function destroy():void
 		{
 			stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			stage.removeEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseUp);
