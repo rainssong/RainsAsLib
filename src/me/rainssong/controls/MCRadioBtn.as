@@ -92,6 +92,11 @@
 		{
 			return _groupName;
 		}
+		
+		public function set groupName(value:String):void 
+		{
+			_groupName = value;
+		}
 	}
 	
 }
