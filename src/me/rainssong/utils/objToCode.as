@@ -13,6 +13,7 @@ package me.rainssong.utils
 	
 	public function objToCode(obj:*):String
 	{
+		if (obj == null) return "";
 		var className:String = obj.constructor.toString();
 		className = className.slice(7, -1);
 		var result:String = "";

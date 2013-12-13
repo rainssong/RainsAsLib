@@ -12,7 +12,7 @@ package me.rainssong.rainMVC.view
 	 * ...
 	 * @author Rainssong
 	 */
-	public class Mediator extends EventDispatcher
+	public class Mediator
 	{
 		private var _name:String;
 		public var autoDestroy:Boolean = true;
@@ -123,6 +123,16 @@ package me.rainssong.rainMVC.view
 			if (_viewComponent is DisplayObjectContainer)
 			{
 				DisplayObjectContainer(_viewComponent).addChild(child);
+				return child;
+			}
+			return null;
+		}
+		
+		protected function addChildAt(child:DisplayObject,index:int) : DisplayObject 
+		{
+			if (_viewComponent is DisplayObjectContainer)
+			{
+				DisplayObjectContainer(_viewComponent).addChildAt(child,index);
 				return child;
 			}
 			return null;

@@ -18,6 +18,7 @@ package me.rainssong.rainMVC.view
 		//内容颜色
 		private var _contentColor:uint = 0x999999;
 		private var _isFoucesed:Boolean = false;
+		private var _displayAsPassword:Boolean = false;
 		
 		
 		public function TipTextFieldMediator(view:DisplayObject)
@@ -31,7 +32,6 @@ package me.rainssong.rainMVC.view
 			myTextField.addEventListener(FocusEvent.FOCUS_IN, focusInHandler);
 			myTextField.addEventListener(FocusEvent.FOCUS_OUT, focusOutHandler);
 			_isFoucesed = false;
-
 		}
 		
 		override public function destroy():void 
@@ -47,6 +47,8 @@ package me.rainssong.rainMVC.view
 			_contentColor = contentColor;
 			_tipColor = tipColor;
 			myTextField.text = "";
+			_displayAsPassword = myTextField.displayAsPassword;
+			myTextField.displayAsPassword = false;
 			refreash();
 			//if (myTextField.stage.focus == myTextField) trace("!!!");
 		}
@@ -62,6 +64,7 @@ package me.rainssong.rainMVC.view
 			{
 				myTextField.textColor = _tipColor;
 				myTextField.text = _tipContent;
+				myTextField.displayAsPassword = false;
 			}
 			_isFoucesed = false;
 		}
@@ -71,7 +74,7 @@ package me.rainssong.rainMVC.view
 			if (myTextField.text == _tipContent && myTextField.textColor == _tipColor  )
 			{
 				myTextField.text = "";
-				
+				myTextField.displayAsPassword = _displayAsPassword;
 			}
 			myTextField.textColor = _contentColor;
 			_isFoucesed = true;

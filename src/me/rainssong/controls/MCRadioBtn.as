@@ -16,6 +16,7 @@
 			// constructor code
 			super();
 			stop();
+			this.mouseChildren=false;
 			MyRadioButtonGroup.addBtn(this);
 			this.addEventListener(MouseEvent.CLICK, clickHandler);
 			
