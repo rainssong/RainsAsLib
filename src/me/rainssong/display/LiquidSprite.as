@@ -55,10 +55,26 @@ package me.rainssong.display
 			return _actualWidth/_originalWidth;
 		}
 		
+		override public function set  scaleX (value:Number):void 
+		{
+			_actualWidth = _originalWidth * value;
+		}
+		
 		override public function get scaleY():Number 
 		{
 			return _actualHeight/_originalHeight;
 		}
+		
+		override public function set  scaleY (value:Number):void 
+		{
+			_actualWidth = _originalHeight * value;
+		}
+		
+		override public function set scaleXY(value:Number):void 
+		{
+			scaleX = scaleY = value;
+		}
+		
 		
 		public function get minScale():Number
 		{
