@@ -15,6 +15,7 @@
 	public class SingletonManager
 	{
 		private static var _dictionary:Dictionary = new Dictionary();
+		private static var _so:SharedObject = SharedObject.getLocal("Default");
 		
 		public function SingletonManager()
 		{
@@ -41,7 +42,7 @@
 		
 		public static function get sharedObject():SharedObject
 		{
-			return SharedObject.getLocal("Default");
+			return _so;
 		}
 	
 		

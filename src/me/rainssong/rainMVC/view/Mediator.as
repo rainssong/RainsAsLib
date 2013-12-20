@@ -3,10 +3,12 @@ package me.rainssong.rainMVC.view
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Loader;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.net.URLLoader;
 	import flash.utils.Timer;
+	import me.rainssong.utils.objToCode;
 	
 	/**
 	 * ...
@@ -67,10 +69,19 @@ package me.rainssong.rainMVC.view
 		
 		private function deleteVars():void
 		{
-			for (var v:String in this)
+			//useless
+			
+			for (var v:* in this)
 			{
+				trace(this,"~~~~~~~~~~~~~~~");
 				delete this[v];
 			}
+			//for each(var v:* in this)
+			//{
+				//v = null;
+			//}
+			//objToCode
+			
 		}
 		
 		public function addViewLisenter(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void

@@ -2,6 +2,7 @@
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.filesystem.File;
 	import flash.utils.Dictionary;
 	import me.rainssong.net.ResumeDownloader;
 	import me.rainssong.utils.StringCore;
@@ -28,7 +29,7 @@
 		public function addDownload(sourceUrl:String,targetUrl:String=null):ResumeDownloader
 		{
 			if (!targetUrl || targetUrl == "") 
-				targetUrl =StringCore.webToLocal(sourceUrl);
+				targetUrl =File.applicationStorageDirectory.resolvePath(StringCore.webToLocal(sourceUrl)).nativePath;
 			if (getDownloader(targetUrl) && getDownloader(targetUrl).isDownloading)
 			{
 				trace(this +targetUrl+ "已经在下载了!");

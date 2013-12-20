@@ -45,6 +45,7 @@ package me.rainssong.net
 		
 		private var _isFinished:Boolean = false;
 		private var _isDownloading:Boolean = false;
+		private var _autoDestroy:Boolean = false;
 		
 		public function ResumeDownloader()
 		{

@@ -2,6 +2,7 @@
 
 package me.rainssong.utils
 {
+	import flash.system.Capabilities;
 	import me.rainssong.math.ArrayCore;
 	
 	/**
@@ -13,6 +14,9 @@ package me.rainssong.utils
 	
 	public function objToCode(obj:*):String
 	{
+		if (!Capabilities.isDebugger)
+			return "";
+		
 		if (obj == null) return "";
 		var className:String = obj.constructor.toString();
 		className = className.slice(7, -1);

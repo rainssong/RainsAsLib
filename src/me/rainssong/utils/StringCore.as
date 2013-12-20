@@ -48,12 +48,12 @@
 		
 		public static function getFileName( url:String ):String {
 			// Find the location of the period.
-			var extensionIndex:Number = filename.lastIndexOf( '.' );
+			var extensionIndex:Number = url.lastIndexOf( '.' );
 			if ( extensionIndex == -1 ) {
 				// Oops, there is no period. Just return the filename.
-				return filename;
+				return url;
 			} else {
-				return filename.substr( 0, extensionIndex );
+				return url.substr( 0, extensionIndex );
 			} 
 		}
 		
@@ -144,6 +144,11 @@
             }
             return str.split("").reverse().join("");
         }// end function
+		
+		static public function webToLocal(url:String):String 
+		{
+			return url.split("://").pop();
+		}
 
 		
 		//public static function getFileName(url:String):String

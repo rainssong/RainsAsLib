@@ -55,6 +55,11 @@ package me.rainssong.filesystem
 			return str;
 		}
 		
+		public static function webToStorerage(url:String):File
+		{
+			
+		}
+		
 		
 	}
 }

@@ -19,11 +19,16 @@ package me.rainssong.tools
 		
 		private var _rect:Rectangle;
 		
-		public function ColorTracker(bmd:BitmapData, color:uint = 0x000000)
+		public function ColorTracker(bmd:BitmapData = null, color:uint = 0x000000)
 		{
-			_bmd = bmd;
+			if (bmd)
+			{
+				_bmd = bmd;
+				_rect = new Rectangle(_bmd.width, bmd.height)
+			}
+			
 			_color = color;
-			_rect = new Rectangle(_bmd.width, bmd.height)
+		
 		}
 		
 		public function get color():uint
@@ -44,6 +49,8 @@ package me.rainssong.tools
 		public function set bmd(value:BitmapData):void
 		{
 			_bmd = value;
+			if(bmd)
+				_rect = new Rectangle(_bmd.width, bmd.height)
 		}
 		
 		public function get trackPoints():Vector.<Point>
@@ -73,6 +80,9 @@ package me.rainssong.tools
 		
 		private function track():void
 		{
+			if (bmd == null)
+				return;
+			
 			_trackPoints = new Vector.<Point>();
 			var w:Number = _bmd.width;
 			var h:Number = _bmd.height;
@@ -82,9 +92,9 @@ package me.rainssong.tools
 			_rect.width = 0;
 			_rect.height = 0;
 			
-			for (var i:int = 0; i < w; i += 4)
+			for (var i:int = 0; i < w; i += 8)
 			{
-				for (var ii:int = 0; ii < h; ii += 4)
+				for (var ii:int = 0; ii < h; ii += 8)
 				{
 					//var color:uint = _bmd.getPixel(i, ii);
 					
@@ -100,9 +110,21 @@ package me.rainssong.tools
 							_rect.y = ii;
 						if (_rect.height < (ii - _rect.y))
 							_rect.height = ii - _rect.y;
+						
+						if (_trackPoints.length > 2000)
+						{
+							_trackPoints = new Vector.<Point>();
+							return;
+						}
 					}
 				}
 			}
+		}
+		
+		public function destroy():void
+		{
+			_bmd.dispose();
+			_trackPoints = null;
 		}
 	}
 
