@@ -57,14 +57,16 @@ package me.rainssong.net
 			_sourceUrl = sourceUrl;
 			
 			
-			_targetUrl = targetUrl;
+			_targetUrl = targetUrl
+			//_targetUrl = targetUrl.replace(":","\\");
+			//_targetUrl = targetUrl.replace(":8200","");
 			_autoStart = autoStart;
 			_isCover = isCover;
 			_bytesLoaded = 0;
 			_isFinished = false;
 			//_targetFile = FileCore.newFile(targetUrl);
-			
-			_targetFile = new File(targetUrl);
+
+			_targetFile = new File(_targetUrl);
 			_targetFile.parent.createDirectory();
 			//_targetFile = (new File("/" + targetUrl)).nativePath;
 			//如果有了就别下了。
@@ -76,7 +78,7 @@ package me.rainssong.net
 			}
 			
 			//.substring(0, targetUrl.lastIndexOf("."))
-			_tempFileUrl = targetUrl + "." + EXTENSION;
+			_tempFileUrl = _targetUrl + "." + EXTENSION;
 			powerTrace(_tempFileUrl);
 			//_tempFile =new File("/"+_tempFileUrl);
 			_tempFile = new File(_tempFileUrl);

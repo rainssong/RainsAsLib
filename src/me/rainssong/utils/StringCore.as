@@ -147,7 +147,7 @@
 		
 		static public function webToLocal(url:String):String 
 		{
-			return url.split("://").pop();
+			return url.split("://").pop().replace(":","//");
 		}
 
 		

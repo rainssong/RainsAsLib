@@ -29,7 +29,10 @@
 		public function addDownload(sourceUrl:String,targetUrl:String=null):ResumeDownloader
 		{
 			if (!targetUrl || targetUrl == "") 
+			{
+				
 				targetUrl =File.applicationStorageDirectory.resolvePath(StringCore.webToLocal(sourceUrl)).nativePath;
+			}
 			if (getDownloader(targetUrl) && getDownloader(targetUrl).isDownloading)
 			{
 				trace(this +targetUrl+ "已经在下载了!");
