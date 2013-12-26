@@ -21,9 +21,9 @@
 			
 		}
 		
-		public function getDownloader(targetUrl:String):ResumeDownloader
+		public function getDownloader(sourceUrl:String):ResumeDownloader
 		{
-			return _downloaderDic[targetUrl];
+			return _downloaderDic[sourceUrl];
 		}
 		
 		public function addDownload(sourceUrl:String,targetUrl:String=null):ResumeDownloader
@@ -42,7 +42,7 @@
 			var downloader:ResumeDownloader = new ResumeDownloader();
 			downloader.download(sourceUrl, targetUrl);
 			downloader.addEventListener(Event.COMPLETE, onComplete);
-			_downloaderDic[targetUrl] = downloader;
+			_downloaderDic[sourceUrl] = downloader;
 			
 			return downloader;
 			//_cookie.data.downloadUrlArr = _downloaderArr;
