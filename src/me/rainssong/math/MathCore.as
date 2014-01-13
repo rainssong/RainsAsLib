@@ -52,9 +52,15 @@ package me.rainssong.math
 		 * @param	cycle
 		 * @return
 		 */
-		public static function getCycledNumber(number:Number, cycle:Number):Number
+		public static function getCycledNumber(number:Number, a:Number, b:Number=0):Number
 		{
-			return (number % cycle + cycle) % cycle;
+			var min:Number = Math.min(a, b);
+			var max:Number = Math.max(a, b);
+			var distance:Number=max - min;
+			var value:Number = number % distance;
+			if(value<min)value += distance;
+			if(value>max)value -= distance;
+			return value;
 		}
 		
 		/**

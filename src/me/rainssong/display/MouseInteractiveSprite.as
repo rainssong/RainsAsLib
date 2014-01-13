@@ -91,7 +91,7 @@ package me.rainssong.display
 				mouseChildren = true;
 		}
 		
-		private function onEnterFrame(e:Event):void
+		protected function onEnterFrame(e:Event):void
 		{
 			if (_isInteracting)
 			{

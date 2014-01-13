@@ -23,6 +23,7 @@ package me.rainssong.utils {
 		 * <span lang="en">Returns the numerical value applying the comma every 1000 digits.</span>
 		 * 
 		 * @param number
+		 * @param number
 		 * <span lang="ja">変換したい数値です。</span>
 		 * <span lang="en">The numerical value to convert.</span>
 		 * @param radix
