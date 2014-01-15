@@ -23,11 +23,14 @@
 		
 		public function getDownloader(sourceUrl:String):ResumeDownloader
 		{
+			sourceUrl=sourceUrl.split("?")[0]
 			return _downloaderDic[sourceUrl];
 		}
 		
 		public function addDownload(sourceUrl:String,targetUrl:String=null):ResumeDownloader
 		{
+			sourceUrl=sourceUrl.split("?")[0]
+			
 			if (!targetUrl || targetUrl == "") 
 			{
 				

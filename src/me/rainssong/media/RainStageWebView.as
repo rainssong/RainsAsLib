@@ -15,7 +15,6 @@
 	public class RainStageWebView extends SmartSprite
 	{
 		
-		
 		public var webWidth:Number;
 		public var webHeight:Number;
 		private var _webView:StageWebView
@@ -40,6 +39,18 @@
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
+		override public function hide():void 
+		{
+			super.hide();
+			_webView.stage = null;
+		}
+		
+		override public function show():void 
+		{
+			super.hide();
+			_webView.stage = this.stage;
+		}
+		
 		private function onEnterFrame(e:Event):void
 		{
 			if (!parent)
@@ -56,7 +67,8 @@
 		{
 			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 			
-			_webView.stage = null;
+			if(_webView.stage)
+				_webView.stage = null;
 			_webView.dispose();
 			_webView = null;
 			

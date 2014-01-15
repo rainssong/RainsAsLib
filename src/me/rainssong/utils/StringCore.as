@@ -59,7 +59,9 @@
 		
 		public static function getExtension(url:String):String
 		{
-			return url.split(".").slice(-1)[0];
+			var result:String = url.split(".").pop();
+			result = result.split("?")[0];
+			return result;
 		}
 		
 		//static public function webToLocal(url:String):String
