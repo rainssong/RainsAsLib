@@ -16,7 +16,7 @@ package me.rainssong.components
 			super();
 		}
 		
-		protected function draw():void
+		protected function refreash():void
 		{
 			
 		}
