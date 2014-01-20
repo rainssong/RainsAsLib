@@ -10,6 +10,7 @@ package me.rainssong.components
 	 */
 	public class Component extends LiquidSprite 
 	{
+		private var _activeted:Boolean = true;
 		
 		public function Component() 
 		{
@@ -19,6 +20,21 @@ package me.rainssong.components
 		protected function refreash():void
 		{
 			
+		}
+		
+		public function get activeted():Boolean 
+		{
+			return _activeted;
+		}
+		
+		public function active():void
+		{
+			_activeted = true;
+		}
+		
+		public function deactive():void
+		{
+			_activeted = false;
 		}
 		
 	}
