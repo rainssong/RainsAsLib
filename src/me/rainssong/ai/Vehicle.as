@@ -9,14 +9,15 @@ package  me.rainssong.ai
 	 */
 	public class Vehicle extends Sprite
 	{
-		protected var _edgeBehavior:String = WRAP;
+		protected var _edgeBehavior:String = NONE;
 		protected var _mass:Number = 1.0;
-		protected var _maxSpeed:Number = 10;
+		protected var _maxSpeed:Number = 100;
 		protected var _position:Vector2D;
 		protected var _velocity:Vector2D;
 // potential edge behaviors
 		public static const WRAP:String = "wrap";
 		public static const BOUNCE:String = "bounce";
+		public static const NONE:String = "none";
 		
 		/**
 		 * Constructor.
@@ -32,7 +33,7 @@ package  me.rainssong.ai
 		 * Default graphics for vehicle. Can be overridden in subclasses.
 		 */
 		//protected function draw():void
-		//{
+		//{ 
 			//graphics.clear();
 			//graphics.lineStyle(0);
 			//graphics.moveTo(10, 0);
@@ -48,11 +49,11 @@ package  me.rainssong.ai
 		public function update():void
 		{
 			
-// make sure velocity stays within max speed.
+			// make sure velocity stays within max speed.
 			_velocity.truncate(_maxSpeed);
-// add velocity to position
+			// add velocity to position
 			_position = _position.add(_velocity);
-// handle any edge behavior
+			// handle any edge behavior
 			if (_edgeBehavior == WRAP)
 			{
 				wrap();
@@ -61,11 +62,11 @@ package  me.rainssong.ai
 			{
 				bounce();
 			}
-// update position of sprite
+			// update position of sprite
 			x = position.x;
 			y = position.y;
-// rotate heading to match velocity
-			rotation = _velocity.angle * 180 / Math.PI;
+			// rotate heading to match velocity
+			//rotation = _velocity.degree;
 		}
 		
 		/**

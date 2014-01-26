@@ -70,7 +70,7 @@ package me.rainssong.geom
 		 */
 		public function set length(value:Number):void
 		{
-			var a:Number = angle;
+			var a:Number = radians;
 			_x = Math.cos(a) * value;
 			_y = Math.sin(a) * value;
 		}
@@ -92,17 +92,29 @@ package me.rainssong.geom
 		 * Gets / sets the angle of this vector. Changing the angle changes the x
 		   and y but retains the same length.
 		 */
-		public function set angle(value:Number):void
+		public function set radians(value:Number):void
 		{
 			var len:Number = length;
 			_x = Math.cos(value) * len;
 			_y = Math.sin(value) * len;
 		}
 		
-		public function get angle():Number
+		public function get radians():Number
 		{
 			return Math.atan2(_y, _x);
 		}
+		
+		public function set degree(value:Number):void
+		{
+			radians = value / 180 * Math.PI;
+		}
+		
+		public function get degree():Number
+		{
+			return radians/Math.PI*180;
+		}
+		
+		
 		
 		/**
 		 * Normalizes this vector. Equivalent to setting the length to one, but

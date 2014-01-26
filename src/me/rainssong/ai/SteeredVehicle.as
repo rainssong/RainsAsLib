@@ -14,6 +14,7 @@ package  me.rainssong.ai
 		 * 转向力
 		 */
 		private var _steeringForce:Vector2D;
+		public var cx:Number=0;
 		private var _arrivalThreshold:Number = 100;
 		private var _wanderAngle:Number = 0;
 		private var _wanderDistance:Number = 10;
@@ -77,7 +78,7 @@ package  me.rainssong.ai
 			var center:Vector2D = velocity.clone().normalize().multiply(_wanderDistance);
 			var offset:Vector2D = new Vector2D(0);
 			offset.length = _wanderRadius;
-			offset.angle = _wanderAngle;
+			offset.degree = _wanderAngle;
 			_wanderAngle += Math.random() * _wanderRange - _wanderRange * .5;
 			var force:Vector2D = center.add(offset);
 			_steeringForce = _steeringForce.add(force);
@@ -132,8 +133,15 @@ package  me.rainssong.ai
 		override public function update():void
 		{
 			_steeringForce.truncate(_maxForce);
-			_steeringForce = _steeringForce.divide(_mass);
-			_velocity = _velocity.add(_steeringForce);
+			//_steeringForce = _steeringForce.divide(_mass);
+			var f:Number = cx * _velocity.lengthSQ;
+			var fForce:Vector2D = _velocity.multiply(cx);
+			
+			
+			_velocity = _velocity.add(_steeringForce.divide(_mass));
+			_velocity = _velocity.subtract(fForce.divide(_mass));
+			
+			
 			_steeringForce = new Vector2D();
 			super.update();
 		}
@@ -168,7 +176,7 @@ package  me.rainssong.ai
 					{
 						// 计算出一个转90 度的力
 						var force:Vector2D = heading.multiply(_maxSpeed);
-						force.angle += difference.sign(_velocity) * Math.PI / 2;
+						force.radians += difference.sign(_velocity) * Math.PI / 2;
 						// 通过离障碍物的距离，调整力度大小，使之足够小但又能避开
 						force = force.multiply(1.0 - projection.length / feeler.length);
 						// 叠加于转向力上
