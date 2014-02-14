@@ -82,24 +82,24 @@
 			var config:String = "";
 			if (params.font)
 			{
-				config = config + (" font=\"" + font + "\"");
+				config = config + (" font=\"" +params.font + "\"");
 			} // end if
 			if (params.size)
 			{
-				config = config + (" size=\"" + size + "\"");
+				config = config + (" size=\"" + params.size + "\"");
 			} // end if
 			if (params.color)
 			{
-				config = config + (" color=\"#" + color.toString(16) + "\"");
+				config = config + (" color=\"#" + params.color.toString(16) + "\"");
 			}
 			content = "<font" + config + ">" + content + "</font>";
 			if (params.href)
 			{
-				content = "<a href=\"" + href + "\" target=\"_blank\">" + content + "</a>";
+				content = "<a href=\"" + params.href + "\" target=\"_blank\">" + content + "</a>";
 			} // end if
 			if (params.align)
 			{
-				content = "<p align=\"" + align + "\">" + content + "</p>";
+				content = "<p align=\"" + params.align + "\">" + content + "</p>";
 			} // end if
 			return content;
 		} // end function

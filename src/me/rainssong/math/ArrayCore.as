@@ -269,6 +269,22 @@ package   me.rainssong.math
 			return true;
 		}
 		
+		public static function merge(arr1:Array, arr2:Array):Array
+		{
+			var arr:Array = arr1.slice();
+			for (var i:int = 0; i < arr2.length; i++ )
+			{
+				if (arr.indexOf(arr2[i])>=0)
+					continue;
+				else
+					arr.push(arr2[i]);
+			}
+			
+			return arr;
+		}
+		
+		
+		
 		
 	}
 
