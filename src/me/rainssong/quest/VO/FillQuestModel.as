@@ -10,9 +10,9 @@ package me.rainssong.quest.VO
 		private var _defaultText:String="";
 		
 	
-		public function FillQuestModel(title:String,index:int=0,rightAnswer:String="",mandatory:Boolean=true) 
+		public function FillQuestModel(title:String,vars:Object=null) 
 		{
-			super(title, index, rightAnswer, mandatory);
+			super(title, vars);
 		}
 		
 		public function get defaultText():String 

@@ -57,9 +57,9 @@
 			var rightAnswer:String = _xml.quest[index].@key.toString();
 			var questModel:QuestModel;
 			if (_xml.quest[index].type.toString == "fill")
-				questModel = new FillQuestModel(title, index, rightAnswer);
+				questModel = new FillQuestModel(title,{index:index,rightAnswer:rightAnswer});
 			else
-				questModel = new OptionQuestModel(title,options,minChoose,maxChoose,randomOrder, index, rightAnswer);
+				questModel = new OptionQuestModel(title,options,{minChoose:minChoose,maxChoose:maxChoose,randomOrder:randomOrder, index:index, rightAnswer:rightAnswer});
 			
 			questModel.isLast = (index == _xml.quest.length() - 1);
 			questModel.data = data;

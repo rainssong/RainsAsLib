@@ -1,5 +1,6 @@
 package me.rainssong.quest.VO 
 {
+	import com.greensock.TweenLite;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.events.EventDispatcher;
@@ -10,20 +11,19 @@ package me.rainssong.quest.VO
 	 */
 	dynamic public class QuestModel extends EventDispatcher
 	{
-		protected var _title:String;
-		protected var _index:int;
-		
-		/**
-		 * like "ACDF"
-		 */
-		protected var _rightAnswer:String;
-		
+		protected var _title:String="";
+		protected var _index:int=0;
+	
 		//can't skip
 		protected var _mandatory:Boolean = true;
-		protected var _isLast:Boolean = false;
+	
 		protected var _data:String;
 		
-		protected var _userAnswer:String;
+		protected var _rightAnswer:String = "";
+		
+		protected var _userAnswer:String = "";
+		
+		protected var _isLast:Boolean = false;
 	
 		/**
 		 * 
@@ -32,12 +32,21 @@ package me.rainssong.quest.VO
 		 * @param	rightAnswers
 		 * @param	mandatory
 		 */
-		public function QuestModel(title:String,index:int=0,rightAnswer:String="",mandatory:Boolean=true) 
+		
+		public function QuestModel(title:String,vars:Object=null) 
 		{
-			_index = index;
 			_title = title;
-			_rightAnswer = rightAnswer;
-			_mandatory = mandatory;
+			if (vars)
+			{
+				if(vars.index)
+					_index = index;
+					
+				if(vars.mandatory)
+					_mandatory = vars.mandatory;
+					
+				if (vars.rightAnswer)
+					_rightAnswer =vars.rightAnswer;
+			}
 		}
 		
 		public function clearAnswer():void 
@@ -53,7 +62,6 @@ package me.rainssong.quest.VO
 		/**
 		 * 1->n
 		 */
-		
 		public function get number():int
 		{
 			return _index + 1;
@@ -69,32 +77,22 @@ package me.rainssong.quest.VO
 			return _rightAnswer;
 		}
 		
-		public function get index():int 
-		{
-			return _index;
-		}
-		
-		public function get userAnswer():String
-		{
-			return _userAnswer;
-		}
-		
-		public function set isLast(value:Boolean):void 
-		{
-			_isLast = value;
-		}
-		
 		public function get isRight():Boolean
 		{
 			powerTrace("标准结果" + _rightAnswer + "用户答案" + _userAnswer);
 			return _rightAnswer==_userAnswer;
 		}
 		
-
-		public function set userAnswer(value:String):void 
+		public function get index():int 
 		{
-			_userAnswer = value;
+			return _index;
 		}
+		
+		public function set isLast(value:Boolean):void 
+		{
+			_isLast = value;
+		}
+
 		
 		public function get data():String 
 		{
@@ -104,6 +102,16 @@ package me.rainssong.quest.VO
 		public function set data(value:String):void 
 		{
 			_data = value;
+		}
+		
+		public function get userAnswer():String 
+		{
+			return _userAnswer;
+		}
+		
+		public function set userAnswer(value:String):void 
+		{
+			_userAnswer = value;
 		}
 		
 	}

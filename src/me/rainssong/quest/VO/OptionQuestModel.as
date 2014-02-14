@@ -1,47 +1,36 @@
-package me.rainssong.quest.VO 
+package me.rainssong.quest.VO
 {
 	import me.rainssong.math.ArrayCore;
+	
 	/**
 	 * ...
 	 * @author rainsong
 	 */
-	public class OptionQuestModel  extends QuestModel
+	public class OptionQuestModel extends QuestModel
 	{
 		private var _options:Vector.<String>;
-		private var _minChoose:int;
-		private var _maxChoose:int;
+		private var _minChoose:int=1;
+		private var _maxChoose:int=1;
 		private var _randomOrder:Boolean = false;
-		private var _userSelectionArr:Array=[]
-	
-		public function OptionQuestModel(title:String,options:Vector.<String>,minChoose:int=1,maxChoose:int=1,randomOrder:Boolean=false,index:int=0,rightAnswer:String="",mandatory:Boolean=true) 
-		{
-			super(title, index, rightAnswer, mandatory);
-			
-			_options = Vector.<String>(options);
-			//
-			_minChoose = minChoose;
-			_maxChoose = maxChoose;
-			_randomOrder = randomOrder;
-		}
+		private var _userInputArr:Array = []
 		
-	
-		/**
-		 * User ansers as ABCD
-		 */
-		public function get userSimpleAnswer():Vector.<String>
+		public function OptionQuestModel(title:String, options:Vector.<String>, vars:Object = null)
 		{
-			var vec:Vector.<String> = new Vector.<String>();
-			for (var i:int = 0; i < _userSelectionArr.length; i++ )
-			{
-				if (_userSelectionArr[i] === true)
-				{
-					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]);
-				}
-				else if (_userSelectionArr[i] is String)
-					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+":"+_userSelectionArr[i]);
-			}
+			super(title, vars);
 			
-			return vec;
+			_options = options;
+			//
+			
+			if (vars)
+			{
+				if (vars.minChoose)
+					_minChoose = minChoose;
+				if (vars.maxChoose)
+					_maxChoose = maxChoose;
+				if (vars.randomOrder)
+					_randomOrder = randomOrder;
+			}
+		
 		}
 		
 		/**
@@ -50,81 +39,81 @@ package me.rainssong.quest.VO
 		public function get userIntactAnswer():Vector.<String>
 		{
 			var vec:Vector.<String> = new Vector.<String>();
-			for (var i:int = 0; i < _userSelectionArr.length; i++ )
+			for (var i:int = 0; i < _userAnswer.length; i++)
 			{
-				if (_userSelectionArr[i] === true)
+				if (_userInputArr[i] == "" || _userInputArr[i]==null)
 				{
-					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+"."+options[i]);
+					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i] + "." + options[i]);
 				}
-				else if (_userSelectionArr[i] is String)
-					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i]+"."+options[i]+":"+_userSelectionArr[i]);
+				else if (_userInputArr[i] is String)
+					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i] + "." + options[i] + ":" + _userInputArr[i]);
 			}
 			
 			return vec;
 		}
 		
-		override public function get userAnswer():String
+		override public function set userAnswer(value:String):void
 		{
-			return userSimpleAnswer.join("");
+			_userAnswer = value.split("").sort().join("");
 		}
 		
-		public function get options():Vector.<String> 
+		public function get options():Vector.<String>
 		{
 			return _options;
 		}
 		
-		public function set options(value:Vector.<String>):void 
+		public function set options(value:Vector.<String>):void
 		{
 			_options = value;
 		}
 		
-		public function get minChoose():int 
+		public function get minChoose():int
 		{
 			return _minChoose;
 		}
 		
-		public function set minChoose(value:int):void 
+		public function set minChoose(value:int):void
 		{
 			_minChoose = value;
 		}
 		
-		public function get maxChoose():int 
+		public function get maxChoose():int
 		{
 			return _maxChoose;
 		}
 		
-		public function set maxChoose(value:int):void 
+		public function set maxChoose(value:int):void
 		{
 			_maxChoose = value;
 		}
 		
-		public function get randomOrder():Boolean 
+		public function get randomOrder():Boolean
 		{
 			return _randomOrder;
 		}
 		
-		public function set randomOrder(value:Boolean):void 
+		public function set randomOrder(value:Boolean):void
 		{
 			_randomOrder = value;
 		}
 		
-		public function get userSelectionArr():Array 
+		public function get userInputArr():Array
 		{
-			return _userSelectionArr;
+			return _userInputArr;
 		}
 		
-		public function set userSelectionArr(value:Array):void 
+		public function set userInputArr(value:Array):void
 		{
-			_userSelectionArr = value;
+			_userInputArr = value;
 		}
 		
-		override public function clearAnswer():void 
+		override public function clearAnswer():void
 		{
-			_userSelectionArr = [];
-		}
+			super.clearAnswer();
+			_userInputArr = [];
 		
+		}
 	
-		
 	}
 
 }
