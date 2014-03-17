@@ -88,6 +88,30 @@
 			_webView.loadURL(url);
 		}
 		
+		/* DELEGATE flash.media.StageWebView */
+		
+		public function historyBack():void 
+		{
+			_webView.historyBack();
+		}
+		
+		public function historyForward():void 
+		{
+			_webView.historyForward();
+		}
+		
+		/* DELEGATE flash.media.StageWebView */
+		
+		public function get isHistoryBackEnabled():Boolean 
+		{
+			return _webView.isHistoryBackEnabled;
+		}
+		
+		public function get isHistoryForwardEnabled():Boolean 
+		{
+			return _webView.isHistoryForwardEnabled;
+		}
+		
 		public function get location():String
 		{
 			return _webView.location;
