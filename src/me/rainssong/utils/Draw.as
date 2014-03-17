@@ -58,7 +58,8 @@ package me.rainssong.utils
 		static public function rect(graphics:Graphics,x:Number=0,y:Number=0,width:Number=100, height:Number=100, rgb:uint=0xFF00000,alpha:Number=1):void
 		{
 			graphics.beginFill(rgb,alpha);
-			graphics.drawRect(x, y,width, height);
+			graphics.drawRect(x, y, width, height);
+			graphics.endFill();
 		}
 		
 		static public function spriteBmp(bmd:BitmapData, scale:Number = 1, x:Number = 0, y:Number = 0):Sprite
