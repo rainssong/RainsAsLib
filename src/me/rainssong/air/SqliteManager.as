@@ -45,7 +45,7 @@ package me.rainssong.air
 		private function onExecute(e:SQLEvent):void 
 		{
 			_result = _statement.getResult();
-			powerTrace(_result.data);
+			powerTrace(_result.complete);
 		}
 		
 		private function onOpen(e:SQLEvent):void
@@ -71,7 +71,7 @@ package me.rainssong.air
 				powerTrace("Error message:", error.message);
 				powerTrace("Details:", error.details);
 			}
-			return _statement.getResult();
+			return _result;
 		}
 		
 		/* DELEGATE flash.data.SQLConnection */
