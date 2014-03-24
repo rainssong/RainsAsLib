@@ -16,9 +16,6 @@ package
 		
 		public function Main()
 		{
-			getSingleton(Sprite).visible = false;
-			powerTrace(getSingleton(Sprite).visible);
-			
 			
 		}
 	
