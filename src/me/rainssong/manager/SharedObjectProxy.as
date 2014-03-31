@@ -10,7 +10,7 @@ package me.rainssong.manager
 	 * @timeStamp 2014/1/20 16:09
 	 * @blog http://blog.sina.com.cn/rainssong
 	 */
-	public class SharedObjectProxy extends Proxy 
+	 public class SharedObjectProxy extends Proxy 
 	{
 		private var _so:SharedObject
 		public function SharedObjectProxy(name:String="default") 
@@ -35,6 +35,7 @@ package me.rainssong.manager
 		{
 			delete _so.data[name];
 			_so.flush();
+			return super.flash_proxy::deleteProperty("name");
 		}
 		
 		/* DELEGATE flash.net.SharedObject */

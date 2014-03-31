@@ -2,13 +2,14 @@ package me.rainssong.application
 {
 	
 	
-	//import flash.desktop.NativeApplication;
+	import flash.desktop.NativeApplication;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.net.SharedObject;
 	import flash.net.URLLoader;
 	import flash.system.Capabilities;
 	import flash.utils.getDefinitionByName;
+	import me.rainssong.manager.SharedObjectProxy;
 
 
 /**
@@ -21,42 +22,54 @@ package me.rainssong.application
 		static public const AIR_MOBILE_EDITION:String = "airMobileEdition";
 		static public const TEST_EDITION:String = "testEdition";
 		
-		private static var _version:String = "1.0";
-		private static var _appName:String = "application";
-		private static var _lastVersion:String = "0.0";
 		public static var edition:String = NORMAL_EDITION;
-		
+		private static var _sharedObjectData:SharedObjectProxy=new SharedObjectProxy(NativeApplication.nativeApplication.applicationID);
 		static private var inited:Boolean = false;
 		
 		
-		private static function init(appName:String,version:String):void
+		public static function init():void
 		{
-			_lastVersion ||= shardObject.data.version;
-			shardObject.data.version = version;
-			_appName = appName;
-			shardObject.data.version = shardObject.data.version;
-			shardObject.flush();
-			
+			_sharedObjectData = new SharedObjectProxy(appId);
 		}
 		
-		public static function get shardObject():SharedObject
+		public static function get appId():String
 		{
-			//var NativeApplication:Class = getDefinitionByName("flash.desktop.NativeApplication") as Class;
-			//try
-			//{
-				//_appName = NativeApplication.nativeApplication.applicationID;
-				//
-			//}
-			//catch (e:Error)
-			//{
-			//
-			//}
-			return SharedObject.getLocal(_appName);
+			return NativeApplication.nativeApplication.applicationID;
+		}
+		
+		public static function get appXml():XML
+		{
+			return NativeApplication.nativeApplication.applicationDescriptor;
+		}
+		
+		public static function get appNameSpace():Namespace
+		{
+			return appXml.namespace();
+		}
+		
+		public static function get appVersion():String
+		{
+			return appXml.appNameSpace::versionNumber[0];
+		}
+		
+		public static function get appName():String
+		{
+			return appXml.appNameSpace::filename[0];
+		}
+		
+		static public function get lastVersion():String 
+		{
+			return _sharedObjectData["version"] as String;
+		}
+	
+		static public function updateVersion():void 
+		{
+			_sharedObjectData["version"] = appVersion;
 		}
 		
 		public static function get isDifferentVersion():Boolean
 		{
-			return _lastVersion != version;
+			return lastVersion != appVersion;
 		}
 		
 		public static function get DEBUG_MODE():Boolean
@@ -94,40 +107,10 @@ package me.rainssong.application
 			return Capabilities.playerType == "External" || Capabilities.playerType == "StandAlone";
 		}
 		
-		static public function get lastVersion():String 
-		{
-			return _lastVersion;
-		}
-		
-		static public function get version():String 
-		{
-			var NativeApplication:Class = getDefinitionByName("flash.desktop.NativeApplication") as Class;
-			
-			try
-			{
-				var appDescriptor:XML = NativeApplication.nativeApplication.applicationDescriptor;
-				var ns:Namespace = appDescriptor.namespace();
-				
-				_version = appDescriptor.ns::versionNumber;
-			}
-			catch (e:Error)
-			{
-				
-			}
-			return _version;
-		}
-		
-		static public function set version(value:String):void 
-		{
-			_version = value;
-			shardObject.data.version = value;
-			shardObject.flush();
-		}
-		
-		public static function isNewVersion(newVer:String = "1.0", oldVer:String = null):Boolean
+		public static function isNewVersion(newVer:String = "1.0", oldVer:String = ""):Boolean
 		{
 			var newArr:Array = newVer.split(".").concat("0","0","0")
-			if (!oldVer) oldVer = version;
+		
 			var oldArr:Array =	oldVer.split(".").concat("0","0","0");
 			
 			for (var i:int = 0; i < 3; i++)
