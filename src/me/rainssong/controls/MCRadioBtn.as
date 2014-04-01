@@ -5,6 +5,7 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import me.rainssong.display.SmartMovieClip;
+	import me.rainssong.events.ObjectEvent;
 	import me.rainssong.utils.superTrace;
 	
 	
@@ -54,13 +55,23 @@
 		
 		public function select():void
 		{
+			if (this.currentFrame == 1)
+			{
+				dispatchEvent(new Event(Event.SELECT, true));
+				dispatchEvent(new Event(Event.CHANGE, true));
+			}
 			this.gotoAndStop(2);
 			MyRadioButtonGroup.selection = this;
+			
+			
 			
 		}
 		
 		public function unselect():void
 		{
+			dispatchEvent(new Event(ObjectEvent.UNSELECT, true));
+			if(this.currentFrame==2)
+				dispatchEvent(new Event(Event.CHANGE, true));
 			this.gotoAndStop(1);
 		}
 		

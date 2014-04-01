@@ -22,13 +22,28 @@ package me.rainssong.utils
 			_revDic = new Dictionary(weakKeys);
 		}
 		
-		flash_proxy override function setProperty(name:*, value:*):void
+		public function setValue(key:*, value:*):void
 		{
-			_revDic[_dic[name]] = undefined;
+			_revDic[_dic[key]] = undefined;
 			
-			_dic[name] = value;
+			_dic[key] = value;
 			
-			_revDic[value] = name;
+			_revDic[value] = key;
+		}
+		
+		public function getKey(value:*):*
+		{
+			return _revDic[value] ;
+		}
+		
+		public function getRevValue(value:*):*
+		{
+			return _revDic[value] ;
+		}
+		
+		public function getValue(key:*):*
+		{
+			return _dic[key];
 		}
 		
 		override flash_proxy function deleteProperty(name:*):Boolean 
@@ -38,16 +53,24 @@ package me.rainssong.utils
 			return true;
 		}
 		
+		/**
+		 * 注意：使用此方法将不支持复杂对象作为键
+		 * @param	name
+		 * @param	value
+		 */
+		override flash_proxy function setProperty(name:*, value:*):void 
+		{
+			powerTrace("注意：使用此方法将不支持复杂对象作为键");
+			setValue(name, value);
+		}
+		
+		
 		 flash_proxy override function getProperty(name:*):*
 		{
+			powerTrace("注意：使用此方法将不支持复杂对象作为键");
 			return _dic[name] ;
 		}
 		
-		public function getRevValue(name:*):*
-		{
-			return _revDic[name] ;
-		}
-	
 	}
 
 }

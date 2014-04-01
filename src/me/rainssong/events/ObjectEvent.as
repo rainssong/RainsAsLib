@@ -8,7 +8,9 @@ package  me.rainssong.events
 	 */
 	public class ObjectEvent extends Event 
 	{
+		static public const UNSELECT:String = "unselect";
 		public var  data:*;
+		
 		
 		public function ObjectEvent(type:String, data:*=null,bubbles:Boolean=false,cancelable:Boolean=false) 
 		{

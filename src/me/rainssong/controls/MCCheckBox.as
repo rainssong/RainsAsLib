@@ -58,11 +58,18 @@
 
 		public function select():void
 		{
+			if (this.currentFrame == 1)
+			{
+				dispatchEvent(new Event(Event.SELECT, true));
+				dispatchEvent(new Event(Event.CHANGE, true));
+			}
 			gotoAndStop(2);
 		}
 		
 		public function unselect():void
 		{
+			if(this.currentFrame==1)
+				dispatchEvent(new Event(Event.CHANGE, true));
 			gotoAndStop(1);
 		}
 
