@@ -90,12 +90,6 @@ package me.rainssong.application
 			return !DEBUG_MODE;
 		}
 		
-		public static function get WEB_MODE():Boolean 
-		{
-			return Capabilities.playerType == "ActiveX" || Capabilities.playerType == "PlugIn";
-			//return true;
-		}
-		
 		public static function get WEB_PLAYER():Boolean 
 		{
 			return Capabilities.playerType == "ActiveX" || Capabilities.playerType == "PlugIn";

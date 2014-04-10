@@ -3,6 +3,7 @@ package me.rainssong.filesystem
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import me.rainssong.utils.StringCore;
 	
 	/**
 	 * ...
@@ -57,7 +58,7 @@ package me.rainssong.filesystem
 		
 		public static function webToStorerage(url:String):File
 		{
-			
+			return File.applicationStorageDirectory.resolvePath(StringCore.webToLocal(url));
 		}
 		
 		
