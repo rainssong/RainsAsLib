@@ -1,1 +1,0 @@
-+this dictionary contains useful classes/framework/assests as *.swc/*.ane/*.as

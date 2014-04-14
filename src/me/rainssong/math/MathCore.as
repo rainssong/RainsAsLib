@@ -109,6 +109,89 @@ package me.rainssong.math
 			return point;
 		}
 		
+		/**
+		 * 获得包含多个举行的一个更大的举行
+		 * 
+		 * @param rects
+		 * 
+		 * @return 
+		 */
+		public static function getBoundsRect(rects:Vector.<Rectangle>):Rectangle
+		{
+			if(rects == null)
+			{
+				return null;
+			}
+			else
+			{
+				var rect:Rectangle = null;
+				var length:uint = rects.length;
+				for(var i:uint = 0; i < length; i++)
+				{
+					var newRect:Rectangle = getBoundsRectangle(rect, rects[i]);
+					rect = newRect == null ? null : newRect.clone();
+				}
+					
+				return rect;
+			}
+		}
+		
+		/**
+		 * 判断联个矩形是否相交
+		 * 
+		 * @param	rect1
+		 * @param	rect2
+		 * 
+		 * @return
+		 */
+		public static function rectHitTest(rect1:Rectangle, rect2:Rectangle):Boolean
+		{
+			if (rect1 == null || rect2 == null)
+			{
+				return false;
+			}
+			else
+			{
+				var xOK:Boolean = false;
+				var xDist:Number = rect2.x - rect1.x;
+				if(rect1.x <= rect2.x)
+				{
+					if(xDist <= rect1.width)
+					{
+						xOK = true;
+					}
+				}
+				else
+				{
+					if(-xDist <= rect2.width)
+					{
+						xOK = true;
+					}
+				}
+				
+				if(xOK)
+				{
+					var yDist:Number = rect2.y - rect1.y;
+					if(rect1.y <= rect2.y)
+					{
+						if(yDist <= rect1.height)
+						{
+							return true;
+						}
+					}
+					else
+					{
+						if(-yDist <= rect2.height)
+						{
+							return true;
+						}
+					}
+				}
+				
+				return false;
+			}
+		}
+		
 		
 	
 	}

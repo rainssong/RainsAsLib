@@ -6,6 +6,7 @@ package
 	import flash.display.Shape;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import me.rainssong.tools.SimpleGUI;
 	import me.rainssong.utils.Draw;
 	
 	import flash.display.Bitmap;
@@ -24,7 +25,6 @@ package
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import me.rainssong.math.ArrayCore;
-	import uk.co.soulwire.gui.SimpleGUI;
 	
 	/**
 	 * ...
@@ -71,7 +71,7 @@ package
 		public var active2:Boolean = true
 		public var active3:Boolean = true
 		
-		public var shape:Sprite = Draw.box(0, 0, 100, 100, 0xDDDD00);
+		public var shape:Sprite = Draw.getBoxSp(100, 100, 0xDDDD00);
 		
 		
 		public var mask4:uint = 0;

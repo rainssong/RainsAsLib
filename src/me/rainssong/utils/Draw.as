@@ -12,25 +12,14 @@ package me.rainssong.utils
 	{
 		static public function sector(graphics:Graphics, startAngle:Number = 0,endAngle:Number = 90 , color:Number = 0xff0000,r:Number = 100,x:Number = 0, y:Number = 0, alpha:Number=1):void
 		{
-			//graphics.clear();
+			
 			graphics.beginFill(color,alpha);
-			//graphics.lineStyle(0, color);
+		
 			graphics.moveTo(x, y);
 			endAngle = (Math.abs(endAngle) > 360) ? 360 : endAngle;
-			//var n:Number = Math.ceil(Math.abs(endAgle) / 45);
-			//var angleA:Number = endAgle / n;
-			//angleA = angleA * Math.PI / 180;
-			//startAngle = startAngle * Math.PI / 180;
-			//graphics.lineTo(x + r * Math.cos(startAngle), y + r * Math.sin(startAngle));
+			
 			for (var i:int = startAngle; i <= endAngle; i++)
 			{
-				//startAngle += angleA;
-				//var angleMid:Number = startAngle - angleA / 2;
-				//var bx:Number = x + r / Math.cos(angleA / 2) * Math.cos(angleMid);
-				//var by:Number = y + r / Math.cos(angleA / 2) * Math.sin(angleMid);
-				//var cx:Number = x + r * Math.cos(i);
-				//var cy:Number = y + r * Math.sin(i);
-				//graphics.curveTo(bx, by, cx, cy);
 				graphics.lineTo(x + r * Math.cos(i / 180 * Math.PI),y + r * Math.sin(i / 180 * Math.PI));
 				
 			}
@@ -45,13 +34,15 @@ package me.rainssong.utils
 		{
 			graphics.beginFill(color);
 			graphics.drawEllipse(x, y, width, height);
+			graphics.endFill(); 
 		}
 		
 		static public function getBoxSp(width:Number, height:Number, rgb:uint,alpha:Number=1):Sprite
 		{
 			var sp:Sprite = new Sprite();
 			sp.graphics.beginFill(rgb,alpha);
-			sp.graphics.drawRect(0,0, width, height);
+			sp.graphics.drawRect(0, 0, width, height);
+			sp.graphics.endFill(); 
 			return sp;
 		}
 		
@@ -60,6 +51,33 @@ package me.rainssong.utils
 			graphics.beginFill(rgb,alpha);
 			graphics.drawRect(x, y, width, height);
 			graphics.endFill();
+		}
+		
+		public static function gridLines(graphics:Graphics, rows:uint = 8, cols:uint = 10, cellWidth:Number = 10, cellHeight:Number = 10, startX:Number = 0, startY:Number = 0):Boolean
+		{
+			if(graphics != null)
+			{
+				var width:Number = cols * cellWidth;
+				var height:Number = rows * cellHeight;
+				
+				for(var row:uint = 0; row <= rows; row++)
+				{
+					graphics.moveTo(startX, startY + row * cellHeight);
+					graphics.lineTo(startX + width, startY + row * cellHeight);
+				}
+				
+				for(var col:uint = 0; col <= cols; col++) 
+				{
+					graphics.moveTo(startX + col * cellWidth, startY);
+					graphics.lineTo(startX + col * cellWidth, startY + height);
+				}
+				
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 		static public function spriteBmp(bmd:BitmapData, scale:Number = 1, x:Number = 0, y:Number = 0):Sprite

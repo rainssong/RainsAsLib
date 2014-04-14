@@ -15,7 +15,7 @@
 	public class SingletonManager
 	{
 		private static var _dictionary:Dictionary = new Dictionary();
-		private static var _so:SharedObject = SharedObject.getLocal("Default");
+		private static var _so:SharedObjectProxy =new  SharedObjectProxy();
 		
 		public function SingletonManager()
 		{
@@ -24,8 +24,7 @@
 		
 		public static function getSingleton(Type:Class, params:Array = null):*
 		{
-			_dictionary[Type] ||=  construct( Type, params );
-			return _dictionary[Type];
+			return getSingleton(Type,params);
 		}
 		
 		public static function get eventBus():EventBus
@@ -40,7 +39,7 @@
 		}
 		
 		
-		public static function get sharedObject():SharedObject
+		public static function get sharedObject():SharedObjectProxy
 		{
 			return _so;
 		}

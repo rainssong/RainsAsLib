@@ -1,6 +1,7 @@
 package me.rainssong.manager
 {
 	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.utils.Dictionary;
 	/**
@@ -14,9 +15,9 @@ package me.rainssong.manager
 		private var _funDic:Dictionary ;
 		private var _isPaused:Boolean ;
 		
-		public function EnterFrameManager(target:DisplayObject, autoStart:Boolean = false) 
+		public function EnterFrameManager(target:DisplayObject=null, autoStart:Boolean = false) 
 		{
-			init(target);
+			init(target?target:new Sprite());
 			if(autoStart)start();
 		}
 		
