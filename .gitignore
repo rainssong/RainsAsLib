@@ -41,7 +41,6 @@ local.properties
 *.sln.docstates
 
 # Build results
-[Dd]ebug/
 [Rr]elease/
 bin-debug
 bin-release
