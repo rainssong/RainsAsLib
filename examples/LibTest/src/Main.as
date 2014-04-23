@@ -15,17 +15,21 @@ package
 	 */
 	public class Main extends Sprite
 	{
-		private var r:RevDictionary = new RevDictionary();
+		
 		public function Main()
 		{
-			var mc:MovieClip = new MovieClip();
-			mc.name="shit"
-			r.setValue(mc, "ShitMc");
-			powerTrace(r[mc]);
-			var t:*= r.getKey("shitMC");
+			Debug.init(this,this.stage)
+			Debug.changeTopTextState("show");
 			
-			powerTrace(t);
-			
+			Debug.log("log");
+			Debug.trace("trace");
+			Debug.trace2("trace2");
+			Debug.traceColor(0xFFAA00);
+			Debug.traceToConsole("traceToConsole");
+			Debug.updateTopText("updateTopText");
+			Debug.updateTopText(Debug.logInfo,1);
+			Debug.updateTopText(Debug.operateInfo,2);
+			Debug.updateTopText(Debug.errorInfo,3);
 		}
 	
 	}

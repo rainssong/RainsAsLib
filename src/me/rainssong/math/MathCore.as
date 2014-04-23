@@ -2,6 +2,7 @@ package me.rainssong.math
 {
 	import flash.display.SimpleButton;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	public final class MathCore
 	{
@@ -110,31 +111,31 @@ package me.rainssong.math
 		}
 		
 		/**
-		 * 获得包含多个举行的一个更大的举行
+		 * 获得包含多个举行的一个更大的矩形
 		 * 
 		 * @param rects
 		 * 
 		 * @return 
 		 */
-		public static function getBoundsRect(rects:Vector.<Rectangle>):Rectangle
-		{
-			if(rects == null)
-			{
-				return null;
-			}
-			else
-			{
-				var rect:Rectangle = null;
-				var length:uint = rects.length;
-				for(var i:uint = 0; i < length; i++)
-				{
-					var newRect:Rectangle = getBoundsRectangle(rect, rects[i]);
-					rect = newRect == null ? null : newRect.clone();
-				}
-					
-				return rect;
-			}
-		}
+		//public static function getBoundsRect(rects:Vector.<Rectangle>):Rectangle
+		//{
+			//if(rects == null)
+			//{
+				//return null;
+			//}
+			//else
+			//{
+				//var rect:Rectangle = null;
+				//var length:uint = rects.length;
+				//for(var i:uint = 0; i < length; i++)
+				//{
+					//var newRect:Rectangle = getBoundsRect(rect, rects[i]);
+					//rect = newRect == null ? null : newRect.clone();
+				//}
+					//
+				//return rect;
+			//}
+		//}
 		
 		/**
 		 * 判断联个矩形是否相交

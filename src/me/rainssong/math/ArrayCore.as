@@ -141,15 +141,17 @@ package   me.rainssong.math
 			return array;
 		}
 		
+		public static function arrayToVector(array:Array):Vector.<*>
+		{
+			return Vector.<*>(array);
+		}
+		
 		public static function isVector(obj:*):Boolean
 		{
 			return obj.constructor.toString().search("Vector") >= 0;
 		}
 
-		public static function arrayToVector(array:Array):Vector.<*>
-		{
-			return Vector.<*>(array);
-		}
+		
 		
 		public static function fillWith(aov:*, element:*, transfer:Boolean = true , params:Array=null ):void
 		{

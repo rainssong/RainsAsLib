@@ -14,7 +14,8 @@ package  me.rainssong.ai
 		protected var _position:Vector2D;
 		protected var _velocity:Vector2D;
 		protected var _steeringForce:Vector2D;
-		protected var _
+		protected var _seekTarget:
+		protected var 
 		
 		/**
 		 * Constructor.

@@ -223,15 +223,15 @@ package  me.rainssong.ai
 			}
 		}
 		
-		public function flock(vehicles:Array):void
+		public function flock(arr:Array):void
 		{
 			var averageVelocity:Vector2D = _velocity.clone();
 			var averagePosition:Vector2D = new Vector2D();
 		
 			var inSightCount:int = 0;
-			for (var i:int = 0; i < vehicles.length; i++)
+			for (var i:int = 0; i < arr.length; i++)
 			{
-				var vehicle:Vehicle = vehicles[i] as Vehicle;
+				var vehicle:Vehicle = arr[i] as Vehicle;
 				if (vehicle != this && inSight(vehicle))
 				{
 					averageVelocity = averageVelocity.add(vehicle.velocity);

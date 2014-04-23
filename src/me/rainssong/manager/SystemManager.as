@@ -52,7 +52,7 @@ package  me.rainssong.manager
 		
 		public static function get isStandAlonePlayer():Boolean 
 		{
-			return Capabilities.playerType == "External" || Capabilities.playerType == "StandAlone";
+			return Capabilities.playerType == "External" || Capabilities.playerType == "StandAlone" || Capabilities.playerType == "Desktop";
 		}
 		
 		
