@@ -7,6 +7,7 @@
 	import flash.utils.Dictionary;
 	
 	import me.rainssong.manager.EventBus;
+	import me.rainssong.utils.getSingleton;
 	
 	/**
 	 * ...
@@ -24,7 +25,7 @@
 		
 		public static function getSingleton(Type:Class, params:Array = null):*
 		{
-			return getSingleton(Type,params);
+			return me.rainssong.utils.getSingleton(Type,params);
 		}
 		
 		public static function get eventBus():EventBus

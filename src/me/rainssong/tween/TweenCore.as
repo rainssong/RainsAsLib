@@ -9,7 +9,7 @@ package me.rainssong.tween
 	
 	public class TweenCore
 	{
-		static public function switchView(oldView:DisplayObject, newView:DisplayObject, effect:String = "move", duration:Number = 0.5, vars:Object=null):DisplayObject
+		static public function switchView(oldView:DisplayObject, newView:DisplayObject, effect:String = "move", duration:Number = 0.5, vars:Object = null):DisplayObject
 		{
 			if (!newView || !oldView)
 			{
@@ -19,14 +19,15 @@ package me.rainssong.tween
 			
 			if (!newView.parent)
 			{
-				_parent.addChildAt(newView,_parent.getChildIndex(oldView));
+				_parent.addChildAt(newView, _parent.getChildIndex(oldView));
 				
 			}
-			
-			if (vars && vars.x)
+			if (!vars)
+				vars = {};
+			if (vars.x)
 				newView.x = vars.x
-			if (vars && vars.y)
-			newView.y =vars.y;
+			if (vars.y)
+				newView.y = vars.y;
 			//oldView.x = 0;
 			//oldView.y = 0;
 			
@@ -34,27 +35,27 @@ package me.rainssong.tween
 			{
 				case "move": 
 					switch (vars["direction"])
-					{
-						case Directions.LEFT: 
-							TweenMax.from(newView, duration, {x: _parent.stage.stageWidth, ease: Cubic.easeInOut});
-							TweenMax.to(oldView, duration, {x: -_parent.stage.stageWidth, onComplete: removeView, onCompleteParams: [oldView], ease: Cubic.easeInOut});
-							break;
-						case Directions.RIGHT: 
-							TweenMax.from(newView, duration, {x: -_parent.stage.stageWidth, ease: Cubic.easeInOut});
-							TweenMax.to(oldView, duration, {x: _parent.stage.stageWidth, onComplete: removeView, onCompleteParams: [oldView], ease: Cubic.easeInOut});
-							break;
-						case Directions.UP: 
-							TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut});
-							TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeView, onCompleteParams: [oldView], ease: Cubic.easeInOut});
-							break;
-						case Directions.DOWN: 
-							TweenMax.from(newView, duration, {y: -_parent.stage.stageHeight, ease: Cubic.easeInOut});
-							TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeView, onCompleteParams: [oldView], ease: Cubic.easeInOut});
-							break;
-						default: 
-							TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut});
-							TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeView, onCompleteParams: [oldView], ease: Cubic.easeInOut});
-					}
+				{
+					case Directions.LEFT: 
+						TweenMax.from(newView, duration, {x: _parent.stage.stageWidth, ease: Cubic.easeInOut});
+						TweenMax.to(oldView, duration, {x: -_parent.stage.stageWidth, onComplete: removeView, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						break;
+					case Directions.RIGHT: 
+						TweenMax.from(newView, duration, {x: -_parent.stage.stageWidth, ease: Cubic.easeInOut});
+						TweenMax.to(oldView, duration, {x: _parent.stage.stageWidth, onComplete: removeView, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						break;
+					case Directions.UP: 
+						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut});
+						TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeView, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						break;
+					case Directions.DOWN: 
+						TweenMax.from(newView, duration, {y: -_parent.stage.stageHeight, ease: Cubic.easeInOut});
+						TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeView, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						break;
+					default: 
+						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut});
+						TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeView, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+				}
 					break;
 				default: 
 			}
