@@ -55,24 +55,37 @@ package me.rainssong.air
 		
 		private function onError(event:SQLErrorEvent):void
 		{
-			powerTrace("Error message:", event.error.message);
+			powerTrace("Error Message:", event.error.message);
 			powerTrace("Details:", event.error.details);
 		}
 		
-		public function execute(sql:String):SQLResult
+		public function execute(sql:String,prefetch:int=-1, responder:Responder=null):SQLResult
 		{
 			try
 			{
 				_statement.text = sql;
-				_statement.execute();
+				_statement.execute(prefetch, responder);
+				return _statement.getResult();
 			}
 			catch (error:SQLError)
 			{
-				powerTrace("Error message:", error.message);
+				powerTrace("Error Message:", error.message);
 				powerTrace("Details:", error.details);
 			}
-			return _result;
+			return null;
 		}
+		
+        public function select(sql:String, prefetch:int = -1, responder:Responder = null):Array
+        {
+			var data:Array=execute(sql, prefetch, responder).data as Array;
+            return data;
+        }
+      
+        public function update(sql:String, prefetch:int = -1, responder:Responder = null):int
+        {
+            var sqlResult:SQLResult=execute(sql, prefetch, responder);
+            return sqlResult!=null?sqlResult.rowsAffected:-1;
+        }
 		
 		/* DELEGATE flash.data.SQLConnection */
 		

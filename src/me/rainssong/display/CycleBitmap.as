@@ -1,6 +1,5 @@
 package me.rainssong.display
 {
-	import com.greensock.BlitMask;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Point;
@@ -32,10 +31,11 @@ package me.rainssong.display
 		{   
 			if (!_originBmd) return null;
 			var bmd:BitmapData = new BitmapData(_originBmd.width * 2, _originBmd.height * 2);
-			bmd.copyPixels(_originBmd, new Rectangle(0, 0, _originBmd.width, _originBmd.height), new Point());
-			bmd.copyPixels(_originBmd, new Rectangle(0, 0, _originBmd.width, _originBmd.height), new Point(_originBmd.width));
-			bmd.copyPixels(_originBmd, new Rectangle(0, 0, _originBmd.width, _originBmd.height), new Point(0, _originBmd.height));
-			bmd.copyPixels(_originBmd, new Rectangle(0, 0, _originBmd.width, _originBmd.height), new Point(_originBmd.width, _originBmd.height));
+			var rect:Rectangle = new Rectangle(0, 0, _originBmd.width, _originBmd.height);
+			bmd.copyPixels(_originBmd,rect, new Point());
+			bmd.copyPixels(_originBmd, rect, new Point(_originBmd.width));
+			bmd.copyPixels(_originBmd,rect, new Point(0, _originBmd.height));
+			bmd.copyPixels(_originBmd,rect, new Point(_originBmd.width, _originBmd.height));
 			return bmd;
 		}
 		
@@ -68,7 +68,9 @@ package me.rainssong.display
 		
 		public function set scrollX(value:Number):void
 		{
-			scrollRect = new Rectangle(value, scrollRect.y, scrollRect.width, scrollRect.height);
+			var rect:Rectangle = this.scrollRect;
+			rect.x = value;
+			scrollRect = rect;
 		}
 		
 		public function get scrollY():Number
@@ -78,13 +80,20 @@ package me.rainssong.display
 		
 		public function set scrollY(value:Number):void
 		{
-			scrollRect = new Rectangle(scrollRect.x, value, scrollRect.width, scrollRect.height);
+			var rect:Rectangle = this.scrollRect;
+			rect.y = value;
+			scrollRect = rect;
 		}
 		
 		override public function get scrollRect():flash.geom.Rectangle
 		{
-			if(super.scrollRect)
-				return new Rectangle(_scrollX, _scrollY, super.scrollRect.width, super.scrollRect.height);
+			if (super.scrollRect)
+			{
+				var rect:Rectangle = this.scrollRect;
+				rect.x = _scrollX;
+				rect.y = _scrollY;
+				return rect;
+			}
 			else 
 				return null;
 		}

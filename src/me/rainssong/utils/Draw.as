@@ -53,7 +53,7 @@ package me.rainssong.utils
 			graphics.endFill();
 		}
 		
-		public static function gridLines(graphics:Graphics, rows:uint = 8, cols:uint = 10, cellWidth:Number = 10, cellHeight:Number = 10, startX:Number = 0, startY:Number = 0):Boolean
+		public static function gridLines(graphics:Graphics, cols:uint = 10,rows:uint = 8,  cellWidth:Number = 10, cellHeight:Number = 10, startX:Number = 0, startY:Number = 0):Boolean
 		{
 			if(graphics != null)
 			{

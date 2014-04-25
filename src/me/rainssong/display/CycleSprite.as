@@ -35,7 +35,9 @@ package   me.rainssong.display
 		
 		public function set scrollX(value:Number):void
 		{
-			scrollRect = new Rectangle(value, scrollRect.y, scrollRect.width, scrollRect.height);
+			var rect:Rectangle = this.scrollRect;
+			rect.x = value;
+			scrollRect = rect;
 		}
 		
 		public function get scrollY():Number
@@ -45,7 +47,9 @@ package   me.rainssong.display
 		
 		public function set scrollY(value:Number):void
 		{
-			scrollRect = new Rectangle(scrollRect.x, value, scrollRect.width, scrollRect.height);
+			var rect:Rectangle = this.scrollRect;
+			rect.y = value;
+			scrollRect = rect;
 		}
 		
 		override public function get scrollRect():Rectangle

@@ -11,7 +11,9 @@ package world.entity.creature
 	{
 		private var _isAlive:Boolean = false;
 		private var _lifetime:Number=0;
-		private var _hp:Number=100;
+		private var _hp:Number = 100;
+		private var position:*;
+		
 		
 		public function CreatureModel() 
 		{
@@ -23,7 +25,12 @@ package world.entity.creature
 			_isAlive = true;
 		}
 		
-		public function death():void
+		public function reborn():void
+		{
+			_isAlive = true;
+		}
+		
+		public function die():void
 		{
 			_isAlive = false;
 		}

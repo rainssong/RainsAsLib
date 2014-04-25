@@ -8,12 +8,12 @@ package
 	import flash.events.*;
 	import flash.text.*;
 	
-	[SWF(width="465",height="465",backgroundColor="0",frameRate="10")]
+	[SWF(width="740",height="540",backgroundColor="0",frameRate="10")]
 	
 	public class Main extends Sprite
 	{
 		private var _lcd:LCDRender;
-		private var _screen:BitmapData = new BitmapData(384, 384, false, 0xffffff);
+		private var _screen:BitmapData = new BitmapData(740, 540, false, 0xffffff);
 		private var _bitmap:Bitmap = new Bitmap(_screen);
 		private var _shape:Shape = new Shape();
 		private var _vbuf:Vector.<Number> = new Vector.<Number>();
@@ -30,11 +30,12 @@ package
 		private var s2:Sprite = new Sprite();
 		private var bmd:BitmapData;
 		
-		[Embed(source="flash8net_9786.swf")]
+		[Embed(source="waitandsee.swf")]
 		public static const MOVIE:Class
 		
 		function Main()
 		{
+			
 			_movie = new MOVIE();
 			// LCDRender を addChild
 			addEventListener(Event.ENTER_FRAME, _onEnterFrame);
@@ -49,7 +50,7 @@ package
 		
 		private function _onEnterFrame(e:Event):void
 		{
-			bmd.draw(_movie);
+			bmd.draw(_movie,new Matrix(2,0,0,2,0,0));
 			_lcd.render(bmd);
 		}
 		

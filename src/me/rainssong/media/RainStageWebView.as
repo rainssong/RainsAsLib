@@ -17,10 +17,11 @@
 		
 		public var webWidth:Number;
 		public var webHeight:Number;
-		private var _webView:StageWebView
+		private var _webView:StageWebView = new StageWebView();
 		
 		public function RainStageWebView(width:Number = 800, height:Number = 600)
 		{
+			super();
 			webWidth= width;
 			webHeight = height;
 		}
@@ -28,7 +29,7 @@
 		override protected function onRegister():void 
 		{
 			super.onRegister();
-			_webView = new StageWebView();
+			//_webView = new StageWebView();
 		}
 		
 		override protected function onAdd(e:Event = null):void 
@@ -99,6 +100,28 @@
 		{
 			_webView.historyForward();
 		}
+		
+		/* DELEGATE flash.media.StageWebView */
+		
+		//override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
+		//{
+			//_webView.addEventListener(type, listener, useCapture, priority, useWeakReference);
+		//}
+		//
+		//override public function dispatchEvent(event:Event):Boolean 
+		//{
+			//return _webView.dispatchEvent(event);
+		//}
+		//
+		//override public function hasEventListener(type:String):Boolean 
+		//{
+			//return _webView.hasEventListener(type);
+		//}
+		//
+		//override public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
+		//{
+			//_webView.removeEventListener(type, listener, useCapture);
+		//}
 		
 		/* DELEGATE flash.media.StageWebView */
 		

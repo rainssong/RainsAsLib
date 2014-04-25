@@ -15,8 +15,18 @@ package  world.entity
 		public function EntityModel() 
 		{
 			super();
+		}
+		
+		public function init():void
+		{
 			
 		}
+	
+		public function destroy():void
+		{
+			
+		}
+		
 		
 	}
 
