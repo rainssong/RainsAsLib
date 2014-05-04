@@ -131,11 +131,15 @@ package me.rainssong.date
 		}
 		
 		//返回农历 y年闰月的天数
-		private function leapDays(y)
+		private function leapDays(y):int
 		{
 			if (leapMonth(y))
 			{
-				return tabCnMonthInfo[y - 1899] & 0xf == 0xf ? 30 : 29;
+				if ((tabCnMonthInfo[y - 1899] & 0xf) == 0xf)
+				return 30;
+				else
+				return 29;
+				//return tabCnMonthInfo[y - 1899] & 0xf == 0xf? 30 : 29;
 			}
 			else
 			{

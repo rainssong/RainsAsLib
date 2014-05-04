@@ -29,7 +29,7 @@ package me.rainssong.display
 		protected var _startX:Number;
 		protected var _startY:Number;
 		
-		public var lockMouseChildren = true;
+		public var lockMouseChildren:Boolean = true;
 		
 		/**
 		 * reduction of speed

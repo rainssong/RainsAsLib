@@ -43,21 +43,21 @@ package br.com.stimuli.loading {
      *
      *  @eventType br.com.stimuli.loading.BulkProgressEvent
      */
-    [Event(name="progress", type="br.com.stimuli.loading.BulkProgressEvent")];
+    [Event(name="progress", type="br.com.stimuli.loading.BulkProgressEvent")]
 
     /**
      *  Dispatched when all items have been downloaded and parsed. Note that this event only fires if there are no errors.
      *
      *  @eventType br.com.stimuli.loading.BulkProgressEvent
      */
-    [Event(name="complete", type="br.com.stimuli.loading.BulkProgressEvent")];
+    [Event(name="complete", type="br.com.stimuli.loading.BulkProgressEvent")]
 
     /**
      *  Dispatched if any item has an error while loading.
      *
      *  @eventType events.ErrorEvent
      */
-    [Event(name="error", type="events.ErrorEvent")];
+    [Event(name="error", type="events.ErrorEvent")]
     /**
      *   Manages loading for simultaneous items and multiple formats.
      *   Exposes a simpler interface, with callbacks instead of events for each item to be loaded (but still dispatched "global" events).

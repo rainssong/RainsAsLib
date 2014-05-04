@@ -47,14 +47,14 @@ package br.com.stimuli.loading.loadingtypes {
      *
      *  @eventType flash.events.ProgressEvent.PROGRESS
      */
-    [Event(name="progress", type="flash.events.ProgressEvent")];
+    [Event(name="progress", type="flash.events.ProgressEvent")]
 
     /**
      *  Dispatched when all the item has been fully downloaded and is ready for use..
      *
      *  @eventType flash.events.ProgressEvent.COMPLETE
      */
-    [Event(name="complete", type="flash.events.Event")];
+    [Event(name="complete", type="flash.events.Event")]
 
     /**
      *  Dispatched when the connection has been stablished and the download has 
@@ -64,14 +64,14 @@ package br.com.stimuli.loading.loadingtypes {
      *
      *  @eventType flash.events.Event.OPEN
      */
-    [Event(name="open", type="flash.events.Event")];
+    [Event(name="open", type="flash.events.Event")]
 
     /**
      *  Dispatched when the ImageItem (swf or image) has inited.
      *
      *  @eventType flash.events.Event.INIT
      */
-    [Event(name="init", type="flash.events.Event")];
+    [Event(name="init", type="flash.events.Event")]
 
     /**
      *  Dispatched when the the netStream can be played until the end with no 
@@ -80,7 +80,7 @@ package br.com.stimuli.loading.loadingtypes {
      *
      *  @eventType br.com.stimuli.loading.BulkLoader.CAN_BEGIN_PLAYING
      */
-    [Event(name="canBeginPlaying", type="br.com.stimuli.loading.BulkLoader")];
+    [Event(name="canBeginPlaying", type="br.com.stimuli.loading.BulkLoader")]
 
     /**
      *   An class used in <code>BulkLoader</code> instances.<p/>.
