@@ -29,7 +29,9 @@ package
 			Debug.updateTopText("updateTopText");
 			Debug.updateTopText(Debug.logInfo,1);
 			Debug.updateTopText(Debug.operateInfo,2);
-			Debug.updateTopText(Debug.errorInfo,3);
+			Debug.updateTopText(Debug.errorInfo, 3);
+			
+			var p = 12;
 		}
 	
 	}

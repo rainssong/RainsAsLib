@@ -27,16 +27,18 @@ package me.rainssong.rainMVC.view
 			_viewComponent = viewComponent;
 			
 			onRegister();
-		}
-		
-		protected function onRegister():void
-		{
+			
 			if (_viewComponent.stage)
 				onAdd();
 			else
 				_viewComponent.addEventListener(Event.ADDED_TO_STAGE, onAdd);
 			
 			_viewComponent.addEventListener(Event.REMOVED_FROM_STAGE, onRemove);
+		}
+		
+		protected function onRegister():void
+		{
+			
 		}
 		
 		protected function onAdd(e:Event = null):void

@@ -356,7 +356,7 @@ package com.adobe.utils
 				}
 				
 				var date:Number = Number(dateParts.shift());
-				var month:Number = Number(DateCore.getShortMonthIndex(dateParts.shift()));
+				var month:Number = Number(DateUtil.getShortMonthIndex(dateParts.shift()));
 				var year:Number = Number(dateParts.shift());
 				var timeParts:Array = dateParts.shift().split(":");
 				var hour:Number = int(timeParts.shift());
@@ -487,7 +487,7 @@ package com.adobe.utils
 			}
 			sb += date;
 			sb += " ";
-			//sb += DateCore.SHORT_MONTH[d.getUTCMonth()];
+			//sb += DateUtil.SHORT_MONTH[d.getUTCMonth()];
 			sb += DateBase.monthNamesShort[d.getUTCMonth()];
 			sb += " ";
 			sb += d.getUTCFullYear();
@@ -664,9 +664,9 @@ package com.adobe.utils
 		/**
 		 * Converts a date into just after midnight.
 		 */
-		public static function makeMorning(d:Date):Date
+		public static function makeMorning($d:Date):Date
 		{
-			var d:Date = new Date(d.time);
+			var d:Date = new Date($d.time);
 			d.hours = 0;
             d.minutes = 0;
             d.seconds = 0;
@@ -677,9 +677,9 @@ package com.adobe.utils
 		/**
 		 * Converts a date into just befor midnight.
 		 */
-		public static function makeNight(d:Date):Date
+		public static function makeNight($d:Date):Date
 		{
-			var d:Date = new Date(d.time);
+			var d:Date = new Date($d.time);
 			d.hours = 23;
             d.minutes = 59;
             d.seconds = 59;

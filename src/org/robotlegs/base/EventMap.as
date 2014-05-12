@@ -156,8 +156,10 @@ package org.robotlegs.base
 		{
 			var params:Object;
 			var dispatcher:IEventDispatcher;
+			//while (listeners.length)
 			while (params = listeners.pop())
 			{
+				//params = listeners.pop();
 				dispatcher = params.dispatcher;
 				dispatcher.removeEventListener(params.type, params.callback, params.useCapture);
 			}
