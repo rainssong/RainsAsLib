@@ -1,6 +1,5 @@
 ﻿
-
-package me.rainssong.display 
+package me.rainssong.display
 {
 	/**
 	 * ...
@@ -8,7 +7,7 @@ package me.rainssong.display
 	 */
 	import flash.events.Event;
 	
-	public interface IView 
+	public interface IView
 	{
 		function show():void
 		function enable():void
@@ -16,5 +15,5 @@ package me.rainssong.display
 		function hide():void
 		function destroy():void
 	}
-	
+
 }

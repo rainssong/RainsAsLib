@@ -1,4 +1,4 @@
-package com.codeTooth.actionscript.lang.utils
+package me.rainssong.utils
 {
 	import flash.utils.ByteArray;
 	
@@ -21,6 +21,7 @@ package com.codeTooth.actionscript.lang.utils
 		public function Chinese()
 		{
 			throw new Error("单例...");
+			
 		}
 		
 		/**
