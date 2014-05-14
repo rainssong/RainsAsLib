@@ -21,9 +21,10 @@ package me.rainssong.rainMVC.view
 		private var _displayAsPassword:Boolean = false;
 		
 		
-		public function TipTextFieldMediator(view:DisplayObject)
+		public function TipTextFieldMediator(view:TextField)
 		{
 			super(view);
+		
 		}
 		
 		override protected function onRegister():void

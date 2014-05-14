@@ -39,7 +39,7 @@ package me.rainssong.quest.VO
 			if (vars)
 			{
 				if(vars.index)
-					_index = index;
+					_index = vars.index;
 					
 				if(vars.mandatory)
 					_mandatory = vars.mandatory;

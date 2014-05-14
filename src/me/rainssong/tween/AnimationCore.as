@@ -55,8 +55,9 @@ package me.rainssong.tween
 					newView.y = params.y;
 				if (params["duration"])
 					duration = params["duration"];
-				if (params["direction"])
+					if (params["direction"])
 					direction = params["direction"];
+				
 			}
 			
 			switch (effect)
@@ -85,8 +86,32 @@ package me.rainssong.tween
 						TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
 				}
 					break;
+				case "cover": 
+					if (_parent.getChildIndex(_newView) < _parent.getChildIndex(_oldView))
+						_parent.swapChildren(_newView, _oldView);
+					switch (direction)
+					{
+					case Directions.LEFT: 
+						TweenMax.from(newView, duration, {x: _parent.stage.stageWidth, ease: Cubic.easeInOut, onComplete: removeViewComplete, onCompleteParams: [oldView]});
+						break;
+					case Directions.RIGHT: 
+						TweenMax.from(newView, duration, {x: -_parent.stage.stageWidth, ease: Cubic.easeInOut, onComplete: removeViewComplete, onCompleteParams: [oldView]});
+						break;
+					case Directions.UP: 
+						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut, onComplete: removeViewComplete, onCompleteParams: [oldView]});
+						break;
+					case Directions.DOWN: 
+						TweenMax.from(newView, duration, {y: -_parent.stage.stageHeight, ease: Cubic.easeInOut, onComplete: removeViewComplete, onCompleteParams: [oldView]});
+
+						break;
+					default: 
+						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut, onComplete: removeViewComplete, onCompleteParams: [oldView]});
+					
+				}
+					break;
 				default: 
 			}
+			
 			return newView;
 		}
 		
@@ -134,8 +159,6 @@ package me.rainssong.tween
 			var duration:Number = 0.5;
 			var direction:String = Directions.DOWN;
 			
-			
-			
 			if (params)
 			{
 				if (params.x)
@@ -175,12 +198,12 @@ package me.rainssong.tween
 			if (_changeMouseEnabled == true)
 			{
 				_changeMouseEnabled == false
-				//_newView["mouseEnabled"] = true;
+					//_newView["mouseEnabled"] = true;
 			}
 			if (_changeMouseChildren == true)
 			{
 				_changeMouseChildren = false;
-				//_newView["mouseChildren"] = true;
+					//_newView["mouseChildren"] = true;
 			}
 			
 			_oldView = null;

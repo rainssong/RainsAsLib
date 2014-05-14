@@ -108,21 +108,10 @@ package me.rainssong.utils {
 		}
 		
 		/**
-		 * <span lang="ja"></span>
-		 * <span lang="en"></span>
-		 * 
 		 * @param date
-		 * <span lang="ja"></span>
-		 * <span lang="en"></span>
 		 * @param format
-		 * <span lang="ja"></span>
-		 * <span lang="en"></span>
 		 * @return
-		 * <span lang="ja"></span>
-		 * <span lang="en"></span>
-		 * 
 		 * @example <listing version="3.0">
-		 * </listing>
 		 */
 		public static function format( date:Date, str:String ):String {
 			var _fullYear:int = date.getFullYear();
