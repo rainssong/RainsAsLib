@@ -106,8 +106,32 @@ package me.rainssong.tween
 						break;
 					default: 
 						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut, onComplete: removeViewComplete, onCompleteParams: [oldView]});
+				
+					}
+					break;
 					
-				}
+				case "uncover": 
+					if (_parent.getChildIndex(_newView) > _parent.getChildIndex(_oldView))
+						_parent.swapChildren(_newView, _oldView);
+					switch (direction)
+					{
+					case Directions.LEFT: 
+						TweenMax.to(oldView, duration, {x: -_parent.stage.stageWidth, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						break;
+					case Directions.RIGHT: 
+						TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						break;
+					case Directions.UP: 
+						TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						break;
+					case Directions.DOWN: 
+						TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+
+						break;
+					default: 
+						TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+				
+					}
 					break;
 				default: 
 			}
