@@ -53,7 +53,7 @@ package me.rainssong.air
 		
 		private function onOpen(e:SQLEvent):void
 		{
-			powerTrace(e);
+			powerTrace();
 		}
 		
 		private function onError(event:SQLErrorEvent):void
@@ -94,8 +94,9 @@ package me.rainssong.air
 		
         public function sqlSelect(sql:String, prefetch:int = -1, responder:Responder = null):Array
         {
-		
-			var data:Array=execute(sql, prefetch, responder).data as Array;
+			var result:SQLResult = execute(sql, prefetch, responder);
+			
+			var data:Array = result?result.data:[];
             return data;
         }
       
