@@ -28,6 +28,8 @@ package me.rainssong.air
 			_conn.addEventListener(SQLErrorEvent.ERROR, onError);
 			_statement.addEventListener(SQLEvent.RESULT, onExecute);
 			_statement.addEventListener(SQLErrorEvent.ERROR, onError);
+			
+			
 		}
 		
 		public function open(path:String, isSync:Boolean = true):void
@@ -35,16 +37,17 @@ package me.rainssong.air
 			_file = File.applicationStorageDirectory.resolvePath(path);
 			_file.parent.createDirectory();
 			
-			_isSync = isSync;
-			if (isSync)
-				_conn.open(_file);
-			else
-				_conn.openAsync(_file);
+			//_isSync = isSync;
+			//if (isSync)
+				//_conn.open(_file);
+			//else
+				//_conn.openAsync(_file);
 		}
 		
 		private function onExecute(e:SQLEvent):void 
 		{
 			_result = _statement.getResult();
+			_conn.close();
 			powerTrace(_result.complete);
 		}
 		
@@ -57,15 +60,17 @@ package me.rainssong.air
 		{
 			powerTrace("Error Message:", event.error.message);
 			powerTrace("Details:", event.error.details);
+			_conn.close();
 		}
 		
 		public function execute(sql:String,prefetch:int=-1, responder:Responder=null):SQLResult
 		{
 			try
 			{
+				_conn.open(_file);
 				_statement.text = sql;
 				_statement.execute(prefetch, responder);
-				return _statement.getResult();
+				return _result;
 			}
 			catch (error:SQLError)
 			{
@@ -73,15 +78,28 @@ package me.rainssong.air
 				powerTrace("Details:", error.details);
 			}
 			return null;
+			
+			
+			//_conn.open(_file);
+			//_statement.text = sql;
+			//_statement.addEventListener(SQLEvent.RESULT,resultHandler);
+			//_statement.addEventListener(SQLErrorEvent.ERROR,errorHandler);
+			//try {
+				//_statement.execute();
+			//}catch (evt:SQLError) {
+				//throw new Error("执行SQL数据出错");
+			//}
+			//return _result;
 		}
 		
-        public function select(sql:String, prefetch:int = -1, responder:Responder = null):Array
+        public function sqlSelect(sql:String, prefetch:int = -1, responder:Responder = null):Array
         {
+		
 			var data:Array=execute(sql, prefetch, responder).data as Array;
             return data;
         }
       
-        public function update(sql:String, prefetch:int = -1, responder:Responder = null):int
+        public function sqlUpdate(sql:String, prefetch:int = -1, responder:Responder = null):int
         {
             var sqlResult:SQLResult=execute(sql, prefetch, responder);
             return sqlResult!=null?sqlResult.rowsAffected:-1;
@@ -102,6 +120,94 @@ package me.rainssong.air
 		public function get isSync():Boolean 
 		{
 			return _isSync;
+		}
+		
+		/**
+		 * 创建一个数据表
+		 * @param	name 表名称
+		 * @param	template 字段与字段类型对象，例如{name:*,age:*}
+		 */
+		public function creatTable(name:String,template:Object):void {
+			//创建数据库表;
+			var sql:String = "create table if not exists " + name + " ( ";
+			sql += "id integer primary key autoincrement, ";//序号，自动生成
+			for (var att:String in template) {
+				sql += (att + " " + template[att] + ", ");
+			}
+			sql = sql.substring(0, sql.length - 2);
+			sql += ")";
+			execute(sql);
+		}
+		
+		public function select(name:String, fields:Array=null,where:Object = null,oa:String="OR"):Array {
+			if (!fields) {
+				fields = new Array("*");
+			}
+			var sql:String;
+			var s1:String = "SELECT ";
+			if (fields[0] == "*"||fields[0] == null) {
+				s1 += "* FROM "+name;
+			}else {
+				for each(var obj1:String in fields) {
+					s1 += obj1 + ",";
+				}
+				s1=s1.substr(0,s1.length-1);
+				s1 += " FROM "+name;
+			}
+			if (where) {
+				var s2:String = " WHERE ";
+				for (var obj2:String in where) {
+					if (where[obj2] is Number) {
+						s2 += obj2 + "=" + where[obj2]+" "+oa+" ";
+					}else {
+						//where[obj2] = StringTools.replaceAllByRegex(where[obj2], "'", "‘");
+						s2 += obj2 + "='" + where[obj2] + "' " + oa + " ";
+						
+					}
+				}
+				s2 = s2.substr(0, (s2.length - (oa.length+1)));
+				sql = s1 + s2;
+			}else {
+				sql = s1;
+			}
+			return sqlSelect(sql);
+			//trace("statement.getResult().data:"+statement.getResult().data);
+			//return (statement.getResult().data as Array);
+		}
+		
+		public function update(name:String, dataObj:Object, where:Object):void {
+			var sql:String;
+			var s1:String = "UPDATE "+name+" SET ";
+			var s2:String = "WHERE ";
+			for (var obj:String in dataObj) {
+				
+				s1 += obj + "='"+dataObj[obj] + "',";
+			}
+			s1 = s1.substring(0, s1.length - 1);
+			
+			for (obj in where) {
+				s2 += (obj + "='" + where[obj] + "' AND ");
+			}
+			s2 = s2.substr(0, s2.length - 5);
+			sql = s1 +" " + s2;
+			execute(sql);
+		}
+		
+		public function insert(name:String,dataObj:Object):void {	
+			var sql:String;
+			var sqlStr:String = "INSERT INTO "+name+" (";
+			var sqlStr2:String = "VALUES(";
+			for (var obj:String in dataObj) {
+				sqlStr += (obj + ",");
+				//dataObj[obj] = StringTools.replaceAllByRegex(dataObj[obj], "'", "‘");
+				sqlStr2 += ("'"+dataObj[obj] + "',");
+			}
+			sqlStr=sqlStr.substring(0, sqlStr.length - 1);
+			sqlStr2 = sqlStr2.substring(0, sqlStr2.length - 1);
+			sqlStr = sqlStr + ")";
+			sqlStr2 = sqlStr2 + ")";
+			sql = sqlStr + " " + sqlStr2;
+			execute(sql);
 		}
 	
 	}

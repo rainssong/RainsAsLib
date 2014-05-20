@@ -113,7 +113,7 @@ package me.rainssong.utils {
 		 * @return
 		 * @example <listing version="3.0">
 		 */
-		public static function format( date:Date, str:String ):String {
+		public static function format( date:Date, str:String="%Y-%M-%D %H:%Min:%S" ):String {
 			var _fullYear:int = date.getFullYear();
 			var _month:int = date.getMonth();
 			var _date:int = date.getDate();
@@ -124,25 +124,24 @@ package me.rainssong.utils {
 			var _seconds:int = date.getSeconds();
 			var _ampm:Boolean = ( _hour < 12 );
 			
-			str = str.replace( new RegExp( "%a", "g" ), _ampm ? "am" : "pm" );
-			str = str.replace( new RegExp( "%A", "g" ), _ampm ? "AM" : "PM" );
-			str = str.replace( new RegExp( "%d", "g" ), NumberCore.digit( _date, 2 ) );
+			str = str.replace( new RegExp( "%ampm", "g" ), _ampm ? "am" : "pm" );
+			str = str.replace( new RegExp( "%AMPM", "g" ), _ampm ? "AM" : "PM" );
 			str = str.replace( new RegExp( "%D", "g" ), NumberCore.digit( _date, 2 ) );
-			str = str.replace( new RegExp( "%F", "g" ), _MONTH_NAMES[_month] );
-			str = str.replace( new RegExp( "%h", "g" ), NumberCore.digit( _hhour, 2 ) );
+			str = str.replace( new RegExp( "%Mn", "g" ), _MONTH_NAMES[_month] );
+			str = str.replace( new RegExp( "%HH", "g" ), NumberCore.digit( _hhour, 2 ) );
 			str = str.replace( new RegExp( "%H", "g" ), NumberCore.digit( _hour, 2 ) );
-			str = str.replace( new RegExp( "%g", "g" ), _hhour.toString() );
-			str = str.replace( new RegExp( "%G", "g" ), _hour.toString() );
-			str = str.replace( new RegExp( "%i", "g" ), NumberCore.digit( _minutes, 2 ) );
-			str = str.replace( new RegExp( "%j", "g" ), _date.toString() );
-			str = str.replace( new RegExp( "%l", "g" ), _DAY_NAMES[_day] );
-			str = str.replace( new RegExp( "%m", "g" ), NumberCore.digit( _month+1, 2 ) );
-			str = str.replace( new RegExp( "%M", "g" ), NumberCore.digit( _month+1, 2 ) );
-			str = str.replace( new RegExp( "%n", "g" ), _month.toString() );
-			str = str.replace( new RegExp( "%s", "g" ), NumberCore.digit( _seconds, 2 ) );
+			str = str.replace( new RegExp( "%hh", "g" ), _hhour.toString() );
+			str = str.replace( new RegExp( "%h", "g" ), _hour.toString() );
+			str = str.replace( new RegExp( "%Min", "g" ), NumberCore.digit( _minutes, 2 ) );
+			str = str.replace( new RegExp( "%min", "g" ), _minutes.toString() );
+			str = str.replace( new RegExp( "%d", "g" ), _date.toString() );
+			str = str.replace( new RegExp( "%Dn", "g" ), _DAY_NAMES[_day] );
+			str = str.replace( new RegExp( "%Mon", "g" ), NumberCore.digit( _month+1, 2 ) );
+			str = str.replace( new RegExp( "%mon", "g" ), _month.toString() );
 			str = str.replace( new RegExp( "%S", "g" ), NumberCore.digit( _seconds, 2 ) );
-			str = str.replace( new RegExp( "%t", "g" ), getMaxDateLength( date ).toString() );
-			str = str.replace( new RegExp( "%w", "g" ), _day.toString() );
+			str = str.replace( new RegExp( "%s", "g" ), _seconds.toString());
+			str = str.replace( new RegExp( "%md", "g" ), getMaxDateLength( date ).toString() );
+			str = str.replace( new RegExp( "%day", "g" ), _day.toString() );
 			str = str.replace( new RegExp( "%y", "g" ), NumberCore.digit( _fullYear, 2 ) );
 			str = str.replace( new RegExp( "%Y", "g" ), _fullYear.toString() );
 			

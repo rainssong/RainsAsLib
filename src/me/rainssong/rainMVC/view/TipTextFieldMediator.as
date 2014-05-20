@@ -95,6 +95,17 @@ package me.rainssong.rainMVC.view
 			return myTextField.text as String;
 		}
 		
+		public function set text(value:String):void
+		{
+			myTextField.text = value;
+			focusOutHandler();
+			//if (value.text =="")
+			//{
+				//return "";
+			//}
+			//return myTextField.text as String;
+		}
+		
 		public function get isFoucesed():Boolean 
 		{
 			return _isFoucesed;
