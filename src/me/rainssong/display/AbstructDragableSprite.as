@@ -31,6 +31,8 @@
 		
 		protected var _startX:Number;
 		protected var _startY:Number;
+		
+		protected var _changeMouseChildren:Boolean = false;
 		/**
 		 * reduction of speed
 		 */
@@ -77,7 +79,12 @@
 		{
 			if (Point.distance(new Point(_startX, _startY), new Point(stage.mouseX, stage.mouseY)) > 5)
 			{
-				this.mouseChildren=false;
+				if (mouseChildren)
+				{
+					this.mouseChildren = false;
+					_changeMouseChildren = true;
+				}
+				
 			}
 		}
 		
@@ -105,9 +112,15 @@
 		public function stopDragging():void
 		{
 			_isDragging = false;
+			if (_changeMouseChildren)
+			{
+				
+				this.mouseChildren = _changeMouseChildren;
+				_changeMouseChildren = false;
+			}
 			
-			this.mouseChildren=true;
 			
+		
 			dispatchEvent(new DragEvent(DragEvent.STOP_DRAG));
 		}
 		

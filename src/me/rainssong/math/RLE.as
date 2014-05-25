@@ -1,4 +1,4 @@
-package com.codeTooth.actionscript.algorithm.compressDecompress 
+package me.rainssong.math 
 {
 
 	import com.codeTooth.actionscript.lang.exceptions.UnknownTypeException;

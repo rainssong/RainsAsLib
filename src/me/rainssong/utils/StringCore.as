@@ -83,6 +83,11 @@
 			return String(resortArr);
 		}
 		
+		/**
+		 * is null or ""
+		 * @param	str
+		 * @return
+		 */
 		public static function isEmpty(str:String) : Boolean
         {
             if (str == null)

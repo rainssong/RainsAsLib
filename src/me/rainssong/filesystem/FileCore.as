@@ -17,11 +17,24 @@ package me.rainssong.filesystem
 		
 		}
 		
+		
 		public static function createFile(content:String, url:String = null):File
 		{
 			var file:File = url ? File.applicationStorageDirectory.resolvePath(url) : File.createTempFile();
 			file.parent.createDirectory();
-			var stream:FileStream = new FileStream();
+			var stream:FileStream = new FileStream());
+			stream.open(file, FileMode.WRITE);
+			stream.writeMultiByte(content, 'utf-8');
+		
+			stream.close();
+			return file;
+		}
+		
+		public static function createFile(content:String, url:String = null):File
+		{
+			var file:File = url ? File.applicationStorageDirectory.resolvePath(url) : File.createTempFile();
+			file.parent.createDirectory();
+			var stream:FileStream = new FileStream());
 			stream.open(file, FileMode.WRITE);
 			stream.writeMultiByte(content, 'utf-8');
 			stream.close();

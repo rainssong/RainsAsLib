@@ -26,7 +26,7 @@ package  me.rainssong.events
 		public override function toString():String
 		{
 			
-			return formatToString("DataEvent", "type","data", "bubbles", "cancelable", "eventPhase");
+			return formatToString("ObjectEvent", "type","data", "bubbles", "cancelable", "eventPhase");
 		}
 	}
 

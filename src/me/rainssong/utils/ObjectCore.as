@@ -2,8 +2,11 @@
 {
 
 
+	import flash.net.registerClassAlias;
+	import flash.utils.ByteArray;
 	import flash.utils.describeType;
 	import flash.utils.Dictionary;
+	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 
 	
@@ -27,6 +30,19 @@
 				dic[i] = obj[i];
 			}
 			return dic;
+		}
+		
+		public static function isSimple(object:Object):Boolean {
+			switch (typeof(object)) {
+				case "number":
+				case "string":
+				case "boolean":
+					return true;
+				case "object":
+					return (object is Date) || (object is Array);
+			}
+			
+			return false;
 		}
 		
 		public static function concatObjects(... args):Object
@@ -106,6 +122,51 @@
 		 */
 		public static function isExtended( target:*, cls:Class ):Boolean {
 			return Object( target ).constructor == cls;
+		}
+		
+		/**
+		 * 克隆对象（深复制）
+		 * @param source:Object — 源对象，克隆对象的主体
+		 * @return * — 源对象的克隆对象
+		 */
+		public static function clone(source:Object):*
+		{
+			var bytes:ByteArray = new ByteArray();
+			var className:String = getQualifiedClassName(source);
+			var cls:Class = getDefinitionByName(className) as Class;
+			
+			registerClassAlias(className, cls);
+			bytes.writeObject(source);
+			bytes.position = 0;
+			return bytes.readObject();
+		}
+		
+		/**
+		 * 该方法并不严谨
+		 * @param	a
+		 * @param	b
+		 * @return
+		 */
+		static public function isContentEqual(a:*,b:*):Boolean 
+		{
+			
+			
+			for (var name:String in a) 
+			{
+				if (a[name] == b[name])
+					continue;
+				else
+					return false;
+			}
+			for (name in b) 
+			{
+				if (a[name] == b[name])
+					continue;
+				else
+					return false;
+			}
+			
+			return true;
 		}
 	}
 }

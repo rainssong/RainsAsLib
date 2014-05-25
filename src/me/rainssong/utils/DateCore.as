@@ -8,7 +8,8 @@
  * jp.nium Classes is released under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  */
-package me.rainssong.utils {
+package me.rainssong.utils 
+{
 
 	
 	/**
@@ -113,7 +114,7 @@ package me.rainssong.utils {
 		 * @return
 		 * @example <listing version="3.0">
 		 */
-		public static function format( date:Date, str:String="%Y-%M-%D %H:%Min:%S" ):String {
+		public static function format( date:Date, str:String="%Y-%M2-%D2 %h2:%m2:%s2" ):String {
 			var _fullYear:int = date.getFullYear();
 			var _month:int = date.getMonth();
 			var _date:int = date.getDate();
@@ -126,24 +127,26 @@ package me.rainssong.utils {
 			
 			str = str.replace( new RegExp( "%ampm", "g" ), _ampm ? "am" : "pm" );
 			str = str.replace( new RegExp( "%AMPM", "g" ), _ampm ? "AM" : "PM" );
-			str = str.replace( new RegExp( "%D", "g" ), NumberCore.digit( _date, 2 ) );
+			str = str.replace( new RegExp( "%D2", "g" ), NumberCore.digit( _date, 2 ) );
+			str = str.replace( new RegExp( "%D", "g" ), _date.toString() );
 			str = str.replace( new RegExp( "%Mn", "g" ), _MONTH_NAMES[_month] );
-			str = str.replace( new RegExp( "%HH", "g" ), NumberCore.digit( _hhour, 2 ) );
-			str = str.replace( new RegExp( "%H", "g" ), NumberCore.digit( _hour, 2 ) );
+			str = str.replace( new RegExp( "%M2", "g" ), NumberCore.digit( _month+1, 2 ) );
+			str = str.replace( new RegExp( "%M", "g" ), _month.toString() );
+			str = str.replace( new RegExp( "%Y2", "g" ), NumberCore.digit( _fullYear, 2 ) );
+			str = str.replace( new RegExp( "%Y", "g" ), _fullYear.toString() );
+			str = str.replace( new RegExp( "%hh2", "g" ), NumberCore.digit( _hhour, 2 ) );
+			str = str.replace( new RegExp( "%h2", "g" ), NumberCore.digit( _hour, 2 ) );
 			str = str.replace( new RegExp( "%hh", "g" ), _hhour.toString() );
 			str = str.replace( new RegExp( "%h", "g" ), _hour.toString() );
-			str = str.replace( new RegExp( "%Min", "g" ), NumberCore.digit( _minutes, 2 ) );
-			str = str.replace( new RegExp( "%min", "g" ), _minutes.toString() );
-			str = str.replace( new RegExp( "%d", "g" ), _date.toString() );
-			str = str.replace( new RegExp( "%Dn", "g" ), _DAY_NAMES[_day] );
-			str = str.replace( new RegExp( "%Mon", "g" ), NumberCore.digit( _month+1, 2 ) );
-			str = str.replace( new RegExp( "%mon", "g" ), _month.toString() );
-			str = str.replace( new RegExp( "%S", "g" ), NumberCore.digit( _seconds, 2 ) );
+			str = str.replace( new RegExp( "%m2", "g" ), NumberCore.digit( _minutes, 2 ) );
+			str = str.replace( new RegExp( "%m", "g" ), _minutes.toString() );
+			
+			str = str.replace( new RegExp( "%s2", "g" ), NumberCore.digit( _seconds, 2 ) );
 			str = str.replace( new RegExp( "%s", "g" ), _seconds.toString());
+			
 			str = str.replace( new RegExp( "%md", "g" ), getMaxDateLength( date ).toString() );
 			str = str.replace( new RegExp( "%day", "g" ), _day.toString() );
-			str = str.replace( new RegExp( "%y", "g" ), NumberCore.digit( _fullYear, 2 ) );
-			str = str.replace( new RegExp( "%Y", "g" ), _fullYear.toString() );
+			str = str.replace( new RegExp( "%DN", "g" ), _DAY_NAMES[_day] );
 			
 			return str;
 		}
@@ -162,7 +165,8 @@ package me.rainssong.utils {
 		 * @example <listing version="3.0">
 		 * </listing>
 		 */
-		public static function w3cdtfToDate( time:String ):Date {
+		public static function praseW3CDTF( time:String ):Date 
+		{
 			var results:Array = new RegExp( "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})Z$", "g" ).exec( time ) || [];
 			
 			var date:Date = new Date();
@@ -174,6 +178,58 @@ package me.rainssong.utils {
 			date.seconds = parseInt( results[6] );
 			
 			return date;
+		}
+		
+		public static function toW3CDTF(d:Date,includeMilliseconds:Boolean=false):String
+		{
+			var date:Number = d.getUTCDate();
+			var month:Number = d.getUTCMonth();
+			var hours:Number = d.getUTCHours();
+			var minutes:Number = d.getUTCMinutes();
+			var seconds:Number = d.getUTCSeconds();
+			var milliseconds:Number = d.getUTCMilliseconds();
+			var sb:String = new String();
+			
+			sb += d.getUTCFullYear();
+			sb += "-";
+			
+			//thanks to "dom" who sent in a fix for the line below
+			if (month + 1 < 10)
+			{
+				sb += "0";
+			}
+			sb += month + 1;
+			sb += "-";
+			if (date < 10)
+			{
+				sb += "0";
+			}
+			sb += date;
+			sb += "T";
+			if (hours < 10)
+			{
+				sb += "0";
+			}
+			sb += hours;
+			sb += ":";
+			if (minutes < 10)
+			{
+				sb += "0";
+			}
+			sb += minutes;
+			sb += ":";
+			if (seconds < 10)
+			{
+				sb += "0";
+			}
+			sb += seconds;
+			if (includeMilliseconds && milliseconds > 0)
+			{
+				sb += ".";
+				sb += milliseconds;
+			}
+			sb += "-00:00";
+			return sb;
 		}
 	}
 }

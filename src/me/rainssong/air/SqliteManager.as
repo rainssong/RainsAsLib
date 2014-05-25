@@ -37,29 +37,25 @@ package me.rainssong.air
 			_file = File.applicationStorageDirectory.resolvePath(path);
 			_file.parent.createDirectory();
 			
-			//_isSync = isSync;
-			//if (isSync)
-				//_conn.open(_file);
-			//else
-				//_conn.openAsync(_file);
+		
 		}
 		
 		private function onExecute(e:SQLEvent):void 
 		{
 			_result = _statement.getResult();
 			_conn.close();
-			powerTrace(_result.complete);
 		}
 		
 		private function onOpen(e:SQLEvent):void
 		{
-			powerTrace();
+			
 		}
 		
 		private function onError(event:SQLErrorEvent):void
 		{
 			powerTrace("Error Message:", event.error.message);
 			powerTrace("Details:", event.error.details);
+			powerTrace("SQL:", _statement.text);
 			_conn.close();
 		}
 		
@@ -76,6 +72,8 @@ package me.rainssong.air
 			{
 				powerTrace("Error Message:", error.message);
 				powerTrace("Details:", error.details);
+				powerTrace("SQL:", sql);
+				_conn.close();
 			}
 			return null;
 			

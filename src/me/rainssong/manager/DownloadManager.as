@@ -34,7 +34,7 @@
 			if (!targetUrl || targetUrl == "") 
 			{
 				
-				targetUrl =File.applicationStorageDirectory.resolvePath(StringCore.webToLocal(sourceUrl)).nativePath;
+				targetUrl =File.documentsDirectory.resolvePath(StringCore.webToLocal(sourceUrl)).nativePath;
 			}
 			if (getDownloader(targetUrl) && getDownloader(targetUrl).isDownloading)
 			{

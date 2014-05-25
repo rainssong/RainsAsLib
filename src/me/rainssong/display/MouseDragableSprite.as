@@ -41,6 +41,8 @@ package me.rainssong.display
  			{
 				stopDragging();
 			}
+			
+		
 		}
 		
 		override protected function onRemove(e:Event):void 

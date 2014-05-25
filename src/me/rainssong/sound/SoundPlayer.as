@@ -17,11 +17,12 @@
         public var soundChannel:SoundChannel;
         public var volumeValue:Number = 1;
         public var playState:int = 0;
+		private var _isPlaying:Boolean = false;
 
-        public function SoundPlayer(volume:Number) : void
+        public function SoundPlayer(volume:Number=1) : void
         {
             sound = new Sound();
-            this.volumeValue = param1;
+            this.volumeValue = volume;
             return;
         }// end function
 
@@ -30,16 +31,8 @@
             soundChannel.removeEventListener(Event.SOUND_COMPLETE, soundComplete);
             event = new Event(Event.COMPLETE);
             this.dispatchEvent(event);
+			_isPlaying = false;
             return;
-        }// end function
-
-        public function playSound() : int
-        {
-            var _loc_2:Number = NaN;
-            var _loc_3:Number = NaN;
-            var _loc_4:int = 0;
-            var _loc_5:Event = null;
-            return 0;
         }// end function
 
         public function loadSound(param1:String) : void
@@ -60,6 +53,7 @@
             {
                 soundChannel.removeEventListener(Event.SOUND_COMPLETE, soundComplete);
                 soundChannel.stop();
+				_isPlaying = false;
             }
             return;
         }// end function
@@ -87,10 +81,11 @@
             return 0;
         }// end function
 
-        public function start(param1:int) : void
+        public function replay() : void
         {
             this.positionTime = 0;
             this.soundChannel = sound.play();
+			_isPlaying = true;
             soundChannel.addEventListener(Event.SOUND_COMPLETE, soundComplete);
             this.startTime = getTimer();
             return;
@@ -101,10 +96,11 @@
             return;
         }// end function
 
-        public function restart(param1:int) : void
+        public function play(param1:int) : void
         {
             this.startTime = Math.round(getTimer());
             this.soundChannel = sound.play(this.positionSaved);
+			_isPlaying = true;
             soundChannel.addEventListener(Event.SOUND_COMPLETE, soundComplete);
             return;
         }// end function
@@ -115,6 +111,7 @@
             var _loc_2:* = sound.length;
             var _loc_3:* = param1 * _loc_2;
             this.soundChannel = sound.play(_loc_3);
+			_isPlaying = true;
             soundChannel.addEventListener(Event.SOUND_COMPLETE, soundComplete);
             this.startTime = getTimer();
             return;
@@ -142,6 +139,7 @@
                 this.positionTime = this.positionTime + Math.round(getTimer()) - this.startTime;
                 this.positionSaved = Math.round(soundChannel.position);
                 soundChannel.stop();
+				_isPlaying = false;
             }
             return;
         }// end function
@@ -154,6 +152,11 @@
             this.dispatchEvent(event);
             return;
         }// end function
+		
+		public function get isPlaying():Boolean 
+		{
+			return _isPlaying;
+		}
 
     }
 }

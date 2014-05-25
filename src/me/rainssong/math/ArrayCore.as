@@ -285,6 +285,35 @@ package   me.rainssong.math
 			return arr;
 		}
 		
+		/**
+		 * select String to get stringArr. select arr to get  objectArr
+		 * @param	param
+		 * @param	arr
+		 * @return
+		 */
+		public static function select(param:*, objectArr:Array):Array
+		{
+			var result:Array = [];
+			
+				for (var i:int = 0; i < objectArr.length; i++) 
+				{
+					
+					if (param is String)
+					{
+						result[i] = objectArr[i][param];
+					}
+					if (param is Array)
+					{
+						result[i] = { };
+						for (var j:int = 0; j < param.length; j++) 
+						{
+							result[i][param[j]] = objectArr[i][param[j]];
+						}
+					}
+				}
+				return result;
+		}
+		
 		
 		
 		
