@@ -3,6 +3,7 @@ package me.rainssong.filesystem
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import flash.utils.ByteArray;
 	import me.rainssong.utils.StringCore;
 	
 	/**
@@ -18,25 +19,68 @@ package me.rainssong.filesystem
 		}
 		
 		
-		public static function createFile(content:String, url:String = null):File
-		{
-			var file:File = url ? File.applicationStorageDirectory.resolvePath(url) : File.createTempFile();
-			file.parent.createDirectory();
-			var stream:FileStream = new FileStream());
-			stream.open(file, FileMode.WRITE);
-			stream.writeMultiByte(content, 'utf-8');
+		//public static function createFile(content:String, url:String = null):File
+		//{
+			//var file:File = url ? File.applicationStorageDirectory.resolvePath(url) : File.createTempFile();
+			//file.parent.createDirectory();
+			//var stream:FileStream = new FileStream());
+			//stream.open(file, FileMode.WRITE);
+			//stream.writeMultiByte(content, 'utf-8');
+		//
+			//stream.close();
+			//return file;
+		//}
 		
-			stream.close();
-			return file;
-		}
 		
-		public static function createFile(content:String, url:String = null):File
+		public static function createFile(content:*,type:String="byteArray", url:String = null,options:Object=null):File
 		{
-			var file:File = url ? File.applicationStorageDirectory.resolvePath(url) : File.createTempFile();
+			var file:File = url? new File(url) : File.createTempFile();
 			file.parent.createDirectory();
-			var stream:FileStream = new FileStream());
+			var stream:FileStream = new FileStream();
 			stream.open(file, FileMode.WRITE);
-			stream.writeMultiByte(content, 'utf-8');
+			
+			options ||= { };
+			
+			switch (type) 
+			{
+				case "byteArray":
+					//powerTrace(0 || options["offset"], 0 || options["length"]);
+					stream.writeBytes(content,0,0);
+				break;
+				case "multiByte":
+					stream.writeMultiByte(content, options["charSet"] || "utf-8");
+				break;
+				case "byte":
+					stream.writeByte(content);
+				break;
+				case "boolean":
+					stream.writeBoolean(content);
+				break;
+				case "float":
+					stream.writeFloat(content);
+				break;
+				case "double":
+					stream.writeDouble(content);
+				break;
+				case "int":
+					stream.writeInt(content);
+				break;
+				case "object":
+					stream.writeObject(content);
+				break;
+				case "short":
+					stream.writeShort(content);
+				break;
+				case "unsignedInt":
+					stream.writeShort(content);
+				break;
+				case "short":
+					stream.writeUnsignedInt(content);
+				break;
+				
+				default:
+			}
+			
 			stream.close();
 			return file;
 		}
