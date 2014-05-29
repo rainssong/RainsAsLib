@@ -48,7 +48,7 @@ package me.rainssong.math
 		}
 		
 		/**
-		 * 值在0-circle内循环，算角度时可用
+		 * 值在circle内循环，算角度时可用
 		 * @param	number
 		 * @param	cycle
 		 * @return
