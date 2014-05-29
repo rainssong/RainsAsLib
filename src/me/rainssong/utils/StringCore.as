@@ -84,7 +84,7 @@
 		}
 		
 		/**
-		 * is null or ""
+		 * null or ""
 		 * @param	str
 		 * @return
 		 */

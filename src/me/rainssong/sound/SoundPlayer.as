@@ -11,7 +11,7 @@
         public var timeLength:int;
         public var startTime:Number;
         public var positionTime:Number;
-        public var positionSaved:Number;
+        public var positionSaved:Number = 0;
         public var paused:Boolean = false;
         public var sndTrsForm:SoundTransform;
         public var soundChannel:SoundChannel;
@@ -96,7 +96,7 @@
             return;
         }// end function
 
-        public function play(param1:int) : void
+        public function play() : void
         {
             this.startTime = Math.round(getTimer());
             this.soundChannel = sound.play(this.positionSaved);
