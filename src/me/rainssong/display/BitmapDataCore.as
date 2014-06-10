@@ -4,6 +4,7 @@ package me.rainssong.display
 	import flash.display.IBitmapDrawable;
 	import flash.display.MovieClip;
 	import flash.geom.Matrix;
+	import me.rainssong.math.MathCore;
 	
 	/**
 	 * ...
@@ -17,6 +18,85 @@ package me.rainssong.display
 		
 		}
 		
+		/**获取9宫格拉伸位图数据*/
+		public static function scale9Bmd(bmd:BitmapData, sizeGrid:Array, width:int, height:int):BitmapData
+		{
+			
+			
+			if (bmd.width == width && bmd.height == height)
+			{
+				return bmd;
+			}
+			
+			var m:Matrix = new Matrix();
+			var newRect:Rectangle = new Rectangle();
+			var clipRect:Rectangle = new Rectangle();
+			var grid:Rectangle = new Rectangle();
+			
+			
+			width = width > 1 ? width : 1;
+			height = height > 1 ? height : 1;
+			
+			var gw:int = int(sizeGrid[0]) + int(sizeGrid[2]);
+			var gh:int = int(sizeGrid[1]) + int(sizeGrid[3]);
+			var newBmd:BitmapData = new BitmapData(width, height, bmd.transparent, 0x00000000);
+			//如果目标大于九宫格，则进行9宫格缩放，否则直接缩放
+			if (width > gw && height > gh)
+			{
+				MathCore.setRect( grid, sizeGrid[0], sizeGrid[1], bmd.width - sizeGrid[0] - sizeGrid[2], bmd.height - sizeGrid[1] - sizeGrid[3]);
+				var rows:Array = [0, grid.top, grid.bottom, bmd.height];
+				var cols:Array = [0, grid.left, grid.right, bmd.width];
+				var newRows:Array = [0, grid.top, height - (bmd.height - grid.bottom), height];
+				var newCols:Array = [0, grid.left, width - (bmd.width - grid.right), width];
+				for (var i:int = 0; i < 3; i++)
+				{
+					for (var j:int = 0; j < 3; j++)
+					{
+						
+						MathCore.setRect(newRect, cols[i], rows[j], cols[i + 1] - cols[i], rows[j + 1] - rows[j]);
+						MathCore.setRect(clipRect, newCols[i], newRows[j], newCols[i + 1] - newCols[i], newRows[j + 1] - newRows[j]);
+						m.identity();
+						m.a = clipRect.width / newRect.width;
+						m.d = clipRect.height / newRect.height;
+						m.tx = clipRect.x - newRect.x * m.a;
+						m.ty = clipRect.y - newRect.y * m.d;
+						newBmd.draw(bmd, m, null, null, clipRect, true);
+					}
+				}
+			}
+			else
+			{
+				m.identity();
+				m.scale(width / bmd.width, height / bmd.height);
+				MathCore.setRect(grid, 0, 0, width, height);
+				newBmd.draw(bmd, m, null, null, grid, true);
+			}
+			return newBmd;
+		}
+		
+		/**创建切片资源*/
+		public static function createClips(bmd:BitmapData, xNum:int, yNum:int):Vector.<BitmapData>
+		{
+			if (bmd == null)
+			{
+				return null;
+			}
+			var clips:Vector.<BitmapData> = new Vector.<BitmapData>();
+			var width:int = Math.max(bmd.width / xNum, 1);
+			var height:int = Math.max(bmd.height / yNum, 1);
+			var point:Point = new Point();
+			for (var i:int = 0; i < yNum; i++)
+			{
+				for (var j:int = 0; j < xNum; j++)
+				{
+					var item:BitmapData = new BitmapData(width, height);
+					item.copyPixels(bmd, new Rectangle(j * width, i * height, width, height), point);
+					clips.push(item);
+				}
+			}
+			return clips;
+		}
+		
 		public static function drawResizeBmd(source:IBitmapDrawable, width:int = 8, height:int = 8):BitmapData
 		{
 			
@@ -28,11 +108,10 @@ package me.rainssong.display
 			return newData;
 		}
 		
-		
-		public static function drawScaleBmd(source:IBitmapDrawable,scaleX:Number=1,scaleY:Number=1):BitmapData
+		public static function drawScaleBmd(source:IBitmapDrawable, scaleX:Number = 1, scaleY:Number = 1):BitmapData
 		{
-			var bmd:BitmapData = new BitmapData(Math.round(source["width"]*scaleX), Math.round(source["height"]*scaleY), true, 0x00FFFFFF);
-			bmd.draw(source,new Matrix(scaleX,0,0,scaleY,0,0));
+			var bmd:BitmapData = new BitmapData(Math.round(source["width"] * scaleX), Math.round(source["height"] * scaleY), true, 0x00FFFFFF);
+			bmd.draw(source, new Matrix(scaleX, 0, 0, scaleY, 0, 0));
 			return bmd;
 		}
 		
@@ -59,7 +138,6 @@ package me.rainssong.display
 			return result;
 		}
 		
-		
 		public static function bmdToArr(bmd:BitmapData):Array
 		{
 			var arr:Array = []
@@ -74,9 +152,9 @@ package me.rainssong.display
 			return arr;
 		}
 		
-		public static function arrToBmd(arr:Array,scale:Number=1):BitmapData
+		public static function arrToBmd(arr:Array, scale:Number = 1):BitmapData
 		{
-			var bmd:BitmapData = new BitmapData(arr[0].length, arr.length,true, 0);
+			var bmd:BitmapData = new BitmapData(arr[0].length, arr.length, true, 0);
 			for (var i:int = 0; i < bmd.height; i++)
 			{
 				for (var j:int = 0; j < bmd.width; j++)
@@ -85,15 +163,15 @@ package me.rainssong.display
 						bmd.setPixel32(j, i, arr[i][j]);
 				}
 			}
-			if (scale != 1) bmd=drawScaleBmd(bmd, scale, scale);
+			if (scale != 1)
+				bmd = drawScaleBmd(bmd, scale, scale);
 			return bmd;
 		}
 		
-		
 		/**
-         * MovieClip to Vector.<BitmapData> 
-         * @author xiaoyi
-         */  
+		 * MovieClip to Vector.<BitmapData>
+		 * @author xiaoyi
+		 */
 		public static function mcToBmdV(mc:MovieClip, useCenterTranslate:Boolean = false, xOffset:Number = 0, yOffset:Number = 0):Array
 		{
 			var result:Array = new Array();

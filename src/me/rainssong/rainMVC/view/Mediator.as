@@ -4,6 +4,7 @@ package me.rainssong.rainMVC.view
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Loader;
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.net.URLLoader;
@@ -131,6 +132,13 @@ package me.rainssong.rainMVC.view
 			}
 		}
 		
+		/* DELEGATE flash.display.DisplayObject */
+		
+		public function get stage():flash.display.Stage 
+		{
+			return _viewComponent.stage;
+		}
+		
 		protected function addChild(child:DisplayObject) : DisplayObject 
 		{
 			if (_viewComponent is DisplayObjectContainer)
@@ -150,6 +158,35 @@ package me.rainssong.rainMVC.view
 			}
 			return null;
 		}
+		
+		protected function removeChild(child:DisplayObject) : void 
+		{
+			if (_viewComponent is DisplayObjectContainer)
+			{
+				DisplayObjectContainer(_viewComponent).removeChild(child);
+			}
+		}
+		
+		protected function removeChildAt(index:int) : void 
+		{
+			if (_viewComponent is DisplayObjectContainer)
+			{
+				DisplayObjectContainer(_viewComponent).removeChildAt(index);
+			
+			}
+		
+		}
+		
+		protected function removeChildren() : void 
+		{
+			if (_viewComponent is DisplayObjectContainer)
+			{
+				DisplayObjectContainer(_viewComponent).removeChildren();
+				
+			}
+		
+		}
+		
 		
 		//override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
 		//{

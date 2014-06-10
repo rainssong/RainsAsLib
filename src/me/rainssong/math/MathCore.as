@@ -3,6 +3,7 @@ package me.rainssong.math
 	import flash.display.SimpleButton;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import me.rainssong.utils.ObjectCore;
 	
 	public final class MathCore
 	{
@@ -62,6 +63,12 @@ package me.rainssong.math
 			if(value<min)value += distance;
 			if(value>max)value -= distance;
 			return value;
+		}
+		
+		/**设置rect，兼容player10*/
+		public static function setRect(rect:Rectangle, paramObj:Object=null):Rectangle {
+			ObjectCore.setData(rect,paramObj)
+			return rect;
 		}
 		
 		/**

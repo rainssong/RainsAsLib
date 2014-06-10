@@ -45,6 +45,18 @@
 			return false;
 		}
 		
+		public static function setData(target:Object, data:Object):void 
+		{
+			if (data == null) return;
+			for (var prop:String in data) 
+				if (target.hasOwnProperty(prop)) 
+					try
+					{
+						this[prop] = data[prop];
+					}
+					catch (e:Error) { };
+		}
+		
 		public static function concatObjects(... args):Object
 		{
 			var finalObject:Object = {};
@@ -85,41 +97,7 @@
 		//
 		//}
 		
-		/**
-		 * <span lang="ja">対象のクラスに final 属性が設定されているかどうかを返します。</span>
-		 * <span lang="en">Returns if the final attribute is set to the class object.</span>
-		 * 
-		 * @param target
-		 * <span lang="en">final 属性の有無を調べる対象です。</span>
-		 * <span lang="en">The object to check if the final attribute is set or not.</span>
-		 * @return
-		 * <span lang="en">final 属性があれば true を、違っていれば false を返します。</span>
-		 * <span lang="en">Returns true if final attribute is set, otherwise return false.</span>
-		 * 
-		 * @example <listing version="3.0">
-		 * </listing>
-		 */
-		//public static function isFinal( target:* ):Boolean {
-			//return Boolean( StringUtil.toProperType( describeType( target ).attribute( "isFinal" ) ) );
-		//}
 		
-		/**
-		 * <span lang="ja">対象のインスタンスが指定されたクラスを継承しているかどうかを返します。</span>
-		 * <span lang="en"></span>
-		 * 
-		 * @param target
-		 * <span lang="ja">継承関係を調査したいインスタンスです。</span>
-		 * <span lang="en"></span>
-		 * @param cls
-		 * <span lang="ja">継承関係を調査委したいクラスです。</span>
-		 * <span lang="en"></span>
-		 * @return
-		 * <span lang="ja">継承されていれば true を、それ以外の場合には false を返します。</span>
-		 * <span lang="en"></span>
-		 * 
-		 * @example <listing version="3.0">
-		 * </listing>
-		 */
 		public static function isExtended( target:*, cls:Class ):Boolean {
 			return Object( target ).constructor == cls;
 		}

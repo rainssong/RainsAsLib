@@ -1,9 +1,6 @@
-package com.codeTooth.actionscript.display 
+package me.rainssong.display 
 {
-	import com.codeTooth.actionscript.lang.exceptions.IllegalParameterException;
-	import com.codeTooth.actionscript.lang.exceptions.UnsupportedException;
-	import com.codeTooth.actionscript.lang.utils.destroy.DestroyUtil;
-	import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
+
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
