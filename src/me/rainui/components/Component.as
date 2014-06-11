@@ -83,13 +83,13 @@ package me.rainui.components
 		
 		override public function set x(value:Number):void
 		{
-			super.x = value;
+			super.x = Math.round(value);
 			callLater(sendEvent, [UIEvent.MOVE]);
 		}
 		
 		override public function set y(value:Number):void
 		{
-			super.y = value;
+			super.y = Math.round(value);
 			callLater(sendEvent, [UIEvent.MOVE]);
 		}
 		

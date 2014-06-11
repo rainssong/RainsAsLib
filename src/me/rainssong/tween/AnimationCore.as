@@ -139,7 +139,7 @@ package me.rainssong.tween
 			return newView;
 		}
 		
-		static public function addView(container:DisplayObjectContainer, newView:DisplayObject, params:Object = null):void
+		static public function addView(container:DisplayObjectContainer, newView:DisplayObject, effect:String = "move", params:Object = null):void
 		{
 			var duration:Number = 0.5;
 			var direction:String = Directions.UP;

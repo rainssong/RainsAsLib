@@ -4,6 +4,7 @@ package me.rainssong.utils
 	import flash.display.BitmapData;
 	import flash.display.GradientType;
 	import flash.display.Graphics;
+	import flash.display.IBitmapDrawable;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
@@ -46,11 +47,35 @@ package me.rainssong.utils
 			return sp;
 		}
 		
-		static public function rect(graphics:Graphics,x:Number=0,y:Number=0,width:Number=100, height:Number=100, rgb:uint=0xFF00000,alpha:Number=1):void
+		static public function rect(target:*,x:Number=0,y:Number=0,width:Number=100, height:Number=100, rgb:uint=0xFF00000,alpha:Number=1):void
 		{
+			
+			if (target == null) return;
+			var graphics:Graphics
+			var shape:Shape = new Shape();
+			if (target.hasOwnProperty("graphics"))
+			{
+				graphics = target.graphics;
+			}
+			else if (target is Graphics)
+			{
+				graphics = target as Graphics;
+			}
+			else
+			{
+				graphics = shape.graphics;
+			}
+			
+			//var graphics:Graphics = new Graphics();
 			graphics.beginFill(rgb,alpha);
 			graphics.drawRect(x, y, width, height);
 			graphics.endFill();
+			
+			if (target is BitmapData)
+				BitmapData(target)..draw(shape);
+			else if (target is Bitmap)
+				Bitmap(target).bitmapData.draw(shape);
+			
 		}
 		
 		public static function gridLines(graphics:Graphics, cols:uint = 10,rows:uint = 8,  cellWidth:Number = 10, cellHeight:Number = 10, startX:Number = 0, startY:Number = 0):Boolean
