@@ -37,7 +37,7 @@ package me.rainssong.utils
 			graphics.endFill(); 
 		}
 		
-		static public function getBoxSp(width:Number, height:Number, rgb:uint,alpha:Number=1):Sprite
+		static public function getBoxSp(width:Number=100, height:Number=100, rgb:uint=0xFF0000,alpha:Number=1):Sprite
 		{
 			var sp:Sprite = new Sprite();
 			sp.graphics.beginFill(rgb,alpha);

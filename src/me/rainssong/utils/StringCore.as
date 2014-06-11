@@ -104,12 +104,13 @@
 		
 		public static function getFileName( url:String ):String {
 			// Find the location of the period.
-			var extensionIndex:Number = url.lastIndexOf( '.' );
+			var fullName:String=url.substr( url.lastIndexOf( '/' )+1 );
+			var extensionIndex:Number = fullName.lastIndexOf( '.' );
 			if ( extensionIndex == -1 ) {
 				// Oops, there is no period. Just return the filename.
-				return url;
+				return fullName;
 			} else {
-				return url.substr( 0, extensionIndex );
+				return fullName.substr( 0, extensionIndex );
 			} 
 		}
 		
