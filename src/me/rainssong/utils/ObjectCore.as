@@ -52,7 +52,7 @@
 				if (target.hasOwnProperty(prop)) 
 					try
 					{
-						this[prop] = data[prop];
+						target[prop] = data[prop];
 					}
 					catch (e:Error) { };
 		}
