@@ -24,6 +24,7 @@ package me.rainssong.tween
 			_newView = newView;
 			_oldView = oldView;
 			var duration:Number = 0.5;
+			var delay:Number = 0;
 			var direction:String = Directions.UP;
 			if (!newView.parent)
 				_parent.addChildAt(newView, _parent.getChildIndex(oldView));
@@ -53,6 +54,8 @@ package me.rainssong.tween
 					newView.x = params.x;
 				if (params.y)
 					newView.y = params.y;
+				if (params.hasOwnProperty("delay"))
+					delay = params["delay"];
 				if (params["duration"])
 					duration = params["duration"];
 					if (params["direction"])
@@ -66,24 +69,24 @@ package me.rainssong.tween
 					switch (direction)
 				{
 					case Directions.LEFT: 
-						TweenMax.from(newView, duration, {x: _parent.stage.stageWidth, ease: Cubic.easeInOut});
-						TweenMax.to(oldView, duration, {x: -_parent.stage.stageWidth, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						TweenMax.from(newView, duration, {x: _parent.stage.stageWidth, ease: Cubic.easeInOut,delay:delay});
+						TweenMax.to(oldView, duration, {x: -_parent.stage.stageWidth, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut,delay:delay});
 						break;
 					case Directions.RIGHT: 
-						TweenMax.from(newView, duration, {x: -_parent.stage.stageWidth, ease: Cubic.easeInOut});
-						TweenMax.to(oldView, duration, {x: _parent.stage.stageWidth, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						TweenMax.from(newView, duration, {x: -_parent.stage.stageWidth, ease: Cubic.easeInOut,delay:delay});
+						TweenMax.to(oldView, duration, {x: _parent.stage.stageWidth, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut,delay:delay});
 						break;
 					case Directions.UP: 
-						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut});
-						TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut,delay:delay});
+						TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut,delay:delay});
 						break;
 					case Directions.DOWN: 
-						TweenMax.from(newView, duration, {y: -_parent.stage.stageHeight, ease: Cubic.easeInOut});
-						TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						TweenMax.from(newView, duration, {y: -_parent.stage.stageHeight, ease: Cubic.easeInOut,delay:delay});
+						TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut,delay:delay});
 						break;
 					default: 
-						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut});
-						TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut,delay:delay});
+						TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut,delay:delay});
 				}
 					break;
 				case "cover": 
@@ -92,20 +95,20 @@ package me.rainssong.tween
 					switch (direction)
 					{
 					case Directions.LEFT: 
-						TweenMax.from(newView, duration, {x: _parent.stage.stageWidth, ease: Cubic.easeInOut, onComplete: removeViewComplete, onCompleteParams: [oldView]});
+						TweenMax.from(newView, duration, {x: _parent.stage.stageWidth, ease: Cubic.easeInOut,delay:delay, onComplete: removeViewComplete, onCompleteParams: [oldView]});
 						break;
 					case Directions.RIGHT: 
-						TweenMax.from(newView, duration, {x: -_parent.stage.stageWidth, ease: Cubic.easeInOut, onComplete: removeViewComplete, onCompleteParams: [oldView]});
+						TweenMax.from(newView, duration, {x: -_parent.stage.stageWidth, ease: Cubic.easeInOut,delay:delay, onComplete: removeViewComplete, onCompleteParams: [oldView]});
 						break;
 					case Directions.UP: 
-						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut, onComplete: removeViewComplete, onCompleteParams: [oldView]});
+						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut,delay:delay, onComplete: removeViewComplete, onCompleteParams: [oldView]});
 						break;
 					case Directions.DOWN: 
-						TweenMax.from(newView, duration, {y: -_parent.stage.stageHeight, ease: Cubic.easeInOut, onComplete: removeViewComplete, onCompleteParams: [oldView]});
+						TweenMax.from(newView, duration, {y: -_parent.stage.stageHeight, ease: Cubic.easeInOut,delay:delay, onComplete: removeViewComplete, onCompleteParams: [oldView]});
 
 						break;
 					default: 
-						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut, onComplete: removeViewComplete, onCompleteParams: [oldView]});
+						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut,delay:delay, onComplete: removeViewComplete, onCompleteParams: [oldView]});
 				
 					}
 					break;
@@ -116,20 +119,20 @@ package me.rainssong.tween
 					switch (direction)
 					{
 					case Directions.LEFT: 
-						TweenMax.to(oldView, duration, {x: -_parent.stage.stageWidth, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						TweenMax.to(oldView, duration, {x: -_parent.stage.stageWidth, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut,delay:delay});
 						break;
 					case Directions.RIGHT: 
-						TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut,delay:delay});
 						break;
 					case Directions.UP: 
-						TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut,delay:delay});
 						break;
 					case Directions.DOWN: 
-						TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut,delay:delay});
 
 						break;
 					default: 
-						TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut});
+						TweenMax.to(oldView, duration, {y: _parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut,delay:delay});
 				
 					}
 					break;
@@ -143,7 +146,7 @@ package me.rainssong.tween
 		{
 			var duration:Number = 0.5;
 			var direction:String = Directions.UP;
-			
+			var delay:Number = 0;
 			container.addChild(newView);
 			
 			if (params)
@@ -152,6 +155,8 @@ package me.rainssong.tween
 					newView.x = params.x;
 				if (params.y)
 					newView.y = params.y;
+				if (params.hasOwnProperty("delay"))
+					delay = params["delay"];
 				if (params["duration"])
 					duration = params["duration"];
 				if (params["direction"])
@@ -161,19 +166,19 @@ package me.rainssong.tween
 			switch (direction)
 			{
 				case Directions.LEFT: 
-					TweenMax.from(newView, duration, {x: container.stage.stageWidth, ease: Cubic.easeInOut});
+					TweenMax.from(newView, duration, {x: container.stage.stageWidth, ease: Cubic.easeInOut,delay:delay});
 					break;
 				case Directions.RIGHT: 
-					TweenMax.from(newView, duration, {x: -container.stage.stageWidth, ease: Cubic.easeInOut});
+					TweenMax.from(newView, duration, {x: -container.stage.stageWidth, ease: Cubic.easeInOut,delay:delay});
 					break;
 				case Directions.UP: 
-					TweenMax.from(newView, duration, {y: container.stage.stageHeight, ease: Cubic.easeInOut});
+					TweenMax.from(newView, duration, {y: container.stage.stageHeight, ease: Cubic.easeInOut,delay:delay});
 					break;
 				case Directions.DOWN: 
-					TweenMax.from(newView, duration, {y: -container.stage.stageHeight, ease: Cubic.easeInOut});
+					TweenMax.from(newView, duration, {y: -container.stage.stageHeight, ease: Cubic.easeInOut,delay:delay});
 					break;
 				default: 
-					TweenMax.from(newView, duration, {y: container.stage.stageHeight, ease: Cubic.easeInOut});
+					TweenMax.from(newView, duration, {y: container.stage.stageHeight, ease: Cubic.easeInOut,delay:delay});
 			
 			}
 		}
@@ -182,13 +187,15 @@ package me.rainssong.tween
 		{
 			var duration:Number = 0.5;
 			var direction:String = Directions.DOWN;
-			
+			var delay:Number = 0;
 			if (params)
 			{
 				if (params.x)
 					view.x = params.x;
 				if (params.y)
 					view.y = params.y;
+				if (params.hasOwnProperty("delay"))
+					delay = params["delay"];
 				if (params["duration"])
 					duration = params["duration"];
 				if (params["direction"])
@@ -198,19 +205,19 @@ package me.rainssong.tween
 			switch (direction)
 			{
 				case Directions.LEFT: 
-					TweenMax.to(view, duration, {x: -view.stage.stageWidth, onComplete: removeViewComplete, onCompleteParams: [view], ease: Cubic.easeInOut});
+					TweenMax.to(view, duration, {x: -view.stage.stageWidth, onComplete: removeViewComplete, onCompleteParams: [view], ease: Cubic.easeInOut,delay:delay});
 					break;
 				case Directions.RIGHT: 
-					TweenMax.to(view, duration, {x: view.stage.stageWidth, onComplete: removeViewComplete, onCompleteParams: [view], ease: Cubic.easeInOut});
+					TweenMax.to(view, duration, {x: view.stage.stageWidth, onComplete: removeViewComplete, onCompleteParams: [view], ease: Cubic.easeInOut,delay:delay});
 					break;
 				case Directions.UP: 
-					TweenMax.to(view, duration, {y: -view.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [view], ease: Cubic.easeInOut});
+					TweenMax.to(view, duration, {y: -view.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [view], ease: Cubic.easeInOut,delay:delay});
 					break;
 				case Directions.DOWN: 
-					TweenMax.to(view, duration, {y: view.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [view], ease: Cubic.easeInOut});
+					TweenMax.to(view, duration, {y: view.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [view], ease: Cubic.easeInOut,delay:delay});
 					break;
 				default: 
-					TweenMax.to(view, duration, {y: view.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [view], ease: Cubic.easeInOut});
+					TweenMax.to(view, duration, {y: view.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [view], ease: Cubic.easeInOut,delay:delay});
 			}
 		}
 		
