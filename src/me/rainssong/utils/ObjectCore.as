@@ -25,7 +25,7 @@
 		public static function toDictionary(obj:Object,weakKeys:Boolean=false):Dictionary
 		{
 			var dic:Dictionary = new Dictionary(weakKeys) ;
-			for (var i:String = 0 in obj)
+			for (var i:String in obj)
 			{
 				dic[i] = obj[i];
 			}

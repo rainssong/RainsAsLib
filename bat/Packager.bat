@@ -35,7 +35,7 @@ goto start
 set CERT_FILE=%AND_CERT_FILE%
 set SIGNING_OPTIONS=%AND_SIGNING_OPTIONS%
 set ICONS=%AND_ICONS%
-set DIST_EXT=air
+set DIST_EXT=exe
 set TYPE=air
 goto start
 
@@ -43,7 +43,6 @@ goto start
 :start
 if not exist "%CERT_FILE%" goto certificate
 :: Output file
-set FILE_OR_DIR=%FILE_OR_DIR%
 set EXTDIR=-extdir lib
 if not exist "%DIST_PATH%" md "%DIST_PATH%"
 set OUTPUT=%DIST_PATH%\%DIST_NAME%%TARGET%%VERSION%.%DIST_EXT%
@@ -52,12 +51,12 @@ echo Packaging: %OUTPUT%
 echo using certificate: %CERT_FILE%...
 echo.
 if "%PLATFORM%"=="desktop" (
-echo call adt -package %OPTIONS% %SIGNING_OPTIONS% "%OUTPUT%" "%APP_XML%" %FILE_OR_DIR%
-call adt -package %OPTIONS% %SIGNING_OPTIONS% "%OUTPUT%" "%APP_XML%" %FILE_OR_DIR%)
+echo call adt -package %OPTIONS%  %SIGNING_OPTIONS% -target %TARGET%  "%OUTPUT%" "%APP_PACKAGE_XML%" %FILE_OR_DIR% -extdir "%EXT_DIR%"
+call adt -package %OPTIONS% %SIGNING_OPTIONS%  -target %TARGET%  "%OUTPUT%" "%APP_PACKAGE_XML%" %FILE_OR_DIR% -extdir "%EXT_DIR%")
 
 if not "%PLATFORM%"=="desktop" (
-echo call adt -package -target %TYPE%%TARGET% %OPTIONS% %SIGNING_OPTIONS% "%OUTPUT%" "%APP_XML%" %FILE_OR_DIR% -extdir "%EXT_DIR%"
-call adt -package -target %TYPE%%TARGET% %OPTIONS% %SIGNING_OPTIONS% "%OUTPUT%" "%APP_XML%" %FILE_OR_DIR% -extdir "%EXT_DIR%")
+echo call adt -package -target %TYPE%%TARGET% %OPTIONS% %SIGNING_OPTIONS% "%OUTPUT%" "%APP_PACKAGE_XML%" %FILE_OR_DIR% -extdir "%EXT_DIR%"
+call adt -package -target %TYPE%%TARGET% %OPTIONS% %SIGNING_OPTIONS% "%OUTPUT%" "%APP_PACKAGE_XML%" %FILE_OR_DIR% -extdir "%EXT_DIR%")
 
 if errorlevel 1 goto failed
 goto set-up
@@ -66,13 +65,14 @@ goto set-up
 if "%PLATFORM%"=="android" set PLAT=android
 if "%PLATFORM%"=="ios" set PLAT=ios
 if "%PLATFORM%"=="ios-dist" set PLAT=ios
-if "%PLATFORM%"=="desktop" (call %OUTPUT% 
+if "%PLATFORM%"=="desktop" (start %OUTPUT%  
 goto end)
 echo uninstalling...
 call adt -uninstallApp -platform %PLAT% -appid %APP_ID%
 echo installing...
 call adt -installApp -platform %PLAT% -package %OUTPUT%
 goto end
+
 
 :certificate
 echo Certificate not found: %CERT_FILE%

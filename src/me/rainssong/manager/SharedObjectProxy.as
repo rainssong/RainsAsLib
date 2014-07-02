@@ -25,10 +25,20 @@ package me.rainssong.manager
 			_so.flush();
 		}
 		
+		flash_proxy function setData(name:*, value:*):void 
+		{
+			_so.data[name] = value;
+			_so.flush();
+		}
+		
 		override flash_proxy function getProperty(name:*):* 
 		{
 			return _so.data[name] ;
-			
+		}
+		 
+		flash_proxy function getData(name:*):* 
+		{
+			return _so.data[name] ;
 		}
 		
 		override flash_proxy function deleteProperty(name:*):Boolean 
@@ -36,6 +46,13 @@ package me.rainssong.manager
 			delete _so.data[name];
 			_so.flush();
 			return super.flash_proxy::deleteProperty("name");
+		}
+		
+		flash_proxy function deleteData(name:*):Boolean 
+		{
+			delete _so.data[name];
+			_so.flush();
+			return _so.data.flash_proxy::deleteProperty("name");
 		}
 		
 		/* DELEGATE flash.net.SharedObject */

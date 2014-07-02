@@ -1,5 +1,6 @@
 package me.rainssong.system
 {
+	import flash.net.LocalConnection;
 	import flash.system.Capabilities;
 	
 	/**

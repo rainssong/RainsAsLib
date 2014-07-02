@@ -7,7 +7,7 @@ call bat\SetupApplication.bat
 :: Generate
 echo.
 echo Generating a self-signed certificate for Android packaging
-::-validityPeriod 25 
+::-validityPeriod 25
 call adt -certificate -cn %AND_CERT_NAME% 1024-RSA "%AND_CERT_FILE%" %AND_CERT_PASS%
 if errorlevel 1 goto failed
 

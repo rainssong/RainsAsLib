@@ -7,9 +7,9 @@
 :: NOTICE: all paths are relative to project root
 
 :: Android packaging
-set AND_CERT_NAME="RainsAsLib"
+set AND_CERT_NAME="MitsubishiElectricDocsShow"
 set AND_CERT_PASS=fd
-set AND_CERT_FILE=cert\RainsAsLib.p12
+set AND_CERT_FILE=cert\MitsubishiElectricDocsShow.p12
 set AND_ICONS=icons/android
 
 set AND_SIGNING_OPTIONS=-storetype pkcs12 -keystore "%AND_CERT_FILE%" -storepass %AND_CERT_PASS%
@@ -26,9 +26,10 @@ set IOS_DIST_SIGNING_OPTIONS=-storetype pkcs12 -keystore "%IOS_DIST_CERT_FILE%" 
 
 :: Application descriptor
 set APP_XML=application.xml
+set APP_PACKAGE_XML=%APP_XML%
 
 :: Files to package
-set APP_DIR=bin-debug
+set APP_DIR=bin
 set EXT_DIR=lib
 set EXT_FOLDER_DIR=ext-folder
 set FILE_OR_DIR=-C %APP_DIR% .
@@ -49,7 +50,7 @@ for /f "tokens=2 delims=>" %%i in ('findstr "<versionNumber>" %APP_XML%') do (
 
 :: Output packages
 set DIST_PATH=bin-release
-set DIST_NAME=RainsAsLib
+set DIST_NAME=MitsubishiElectricDocsShow
 
 :: Debugging using a custom IP
 set DEBUG_IP=

@@ -1,27 +1,42 @@
-package
+package 
 {
-
-
-	import flash.display.MovieClip;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
-	import me.rainssong.application.ApplicationManager;
-	import me.rainssong.manager.EnterFrameManager;
-	import me.rainssong.utils.getSingleton;
-	import me.rainssong.utils.GUID;
-	import me.rainssong.utils.RevDictionary;
+	import flash.events.Event;
+	import flash.text.TextField;
+	import me.rainssong.utils.Color;
+	import me.rainssong.utils.Draw;
+	import utils.GamePad;
+	import utils.Logitech;
 	
 	/**
 	 * ...
-	 * @author Rainssong
+	 * @author Mike
 	 */
-	public class Main extends Sprite
+	public class Main extends Sprite 
 	{
 		
-		public function Main()
+		private var ball:Sprite;
+		private var frameTime:TextField;
+		private var lastFrameTime:Number;
+		private var ySpeed:Number = 0;
+		private var xSpeed:Number = 0;
+		private var energy:Number = 100;
+		
+		private const speed:Number = 8;
+		private const jumpSpeed:Number = 14;
+		
+		private var energyBar:Sprite;
+		
+		public function Main():void 
 		{
-			powerTrace(GUID.create());
+			var j:JoyStick = new JoyStick(this);
+			j.setBallTexture(new BitmapData(100, 100, false, Color.BlanchedAlmond));
+			j.setDockTexture(new BitmapData(100, 100, false, Color.Tomato));
+			j.setStickTexture(new BitmapData(100, 100, false, Color.ForestGreen));
+			
 		}
-	
+		
 	}
-
+	
 }

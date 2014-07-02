@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <application xmlns="http://ns.adobe.com/air/application/3.9">
-  <id>me.rainssong.RainsAsLib</id>
+  <id>cn.rainssong.RainsAsLib</id>
   <versionNumber>1.0</versionNumber>
-  <supportedProfiles>extendedDesktop</supportedProfiles>
+  <supportedProfiles>mobileDevice extendedDesktop</supportedProfiles>
   <filename>RainsAsLib</filename>
   <name>
 		<text xml:lang="en">RainsAsLib</text>
 		<text xml:lang="zh_Hans">RainsAsLib</text>
 		<text xml:lang="zh_Hant">RainsAsLib</text>
   </name>
-  <copyright>wjypresents</copyright>
-  
+  <copyright>rainssong‎</copyright>
   <android>
     <manifestAdditions><![CDATA[<manifest android:installLocation="auto">
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -29,38 +28,55 @@
 <key>UIDeviceFamily</key>
 <array>
 	<!-- iPhone support -->
-	<string>1</string>
+	 <string>1</string> 
 	<!-- iPad support -->
 	<string>2</string>
 </array>]]></InfoAdditions>
     <requestedDisplayResolution>high</requestedDisplayResolution>
   </iPhone>
   <initialWindow>
-	<title>RainsAsLib</title>
+    <title>RainsAsLib</title>
     <content>RainsAsLib.swf</content>
     <visible>true</visible>
-    <fullScreen>false</fullScreen>
-	<renderMode>gpu</renderMode><!--cpu,gpu,direct-->
-	<!--<depthAndStencil>false</depthAndStencil>-->
-    <systemChrome>standard</systemChrome><!--standard,none-->
-	<transparent>false</transparent>
-    <aspectRatio>landscape</aspectRatio><!--landscape,portrait-->
+    <fullScreen>true</fullScreen>
+    <!-- cpu,gpu,direct -->
+    <renderMode>gpu</renderMode>
+    <!--<depthAndStencil>true</depthAndStencil>-->
+    <!-- standard,none -->
+    <systemChrome>standard</systemChrome>
+    <transparent>false</transparent>
+    <!-- landscape,portrait -->
+    <aspectRatio>landscape</aspectRatio>
     <autoOrients>true</autoOrients>
   </initialWindow>
   <icon>
-		<!--iphone-->
-		<image29x29>icons/Icon-Small.png</image29x29>
-		<image58x58>icons/Icon-Small@2x.png</image58x58>
-		<image57x57>icons/Icon.png</image57x57>
-		<image114x114>icons/Icon@2x.png</image114x114>
-		<!--ipad-->
-		<image50x50>icons/Icon-Small-50.png</image50x50>
-		<image100x100>icons/Icon-Small-50@2x.png</image100x100>
+		<!--iphone ios6-->
+		<image57x57>icons/Icon-57.png</image57x57>
+		<image114x114>icons/Icon-57@2x.png</image114x114>
+		<!--iphone ios7-->
+		<image120x120>icons/Icon-120.png</image120x120>
+
+		<!--ipad ios6-->
 		<image72x72>icons/Icon-72.png</image72x72>
 		<image144x144>icons/Icon-72@2x.png</image144x144>
+		<!--ipad ios7-->
+		<image76x76>icons/Icon-76.png</image76x76>
+		<image152x152>icons/Icon-76@2x.png</image152x152>
+
+		<!--setting recommanded-->
+		<!--<image29x29>icons/Icon-29.png</image29x29>
+		<image58x58>icons/Icon-29@2x.png</image58x58>-->
+
+		<!--spotlight ios6 recommanded-->
+		<!--<image50x50>icons/Icon-50.png</image50x50>
+		<image100x100>icons/Icon-50@2x.png</image100x100>-->
+
+		<!--spotlight ios7 recommanded-->
+		<!--<image40x40>icons/Icon-40.png</image40x40>
+		<image80x80>icons/Icon-40@2x.png</image80x80>-->
   </icon>
-  <extensions>
-    
+ <extensions>
+    <!--<extensionID>com.vsdevelop.iosExtension</extensionID>-->
   </extensions>
   <!-- 
 	AIR options:

@@ -4,7 +4,7 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin-debug\RainsAsLib.swf" />
+    <movie path="bin\RainsAsLib.swf" />
     <movie fps="30" />
     <movie width="1024" />
     <movie height="768" />
@@ -81,7 +81,7 @@
     <hidden path="obj" />
   </hiddenPaths>
   <!-- Executed before build -->
-  <preBuildCommand />
+  <preBuildCommand>bat/UpdateResource.bat</preBuildCommand>
   <!-- Executed after build -->
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->

@@ -1,14 +1,15 @@
-﻿package me.rainssong.display
+﻿package me.rainssong.starling.display
 {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Loader;
-	import flash.display.Sprite;
+	import starling.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import flash.net.URLLoader;
 	import flash.utils.Timer;
+	import me.rainssong.display.IView;
 
 	/**
 	 * ...
@@ -18,7 +19,6 @@
 	public class SmartSprite extends Sprite implements IView
 	{
 		private var _autoDestroy:Boolean = true;
-		public var disposeChildren:Boolean = false;
 		public var autoDisable:Boolean = true;
 		private var _listenerArr:Vector.<Array > ;
 
@@ -100,9 +100,12 @@
 
 			removeListeners();
 			removeChildren();
-			
-			if (parent)
+			//deleteVars();
+			//remove();
+			if (! autoDestroy && parent)
+			{
 				parent.removeChild(this);
+			}
 		}
 
 		private function deleteVars():void
@@ -129,13 +132,13 @@
 
 				this.removeChild(child);
 
-				if (disposeChildren)
+				if (autoDestroy)
 				{
 					if (child is Bitmap && (child as Bitmap).bitmapData)
 					{
 						child.bitmapData.dispose();
 					}
-					if (child is flash.display.MovieClip && child.parent==null)
+					if (child is flash.display.MovieClip)
 					{
 						child.stop();
 					}
