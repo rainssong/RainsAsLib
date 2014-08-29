@@ -27,12 +27,6 @@
 			super();
 			_listenerArr = new Vector.<Array >   ;
 			onRegister();
-		}
-
-		/* INTERFACE rainssong.display.IView */
-
-		protected function onRegister():void
-		{
 			if (stage)
 			{
 				onAdd();
@@ -41,6 +35,13 @@
 			{
 				addEventListener(Event.ADDED_TO_STAGE, onAdd);
 			}
+		}
+
+		/* INTERFACE rainssong.display.IView */
+
+		protected function onRegister():void
+		{
+			
 		}
 
 		protected function onAdd(e:Event = null):void
@@ -97,12 +98,10 @@
 
 		public function destroy():void
 		{
-
 			removeListeners();
 			removeChildren();
 			
-			if (parent)
-				parent.removeChild(this);
+			//remove();
 		}
 
 		private function deleteVars():void

@@ -47,6 +47,7 @@ package me.rainssong.quest.VO
 				}
 				else if (_userInputArr[i] is String)
 					vec.push(ArrayCore.UPPER_CASE_LETTER_ARR[i] + "." + options[i] + ":" + _userInputArr[i]);
+				
 			}
 			
 			return vec;

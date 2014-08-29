@@ -42,6 +42,19 @@ package   me.rainssong.math
 		}
 		
 		/**
+		 * 
+		 * @param	target Object
+		 * @param	fun String or Function
+		 */
+		static public function forEach(target:Object, fun:*):void
+		{
+			for each(var t:* in target)
+			{
+				t[fun]();
+			}
+		}
+		
+		/**
 		 * Make Copy And Randomize an Array/Vector
 		 * @param arr Array or Vector
 		 * @return Randomized Array

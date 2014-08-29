@@ -64,7 +64,7 @@
 		
 		public function StringCore()
 		{
-		
+			
 		}
 		
 		/**

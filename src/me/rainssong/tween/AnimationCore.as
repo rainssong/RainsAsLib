@@ -65,8 +65,11 @@ package me.rainssong.tween
 			
 			switch (effect)
 			{
+				case "none": 
+					removeViewComplete(_oldView);
+				break;
 				case "move": 
-					switch (direction)
+				switch (direction)
 				{
 					case Directions.LEFT: 
 						TweenMax.from(newView, duration, {x: _parent.stage.stageWidth, ease: Cubic.easeInOut,delay:delay});

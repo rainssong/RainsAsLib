@@ -77,6 +77,7 @@
 		
 		public function destroy():void 
 		{
+			stop();
 			deleteVars();
 			removeListeners();
 			removeChildren();

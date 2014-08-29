@@ -77,9 +77,19 @@ package me.rainssong.math
 		 * @param	objTarget
 		 * @return
 		 */
-		public static function getPointRadians(objOrigin:*, objTarget:*):Number
+		public static function getPointRadians(objTarget:*,objOrigin:*=null):Number
 		{
-			return Math.atan2(objTarget.y - objOrigin.y, objTarget.x - objOrigin.x)
+			if (objOrigin == null) objOrigin = new Point();
+			if (objTarget == null) objTarget = new Point();
+			
+			if (objTarget.x - objOrigin.x == 0) 
+			{
+				if (objTarget.y - objOrigin.y > 0) return Math.PI/2;
+				else if (objTarget.y - objOrigin.y == 0) return 0;
+				else return -Math.PI/2;
+			}
+			else
+				return Math.atan2(objTarget.y - objOrigin.y, objTarget.x - objOrigin.x)
 		}
 		
 		public static function radiansToDegree(radians:Number):Number

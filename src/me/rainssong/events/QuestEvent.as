@@ -12,6 +12,7 @@
 	{
 		static public const COMPLETE:String = "complete";
 		static public const SKIP:String = "skip";
+		static public const PREV:String = "prev";
 
 		private var _questModel:QuestModel;
 		

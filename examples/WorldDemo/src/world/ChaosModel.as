@@ -5,10 +5,10 @@ package  world
 	 * @timeStamp 2013/11/26 18:35
 	 * @blog http://blog.sina.com.cn/rainssong
 	 */
-	dynamic public class Chaos 
+	dynamic public class ChaosModel 
 	{
-		
-		public function Chaos() 
+		public var name:String = "chaos";
+		public function ChaosModel() 
 		{
 			
 		}

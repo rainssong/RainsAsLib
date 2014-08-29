@@ -1,14 +1,12 @@
 ﻿package me.rainssong.utils
 {
-
-
+	
 	import flash.net.registerClassAlias;
 	import flash.utils.ByteArray;
 	import flash.utils.describeType;
 	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
-
 	
 	/**
 	 * ...
@@ -22,9 +20,18 @@
 		
 		}
 		
-		public static function toDictionary(obj:Object,weakKeys:Boolean=false):Dictionary
+		static public function traceProps(obj:*):void
 		{
-			var dic:Dictionary = new Dictionary(weakKeys) ;
+			powerTrace(getQualifiedClassName(obj));
+			for (var i:* in obj)
+			{	
+				trace(i , ":" , typeof(i) , " = " , obj[i]);
+			}
+		}
+		
+		public static function toDictionary(obj:Object, weakKeys:Boolean = false):Dictionary
+		{
+			var dic:Dictionary = new Dictionary(weakKeys);
 			for (var i:String in obj)
 			{
 				dic[i] = obj[i];
@@ -32,29 +39,35 @@
 			return dic;
 		}
 		
-		public static function isSimple(object:Object):Boolean {
-			switch (typeof(object)) {
-				case "number":
-				case "string":
-				case "boolean":
+		public static function isSimple(object:Object):Boolean
+		{
+			switch (typeof(object))
+			{
+				case "number": 
+				case "string": 
+				case "boolean": 
 					return true;
-				case "object":
+				case "object": 
 					return (object is Date) || (object is Array);
 			}
 			
 			return false;
 		}
 		
-		public static function setData(target:Object, data:Object):void 
+		public static function setData(target:Object, data:Object):void
 		{
-			if (data == null) return;
-			for (var prop:String in data) 
-				if (target.hasOwnProperty(prop)) 
+			if (data == null)
+				return;
+			for (var prop:String in data)
+				if (target.hasOwnProperty(prop))
 					try
 					{
 						target[prop] = data[prop];
 					}
-					catch (e:Error) { };
+					catch (e:Error)
+					{
+					}
+			;
 		}
 		
 		public static function concatObjects(... args):Object
@@ -80,26 +93,29 @@
 			return finalObject;
 		}
 		
-		public static function getClassName( target:* ):String {
-			return getQualifiedClassName( target ).split( "::" ).pop();
+		public static function getClassName(target:*):String
+		{
+			return getQualifiedClassName(target).split("::").pop();
 		}
 		
-		public static function getClassPath( target:* ):String {
-			return getQualifiedClassName( target ).replace( new RegExp( "::", "g" ), "." );
+		public static function getClassPath(target:*):String
+		{
+			return getQualifiedClassName(target).replace(new RegExp("::", "g"), ".");
 		}
 		
-		public static function getPackage( target:* ):String {
-			return getQualifiedClassName( target ).split( "::" ).shift();
+		public static function getPackage(target:*):String
+		{
+			return getQualifiedClassName(target).split("::").shift();
 		}
 		
 		//public static function isDynamic( target:* ):Boolean {
-			//return Boolean( StringUtil.toProperType( describeType( target ).attribute( "isDynamic" ) ) );
+		//return Boolean( StringUtil.toProperType( describeType( target ).attribute( "isDynamic" ) ) );
 		//
 		//}
 		
-		
-		public static function isExtended( target:*, cls:Class ):Boolean {
-			return Object( target ).constructor == cls;
+		public static function isExtended(target:*, cls:Class):Boolean
+		{
+			return Object(target).constructor == cls;
 		}
 		
 		/**
@@ -125,18 +141,16 @@
 		 * @param	b
 		 * @return
 		 */
-		static public function isContentEqual(a:*,b:*):Boolean 
+		static public function isContentEqual(a:*, b:*):Boolean
 		{
-			
-			
-			for (var name:String in a) 
+			for (var name:String in a)
 			{
 				if (a[name] == b[name])
 					continue;
 				else
 					return false;
 			}
-			for (name in b) 
+			for (name in b)
 			{
 				if (a[name] == b[name])
 					continue;

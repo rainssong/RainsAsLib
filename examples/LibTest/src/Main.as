@@ -1,42 +1,41 @@
-package 
+package
 {
+	import com.nocircleno.graffiti.GraffitiCanvas;
+	import com.nocircleno.graffiti.tools.BrushTool;
+	import com.nocircleno.graffiti.tools.BrushType;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.text.TextField;
+	import flash.utils.Dictionary;
+	import me.rainssong.math.ArrayCore;
 	import me.rainssong.utils.Color;
 	import me.rainssong.utils.Draw;
+	import me.rainssong.utils.ObjectCore;
 	import utils.GamePad;
 	import utils.Logitech;
 	
-	/**
-	 * ...
-	 * @author Mike
-	 */
-	public class Main extends Sprite 
+	public class Main extends Sprite
 	{
 		
-		private var ball:Sprite;
-		private var frameTime:TextField;
-		private var lastFrameTime:Number;
-		private var ySpeed:Number = 0;
-		private var xSpeed:Number = 0;
-		private var energy:Number = 100;
+		//public const mathSin:Function = Math.sin;
+		private var _dic:Dictionary = new Dictionary();
 		
-		private const speed:Number = 8;
-		private const jumpSpeed:Number = 14;
-		
-		private var energyBar:Sprite;
-		
-		public function Main():void 
+		public function Main():void
 		{
-			var j:JoyStick = new JoyStick(this);
-			j.setBallTexture(new BitmapData(100, 100, false, Color.BlanchedAlmond));
-			j.setDockTexture(new BitmapData(100, 100, false, Color.Tomato));
-			j.setStickTexture(new BitmapData(100, 100, false, Color.ForestGreen));
 			
+			var myXML:XML = new XML();
+			
+			myXML =
+				<Item ID="3132131" Name="我的我的" Type="14">
+					<Tip>我们强大武器道具\n带去我的钱我决定去忘记</Tip>
+				</Item>
+				
+			var temp:*= myXML.Tip[0].toString();
+			trace(temp);
 		}
-		
-	}
 	
+	}
+
 }

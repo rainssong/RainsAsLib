@@ -11,8 +11,9 @@ package world.entity.creature
 	{
 		private var _isAlive:Boolean = false;
 		private var _lifetime:Number=0;
-		private var _hp:Number = 100;
-		private var position:*;
+		private var _health:Number = 1;
+		private var _food:Number = 1;
+		private var _energy:Number = 1;
 		
 		
 		public function CreatureModel() 
@@ -40,17 +41,29 @@ package world.entity.creature
 			
 		}
 		
-		public function move():void
+		public function act():void
 		{
 			
 		}
+		
+		public function feel(information:*):void
+		{
+			
+		}
+		
+		
 		
 		public function grow():void
 		{
 			
 		}
 		
-		public function eat(food:*):void
+		public function eat(food:EntityModel):void
+		{
+			
+		}
+		
+		public function release():EntityModel
 		{
 			
 		}
