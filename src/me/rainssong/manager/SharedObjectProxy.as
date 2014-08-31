@@ -15,7 +15,7 @@ package me.rainssong.manager
 		private var _so:SharedObject
 		public function SharedObjectProxy(name:String="default") 
 		{
-			_so = SharedObject.getLocal("name");
+			_so = SharedObject.getLocal(name);
 			
 		}
 		

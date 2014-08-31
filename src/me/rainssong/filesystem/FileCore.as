@@ -34,12 +34,15 @@ package me.rainssong.filesystem
 		
 		public static function createFile(content:*,type:String="byteArray", url:String = null,options:Object=null):File
 		{
+			options ||= { };
 			var file:File = url? new File(url) : File.createTempFile();
 			file.parent.createDirectory();
 			var stream:FileStream = new FileStream();
-			stream.open(file, FileMode.WRITE);
+			var fileMode:String = FileMode.WRITE;
+			if(options["fileMode"]!=null)fileMode=options["fileMode"]
+			stream.open(file, fileMode);
 			
-			options ||= { };
+			
 			
 			switch (type) 
 			{
