@@ -10,6 +10,7 @@ package  world.entity
 	 */
 	public class EntityModel extends ChaosModel
 	{
+		//内部的数据
 		public var position:Vector3D = new Vector3D();
 		public var speed:Vector3D = new Vector3D();
 		public var weight:Number = 0;
@@ -17,6 +18,8 @@ package  world.entity
 		public var height:Number = 0;
 		public var length:Number = 0;
 		public var mass:Number = 0;
+		//外界的感知
+		public var environment:Object = { };
 		
 		
 		public function EntityModel() 

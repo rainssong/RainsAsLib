@@ -210,6 +210,12 @@
 		}
 
 		
+		static public function getRandomChinese():String
+		{
+			var charNumber:int=int(Math.random ()*(0x9000-0x5000))+0x5000;
+			return (String.fromCharCode (charNumber));
+		}
+		
 		//public static function getFileName(url:String):String
 		//{
 		//return url.split(/[\\/] / ).slice( -1)[0];

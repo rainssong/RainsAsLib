@@ -1,0 +1,61 @@
+工作流：
+创建组件
+组件获取原始视图->失败则获取主题视图（自带视图）
+显示
+用户修改外观和事件处理
+更新显示
+
+
+功能：
+自带皮肤
+动态换肤
+低耦合
+自适应也可拉伸
+视图基于DisplayObject
+接受flash绑定
+事件触发提供方法用于重写和修改
+组件即组件的集合，需要代理内部组件属性
+检测parent 自动resize ，内容自我决定显示方式，可以和非RainUI元素结合
+提供自动缩放机制,autosclemode:NONE/MAX_SCALE/MIN_SCALE 与 percent联动
+
+自适应优先级：
+DPI位置 宽高
+百分比位置 宽高
+绝对位置
+绝对宽高
+
+自动化命令:
+	更新尺寸resize
+	更新显示内容redraw
+	
+自动更新流（Resize 不可触发 redraw）：
+	parent resize
+	resize
+	
+	content change
+	redraw
+	resize
+
+宽定义:
+	width:定义宽度
+	percentWidth:百分比宽度
+	actualWidth:实际显示宽度(Math.max(内容宽+内容x),定义宽*scaleX)) 计算时使用
+	contentWidth:内容宽度
+	scaleX:
+
+类：
+Component：基本类，提供所有通用属性
+Button：
+Scene：全屏视图
+Dialog：
+Image：
+
+皮肤更新机制：
+	可以单独更新：btn.normalSkin=new display;
+	集体更新：btn.skinName="darkSkin";向当前theme请求一整套皮肤。
+	
+
+容器决定内容显示方式？
+callLater和手动立即执行重复
+
+

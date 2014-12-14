@@ -80,7 +80,49 @@ package me.rainssong.utils
 			return sp;
 		}
 		
-		static public function rect(target:*, x:Number = 0, y:Number = 0, width:Number = 100, height:Number = 100, rgb:uint = 0xFF00000, alpha:Number = 1):void
+		static public function drawGraphics(graphics:Graphics, fun:Function,  rgb:uint = 0xFF0000,...args):Graphics
+		{
+			graphics.beginFill(rgb);
+			
+			fun.apply(null, args);
+			graphics.endFill();
+			return graphics;
+		}
+		
+		//static public function roundRect(target:*, x:Number = 0, y:Number = 0, width:Number = 100, height:Number = 100,ellipseWidth:Number=0, ellipseHeight:Number=null, rgb:uint = 0xFF0000, alpha:Number = 1):void
+		//{
+			//
+			//if (target == null)
+				//return;
+			//var graphics:Graphics
+			//var shape:Shape = new Shape();
+			//if (target.hasOwnProperty("graphics"))
+			//{
+				//graphics = target.graphics;
+			//}
+			//else if (target is Graphics)
+			//{
+				//graphics = target as Graphics;
+			//}
+			//else
+			//{
+				//graphics = shape.graphics;
+			//}
+			//
+			//var graphics:Graphics = new Graphics();
+			//graphics.beginFill(rgb, alpha);
+			//graphics.drawRoundRect(x, y, width, height,ellipseWidth, ellipseHeight);
+			//graphics.endFill();
+			//
+			//if (target is BitmapData)
+				//BitmapData(target).draw(shape);
+			//else if (target is Bitmap)
+				//Bitmap(target).bitmapData.draw(shape);
+		//
+		//}
+		//
+		
+		static public function rect(target:*, x:Number = 0, y:Number = 0, width:Number = 100, height:Number = 100, rgb:uint = 0xFF0000, alpha:Number = 1):void
 		{
 			
 			if (target == null)
@@ -106,7 +148,7 @@ package me.rainssong.utils
 			graphics.endFill();
 			
 			if (target is BitmapData)
-				BitmapData(target)..draw(shape);
+				BitmapData(target).draw(shape);
 			else if (target is Bitmap)
 				Bitmap(target).bitmapData.draw(shape);
 		

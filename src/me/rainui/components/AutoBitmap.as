@@ -6,6 +6,7 @@ package me.rainui.components {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import me.rainui.App;
+	import me.rainui.RainUI;
 	import morn.core.utils.BitmapUtils;
 	
 	/**增强的Bitmap，封装了位置，宽高及9宫格的处理，供组件使用*/
@@ -51,7 +52,7 @@ package me.rainui.components {
 		override public function set width(value:Number):void {
 			if (_width != value) {
 				_width = value;
-				App.render.callLater(changeSize);
+				RainUI.render.callLater(changeSize);
 			}
 		}
 		
@@ -63,7 +64,7 @@ package me.rainui.components {
 		override public function set height(value:Number):void {
 			if (_height != value) {
 				_height = value;
-				App.render.callLater(changeSize);
+				RainUI.render.callLater(changeSize);
 			}
 		}
 		
@@ -74,7 +75,7 @@ package me.rainui.components {
 		
 		public function set sizeGrid(value:Array):void {
 			_sizeGrid = value;
-			App.render.callLater(changeSize);
+			RainUI.render.callLater(changeSize);
 		}
 		
 		override public function set bitmapData(value:BitmapData):void {
@@ -98,7 +99,7 @@ package me.rainui.components {
 			_source = value;
 			if (value && value.length > 0) {
 				super.bitmapData = value[0];
-				App.render.callLater(changeSize);
+				RainUI.render.callLater(changeSize);
 			}
 		}
 		

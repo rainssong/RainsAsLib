@@ -5,6 +5,7 @@
 	import flash.filesystem.File;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.html.HTMLLoader;
 	import flash.media.StageWebView;
 	import me.rainssong.display.SmartSprite;
 	
@@ -18,12 +19,14 @@
 		public var webWidth:Number;
 		public var webHeight:Number;
 		private var _webView:StageWebView = new StageWebView();
+		private var _htmlLoader:HTMLLoader = new HTMLLoader();
 		
 		public function RainStageWebView(width:Number = 800, height:Number = 600)
 		{
 			super();
 			webWidth= width;
 			webHeight = height;
+			addChild(_webloader)
 		}
 		
 		override protected function onRegister():void 
@@ -37,6 +40,7 @@
 			super.onAdd(e);
 			
 			_webView.stage = this.stage;
+			
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
@@ -68,9 +72,12 @@
 		{
 			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 			
-			if(_webView.stage)
+			if (_webView && _webView.stage)
+			{
 				_webView.stage = null;
-			_webView.dispose();
+				_webView.dispose();
+			}
+			
 			_webView = null;
 			
 			super.destroy();

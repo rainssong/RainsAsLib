@@ -67,7 +67,6 @@
 					catch (e:Error)
 					{
 					}
-			;
 		}
 		
 		public static function concatObjects(... args):Object

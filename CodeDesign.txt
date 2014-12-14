@@ -1,0 +1,11 @@
+库设计原则：
+	1.不保护BUG,非法数据根据情况报错或警告
+	2.
+
+Todo：
+GameBase
+RainUI
+AI
+DateCore
+DetalingShow-delay
+ElementFormat研究

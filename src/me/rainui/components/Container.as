@@ -1,0 +1,437 @@
+package me.rainui.components
+{
+	import flash.display.DisplayObject;
+	import flash.events.Event;
+	import flash.geom.Rectangle;
+	import me.rainssong.math.MathCore;
+	import me.rainui.components.Component
+	import me.rainui.events.RainUIEvent;
+	
+	/**
+	 * 具有自适应能力的组件基类
+	 * @author Rainssong
+	 */
+	public class Container extends Component
+	{
+		
+		
+		//百分比优先级高于绝对值
+		protected var _percentWidth:Number = NaN;
+		protected var _percentHeight:Number = NaN;
+		
+		protected var _top:Number = NaN;
+		protected var _percentTop:Number = NaN;
+		protected var _bottom:Number = NaN;
+		protected var _percentBottom:Number = NaN;
+		protected var _left:Number = NaN;
+		protected var _percentLeft:Number = NaN;
+		protected var _right:Number = NaN;
+		protected var _percentRight:Number = NaN;
+		
+		protected var _centerX:Number = NaN;
+		protected var _centerY:Number = NaN;
+		
+		protected var _minHeight:Number = 0;
+		protected var _maxHeight:Number = Infinity;
+		
+		protected var _minWidth:Number = 0;
+		protected var _maxWidth:Number = Infinity;
+		
+		public function Container()
+		{
+			//this.scrollRect = new Rectangle(0, 0, 100, 100);
+			
+			
+			addEventListener(Event.ADDED, onAdded);
+			addEventListener(Event.REMOVED, onRemoved);
+		}
+		
+		override protected function preinitialize():void 
+		{
+			super.preinitialize();
+			this.mouseChildren = true;
+		}
+		
+		
+		protected function onRemoved(e:Event):void
+		{
+			if (e.target == this)
+			{
+				parent.removeEventListener(Event.RESIZE, onParentResize);
+			}
+		}
+		
+		protected function onAdded(e:Event):void
+		{
+			if (e.target == this)
+			{
+				parent.addEventListener(Event.RESIZE, onParentResize);
+				callLater(resize);
+			}
+		}
+		
+		protected function onParentResize(e:Event):void
+		{
+			callLater(resize);
+		}
+		
+		/**添加显示对象*/
+		public function addElement(element:DisplayObject, x:Number, y:Number):void
+		{
+			element.x = x;
+			element.y = y;
+			addChild(element);
+		}
+		
+		/**增加显示对象到index层*/
+		public function addElementAt(element:DisplayObject, index:int, x:Number, y:Number):void
+		{
+			element.x = x;
+			element.y = y;
+			addChildAt(element, index);
+		}
+		
+		/**批量增加显示对象*/
+		public function addElements(elements:Array):void
+		{
+			for (var i:int = 0, n:int = elements.length; i < n; i++)
+			{
+				var item:DisplayObject = elements[i];
+				addChild(item);
+			}
+		}
+		
+		/**删除子显示对象，子对象为空或者不包含子对象时不抛出异常*/
+		public function removeElement(element:DisplayObject):void
+		{
+			if (element && contains(element))
+			{
+				removeChild(element);
+			}
+		}
+		
+		/**删除所有子显示对象
+		 * @param except 例外的对象(不会被删除)*/
+		public function removeAllChild(except:DisplayObject = null):void
+		{
+			for (var i:int = numChildren - 1; i > -1; i--)
+			{
+				if (except != getChildAt(i))
+				{
+					removeChildAt(i);
+				}
+			}
+		}
+		
+		/**增加显示对象到某对象上面*/
+		public function insertAbove(element:DisplayObject, compare:DisplayObject):void
+		{
+			removeElement(element);
+			var index:int = getChildIndex(compare);
+			addChildAt(element, Math.min(index + 1, numChildren));
+		}
+		
+		/**增加显示对象到某对象下面*/
+		public function insertBelow(element:DisplayObject, compare:DisplayObject):void
+		{
+			removeElement(element);
+			var index:int = getChildIndex(compare);
+			addChildAt(element, Math.max(index, 0));
+		}
+		override public function set width(value:Number):void
+		{
+			super.width = value;
+			_percentWidth = NaN;
+			_percentLeft = NaN;
+			_percentRight = NaN;
+			
+			//var sc:Rectangle = this.scrollRect;
+			//sc.width = value;
+			//this.scrollRect = sc;
+		}
+		
+		override public function set height(value:Number):void
+		{
+			super.height = value;
+			_percentHeight = NaN;
+			_percentTop = NaN;
+			_percentBottom = NaN;
+			//var sc:Rectangle = this.scrollRect;
+			//sc.height = value;
+			//this.scrollRect = sc;
+		}
+		
+		/**居父容器顶上的距离*/
+		public function get top():Number
+		{
+			return _top;
+		}
+		
+		public function set top(value:Number):void
+		{
+			_top = value;
+			_percentHeight = NaN;
+			_percentTop = NaN;
+			_percentBottom = NaN;
+			_centerY=NaN;
+			callLater(resize);
+			
+		}
+		
+		/**居父容器底部的距离*/
+		public function get bottom():Number
+		{
+			return _bottom;
+		}
+		
+		public function set bottom(value:Number):void
+		{
+			_bottom = value;
+			_percentHeight = NaN;
+			_percentTop = NaN;
+			_percentBottom = NaN;
+			callLater(resize);
+		}
+		
+		/**居父容器左边的距离*/
+		public function get left():Number
+		{
+			return _left;
+		}
+		
+		public function set left(value:Number):void
+		{
+			_left = value;
+			_percentWidth = NaN;
+			_percentLeft = NaN;
+			_percentRight = NaN;
+			callLater(resize);
+			
+		}
+		
+		/**居父容器右边的距离*/
+		public function get right():Number
+		{
+			return _right;
+		}
+		
+		public function set right(value:Number):void
+		{
+			_right = value
+			_percentWidth = NaN;
+			_percentLeft = NaN;
+			_percentRight = NaN;
+			callLater(resize);
+		}
+		
+		/**水平居中偏移位置*/
+		public function get centerX():Number
+		{
+			return _centerX;
+		}
+		
+		public function set centerX(value:Number):void
+		{
+			_centerX = value;
+			
+			_percentLeft = NaN;
+			_percentRight = NaN;
+			_left = NaN;
+			_right = NaN
+			
+			callLater(resize);
+		}
+		
+		/**垂直居中偏移位置*/
+		public function get centerY():Number
+		{
+			return _centerY;
+		}
+		
+		public function set centerY(value:Number):void
+		{
+			_centerY = value;
+			
+			_percentTop = NaN;
+			_percentBottom = NaN;
+			_top = NaN;
+			_bottom=NaN
+			callLater(resize);
+		}
+		
+		public function get percentWidth():Number 
+		{
+			return _percentWidth;
+		}
+		
+		public function set percentWidth(value:Number):void 
+		{
+			_percentWidth = value;
+			callLater(resize);
+		}
+		
+		public function get percentHeight():Number 
+		{
+			return _percentHeight;
+		}
+		
+		public function set percentHeight(value:Number):void 
+		{
+			_percentHeight = value;
+			callLater(resize);
+		}
+		
+		public function get percentTop():Number 
+		{
+			return _percentTop;
+		}
+		
+		public function set percentTop(value:Number):void 
+		{
+			_percentTop = value;
+			callLater(resize);
+		}
+		
+		public function get percentBottom():Number 
+		{
+			return _percentBottom;
+		}
+		
+		public function set percentBottom(value:Number):void 
+		{
+			_percentBottom = value;
+			callLater(resize);
+		}
+		
+		public function get percentLeft():Number 
+		{
+			return _percentLeft;
+		}
+		
+		public function set percentLeft(value:Number):void 
+		{
+			_percentLeft = value;
+			callLater(resize);
+		}
+		
+		public function get percentRight():Number 
+		{
+			return _percentRight;
+		}
+		
+		public function set percentRight(value:Number):void 
+		{
+			_percentRight = value;
+			callLater(resize);
+		}
+		
+		public function get minHeight():Number 
+		{
+			return _minHeight;
+		}
+		
+		public function set minHeight(value:Number):void 
+		{
+			_minHeight = value;
+		}
+		
+		public function get maxHeight():Number 
+		{
+			return _maxHeight;
+		}
+		
+		public function set maxHeight(value:Number):void 
+		{
+			_maxHeight = value;
+		}
+
+		
+		
+		//resize后自动更新位置
+		override public function resize():void
+		{
+			if (parent == null)
+				return;
+			
+			if (!isNaN(_percentLeft))
+			{
+				x = _percentLeft * parent.width;
+				if (!isNaN(_percentRight))
+				{
+					_width=parent.width*(1-_percentLeft-_percentRight)
+				}
+			}
+			else if (!isNaN(_percentRight))
+			{
+				x = parent.width-(_percentRight * parent.width)-displayWidth;
+			}
+			if(isNaN(_percentLeft) || isNaN(_percentRight))
+			{
+				if (!isNaN(_percentWidth))
+				_width = parent.width * _percentWidth;
+			}
+		
+			
+			if (!isNaN(_percentTop))
+			{
+				y = _percentTop * parent.width;
+				if (!isNaN(_percentBottom))
+				{
+					_height=parent.height*(1-_percentTop-_percentBottom)
+				}
+			}
+			else if (!isNaN(_percentBottom))
+			{
+				y = parent.height-(_percentBottom* parent.height)-displayHeight;
+			}
+			else
+			{
+				if (!isNaN(_percentHeight))
+					_height = parent.height * _percentHeight;
+			}
+			
+			if (isNaN(_percentLeft) && isNaN(_percentRight) && isNaN(_percentWidth))
+			{
+				if (!isNaN(_centerX))
+				{
+					x = (parent.width - width) * 0.5 + _centerX;
+				}
+				else if (!isNaN(_left))
+				{
+					x = _left;
+					if (!isNaN(_right))
+						_width = parent.width - _left - _right;
+				}
+				else if (!isNaN(_right))
+				{
+					x = parent.width - _right - displayWidth;
+				}
+			}
+			
+			if (isNaN(_percentTop) && isNaN(_percentBottom) && isNaN(_percentHeight))
+			{
+				if (!isNaN(_centerY))
+				{
+					y = (parent.height - displayHeight) * 0.5 + _centerY;
+				}
+				if (!isNaN(_top))
+				{
+					y = _top;
+					if (!isNaN(_bottom))
+						_height = parent.height - _top - _bottom;
+				}
+				else if (!isNaN(_bottom))
+				{
+					y = parent.height - _bottom - displayHeight;
+				}
+			}
+			
+			_height = MathCore.getRangedNumber(_height, _minHeight, _maxHeight);
+			_width = MathCore.getRangedNumber(_width, _minWidth, _maxWidth);
+			
+			super.resize();
+		}
+	
+	}
+
+}

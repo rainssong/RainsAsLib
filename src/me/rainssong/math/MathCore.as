@@ -15,7 +15,7 @@ package me.rainssong.math
 		
 		public static function getRandomInt(min:int, max:int):int
 		{
-			return Math.round(Math.random() * (max - min) + min);
+			return Math.floor(Math.random() * (max - min+1) + min);
 		}
 		
 		/**
@@ -44,6 +44,10 @@ package me.rainssong.math
 				min = max;
 				max = tmp;
 			}
+			if (isNaN(min))
+				min = -Infinity;
+			if (isNaN(max))
+				max = Infinity;
 			
 			return Math.max(min, Math.min(number, max));
 		}
@@ -54,20 +58,23 @@ package me.rainssong.math
 		 * @param	cycle
 		 * @return
 		 */
-		public static function getCycledNumber(number:Number, a:Number, b:Number=0):Number
+		public static function getCycledNumber(number:Number, a:Number, b:Number = 0):Number
 		{
 			var min:Number = Math.min(a, b);
 			var max:Number = Math.max(a, b);
-			var distance:Number=max - min;
+			var distance:Number = max - min;
 			var value:Number = number % distance;
-			if(value<min)value += distance;
-			if(value>max)value -= distance;
+			while (value < min)
+				value += distance;
+			while (value > max)
+				value -= distance;
 			return value;
 		}
 		
 		/**设置rect，兼容player10*/
-		public static function setRect(rect:Rectangle, paramObj:Object=null):Rectangle {
-			ObjectCore.setData(rect,paramObj)
+		public static function setRect(rect:Rectangle, paramObj:Object = null):Rectangle
+		{
+			ObjectCore.setData(rect, paramObj)
 			return rect;
 		}
 		
@@ -77,16 +84,21 @@ package me.rainssong.math
 		 * @param	objTarget
 		 * @return
 		 */
-		public static function getPointRadians(objTarget:*,objOrigin:*=null):Number
+		public static function getPointRadians(objTarget:*, objOrigin:* = null):Number
 		{
-			if (objOrigin == null) objOrigin = new Point();
-			if (objTarget == null) objTarget = new Point();
+			if (objOrigin == null)
+				objOrigin = new Point();
+			if (objTarget == null)
+				objTarget = new Point();
 			
-			if (objTarget.x - objOrigin.x == 0) 
+			if (objTarget.x - objOrigin.x == 0)
 			{
-				if (objTarget.y - objOrigin.y > 0) return Math.PI/2;
-				else if (objTarget.y - objOrigin.y == 0) return 0;
-				else return -Math.PI/2;
+				if (objTarget.y - objOrigin.y > 0)
+					return Math.PI / 2;
+				else if (objTarget.y - objOrigin.y == 0)
+					return 0;
+				else
+					return -Math.PI / 2;
 			}
 			else
 				return Math.atan2(objTarget.y - objOrigin.y, objTarget.x - objOrigin.x)
@@ -107,14 +119,16 @@ package me.rainssong.math
 			return aov[int(aov.length * Math.random())];
 		}
 		
-		public static function isEven( number:Number ):Boolean {
+		public static function isEven(number:Number):Boolean
+		{
 			
 			return (number & 1) == 0;
 		}
 		
 		public static function averagePoint(points:Vector.<Point>):Point
-		{	
-			if (!points.length) return null;
+		{
+			if (!points.length)
+				return null;
 			var point:Point = new Point();
 			
 			for each (var p:Point in points)
@@ -129,37 +143,37 @@ package me.rainssong.math
 		
 		/**
 		 * 获得包含多个举行的一个更大的矩形
-		 * 
+		 *
 		 * @param rects
-		 * 
-		 * @return 
+		 *
+		 * @return
 		 */
 		//public static function getBoundsRect(rects:Vector.<Rectangle>):Rectangle
 		//{
-			//if(rects == null)
-			//{
-				//return null;
-			//}
-			//else
-			//{
-				//var rect:Rectangle = null;
-				//var length:uint = rects.length;
-				//for(var i:uint = 0; i < length; i++)
-				//{
-					//var newRect:Rectangle = getBoundsRect(rect, rects[i]);
-					//rect = newRect == null ? null : newRect.clone();
-				//}
-					//
-				//return rect;
-			//}
+		//if(rects == null)
+		//{
+		//return null;
+		//}
+		//else
+		//{
+		//var rect:Rectangle = null;
+		//var length:uint = rects.length;
+		//for(var i:uint = 0; i < length; i++)
+		//{
+		//var newRect:Rectangle = getBoundsRect(rect, rects[i]);
+		//rect = newRect == null ? null : newRect.clone();
+		//}
+		//
+		//return rect;
+		//}
 		//}
 		
 		/**
 		 * 判断联个矩形是否相交
-		 * 
+		 *
 		 * @param	rect1
 		 * @param	rect2
-		 * 
+		 *
 		 * @return
 		 */
 		public static function rectHitTest(rect1:Rectangle, rect2:Rectangle):Boolean
@@ -172,34 +186,34 @@ package me.rainssong.math
 			{
 				var xOK:Boolean = false;
 				var xDist:Number = rect2.x - rect1.x;
-				if(rect1.x <= rect2.x)
+				if (rect1.x <= rect2.x)
 				{
-					if(xDist <= rect1.width)
+					if (xDist <= rect1.width)
 					{
 						xOK = true;
 					}
 				}
 				else
 				{
-					if(-xDist <= rect2.width)
+					if (-xDist <= rect2.width)
 					{
 						xOK = true;
 					}
 				}
 				
-				if(xOK)
+				if (xOK)
 				{
 					var yDist:Number = rect2.y - rect1.y;
-					if(rect1.y <= rect2.y)
+					if (rect1.y <= rect2.y)
 					{
-						if(yDist <= rect1.height)
+						if (yDist <= rect1.height)
 						{
 							return true;
 						}
 					}
 					else
 					{
-						if(-yDist <= rect2.height)
+						if (-yDist <= rect2.height)
 						{
 							return true;
 						}
@@ -209,8 +223,6 @@ package me.rainssong.math
 				return false;
 			}
 		}
-		
-		
 	
 	}
 }

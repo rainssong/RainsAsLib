@@ -1,4 +1,4 @@
-﻿package  me.rainssong.display
+﻿package me.rainssong.display
 {
 	import com.greensock.TweenLite;
 	import flash.display.DisplayObject;
@@ -47,6 +47,26 @@
 		public function restore(duration:Number=0.5):void
 		{
 			TweenLite.to(this, duration, { x:_originX, y:_originY });
+		}
+		
+		public function get originX():Number 
+		{
+			return _originX;
+		}
+		
+		public function set originX(value:Number):void 
+		{
+			_originX = value;
+		}
+		
+		public function get originY():Number 
+		{
+			return _originY;
+		}
+		
+		public function set originY(value:Number):void 
+		{
+			_originY = value;
 		}
 		
 	}

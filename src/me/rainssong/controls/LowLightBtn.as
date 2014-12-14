@@ -10,6 +10,7 @@
 	import flash.events.MouseEvent;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.ColorTransform;
+	import flash.text.TextField;
 	import me.rainssong.display.BitmapDataCore;
 	import me.rainssong.display.SmartSprite;
 	
@@ -21,13 +22,14 @@
 	{
 		private const darkColorTrans:ColorTransform = new ColorTransform(0.7, 0.7, 0.7, 1, 0, 0, 0, 0)
 		private var normalColorTrans:ColorTransform = new ColorTransform()
+		public var labelTF:TextField;
 		
 		
 		public function LowLightBtn(view:DisplayObject = null )
 		{
 			super();
 			this.mouseChildren = false;
-			
+			if (labelTF == null) labelTF = new TextField();
 			if (view) addChild(new Bitmap(BitmapDataCore.drawScaleBmd(view)));
 		}
 		
