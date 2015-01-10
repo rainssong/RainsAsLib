@@ -1,6 +1,6 @@
 /**
- * VERSION: 0.4
- * DATE: 2011-10-11
+ * VERSION: 0.62
+ * DATE: 2013-07-12
  * AS3
  * UPDATES AND DOCS AT: http://www.greensock.com
  **/
@@ -17,7 +17,7 @@ package com.greensock {
 	import flash.geom.Rectangle;
 	import flash.geom.Transform;
 /**
- * A BlitMask is basically a rectangular Sprite that acts as a high-performance mask for a DisplayObject
+ * [AS3 only] A BlitMask is basically a rectangular Sprite that acts as a high-performance mask for a DisplayObject
  * by caching a bitmap version of it and blitting only the pixels that should be visible at any given time,
  * although its <code>bitmapMode</code> can be turned off to restore interactivity in the DisplayObject 
  * whenever you want. When scrolling very large images or text blocks, a BlitMask can greatly improve 
@@ -78,13 +78,13 @@ package com.greensock {
  * 			be better off just turning off bitmapMode during that animation sequence.</li>
  * </ul><br /><br />
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2014-2014, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  **/
 	public class BlitMask extends Sprite {
 		/** @private **/
-		public static var version:Number = 0.4;
+		public static var version:Number = 0.62;
 		
 		// In order to conserve memory and improve performance, we create a few instances of Rectangles, Sprites, Points, Matrices, and Arrays and reuse them rather than creating new instances over and over.
 		/** @private **/
@@ -102,7 +102,7 @@ package com.greensock {
 		/** @private **/
 		protected static var _colorTransform:ColorTransform = new ColorTransform();
 		/** @private **/
-		protected static var _mouseEvents:Array = [MouseEvent.CLICK, MouseEvent.DOUBLE_CLICK, MouseEvent.MOUSE_DOWN, MouseEvent.MOUSE_MOVE, MouseEvent.MOUSE_OUT, MouseEvent.MOUSE_OVER, MouseEvent.MOUSE_UP, MouseEvent.MOUSE_WHEEL, MouseEvent.ROLL_OUT, MouseEvent.ROLL_OVER];
+		protected static var _mouseEvents:Array = [MouseEvent.CLICK, MouseEvent.DOUBLE_CLICK, MouseEvent.MOUSE_DOWN, MouseEvent.MOUSE_MOVE, MouseEvent.MOUSE_OUT, MouseEvent.MOUSE_OVER, MouseEvent.MOUSE_UP, MouseEvent.MOUSE_WHEEL, MouseEvent.ROLL_OUT, MouseEvent.ROLL_OVER, "gesturePressAndTap", "gesturePan", "gestureRotate", "gestureSwipe", "gestureZoom", "gestureTwoFingerTap", "touchBegin", "touchEnd", "touchMove", "touchOut", "touchOver", "touchRollOut", "touchRollOver", "touchTap"];
 		
 		/** @private **/
 		protected var _target:DisplayObject;
@@ -164,6 +164,9 @@ package com.greensock {
 		 */
 		public function BlitMask(target:DisplayObject, x:Number=0, y:Number=0, width:Number=100, height:Number=100, smoothing:Boolean=false, autoUpdate:Boolean=false, fillColor:uint=0x00000000, wrap:Boolean=false) {
 			super();
+			if (width < 0 || height < 0) {
+				throw new Error("A FlexBlitMask cannot have a negative width or height.");
+			}
 			_width = width;
 			_height = height;
 			_scaleX = _scaleY = 1;
@@ -172,6 +175,7 @@ package com.greensock {
 			_autoUpdate = autoUpdate;
 			_wrap = wrap;
 			_grid = [];
+			_bounds = new Rectangle();
 			if (_smoothing) {
 				super.x = x;
 				super.y = y;
@@ -181,12 +185,16 @@ package com.greensock {
 			}
 			_clipRect = new Rectangle(0, 0, _gridSize + 1, _gridSize + 1);
 			_bd = new BitmapData(width + 1, height + 1, true, _fillColor);
+			_bitmapMode = true;
 			this.target = target;
-			this.bitmapMode = true;
 		}
 		
 		/** @private **/
 		protected function _captureTargetBitmap():void {
+			if (_bd == null || _target == null) { //must have been disposed, so don't update. 
+				return;
+			}
+			
 			_disposeGrid();
 			
 			//capturing when the target is masked (or has a scrollRect) can cause problems. 
@@ -197,6 +205,10 @@ package com.greensock {
 			var prevScrollRect:Rectangle = _target.scrollRect;
 			if (prevScrollRect != null) {
 				_target.scrollRect = null;
+			}
+			var prevFilters:Array = _target.filters;
+			if (prevFilters.length != 0) {
+				_target.filters = _emptyArray;
 			}
 			
 			_grid = [];
@@ -212,7 +224,6 @@ package com.greensock {
 			var matrix:Matrix = _transform.matrix;
 			var xOffset:Number = matrix.tx - _bounds.x;
 			var yOffset:Number = matrix.ty - _bounds.y;
-			
 			if (!_smoothing) {
 				xOffset = (xOffset + 0.5) >> 0;
 				yOffset = (yOffset + 0.5) >> 0;
@@ -233,6 +244,7 @@ package com.greensock {
 				}
 				cumulativeHeight += h;
 			}
+			
 			if (_target.parent == _tempContainer) {
 				_tempContainer.removeChild(_target);
 			}
@@ -243,15 +255,19 @@ package com.greensock {
 			if (prevScrollRect != null) {
 				_target.scrollRect = prevScrollRect;
 			}
+			if (prevFilters.length != 0) {
+				_target.filters = prevFilters;
+			}
 		}
 		
 		/** @private **/
 		protected function _disposeGrid():void {
-			var i:int = _grid.length;
+			var i:int = _grid.length, j:int, r:Array;
 			while (--i > -1) {
-				var j:int = _grid[i].length;
+				r = _grid[i];
+				j = r.length;
 				while (--j > -1) {
-					BitmapData(_grid[i][j]).dispose();
+					BitmapData(r[j]).dispose();
 				}
 			}
 		}
@@ -265,7 +281,11 @@ package com.greensock {
 		 * @param forceRecaptureBitmap Normally, the cached bitmap of the <code>target</code> is only recaptured if its scale or rotation changed because doing so is rather processor-intensive, but you can force a full update (and regeneration of the cached bitmap) by setting <code>forceRecaptureBitmap</code> to <code>true</code>.
 		 */
 		public function update(event:Event=null, forceRecaptureBitmap:Boolean=false):void {
-			if (_target.parent) {
+			if (_bd == null) {
+				return;
+			} else if (_target == null) {
+				_render();
+			}  else if (_target.parent) {
 				_bounds = _target.getBounds(_target.parent);
 				if (this.parent != _target.parent) {
 					_target.parent.addChildAt(this, _target.parent.getChildIndex(_target));
@@ -278,6 +298,9 @@ package com.greensock {
 					_render();
 				} else if (m.tx != _prevMatrix.tx || m.ty != _prevMatrix.ty) {
 					_render();
+				} else if (_bitmapMode && _target != null) {
+					this.filters = _target.filters;
+					this.transform.colorTransform = _transform.colorTransform;
 				}
 				_prevMatrix = m;
 			}
@@ -286,18 +309,13 @@ package com.greensock {
 		/** @private  **/
 		protected function _render(xOffset:Number=0, yOffset:Number=0, clear:Boolean=true, limitRecursion:Boolean=false):void {
 			//note: the code in this method was optimized for speed rather than readability or succinctness (since the whole point of this class is to help things perform better)
-			
-			if (_bounds == null) {
-				return;
-			}
-			
 			if (clear) {
 				_sliceRect.x = _sliceRect.y = 0;
 				_sliceRect.width = _width + 1;
 				_sliceRect.height = _height + 1;
 				_bd.fillRect(_sliceRect, _fillColor);
 				
-				if (_bitmapMode) {
+				if (_bitmapMode && _target != null) {
 					this.filters = _target.filters;
 					this.transform.colorTransform = _transform.colorTransform;
 				} else {
@@ -306,10 +324,18 @@ package com.greensock {
 				}
 			}
 			
+			if (_bd == null) {
+				return;
+			} else if (_rows == 0) { //sometimes (especially in Flex) objects take a frame or two to render in Flash and properly report their width/height. Before that, their width/height is typically 0. This works around that issue and forces a refresh if we didn't capture any pixels last time we did a capture.
+				_captureTargetBitmap();
+			}
+			
 			var x:Number = super.x + xOffset;
 			var y:Number = super.y + yOffset;
-			var wrapWidth:Number = _bounds.width + _wrapOffsetX;
-			var wrapHeight:Number = _bounds.height + _wrapOffsetY;
+			
+			
+			var wrapWidth:int = (_bounds.width + _wrapOffsetX + 0.5) >> 0;
+			var wrapHeight:int = (_bounds.height + _wrapOffsetY + 0.5) >> 0;
 			var g:Graphics = this.graphics;
 			
 			if (_bounds.width == 0 || _bounds.height == 0 || (_wrap && (wrapWidth == 0 || wrapHeight == 0)) || (!_wrap && (x + _width < _bounds.x || y + _height < _bounds.y || x > _bounds.right || y > _bounds.bottom))) {
@@ -368,7 +394,7 @@ package com.greensock {
 			if (_wrap && clear) {
 				//make sure to offset appropriately so that we start drawing directly on the image. We must use consistent xNudge and yNudge values across all the recursive calls too, otherwise the copies may vibrate visually a bit as they move
 				_render(Math.ceil((_bounds.x - x) / wrapWidth) * wrapWidth, Math.ceil((_bounds.y - y) / wrapHeight) * wrapHeight, false, false);
-			} else {
+			} else if (_rows != 0) {
 				var xDestReset:Number = _destPoint.x;
 				var xSliceReset:Number = _sliceRect.x;
 				var columnReset:int = column;
@@ -412,7 +438,6 @@ package com.greensock {
 					_render(xOffset, yOffset - wrapHeight, false, false);
 				}
 			}
-			
 		}
 		
 		/** 
@@ -428,6 +453,8 @@ package com.greensock {
 		public function setSize(width:Number, height:Number):void {
 			if (_width == width && _height == height) {
 				return;
+			} else if (width < 0 || height < 0) {
+				throw new Error("A BlitMask cannot have a negative width or height.");
 			} else if (_bd != null) {
 				_bd.dispose();
 			}
@@ -438,8 +465,8 @@ package com.greensock {
 		}
 		
 		/** @private **/
-		protected function _mouseEventPassthrough(event:MouseEvent):void {
-			if (this.mouseEnabled && (!_bitmapMode || this.hitTestPoint(event.stageX, event.stageY, false))) {
+		protected function _mouseEventPassthrough(event:Event):void {
+			if (this.mouseEnabled && (!_bitmapMode || (event is MouseEvent && this.hitTestPoint(MouseEvent(event).stageX, MouseEvent(event).stageY, false)))) {
 				dispatchEvent(event);
 			}
 		}
@@ -476,12 +503,51 @@ package com.greensock {
 			this.bitmapMode = false;
 		}
 		
+		/**
+		 * Repositions the <code>target</code> so that it is visible within the BlitMask, as though <code>wrap</code>
+		 * was enabled (this method is called automatically when <code>bitmapMode</code> is disabled while <code>wrap</code> 
+		 * is <code>true</code>). For example, if you tween the <code>target</code> way off the edge of the BlitMask and
+		 * have <code>wrap</code> enabled, it will appear to come back in from the other side even though the raw coordinates
+		 * of the target would indicate that it is outside the BlitMask. If you want to force the coordinates to normalize 
+		 * so that they reflect that wrapped position, simply call <code>normalizePosition()</code>. It will automatically 
+		 * choose the coordinates that would maximize the visible portion of the target if a seam is currently showing.
+		 **/
+		public function normalizePosition():void {
+			if (_target && _bounds) {
+				var wrapWidth:int = (_bounds.width + _wrapOffsetX + 0.5) >> 0;
+				var wrapHeight:int = (_bounds.height + _wrapOffsetY + 0.5) >> 0;
+				var offsetX:Number = (_bounds.x - this.x) % wrapWidth;
+				var offsetY:Number = (_bounds.y - this.y) % wrapHeight;
+				
+				if (offsetX > (_width + _wrapOffsetX) / 2) {
+					offsetX -= wrapWidth;
+				} else if (offsetX < (_width + _wrapOffsetX) / -2) {
+					offsetX += wrapWidth;
+				}
+				if (offsetY > (_height + _wrapOffsetY) / 2) {
+					offsetY -= wrapHeight;
+				} else if (offsetY < (_height + _wrapOffsetY) / -2) {
+					offsetY += wrapHeight;
+				}
+				
+				_target.x += this.x + offsetX - _bounds.x;
+				_target.y += this.y + offsetY - _bounds.y;
+			}
+		}
+		
 		/** Disposes of the BlitMask and its internal BitmapData instances, releasing them for garbage collection. **/
 		public function dispose():void {
+			if (_bd == null) { //already disposed.
+				return;
+			}
 			_disposeGrid();
 			_bd.dispose();
+			_bd = null;
 			this.bitmapMode = false;
-			_target.mask = null;
+			this.autoUpdate = false;
+			if (_target != null) {
+				_target.mask = null;
+			}
 			if (this.parent != null) {
 				this.parent.removeChild(this);
 			}
@@ -520,22 +586,29 @@ package com.greensock {
 		public function set bitmapMode(value:Boolean):void {
 			if (_bitmapMode != value) {
 				_bitmapMode = value;
-				_target.visible = !_bitmapMode;
-				update(null);
-				if (_bitmapMode) {
-					this.filters = _target.filters;
-					this.transform.colorTransform = _transform.colorTransform;
-					_target.mask = null;
-				} else {
-					this.filters = _emptyArray;
-					this.transform.colorTransform = _colorTransform;
-					this.cacheAsBitmap = false; //if cacheAsBitmap is true on both the _target and the BlitMask instance, the transparent areas of the mask will be...well...transparent which isn't what we want when bitmapMode is false (it could hide visible areas unless update(null, true) is called regularly, like if the target has animated children and bitmapMode is false)
-					_target.mask = this;
-				}
-				if (_bitmapMode && _autoUpdate) {
-					this.addEventListener(Event.ENTER_FRAME, update, false, -10, true);
-				} else {
-					this.removeEventListener(Event.ENTER_FRAME, update);
+				if (_target != null) {
+					_target.visible = !_bitmapMode;
+					update(null);
+					if (_bitmapMode) {
+						this.filters = _target.filters;
+						this.transform.colorTransform = _transform.colorTransform;
+						this.blendMode = _target.blendMode;
+						_target.mask = null;
+					} else {
+						this.filters = _emptyArray;
+						this.transform.colorTransform = _colorTransform;
+						this.blendMode = "normal";
+						this.cacheAsBitmap = false; //if cacheAsBitmap is true on both the _target and the FlexBlitMask instance, the transparent areas of the mask will be...well...transparent which isn't what we want when bitmapMode is false (it could hide visible areas unless update(null, true) is called regularly, like if the target has animated children and bitmapMode is false)
+						_target.mask = this;
+						if (_wrap) {
+							normalizePosition();
+						}
+					}
+					if (_bitmapMode && _autoUpdate) {
+						this.addEventListener(Event.ENTER_FRAME, update, false, -10, true);
+					} else {
+						this.removeEventListener(Event.ENTER_FRAME, update);
+					}
 				}
 			}
 		}
@@ -568,21 +641,26 @@ package com.greensock {
 			return _target;
 		}
 		public function set target(value:DisplayObject):void {
-			var i:int = _mouseEvents.length;
-			if (_target != null) {
-				while (--i > -1) {
-					_target.removeEventListener(_mouseEvents[i], _mouseEventPassthrough);
+			if (_target != value) {
+				var i:int = _mouseEvents.length;
+				if (_target != null) {
+					while (--i > -1) {
+						_target.removeEventListener(_mouseEvents[i], _mouseEventPassthrough);
+					}
 				}
-			}
-			_target = value;
-			if (_target != null) {
-				i = _mouseEvents.length;
-				while (--i > -1) {
-					_target.addEventListener(_mouseEvents[i], _mouseEventPassthrough, false, 0, true);
+				_target = value;
+				if (_target != null) {
+					i = _mouseEvents.length;
+					while (--i > -1) {
+						_target.addEventListener(_mouseEvents[i], _mouseEventPassthrough, false, 0, true);
+					}
+					_prevMatrix = null;
+					_transform = _target.transform;
+					_bitmapMode = !_bitmapMode; 
+					this.bitmapMode = !_bitmapMode; //forces a refresh (applying the mask, doing an update(), etc.)
+				} else {
+					_bounds = new Rectangle();
 				}
-				_prevMatrix = null;
-				_transform = _target.transform;
-				update(null);
 			}
 		}
 		
@@ -678,7 +756,7 @@ package com.greensock {
 			return (super.x - _bounds.x) / (_bounds.width - _width);
 		}
 		public function set scrollX(value:Number):void {
-			if (_target.parent) {
+			if (_target != null && _target.parent) {
 				_bounds = _target.getBounds(_target.parent);
 				var dif:Number;
 				dif = (super.x - (_bounds.width - _width) * value) - _bounds.x;
@@ -705,7 +783,7 @@ package com.greensock {
 			return (super.y - _bounds.y) / (_bounds.height - _height);
 		}
 		public function set scrollY(value:Number):void {
-			if (_target.parent) {
+			if (_target != null && _target.parent) {
 				_bounds = _target.getBounds(_target.parent);
 				var dif:Number = (super.y - (_bounds.height - _height) * value) - _bounds.y;
 				_target.y += dif;

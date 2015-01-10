@@ -20,13 +20,13 @@ package me.rainui.components
 		public function Page() 
 		{
 			super();
-			addEventListener(Event.ADDED_TO_STAGE, onAddStage);
+			addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		}
 		
-		private function onAddStage(e:Event):void 
+		private function onAddToStage(e:Event):void 
 		{
 			stage.addEventListener(Event.RESIZE, onParentResize);
-			removeEventListener(Event.ADDED_TO_STAGE, onAddStage);
+			removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			this._height = RainUI.stageHeight;
 			this._width = RainUI.stageWidth;
 		}
@@ -40,13 +40,6 @@ package me.rainui.components
 			this.mouseChildren = true;
 		}
 		
-		override protected function onAdded(e:Event):void 
-		{
-			super.onAdded(e);
-		}
-		
-		
-		
 		override protected function createChildren():void 
 		{
 			if (bgSkin == null) 
@@ -55,7 +48,7 @@ package me.rainui.components
 				Draw.rect(shape, 0, 0, 100, 100, 0xFFFFFF);
 				bgSkin = shape;
 			}
-			redraw();
+			callLater(redraw);
 			
 		}
 		
@@ -65,12 +58,6 @@ package me.rainui.components
 			_width = RainUI.stageWidth;
 			_height = RainUI.stageHeight;
 			super.resize();
-			
-			if(bgSkin)
-			{
-				bgSkin.width = _width;
-				bgSkin.height = _height;
-			}
 		}
 		
 		

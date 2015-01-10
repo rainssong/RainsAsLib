@@ -5,9 +5,7 @@
 package me.rainui.components {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import me.rainui.App;
 	import me.rainui.RainUI;
-	import morn.core.utils.BitmapUtils;
 	
 	/**增强的Bitmap，封装了位置，宽高及9宫格的处理，供组件使用*/
 	public final class AutoBitmap extends Bitmap {
@@ -118,25 +116,25 @@ package me.rainui.components {
 		}
 		
 		private function changeSize():void {
-			if (_source && _source.length > 0) {
-				var w:int = Math.round(width);
-				var h:int = Math.round(height);
+			//if (_source && _source.length > 0) {
+				//var w:int = Math.round(width);
+				//var h:int = Math.round(height);
 				//清理临时位图数据
-				disposeTempBitmapdata();
+				//disposeTempBitmapdata();
 				//重新生成新位图
-				var temp:Vector.<BitmapData> = new Vector.<BitmapData>();
-				for (var i:int = 0, n:int = _source.length; i < n; i++) {
-					if (_sizeGrid) {
-						temp.push(BitmapUtils.scale9Bmd(_source[i], _sizeGrid, w, h));
-					} else {
-						temp.push(_source[i]);
-					}
-				}
-				_clips = temp;
-				index = _index;
-				super.width = w;
-				super.height = h;
-			}
+				//var temp:Vector.<BitmapData> = new Vector.<BitmapData>();
+				//for (var i:int = 0, n:int = _source.length; i < n; i++) {
+					//if (_sizeGrid) {
+						//temp.push(BitmapUtils.scale9Bmd(_source[i], _sizeGrid, w, h));
+					//} else {
+						//temp.push(_source[i]);
+					//}
+				//}
+				//_clips = temp;
+				//index = _index;
+				//super.width = w;
+				//super.height = h;
+			//}
 		}
 		
 		/**销毁临时位图*/

@@ -7,6 +7,8 @@ package me.rainssong.math
 	
 	public final class MathCore
 	{
+		static public const DEGREE_RADIAN_RATIO:Number = 180/Math.PI;
+		static public const RADIAN_DEGREE_RATIO:Number = Math.PI/180;
 		
 		public static function getRandomNumber(min:Number, max:Number):Number
 		{
@@ -69,6 +71,58 @@ package me.rainssong.math
 			while (value > max)
 				value -= distance;
 			return value;
+		}
+		
+		public static function stepRadian(targetRadian:Number, currentRadian:Number, step:Number = Math.PI / 180, absolute:Boolean = true):Number
+		{
+			//return stepDegree(targetRadian * MathCore.DEGREE_RADIAN_RATIO, currentRadian * MathCore.DEGREE_RADIAN_RATIO, absolute?step*MathCore.DEGREE_RADIAN_RATIO:step, absolute);
+			var distance:Number = targetRadian - currentRadian;
+				
+			while (distance >= Math.PI)
+				distance = distance-Math.PI*2;
+			while (distance <= -Math.PI)
+				distance = Math.PI*2 + distance;
+
+			if(absolute)
+				distance = getRangedNumber(distance, -step, step);
+			else
+				distance = step * distance;
+			
+			return currentRadian+distance;
+		}
+		
+		public static function stepDegree(tagertDegree:Number,currentDegree:Number,step:Number=1,absolute:Boolean=true):Number
+		{
+			var degreeDistance:Number = tagertDegree - currentDegree;
+				
+			while (degreeDistance >= 180)
+				degreeDistance = degreeDistance-360;
+			while (degreeDistance <= -180)
+				degreeDistance = 360 + degreeDistance;
+
+			if(absolute)
+				degreeDistance = getRangedNumber(degreeDistance, -step, step);
+			else
+				degreeDistance = step * degreeDistance;
+			
+			return currentDegree+degreeDistance;
+		}
+		
+		public static function stepNumber(target:Number,current:Number,stepValue:Number=1,stepPercent:Number=0,minDis:Number=1):Number
+		{
+			var dis:Number = target - current;
+			stepValue *= dis > 0?1: -1;
+			var step:Number = dis * stepPercent + stepValue;
+			if ((dis-step)<=minDis && (dis-step)>=-minDis)
+				return target;
+			else
+				return current+step;
+		}
+		
+		public static function smartAtan2(y:Number,x:Number):Number
+		{
+			if (x == 0) x = 0.0001;
+			return Math.atan2(y, x);
 		}
 		
 		/**设置rect，兼容player10*/

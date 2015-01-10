@@ -1,49 +1,41 @@
 ﻿rain's as3 lib!
 ===============
 
-Contains my as3 collection and my own lib (me.rainssong.*)
-
+Contains my as3 collection and my own lib (me.rainssong.* , me.rainui.*)
 
 me.rainssong.*:
 
 powerTrace.as		//You will love it
 
----application
-ApplicationBase.as	//MutiLayerSprite
+---air					//sqlite
 
----controls
-LowLightBtn.as:		//iOS style btn
-ZoomBtn.as：		//Auto zoom btn
+---application		//to manager your app
+
+---controls			//some easy-use components(bling symbol)
+
+---date					//ChineseCalendar
 
 ---display
-SmartSprite.as:			//instead of sprite
-BitmapDataCore.as:		//Opration Bmd
+SmartSprite.as:					//instead of sprite
+BitmapDataCore.as:			//Opration Bmd
 DisplayObjectTransfer.as	//Get display instant by url|ClassName|Class
-LCDRender.as			//Get LCD View From DisplayObject
-MouseRotatableSprite.as		//Rotate when drag
+LCDRender.as					//Get LCD View From DisplayObject
+MouseRotatableSprite.as	//Rotate when drag
 RestoreLocationSprite.as	//AutoRestoreLocation
-Scale9BitmapSprite.as		
-
-ToolTip.as
-CycleBitmap.as			//Scrollable
+Scale9BitmapSprite.as		//
+CycleBitmap.as					//Scrollable
+ToolTip.as							
 
 ---events
-ApplicationEvent.as		//Login/Logout Init/Exit
-MouseInteractiveEvent.as	//with SwipeGesture
-QuestEvent.as			//with QuestModel
 
 ---manager
-EventBus.as			//Global EventDispatcher
+EventBus.as						//Global EventDispatcher
 KeyboardManager.as:		//Manage Keyboard event
-MouseManager.as			//
+MouseManager.as				//
 SingletonManager.as:		//Get singleton of any class
-SystemManager.as		//Get system information
+SystemManager.as			//Get system information
 
----math
-ArrayCore.as:			//Opition Array/Vector
-BitmapHitTestPlus.as		
-HitTest.as			
-MathCore.as:			//More math function	
+---math								//operation all data
 
 ---media
 RainStageWebView.as		//add webview to DisplayObject
@@ -64,13 +56,13 @@ RainSlideShow.as:		//Powerful Slide Show
 SoundPlayer.as
 
 ---text
-HtmlText.as			//Create htmltext
+HtmlText.as				//Create htmltext
 
 --tweenCore
-TweenCore.as		//siwtch view
+TweenCore.as			//siwtch view
 
 ---utils
-Color.as			//140 colors				
+Color.as					//140 colors				
 LocalTimer.as			//accurate timer (local timer)
 Locations.as			
 StringCore.as			//OprationString

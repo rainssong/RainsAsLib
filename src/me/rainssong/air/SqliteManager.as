@@ -208,6 +208,28 @@ package me.rainssong.air
 			sql = sqlStr + " " + sqlStr2;
 			execute(sql);
 		}
+		
+		public function deleteData(tableName:String,where:Object=null):void
+		{
+			var sql:String;
+			var s1:String = "DELETE FROM " + tableName + " ";
+			
+			if (where != null)
+			{
+				var s2:String = "WHERE ";
+				for (var obj:String in where) {
+					s2 += (obj + "='" + where[obj] + "' AND ");
+				}
+				s2 = s2.substr(0, s2.length - 5);
+				sql = s1 +" " + s2;
+			}
+			else
+			{
+				sql = s1;
+			}
+			
+			execute(sql);
+		}
 	
 	}
 

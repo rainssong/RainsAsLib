@@ -13,9 +13,6 @@ package me.rainssong.utils
 		static public const FRONT:String = "front";
 		static public const BACK:String = "back";
 		
-		/**
-		 * 水平
-		 */
 		static public const CENTER:String = "center";
 		static public const ANY:String = "any";
 		
@@ -23,6 +20,11 @@ package me.rainssong.utils
 		static public const TOP_LEFT:String = "topLeft";
 		static public const BOTTOM_RIGHT:String = "bottomRight";
 		static public const BOTTOM_LEFT:String = "bottomLeft";
+		
+		static public const WEST:String = "west";
+		static public const EAST:String = "east";
+		static public const NORTH:String = "north";
+		static public const SOUTH:String = "south";
 		
 		public function Locations() 
 		{

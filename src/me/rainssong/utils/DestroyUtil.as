@@ -150,15 +150,10 @@ package me.rainssong.utils
 			if (array != null)
 			{
 				var length:int = array.length;
-				
 				for(var i:int = 0; i < length; i++)
-				{
 					array[i] = null;
-				}
-				
 				array.length = 0;
 			}
-			
 			return array;
 		}
 		

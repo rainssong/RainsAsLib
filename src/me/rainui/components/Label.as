@@ -32,8 +32,7 @@ package me.rainui.components
 		public function Label(text:String = "", _skinName:String = null)
 		{
 			this.text = text;
-			this.skinName = _skinName;
-			
+			//this.skinName = _skinName;
 		}
 		
 		override protected function preinitialize():void
@@ -43,6 +42,7 @@ package me.rainui.components
 			_format = new TextFormat("微软雅黑", 24, 0, null, null, null, null, null, TextFormatAlign.CENTER);
 			_width = 200;
 			_height = 60;
+			_autoSize = true;
 		}
 		
 		override protected function createChildren():void
@@ -61,7 +61,7 @@ package me.rainui.components
 			textField.autoSize = TextFieldAutoSize.LEFT;
 			
 			//_bitmap.sizeGrid = [2, 2, 2, 2];
-			resize();
+			callLater(resize);
 		}
 		
 		/**显示的文本*/
@@ -82,12 +82,11 @@ package me.rainui.components
 			}
 		}
 		
-		protected function changeText():void
-		{
-			
+		//protected function changeText():void
+		//{
 			//textField.setTextFormat(_format);
 			//_isHtml ? textField.htmlText = App.lang.getLang(_text) : textField.text = App.lang.getLang(_text);
-		}
+		//}
 		
 		override public function redraw():void 
 		{
@@ -100,45 +99,39 @@ package me.rainui.components
 		
 		override public function resize():void
 		{
+			super.resize();
+			
+			textField.x = 2;
+			textField.y = 2;
 			if (_autoSize)
 			{
-				_width = textField.textWidth + 4 + textField.x;
-				_height = textField.textHeight + 4 + textField.y;
-			}
-			
-			if (!isNaN(_width))
-			{
-				textField.autoSize = TextFieldAutoSize.NONE;
-				textField.width = _width - _margin[0] - _margin[2];
-				if (isNaN(_height) && wordWrap)
+				if (wordWrap)
 				{
-					textField.autoSize = TextFieldAutoSize.LEFT;
+					textField.width = _width;
+					textField.height = textField.textHeight + 2;
 				}
 				else
 				{
-					_height = isNaN(_height) ? Math.max(textField.textHeight, 40) : _height;
-					textField.height = Math.min(_height - _margin[1] - _margin[3], textField.textHeight + 4);
-					//textField.height = _height - _margin[1] - _margin[3];
-					textField.y = _height * 0.5 - textField.height * 0.5;
-					
+					textField.height = _height;
+					textField.width = textField.textWidth + 2;
 				}
+				_height = textField.height + 4 + textField.x;
+				_width = textField.width + 4 + textField.y;
 			}
 			else
 			{
-				_width = _height = NaN;
-				textField.autoSize = TextFieldAutoSize.LEFT;
+				textField.width = _width;
+				textField.height = _height;
 			}
-			//changeText();
-			super.resize();
-		
 		}
 		
 		override public function showBorder(color:uint = 0xff0000, content:Boolean = false):void
 		{
 			super.showBorder(color, content);
 			
-			_border.graphics.lineStyle(1, 0x00FF00);
-			_border.graphics.drawRect(textField.x, textField.y, textField.width, textField.height);
+			_border.graphics.lineStyle(0.1, 0x00FF00);
+			if(content)
+				_border.graphics.drawRect(textField.x, textField.y, textField.width, textField.height);
 		}
 		
 		/**是否是html格式*/
@@ -152,7 +145,7 @@ package me.rainui.components
 			if (_isHtml != value)
 			{
 				_isHtml = value;
-				//callLater(changeText);
+				//callLater(redraw);
 				callLater(redraw);
 			}
 		}
@@ -261,7 +254,7 @@ package me.rainui.components
 		public function set color(value:Object):void
 		{
 			_format.color = value;
-			callLater(changeText);
+			callLater(redraw);
 		}
 		
 		/**字体类型*/
@@ -273,7 +266,7 @@ package me.rainui.components
 		public function set font(value:String):void
 		{
 			_format.font = value;
-			callLater(changeText);
+			callLater(redraw);
 		}
 		
 		/**对齐方式*/
@@ -285,7 +278,7 @@ package me.rainui.components
 		public function set align(value:String):void
 		{
 			_format.align = value;
-			callLater(changeText);
+			callLater(redraw);
 		}
 		
 		/**粗体类型*/
@@ -297,7 +290,7 @@ package me.rainui.components
 		public function set bold(value:Object):void
 		{
 			_format.bold = value;
-			callLater(changeText);
+			callLater(redraw);
 		}
 		
 		/**垂直间距*/
@@ -309,7 +302,7 @@ package me.rainui.components
 		public function set leading(value:Object):void
 		{
 			_format.leading = value;
-			callLater(changeText);
+			callLater(redraw);
 		}
 		
 		/**第一个字符的缩进*/
@@ -321,7 +314,7 @@ package me.rainui.components
 		public function set indent(value:Object):void
 		{
 			_format.indent = value;
-			callLater(changeText);
+			callLater(redraw);
 		}
 		
 		/**字体大小*/
@@ -333,7 +326,7 @@ package me.rainui.components
 		public function set size(value:Object):void
 		{
 			_format.size = value;
-			callLater(changeText);
+			callLater(redraw);
 		}
 		
 		/**下划线类型*/
@@ -345,7 +338,7 @@ package me.rainui.components
 		public function set underline(value:Object):void
 		{
 			_format.underline = value;
-			callLater(changeText);
+			callLater(redraw);
 		}
 		
 		/**字间距*/
@@ -357,7 +350,7 @@ package me.rainui.components
 		public function set letterSpacing(value:Object):void
 		{
 			_format.letterSpacing = value;
-			callLater(changeText);
+			callLater(redraw);
 		}
 		
 		/**边距(格式:左边距,上边距,右边距,下边距)*/
@@ -383,7 +376,7 @@ package me.rainui.components
 		public function set format(value:TextFormat):void
 		{
 			_format = value;
-			callLater(changeText);
+			callLater(redraw);
 		}
 		
 		/**将指定的字符串追加到文本的末尾*/
@@ -393,21 +386,21 @@ package me.rainui.components
 		}
 		
 		/**皮肤*/
-		public function get skinName():String
-		{
-			return _skinName;
-		}
-		
-		public function set skinName(value:String):void
-		{
-			if (_skinName != value)
-			{
-				_skinName = value;
-					//_bitmap.bitmapData = RainUI.asset.getBitmapData(_skin);
-					//_contentWidth = _bitmap.bitmapData.width;
-					//_contentHeight = _bitmap.bitmapData.height;
-			}
-		}
+		//public function get skinName():String
+		//{
+			//return _skinName;
+		//}
+		//
+		//public function set skinName(value:String):void
+		//{
+			//if (_skinName != value)
+			//{
+				//_skinName = value;
+				//_bitmap.bitmapData = RainUI.asset.getBitmapData(_skin);
+				//_contentWidth = _bitmap.bitmapData.width;
+				//_contentHeight = _bitmap.bitmapData.height;
+			//}
+		//}
 		
 		/**九宫格信息(格式:左边距,上边距,右边距,下边距)*/
 		//public function get sizeGrid():String {
@@ -427,11 +420,11 @@ package me.rainui.components
 			return 0;
 		}
 		
-		override public function set width(value:Number):void
-		{
-			super.width = value;
+		//override public function set width(value:Number):void
+		//{
+			//super.width = value;
 			//_bitmap.width = value;
-		}
+		//}
 		
 		override public function get height():Number
 		{
@@ -442,11 +435,11 @@ package me.rainui.components
 			return 0;
 		}
 		
-		override public function set height(value:Number):void
-		{
-			super.height = value;
+		//override public function set height(value:Number):void
+		//{
+			//super.height = value;
 			//_bitmap.height = value;
-		}
+		//}
 		
 		override public function set dataSource(value:Object):void
 		{

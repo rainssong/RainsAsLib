@@ -45,7 +45,6 @@ package me.rainssong.rainMVC.view
 		protected function onAdd(e:Event = null):void
 		{
 			_viewComponent.removeEventListener(Event.ADDED_TO_STAGE, onAdd);
-		
 		}
 		
 		protected function onRemove(e:Event = null):void
@@ -186,13 +185,6 @@ package me.rainssong.rainMVC.view
 			}
 		
 		}
-		
-		
-		//override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
-		//{
-			//
-			//super.addEventListener(type, listener, useCapture, priority, useWeakReference);
-		//}
 		
 		public function get viewComponent():DisplayObject 
 		{

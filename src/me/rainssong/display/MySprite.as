@@ -10,7 +10,7 @@
 	import flash.utils.Timer;
 	
 	/**
-	 * ...
+	 * instead by SmartSprite
 	 * @author Rainssong
 	 * Can self destroy when removed from stage
 	 */

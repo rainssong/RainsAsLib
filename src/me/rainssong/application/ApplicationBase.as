@@ -4,6 +4,7 @@
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.events.FullScreenEvent;
 	import flash.utils.getDefinitionByName;
 	import me.rainssong.display.SmartSprite;
 	
@@ -11,37 +12,28 @@
 	 * ...
 	 * @author Rainssong
 	 */
-	public class ApplicationBase extends SmartSprite 
+	public class ApplicationBase extends Sprite 
 	{
-		protected var _instance:ApplicationBase;
-		protected var _bgLayer:SmartSprite;
-		protected var _mainLayer:SmartSprite;
-		protected var _uiLayer:SmartSprite;
-		protected var _warningLayer:SmartSprite
-		
+		static protected var _instance:ApplicationBase;
 		
 		
 		public function ApplicationBase() 
 		{
-			super();
+			if(stage)
+				this.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+			else
+				onAddToStage();
 		}
 		
-		override protected function onAdd(e:Event = null):void 
+		protected function onAddToStage(e:Event = null):void 
 		{
-			super.onAdd(e);
-			
-			
-			_bgLayer = new SmartSprite();
-			
-			_mainLayer = new SmartSprite();
-			_uiLayer = new SmartSprite();
-			_warningLayer = new SmartSprite();
-			addChild(_bgLayer);
-			
-			addChild(_mainLayer);
-			addChild(_uiLayer);
-			addChild(_warningLayer);
-			
+			stage.removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+			ApplicationManager.init(stage);
+			_instance = this;
+			stage.addEventListener(FullScreenEvent.FULL_SCREEN, onFullScreen);
+			stage.addEventListener(Event.RESIZE, onStageResize);
+			stage.addEventListener(Event.DEACTIVATE, onStageDeactivate);
+			stage.addEventListener(Event.ACTIVATE, onStageActivate);
 			try 
 			{
 				var StageOrientationEvent:Class = getDefinitionByName("StageOrientationEvent") as Class;
@@ -51,6 +43,26 @@
 			{
 				trace("不支持旋转");
 			}
+		}
+		
+		private function onStageResize(e:Event):void 
+		{
+			
+		}
+		
+		private function onFullScreen(e:Event):void 
+		{
+			
+		}
+		
+		private function onStageDeactivate(e:Event):void 
+		{
+			
+		}
+		
+		private function onStageActivate(e:Event):void 
+		{
+			
 		}
 		
 		
@@ -74,25 +86,9 @@
 			//}
 		}
 		
-		public function get bgLayer():SmartSprite 
+		static public function get instance():ApplicationBase 
 		{
-			return _bgLayer;
-		}
-		
-		
-		public function get mainLayer():SmartSprite 
-		{
-			return _mainLayer;
-		}
-		
-		public function get uiLayer():SmartSprite 
-		{
-			return _uiLayer;
-		}
-		
-		public function get warningLayer():SmartSprite 
-		{
-			return _warningLayer;
+			return _instance||new ApplicationBase();
 		}
 	}
 

@@ -26,7 +26,7 @@
 			super();
 			webWidth= width;
 			webHeight = height;
-			addChild(_webloader)
+			//addChild(_webView)
 		}
 		
 		override protected function onRegister():void 

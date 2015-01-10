@@ -42,6 +42,7 @@ local.properties
 
 # Build results
 [Rr]elease/
+bin
 bin-debug
 bin-release
 *_i.c

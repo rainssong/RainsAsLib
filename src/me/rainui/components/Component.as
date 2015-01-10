@@ -222,17 +222,17 @@
 		public function get contentHeight():Number
 		{
 			//commitMeasure();
-			//var max:Number = 0;
-			//for (var i:int = numChildren - 1; i > -1; i--)
-			//{
-				//var comp:DisplayObject = getChildAt(i);
-				//if (comp.visible)
-				//{
-					//max = Math.max(comp.y + comp.height * comp.scaleY, max);
-				//}
-			//}
-			//return max;
-			return this.getBounds(this).height;
+			var max:Number = 0;
+			for (var i:int = numChildren - 1; i > -1; i--)
+			{
+				var comp:DisplayObject = getChildAt(i);
+				if (comp.visible)
+				{
+					max = Math.max(comp.y + comp.height * comp.scaleY, max);
+				}
+			}
+			return max;
+			//return this.getBounds(this).height;
 		}
 		
 		
@@ -260,11 +260,6 @@
 			return scaleX;
 		}
 		
-		//public function commitMeasure():void
-		//{
-		//
-		//}
-		
 		//尺寸改变后调用
 		public function resize():void
 		{
@@ -283,10 +278,8 @@
 			clearCallLater(redraw);
 			var currentBgSkin:DisplayObject = getChildByName("bgSkin");
 			if (currentBgSkin!=null && currentBgSkin!=bgSkin)
-			{
 				removeChild(currentBgSkin);
-			}
-			if (bgSkin)
+			if (bgSkin && bgSkin.parent==null)
 			{
 				addChildAt(bgSkin,0);
 				bgSkin.name = "bgSkin";
@@ -353,8 +346,8 @@
 		public function set autoSize(value:Boolean):void 
 		{
 			_autoSize = value;
+			callLater(resize);
 		}
-		
 		
 		
 		public function destroy():void

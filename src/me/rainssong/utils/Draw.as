@@ -34,12 +34,13 @@ package me.rainssong.utils
 		static public function getSprite(drawFun:Function = null, args:Array = null):Sprite
 		{
 			var sp:Sprite = new Sprite();
-			args.unshift(sp.graphics);
+			args ||= [];
+			
 			if (drawFun != null)
 			{
 				var _args:Array = args.slice();
 				_args.unshift(sp.graphics);
-				drawFun.call(_args);
+				drawFun.apply(_args,_args);
 			}
 			return sp;
 		}

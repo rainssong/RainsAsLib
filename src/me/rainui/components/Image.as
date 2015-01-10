@@ -1,6 +1,8 @@
 package me.rainui.components
 {
-	import com.rainui.components.Component;
+	import flash.display.BitmapData;
+	import me.rainui.components.Component;
+	import me.rainui.events.RainUIEvent;
 	
 	/**
 	 * ...
@@ -20,7 +22,7 @@ package me.rainui.components
 		
 		override protected function createChildren():void
 		{
-			addChild(_bitmap = new AutoBitmap());
+			addChild(_bitmap = new SmartBitmap());
 		}
 		
 		/**图片地址*/
@@ -36,14 +38,14 @@ package me.rainui.components
 				_url = value;
 				if (Boolean(value))
 				{
-					if (App.asset.hasClass(_url))
-					{
-						bitmapData = App.asset.getBitmapData(_url);
-					}
-					else
-					{
-						App.loader.loadBMD(_url, new Handler(setBitmapData, [_url]));
-					}
+					//if (App.asset.hasClass(_url))
+					//{
+						//bitmapData = App.asset.getBitmapData(_url);
+					//}
+					//else
+					//{
+						//App.loader.loadBMD(_url, new Handler(setBitmapData, [_url]));
+					//}
 				}
 				else
 				{
@@ -60,13 +62,13 @@ package me.rainui.components
 		
 		public function set bitmapData(value:BitmapData):void
 		{
-			if (value)
-			{
-				_contentWidth = value.width;
-				_contentHeight = value.height;
-			}
+			//if (value)
+			//{
+				//_contentWidth = value.width;
+				//_contentHeight = value.height;
+			//}
 			_bitmap.bitmapData = value;
-			sendEvent(UIEvent.IMAGE_LOADED);
+			//sendEvent(RainUIEvent.IMAGE_LOADED);
 		}
 		
 		protected function setBitmapData(url:String, bmd:BitmapData):void
@@ -101,11 +103,11 @@ package me.rainui.components
 		
 		public function set sizeGrid(value:String):void
 		{
-			_bitmap.sizeGrid = StringUtils.fillArray(Styles.defaultSizeGrid, value);
+			//_bitmap.sizeGrid = StringUtils.fillArray(Styles.defaultSizeGrid, value);
 		}
 		
 		/**位图控件实例*/
-		public function get bitmap():AutoBitmap
+		public function get bitmap():SmartBitmap
 		{
 			return _bitmap;
 		}
@@ -138,11 +140,11 @@ package me.rainui.components
 		 * @param	clearFromLoader 是否同时删除加载缓存*/
 		public function dispose(clearFromLoader:Boolean = false):void
 		{
-			App.asset.disposeBitmapData(_url);
+			//App.asset.disposeBitmapData(_url);
 			_bitmap.bitmapData = null;
 			if (clearFromLoader)
 			{
-				App.loader.clearResLoaded(_url);
+				//App.loader.clearResLoaded(_url);
 			}
 		}
 	

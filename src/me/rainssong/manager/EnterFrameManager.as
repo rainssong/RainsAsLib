@@ -12,7 +12,8 @@ package me.rainssong.manager
 	{
 		private var _target:DisplayObject;
 		private var _frameCount:int = 0;
-		private var _funDic:Dictionary ;
+		private var _stepDic:Dictionary ;
+		private var _paramsDic:Dictionary ;
 		private var _isPaused:Boolean ;
 		
 		public function EnterFrameManager(target:DisplayObject=null, autoStart:Boolean = false) 
@@ -25,11 +26,11 @@ package me.rainssong.manager
 		{
 			destroy();
 			
-			_funDic = new Dictionary();
+			_stepDic = new Dictionary();
+			_paramsDic = new Dictionary();
 			_frameCount = 0;
 			_isPaused= true;
 			_target = target;
-			
 		}
 		
 		public function start():void
@@ -48,35 +49,40 @@ package me.rainssong.manager
 		public function onEnterFrame(e:Event):void
 		{
 			_frameCount++;
-			for ( var i:* in _funDic)
+			for ( var i:Function in _stepDic)
 			{
-				if (_funDic[i] == 1)
+				if (_stepDic[i] == 1)
 				{
-					i();
+					if (_paramsDic[i]!=null) i.apply(this, _paramsDic[i]);
+					else i();
 					continue;
 				}
 				
-				if (_frameCount % _funDic[i] == 0 )i();
+				if (_frameCount % _stepDic[i] == 0 )
+					if (_paramsDic[i]) i.apply(this, _paramsDic[i]);
+					else i();
 			}
 			
 		}
 		
-		public function addFun(fun:Function, step:int = 1):void
+		public function addFun(fun:Function, step:int = 1,...params):void
 		{
-			_funDic[fun] = step;
+			_stepDic[fun] = step;
+			_paramsDic[fun] = params;
 			
 		}
 		
 		public function removeFun(fun:Function):void
 		{
-			delete _funDic[fun];
+			delete _stepDic[fun];
 		}
 		
 		public function clear():void
 		{
 			if(_target)
 				_target.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
-			_funDic = null;
+			_stepDic = null;
+			_paramsDic = null;
 			_isPaused = true;
 		}
 		

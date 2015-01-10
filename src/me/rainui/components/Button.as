@@ -65,7 +65,6 @@ package me.rainui.components
 		{
 			super();
 			this.text = text;
-		
 		}
 		
 		override protected function preinitialize():void
@@ -111,8 +110,10 @@ package me.rainui.components
 			if (this.label == null)
 			{
 				label = new Label();
-				label.dataSource = {left: 4, right: 4, top:4,bottom:4};
-				label.align = "center";
+				//label.dataSource = {left: 4, right: 4, top:4,bottom:4};
+				label.centerX = 0;
+				label.centerY = 0;
+				label.autoSize = true;
 				label.format = defaultTextFormat;
 			}
 			
@@ -122,7 +123,6 @@ package me.rainui.components
 		
 		override protected function initialize():void
 		{
-			
 			addEventListener(MouseEvent.ROLL_OVER, onRollOver);
 			addEventListener(MouseEvent.ROLL_OUT, onRollOut);
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -130,14 +130,12 @@ package me.rainui.components
 			addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseUp);
 			addEventListener(MouseEvent.CLICK, onClick);
 			
-			redraw();
-			//resize();
+			callLater(redraw);
 		}
 		
 		override public function resize():void
 		{
 			super.resize();
-			
 			
 			if (this.normalSkin)
 			{
@@ -163,25 +161,24 @@ package me.rainui.components
 		
 		protected function onRollOver(e:MouseEvent):void
 		{
-			//powerTrace(e.type);
+			
+			//含redraw
+			state = HOVER;
 		}
 		
 		protected function onRollOut(e:MouseEvent):void
 		{
-			//powerTrace(e.type);
+			state = NORMAL;
 		}
 		
 		protected function onMouseDown(e:MouseEvent):void
 		{
-			//powerTrace(e.type);
-			_state = MOUSE_DOWN;
-			redraw();
+			state = MOUSE_DOWN;
 		}
 		
 		protected function onMouseUp(e:MouseEvent):void
 		{
-			_state = NORMAL;
-			redraw();
+			state = NORMAL;
 		}
 		
 		protected function onClick(e:MouseEvent):void
@@ -275,20 +272,21 @@ package me.rainui.components
 		protected function set state(value:String):void
 		{
 			_state = value;
-			//callLater(redraw);
+			callLater(redraw);
 		}
 		
 		override public function redraw():void
 		{
-			//super.redraw();
+			clearCallLater(redraw);
 			//_bitmap.index = _state;
 			//label.color = labelColors[_state];
-			addChildAt(normalSkin, 0);
-			normalSkin.visible = false;
+			
+			
 			
 			if (downSkin)
 			{
-				addChild(downSkin);
+				if(downSkin.parent==null)
+					addChild(downSkin);
 				downSkin.visible = false;
 			}
 			
@@ -296,9 +294,15 @@ package me.rainui.components
 			{
 				case MOUSE_DOWN: 
 					if (downSkin)
-						downSkin.visible = true;
+					{
+						if(downSkin.parent==null)
+							addChild(downSkin);
+						downSkin.visible = false;
+					}
 					else
 					{
+						if (normalSkin.parent == null)
+							addChildAt(normalSkin, 0);
 						normalSkin.visible = true;
 						this.transform.colorTransform = darkColorTrans;
 					}
@@ -332,7 +336,6 @@ package me.rainui.components
 		public function set toggle(value:Boolean):void
 		{
 			_toggle = value;
-		
 		}
 		
 		override public function set disabled(value:Boolean):void
@@ -511,8 +514,9 @@ package me.rainui.components
 		
 		public function set showIcon(value:Boolean):void
 		{
+			if (_showIcon == value) return;
 			_showIcon = value;
-			redraw();
+			callLater(redraw);
 		}
 	
 	}

@@ -5,42 +5,41 @@
 用户修改外观和事件处理
 更新显示
 
-
 功能：
 自带皮肤
 动态换肤
 低耦合
 自适应也可拉伸
 视图基于DisplayObject
-接受flash绑定
+接受类绑定
 事件触发提供方法用于重写和修改
 组件即组件的集合，需要代理内部组件属性
-检测parent 自动resize ，内容自我决定显示方式，可以和非RainUI元素结合
+检测parent 自动resize ，内容自我决定显示方式，可以和非RainUI元素自由结合
 提供自动缩放机制,autosclemode:NONE/MAX_SCALE/MIN_SCALE 与 percent联动
+绑定机制：自适应参照物可修改
+DPI缩放
+大小的变化：根据百分比；根据实际像素；根据DPI（生活宽度）
+内容缩放：
+	全局DPI缩放
+	内容缩放管理（类似DisplayResizer），由组件决定是否缩放，提供外部接口。
 
 自适应优先级：
 DPI位置 宽高
 百分比位置 宽高
-绝对位置
-绝对宽高
-
-自动化命令:
-	更新尺寸resize
-	更新显示内容redraw
+绝对位置 宽高
 	
-自动更新流（Resize 不可触发 redraw）：
-	parent resize
-	resize
-	
-	content change
-	redraw
-	resize
+执行顺序：
+//refreashContent(手动触发)——更新部件后手动触发，该功能可置入redraw中
+redraw（内容改变）——手动触发或内部参数触发
+resize（大小改变）——redraw触发(具体由组件决定)，父容器触发
+move（坐标改变）——resize触发(100%触发)，内部参数触发
 
 宽定义:
 	width:定义宽度
 	percentWidth:百分比宽度
 	actualWidth:实际显示宽度(Math.max(内容宽+内容x),定义宽*scaleX)) 计算时使用
 	contentWidth:内容宽度
+	defaultWidth:默认宽度，用于等比缩放，还原
 	scaleX:
 
 类：
@@ -54,8 +53,7 @@ Image：
 	可以单独更新：btn.normalSkin=new display;
 	集体更新：btn.skinName="darkSkin";向当前theme请求一整套皮肤。
 	
-
-容器决定内容显示方式？
-callLater和手动立即执行重复
-
-
+2015-01-03
+昨天看网页自适应方案有所启发，无论是文字还是图片，都可以采用ScaleMode来解决缩放问题
+字体大小的问题，由theme分配大小，字号与屏幕分辨率相关。
+1pt=Math.floor(96/72pixel)
