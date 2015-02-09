@@ -8,6 +8,10 @@ package  me.rainssong.events
 	 */
 	public class ObjectEvent extends Event 
 	{
+		//static public const SUCCESS:String = "unselect";
+		//static public const FAILED:String = "unselect";
+		//static public const UNSELECT:String = "unselect";
+		//static public const UNSELECT:String = "unselect";
 		static public const UNSELECT:String = "unselect";
 		public var  data:*;
 		

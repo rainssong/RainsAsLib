@@ -31,7 +31,7 @@ package me.rainui.components
 			Draw.rect(shape, 0, 0,2, 100,RainTheme.DARK_BLUE);
 			Draw.rect(shape, 98, 0, 2, 100, RainTheme.DARK_BLUE);
 			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
-			normalSkin = shape;
+			_normalSkin = shape;
 			
 			super.createChildren();
 			

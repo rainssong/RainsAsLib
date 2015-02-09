@@ -26,7 +26,8 @@ package  me.rainssong.manager
 				return true;
 			else return false;
 		}
-			
+		
+		//BUG: Did not work
 		public static function get isDebugMode():Boolean
 		{
 			try

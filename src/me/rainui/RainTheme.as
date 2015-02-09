@@ -26,6 +26,7 @@ package me.rainui
 		static public const BLUE:uint = 0x48b7e0;
 		
 		static public const LIGHT_READ:uint = 0xed5565;
+		
 		static public const LIGHT_GREEN:uint = 0xa0d468;
 		
 		static public const LIGHT_GRAY:uint = 0xe3e4e8
@@ -34,18 +35,17 @@ package me.rainui
 		
 		static public const WHITE:uint = 0xFFFFFF;
 		
-		static public var darkColorTrans:ColorTransform = new ColorTransform(0.7, 0.7, 0.7, 1, 0, 0, 0, 0);
-		
-		static private var grayTextFormat:TextFormat = new TextFormat(null, 32, GRAY, null, null, null, null, null, TextFormatAlign.CENTER);
-		
-		static private var whiteTextFormat:TextFormat = new TextFormat(null, 32, 0xffffff, null, null, null, null, null, TextFormatAlign.CENTER);
-		static private var blackTextFormat:TextFormat = new TextFormat(null, 32, 0, null, null, null, null, null, TextFormatAlign.CENTER);
-		
 		static public const WHITE_TEXT_FORMAT:String = "whiteTextFormat";
 		static public const BLACK_TEXT_FORMAT:String = "blackTextFormat";
 		static public const GRAY_TEXT_FORMAT:String = "grayTextFormat";
 		
-		private var _skinSetDic:Dictionary = new Dictionary();
+		static public const darkColorTrans:ColorTransform = new ColorTransform(0.7, 0.7, 0.7, 1, 0, 0, 0, 0);
+		
+		static private const grayTextFormat:TextFormat = new TextFormat(null, 32, GRAY, null, null, null, null, null, TextFormatAlign.CENTER);
+		static private const whiteTextFormat:TextFormat = new TextFormat(null, 32, 0xffffff, null, null, null, null, null, TextFormatAlign.CENTER);
+		static private const blackTextFormat:TextFormat = new TextFormat(null, 32, 0, null, null, null, null, null, TextFormatAlign.CENTER);
+		
+		private var _configDic:Dictionary = new Dictionary();
 		private var _skinDic:Dictionary = new Dictionary();
 		
 		public function RainTheme()
@@ -55,47 +55,19 @@ package me.rainui
 		
 		public function init():void
 		{
-			//_skinDic["btnDarkBlueNormalSkin"] = btnDarkBlueNormalSkin;
-			//_skinDic["darkBlueSkin"] = darkBlueSkin;
-		
+			//_configDic
+			_skinDic["darkBlueRoundSkin"] = darkBlueRoundSkinFactory;
+			_skinDic["darkBlueRoundFlatSkin"] = darkBlueRoundFlatSkinFactory;
 		}
 		
-		public function getSkinSet(skinSetName:String = "default"):Object
+		public function getConfigs(configName:String = "default"):Object
 		{
-			return _skinSetDic[skinSetName];
+			return _configDic[configName];
 		}
 		
 		public function getSkin(skinName:String = "default"):DisplayObject
 		{
-			return _skinDic[skinName];
-		}
-		
-		public function get darkBlueRoundSkin():DisplayObject
-		{
-			var shape:Shape = new Shape();
-			
-			Draw.drawGraphics(shape.graphics, shape.graphics.drawRoundRect, LIGHT_BLUE, 0, 0, 100, 100, 4, 4);
-			Draw.drawGraphics(shape.graphics, shape.graphics.drawRoundRect, DARK_BLUE, 0, 0, 100, 96, 4, 4);
-			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
-			return shape;
-		}
-		
-		public function get darkBlueSkin():DisplayObject
-		{
-			var shape:Shape = new Shape();
-			
-			Draw.rect(shape, 0, 0, 100, 100, LIGHT_BLUE);
-			Draw.rect(shape, 0, 0, 100, 96, DARK_BLUE);
-			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
-			return shape;
-		}
-		
-		public function get bgBlueSkin():DisplayObject
-		{
-			var shape:Shape = new Shape();
-			Draw.rect(shape.graphics, 0, 0, 100, 100, BLUE);
-			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
-			return shape;
+			return _skinDic[skinName]();
 		}
 		
 		public static function getTextFormat(name:String = ""):TextFormat
@@ -115,6 +87,43 @@ package me.rainui
 					return ObjectCore.clone(whiteTextFormat);
 			}
 		}
+		
+		public function darkBlueRoundSkinFactory():DisplayObject
+		{
+			var shape:Shape = new Shape();
+			Draw.drawGraphics(shape.graphics, shape.graphics.drawRoundRect, LIGHT_BLUE, 0, 0, 100, 100, 4, 4);
+			Draw.drawGraphics(shape.graphics, shape.graphics.drawRoundRect, DARK_BLUE, 0, 0, 100, 96, 4, 4);
+			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
+			return shape;
+		}
+		
+		public function darkBlueSkinFactory():DisplayObject
+		{
+			var shape:Shape = new Shape();
+			
+			Draw.rect(shape, 0, 0, 100, 100, LIGHT_BLUE);
+			Draw.rect(shape, 0, 0, 100, 96, DARK_BLUE);
+			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
+			return shape;
+		}
+		
+		public function bgBlueSkinFactory():DisplayObject
+		{
+			var shape:Shape = new Shape();
+			Draw.rect(shape.graphics, 0, 0, 100, 100, BLUE);
+			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
+			return shape;
+		}
+		
+		public function darkBlueRoundFlatSkinFactory():DisplayObject
+		{
+			var shape:Shape = new Shape();
+			Draw.drawGraphics(shape.graphics, shape.graphics.drawRoundRect, DARK_BLUE, 0, 0, 100, 100, 4, 4);
+			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
+			return shape;
+		}
+		
+		
 	
 	}
 

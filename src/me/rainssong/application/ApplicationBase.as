@@ -5,6 +5,8 @@
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.FullScreenEvent;
+	import flash.media.AudioPlaybackMode;
+	import flash.media.SoundMixer;
 	import flash.utils.getDefinitionByName;
 	import me.rainssong.display.SmartSprite;
 	
@@ -29,6 +31,7 @@
 		{
 			stage.removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			ApplicationManager.init(stage);
+			SoundMixer.audioPlaybackMode = AudioPlaybackMode.AMBIENT;
 			_instance = this;
 			stage.addEventListener(FullScreenEvent.FULL_SCREEN, onFullScreen);
 			stage.addEventListener(Event.RESIZE, onStageResize);

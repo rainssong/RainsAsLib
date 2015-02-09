@@ -2,6 +2,7 @@ package me.rainui.components
 {
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
+	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
@@ -20,18 +21,15 @@ package me.rainui.components
 	 */
 	public class DisplayResizer extends Container
 	{
-		public var content:DisplayObject
+		protected var _content:DisplayObject
 	
 		private var _contentScaleMode:String = ScaleMode.FULL_FILL;
 		private var _contentAlign:String = Align.CENTER;
 		
 		public function DisplayResizer(content:DisplayObject=null)
 		{
-			if (content != null)
-			{
+			if(content)
 				this.content = content;
-				redraw();
-			}
 		}
 		
 		override protected function preinitialize():void 
@@ -41,23 +39,21 @@ package me.rainui.components
 			_height = 100;
 		}
 		
+		override protected function createChildren():void 
+		{
+			if (_content != null)
+				this._content = new Sprite();
+			super.createChildren();
+		}
+		
 		override public function redraw():void 
 		{
 			super.redraw();
-			
-			//if (this.content && this.content.parent)
-				//this.content.parent.removeChild(this.content);
-			//this.content = content;
-			this.content.name = "content";
-			addChild(this.content);
-			
-			if (this.content is Loader)
+			if (this._content is Loader)
 			{
-				var l:Loader = this.content as Loader;
+				var l:Loader = this._content as Loader;
 				l.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
 			}
-			
-			callLater(resize);
 		}
 		
 		private function onLoadComplete(e:Event):void
@@ -168,6 +164,18 @@ package me.rainui.components
 			if (_contentAlign == value) return;
 			_contentAlign = value;
 			callLater(resize);
+		}
+		
+		public function get content():DisplayObject 
+		{
+			return _content;
+		}
+		
+		public function set content(value:DisplayObject):void 
+		{
+			swapContent(_content, value);
+			_content = value;
+			callLater(redraw);
 		}
 	
 	}

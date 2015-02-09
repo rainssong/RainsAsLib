@@ -1,0 +1,36 @@
+package me.rainui.components 
+{
+	import adobe.utils.CustomActions;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
+	import flash.display.Shape;
+	import flash.events.Event;
+	import flash.geom.Matrix;
+	import me.rainssong.utils.Draw;
+	import me.rainui.RainUI;
+	/**
+	 * ...
+	 * @author Rainssong
+	 */
+	public class Scene extends Container 
+	{
+		//public var btnSkinClass:Class = Button;
+		
+		public function Scene() 
+		{
+			
+		}
+		
+		override protected function preinitialize():void 
+		{
+			super.preinitialize();
+			this.percentWidth = 1;
+			this.percentHeight = 1;
+			//this.mouseEnabled = true;
+			this.mouseChildren = true;
+		}
+		
+	}
+
+}

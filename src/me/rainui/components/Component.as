@@ -4,6 +4,7 @@
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	import me.rainui.events.RainUIEvent;
 	import me.rainui.RainUI;
 	
@@ -30,13 +31,15 @@
 		protected var _scaleLock:Boolean = false;
 		
 		protected var _border:Shape = new Shape();
+		protected var _borderVisible:Boolean = false;
 		
 		protected var _autoSize:Boolean = false;
 		
-		public var bgSkin:DisplayObject;
+		protected var _bgSkin:DisplayObject;
 		
-		public function Component()
+		public function Component(dataSource:Object=null)
 		{
+			this.dataSource = dataSource;
 			mouseChildren = tabEnabled = tabChildren = false;
 			preinitialize();
 			createChildren();
@@ -51,7 +54,11 @@
 		
 		protected function createChildren():void
 		{
-		
+			if (bgSkin == null)
+			{
+				bgSkin = new Shape();
+				addChild(bgSkin);
+			}
 		}
 		
 		protected function preinitialize():void
@@ -66,7 +73,6 @@
 				RainUI.render.callLater(method, args);
 			else
 				method.apply(this, args);
-			//App.render.callLater(method, args);
 		}
 		
 		public function exeCallLater(method:Function):void
@@ -75,40 +81,32 @@
 				RainUI.render.exeCallLater(method);
 			else
 				method.apply(this);
-			//App.render.exeCallLater(method);
 		}
 		
 		public function clearCallLater(method:Function):void
 		{
 			if (RainUI.render)
 				RainUI.render.clearCallLater(method);
-			//App.render.exeCallLater(method);
 		}
 		
 		
 		public function sendEvent(type:String, data:* = null):void
 		{
 			if (hasEventListener(type))
-			{
 				dispatchEvent(new RainUIEvent(type, data));
-			}
 		}
 		
 		public function remove():void
 		{
 			if (parent)
-			{
 				parent.removeChild(this);
-			}
 		}
 		
 		public function removeChildByName(name:String):void
 		{
 			var display:DisplayObject = getChildByName(name);
 			if (display)
-			{
 				removeChild(display);
-			}
 		}
 		
 		public function setPostion(x:Number, y:Number):void
@@ -138,8 +136,6 @@
 		{
 			return this.getBounds(this).y;
 		}
-		
-		
 		
 		public function get displayWidth():Number
 		{
@@ -221,7 +217,6 @@
 		
 		public function get contentHeight():Number
 		{
-			//commitMeasure();
 			var max:Number = 0;
 			for (var i:int = numChildren - 1; i > -1; i--)
 			{
@@ -261,29 +256,28 @@
 		}
 		
 		//尺寸改变后调用
+		//TODO:super.resize必须在底部，否则可能导致border和bgSkin宽高不正确
 		public function resize():void
 		{
 			clearCallLater(resize);
-			if (bgSkin)
+			if (_bgSkin)
 			{
-				bgSkin.width = _width;
-				bgSkin.height = _height;
+				_bgSkin.width = _width;
+				_bgSkin.height = _height;
 			}
+			
 			sendEvent(Event.RESIZE);
+			
+			if(_borderVisible)
+				showBorder();
 		}
 		
 		//更新视图
+		
 		public function redraw():void
 		{
 			clearCallLater(redraw);
-			var currentBgSkin:DisplayObject = getChildByName("bgSkin");
-			if (currentBgSkin!=null && currentBgSkin!=bgSkin)
-				removeChild(currentBgSkin);
-			if (bgSkin && bgSkin.parent==null)
-			{
-				addChildAt(bgSkin,0);
-				bgSkin.name = "bgSkin";
-			}
+			resize();
 		}
 		
 		public function setSize(width:Number, height:Number):void
@@ -292,6 +286,7 @@
 			this.height = height;
 		}
 		
+		[Inspectable(name="disabled",type="Bealoon",defaultValue=false)]
 		public function set disabled(value:Boolean):void
 		{
 			if (_disabled != value)
@@ -311,14 +306,26 @@
 			_mouseChildren = super.mouseChildren = value;
 		}
 		
-		public function showBorder(color:uint = 0xff0000,conetnt:Boolean=false):void
+		public function showBorder(color:uint = 0xff0000,conetntColor:int = -1):void
 		{
-		
 			_border.graphics.clear();
 			_border.graphics.lineStyle(1, color);
 			_border.graphics.drawRect(0, 0, width, height);
 			
+			if (conetntColor > 0)
+			{
+				var contentRect:Rectangle = getBounds(this);
+				_border.graphics.lineStyle(1, conetntColor);
+				_border.graphics.drawRect(contentRect.x, contentRect.y, contentRect.width, contentRect.height);
+			}
+			
 			addChild(_border);
+		}
+		
+		public function hideBorder():void
+		{
+			if(_border && _border.parent)
+				removeChild(_border);
 		}
 		
 		public function get dataSource():Object
@@ -349,11 +356,58 @@
 			callLater(resize);
 		}
 		
+		public function get borderVisible():Boolean 
+		{
+			return _borderVisible;
+		}
+		
+		public function set borderVisible(value:Boolean):void 
+		{
+			_borderVisible = value;
+			if(value)
+				showBorder();
+			else
+				hideBorder();
+		}
+		
+		public function get bgSkin():DisplayObject 
+		{
+			return _bgSkin;
+		}
+		
+		
+		public function set bgSkin(value:DisplayObject):void 
+		{
+			//swapContent(_bgSkin, value);
+			if (_bgSkin == value) return;
+			if (_bgSkin && _bgSkin.parent)
+			{
+				_bgSkin.parent.removeChild(_bgSkin)
+			}
+			addChildAt(value, 0);
+			_bgSkin = value;
+			callLater(redraw);
+		}
+		
+		public function swapContent(oldCon:DisplayObject, newCon:DisplayObject):DisplayObject
+		{
+			var index:int = this.numChildren
+			if (oldCon && oldCon.parent)
+			{
+				index= getChildIndex(oldCon);
+				oldCon.parent.removeChild(oldCon)
+			}
+			addChildAt(newCon, index);
+			return newCon;
+		}
+		
 		
 		public function destroy():void
 		{
-		
+			this.removeChildren();
 		}
+		
+		
 		
 	
 	}

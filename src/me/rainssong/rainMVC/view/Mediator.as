@@ -53,6 +53,12 @@ package me.rainssong.rainMVC.view
 				destroy();
 		}
 		
+		public function remove():void
+		{
+			if (_viewComponent.parent)
+				_viewComponent.parent.removeChild(_viewComponent);
+		}
+		
 		public function destroy():void
 		{
 			_viewComponent.removeEventListener(Event.REMOVED_FROM_STAGE, onRemove);

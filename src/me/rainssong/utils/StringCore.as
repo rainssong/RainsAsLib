@@ -216,6 +216,11 @@
 			return (String.fromCharCode (charNumber));
 		}
 		
+		static public function toNumber(str:String):Number 
+		{
+			return Number(str.replace(/\D/g, ""));
+		}
+		
 		//public static function getFileName(url:String):String
 		//{
 		//return url.split(/[\\/] / ).slice( -1)[0];

@@ -19,6 +19,19 @@ package   me.rainssong.math
 			
 		}
 		
+		/**
+		 * it's more faster than origin concat
+		 * @param	arr1
+		 * @param	arr2
+		 * @return
+		 */
+		public static function concat(arr1:Array, arr2:Array):Array
+		{
+			var arr:Array = arr1.slice();
+			arr.push.apply(null, arr2);
+			return arr;
+		}
+		
 		public static function getIntArray(start:int=0, end:int=100):Array
 		{
 			var arr:Array = [];

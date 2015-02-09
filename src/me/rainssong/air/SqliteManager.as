@@ -230,6 +230,17 @@ package me.rainssong.air
 			
 			execute(sql);
 		}
+		
+		public function addColumn(tableName:String,template:Object=null):void
+		{
+			var sql:String;
+			for (var att:String in template) {
+				sql = "alter table "+ tableName +" add " ;
+				sql += att + " " + template[att];
+				execute(sql);
+			}
+			
+		}
 	
 	}
 

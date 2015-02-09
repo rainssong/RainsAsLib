@@ -51,7 +51,8 @@ Image：
 
 皮肤更新机制：
 	可以单独更新：btn.normalSkin=new display;
-	集体更新：btn.skinName="darkSkin";向当前theme请求一整套皮肤。
+	集体更新：btn.dataSource="darkSkin";向当前theme请求一组设置。
+	
 	
 2015-01-03
 昨天看网页自适应方案有所启发，无论是文字还是图片，都可以采用ScaleMode来解决缩放问题

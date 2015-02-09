@@ -116,10 +116,28 @@ package me.rainssong.filesystem
 			return str;
 		}
 		
-		public static function webToStorerage(url:String):File
+		public static function webToStorage(url:String):File
 		{
 			return File.applicationStorageDirectory.resolvePath(StringCore.webToLocal(url));
 		}
+		
+		static public function getAllFiles(file:File):Array 
+		{
+			var files:Array = file.getDirectoryListing();
+			for (var i:int = 0; i < files.length; i++) 
+			{
+				var file2:File = files[i] as File;
+				if (file2.isDirectory)
+				{
+					var arr:Array=getAllFiles(file2)
+					files=files.concat(arr);
+					//files.push.apply(null,arr);
+				}
+			}
+			
+			return files;
+		}
+		
 		
 		
 	}

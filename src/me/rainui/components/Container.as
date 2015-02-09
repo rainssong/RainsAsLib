@@ -13,7 +13,6 @@ package me.rainui.components
 	 */
 	public class Container extends Component
 	{
-		
 		//百分比优先级高于绝对值
 		protected var _percentWidth:Number = NaN;
 		protected var _percentHeight:Number = NaN;
@@ -38,11 +37,13 @@ package me.rainui.components
 		protected var _minWidth:Number = 0;
 		protected var _maxWidth:Number = Infinity;
 		
-		public function Container()
+		public function Container(dataSource:Object=null)
 		{
 			//this.scrollRect = new Rectangle(0, 0, 100, 100);
+			super(dataSource)
 			addEventListener(Event.ADDED, onAdded);
 			addEventListener(Event.REMOVED, onRemoved);
+			
 		}
 		
 		override protected function preinitialize():void 
@@ -55,9 +56,7 @@ package me.rainui.components
 		protected function onRemoved(e:Event):void
 		{
 			if (e.target == this)
-			{
 				parent.removeEventListener(Event.RESIZE, onParentResize);
-			}
 		}
 		
 		protected function onAdded(e:Event):void
@@ -68,9 +67,7 @@ package me.rainui.components
 				callLater(resize);
 			}
 			else
-			{
 				return;
-			}
 		}
 		
 		protected function onParentResize(e:Event):void
@@ -153,12 +150,13 @@ package me.rainui.components
 			//this.scrollRect = sc;
 		}
 		
+		//TODO:减少percent和固定值的冲突，兼容
 		override public function set height(value:Number):void
 		{
 			super.height = value;
 			_percentHeight = NaN;
-			_percentTop = NaN;
-			_percentBottom = NaN;
+			//_percentTop = NaN;
+			//_percentBottom = NaN;
 			//var sc:Rectangle = this.scrollRect;
 			//sc.height = value;
 			//this.scrollRect = sc;
@@ -166,6 +164,7 @@ package me.rainui.components
 		}
 		
 		/**居父容器顶上的距离*/
+		[Inspectable(name="top",type="Number",defaultValue=NaN)]
 		public function get top():Number
 		{
 			return _top;
@@ -174,9 +173,9 @@ package me.rainui.components
 		public function set top(value:Number):void
 		{
 			_top = value;
-			_percentHeight = NaN;
+			//_percentHeight = NaN;
 			_percentTop = NaN;
-			_percentBottom = NaN;
+			//_percentBottom = NaN;
 			
 			_centerY = NaN;
 			_percentCenterY = NaN;
@@ -193,8 +192,8 @@ package me.rainui.components
 		public function set bottom(value:Number):void
 		{
 			_bottom = value;
-			_percentHeight = NaN;
-			_percentTop = NaN;
+			//_percentHeight = NaN;
+			//_percentTop = NaN;
 			_percentBottom = NaN;
 			
 			_centerY = NaN;
@@ -385,7 +384,7 @@ package me.rainui.components
 			_percentCenterY = value;
 		}
 		
-		//resize后自动更新位置
+		//resize后自动更新位置，注意super.resize必须先行
 		override public function resize():void
 		{
 			if (parent == null)

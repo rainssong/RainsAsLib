@@ -1,14 +1,9 @@
 package me.rainui.components 
 {
-	import adobe.utils.CustomActions;
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
-	import flash.display.Shape;
+	import flash.display.Stage;
 	import flash.events.Event;
-	import flash.geom.Matrix;
-	import me.rainssong.utils.Draw;
 	import me.rainui.RainUI;
+	
 	/**
 	 * ...
 	 * @author Rainssong
@@ -17,18 +12,21 @@ package me.rainui.components
 	{
 		//public var btnSkinClass:Class = Button;
 		
-		public function Page() 
+		public function Page()
 		{
 			super();
-			addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+			//addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		}
 		
-		private function onAddToStage(e:Event):void 
+		override protected function onAdded(e:Event):void 
 		{
-			stage.addEventListener(Event.RESIZE, onParentResize);
-			removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
-			this._height = RainUI.stageHeight;
-			this._width = RainUI.stageWidth;
+			super.onAdded(e);
+			if (this.parent is Stage && e.target==this)
+			{
+				stage.addEventListener(Event.RESIZE, onParentResize);
+				this._height = RainUI.stageHeight;
+				this._width = RainUI.stageWidth;
+			}
 		}
 		
 		override protected function preinitialize():void 
@@ -36,20 +34,7 @@ package me.rainui.components
 			super.preinitialize();
 			this._height = 640;
 			this._width = 480;
-			//this.mouseEnabled = true;
 			this.mouseChildren = true;
-		}
-		
-		override protected function createChildren():void 
-		{
-			if (bgSkin == null) 
-			{
-				var shape:Shape = new Shape();
-				Draw.rect(shape, 0, 0, 100, 100, 0xFFFFFF);
-				bgSkin = shape;
-			}
-			callLater(redraw);
-			
 		}
 		
 		
@@ -58,6 +43,16 @@ package me.rainui.components
 			_width = RainUI.stageWidth;
 			_height = RainUI.stageHeight;
 			super.resize();
+		}
+		
+		override protected function onRemoved(e:Event):void 
+		{
+			if (this.parent is Stage)
+			{
+				stage.removeEventListener(Event.RESIZE, onParentResize);
+			}
+			super.onRemoved(e);
+			
 		}
 		
 		

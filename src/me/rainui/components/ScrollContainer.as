@@ -246,12 +246,9 @@ package me.rainui.components
 				return 0;
 		}
 		
-		override public function showBorder(color:uint = 0xff0000,content:Boolean=false):void 
+		override public function showBorder(color:uint = 0xff0000,conetntColor:int = -1):void 
 		{
-			_border.graphics.clear();
-			_border.graphics.lineStyle(1, color);
-			_border.graphics.drawRect(0, 0, width, height);
-			super.addChild(_border);
+			super.showBorder()
 		}
 		
 		override public function resize():void 

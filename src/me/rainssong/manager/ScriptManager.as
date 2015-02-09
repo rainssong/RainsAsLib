@@ -1,16 +1,7 @@
-package manager
+package me.rainssong.manager
 {
-	import controller.GameController;
-	import events.SAGameEvent;
-	import flash.display.DisplayObject;
-	import flash.display.InteractiveObject;
-	import flash.display.Scene;
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
-	import me.rainssong.display.SmartSprite;
-	import me.rainssong.manager.SingletonManager;
-	import me.rainssong.text.HtmlText;
-	import me.rainssong.utils.superTrace;
 	import r1.deval.D;
 	
 	/**
@@ -21,8 +12,9 @@ package manager
 	{
 		public var count:int = 0;
 		
-		public var xmlName:String;
-		
+		public var xmlName:String="";
+		public var scriptDic:Dictionary = new Dictionary(true);
+		private var _keyDic:Dictionary = new Dictionary(true);
 		
 		public function ScriptManager()
 		{
@@ -33,43 +25,62 @@ package manager
 			count = 0;
 		}
 		
-		public function runScript(line:*=-1,xmlName:String=null):void
+		public function runScript(line:*=null,xmlName:String=null):void
 		{
-			
-			if (xmlName) 
-			{	this.xmlName = xmlName;
+			//if (xmlName!=null && xmlName!=this.xmlName) 
+			//{	
+				//this.xmlName = xmlName;
+				//count = 0;
+			//} 
+			var changeXml:Boolean = false;
+			if (xmlName!=null && xmlName!=this.xmlName) 
+			{	
+				this.xmlName = xmlName;
 				count = 0;
-			} 
+				changeXml = true;
+			}
 			
-			var length:int = currentXml.motion.length();
+			var xml:XML = scriptDic[this.xmlName];
+			var length:int = xml.motion.length();
+			
+			if(changeXml)
+				for (var i:int = 0; i < length; i++ )
+					if (xml.motion[i].@key.toString() != null)
+						_keyDic[xml.motion[i].@key.toString()] = i;
 			
 			if (line is Number && line>=0)
 			{
 				count = line;
 			}
+			else if(line == null)
+			{
+				count ++;
+			}
 			else if (line is String)
 			{
-				for (var i:int = 0; i < length; i++ )
-				{
-					if (currentXml.motion[i].@key.toString() == line)
-					{
-						count = i;
-						break;
-					}
-				}
+				var targetIndex:int = _keyDic[line];
+				if (targetIndex > 0)
+					count = targetIndex;
+				else
+					powerTrace("no such key:" + line);
 			}
 			
 			if (count >= length)
 			{
 				return;
-				powerTrace("overload",count,xmlName)
+				powerTrace("overload",count)
 			}
 			
-			var motion:String = currentXml.motion[count].toString();
+			var motion:String = xml.motion[count].toString();
 			powerTrace(motion);
 			
 			D.eval(motion,ScriptManager,this);
 			
+		}
+		
+		public function next():void
+		{
+			runScript(count+1);
 		}
 		
 	}

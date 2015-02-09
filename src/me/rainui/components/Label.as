@@ -29,8 +29,9 @@ package me.rainui.components
 		//protected var _bitmap:AutoBitmap;
 		protected var _margin:Array = [0, 0, 0, 0];
 		
-		public function Label(text:String = "", _skinName:String = null)
+		public function Label(text:String = "", dataSource:String = null)
 		{
+			super(dataSource)
 			this.text = text;
 			//this.skinName = _skinName;
 		}
@@ -42,7 +43,7 @@ package me.rainui.components
 			_format = new TextFormat("微软雅黑", 24, 0, null, null, null, null, null, TextFormatAlign.CENTER);
 			_width = 200;
 			_height = 60;
-			_autoSize = true;
+			_autoSize = false;
 		}
 		
 		override protected function createChildren():void
@@ -75,9 +76,7 @@ package me.rainui.components
 			if (_text != value)
 			{
 				_text = value || "";
-				
 				callLater(redraw);
-				//changeText();
 				sendEvent(Event.CHANGE);
 			}
 		}
@@ -90,11 +89,11 @@ package me.rainui.components
 		
 		override public function redraw():void 
 		{
-			super.redraw();
+			
 			textField.defaultTextFormat = _format;
 			textField.setTextFormat(_format);
 			textField.text = _text;
-			resize();
+			super.redraw();
 		}
 		
 		override public function resize():void
@@ -125,12 +124,11 @@ package me.rainui.components
 			}
 		}
 		
-		override public function showBorder(color:uint = 0xff0000, content:Boolean = false):void
+		override public function showBorder(color:uint = 0xff0000, conetntColor:int =-1):void
 		{
-			super.showBorder(color, content);
-			
-			_border.graphics.lineStyle(0.1, 0x00FF00);
-			if(content)
+			super.showBorder(color, conetntColor);
+			_border.graphics.lineStyle(1, 0x00FF00);
+			if(conetntColor)
 				_border.graphics.drawRect(textField.x, textField.y, textField.width, textField.height);
 		}
 		
@@ -189,16 +187,16 @@ package me.rainui.components
 		}
 		
 		/**宽高是否自适应*/
-		public function get textAlign():String
-		{
-			return textField.autoSize;
-		}
-		
-		public function set textAlign(value:String):void
-		{
-			textField.autoSize = value;
-			callLater(resize);
-		}
+		//public function get textAlign():String
+		//{
+			//return textField.autoSize;
+		//}
+		//
+		//public function set textAlign(value:String):void
+		//{
+			//textField.autoSize = value;
+			//callLater(resize);
+		//}
 		
 		/**是否自动换行*/
 		public function get wordWrap():Boolean
@@ -411,14 +409,14 @@ package me.rainui.components
 		//_bitmap.sizeGrid = StringUtils.fillArray(Styles.defaultSizeGrid, value, int);
 		//}
 		
-		override public function get width():Number
-		{
-			if (!isNaN(_width) || Boolean(_skinName) || Boolean(_text))
-			{
-				return super.width;
-			}
-			return 0;
-		}
+		//override public function get width():Number
+		//{
+			//if (!isNaN(_width) || Boolean(_skinName) || Boolean(_text))
+			//{
+				//return super.width;
+			//}
+			//return 0;
+		//}
 		
 		//override public function set width(value:Number):void
 		//{

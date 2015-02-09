@@ -8,6 +8,7 @@ package me.rainui.components
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import flash.text.TextFormatAlign;
 	import me.rainssong.utils.Draw;
 	import me.rainui.events.RainUIEvent;
 	import me.rainui.RainTheme;
@@ -40,7 +41,7 @@ package me.rainui.components
 		
 		override protected function createChildren():void
 		{
-			if (bgSkin == null)
+			if (_bgSkin == null)
 			{
 				var shape:Shape = new Shape();
 				Draw.rect(shape, 0, 0, 100, 100,RainTheme.BLUE);
@@ -51,15 +52,15 @@ package me.rainui.components
 			redraw();
 			
 			if (label == null)
-			{
 				label = new Label("");
-				
-			}
 			
 			addChild(label);
 			label.centerX = 0;
 			label.centerY = 0;
 			label.format = RainTheme.getTextFormat(RainTheme.WHITE_TEXT_FORMAT);
+			label.align = TextFormatAlign.CENTER;
+			label.autoSize = true;
+			//label.borderVisible = true;
 		}
 		
 		override protected function initialize():void 

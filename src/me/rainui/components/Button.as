@@ -15,7 +15,9 @@ package me.rainui.components
 	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
+	import me.rainssong.manager.SystemManager;
 	import me.rainssong.media.RainStageWebView;
+	import me.rainssong.system.SystemCore;
 	import me.rainssong.utils.Draw;
 	import me.rainui.RainTheme;
 	import me.rainui.RainUI;
@@ -39,21 +41,20 @@ package me.rainui.components
 		static public const NORMAL:String = "normal";
 		static public const DISABLED:String = "disabled";
 		
-		public var normalSkin:DisplayObject;
-		public var downSkin:DisplayObject;
-		public var hoverSkin:DisplayObject;
-		public var disabledSkin:DisplayObject;
-		public var selectedSkin:DisplayObject;
+		protected var _label:Label;
+		protected var _normalSkin:DisplayObject;
+		protected var _downSkin:DisplayObject;
+		protected var _hoverSkin:DisplayObject;
+		protected var _disabledSkin:DisplayObject;
+		protected var _selectedSkin:DisplayObject;
+		protected var _iconSkin:DisplayObject;
 		
-		public var icon:DisplayObject;
-		private var _showIcon:Boolean = false;
+		protected var _showIcon:Boolean = false;
 		
-		public var label:Label;
-		private var _showLabel:Boolean = true;
-		
-		//protected var _clickHandler:Handler;
-		//protected var labelColors:Array = Styles.buttonLabelColors;
-		//protected var labelMargin:Array = Styles.buttonLabelMargin;
+		protected var _handler:Function
+		//protected var _labelColors:Array = Styles.buttonLabelColors;
+		//protected var _labelMargin:Array = Styles.buttonLabelMargin;
+		protected var _showLabel:Boolean = true;
 		protected var _state:String = NORMAL;
 		protected var _toggle:Boolean = false;
 		protected var _selected:Boolean = false;
@@ -61,9 +62,9 @@ package me.rainui.components
 		
 		private var _normalColorTrans:ColorTransform;
 		
-		public function Button(text:String = "")
+		public function Button(text:String = "",dataSource:Object=null)
 		{
-			super();
+			super(dataSource);
 			this.text = text;
 		}
 		
@@ -86,38 +87,38 @@ package me.rainui.components
 		{
 			if (this.numChildren == 1)
 			{
-				normalSkin = this.getChildAt(0);
-				_width = normalSkin.width;
-				_height = normalSkin.height;
+				_normalSkin = this.getChildAt(0);
+				//_width = _normalSkin.width;
+				//_height = _normalSkin.height;
 			}
-			if (this.normalSkin == null)
+			if (_normalSkin == null)
 			{
 				var shape:Shape = new Shape();
 				Draw.rect(shape, 0, 0, 100, 100, RainTheme.BLUE);
 				Draw.rect(shape, 0, 96, 100, 4, RainTheme.DARK_BLUE);
 				shape.scale9Grid = new Rectangle(4, 4, 92, 92);
-				normalSkin = shape;
-				normalSkin.name = "normalSkin";
+				_normalSkin = shape;
+				_normalSkin.name = "normalSkin";
 			}
-			addChild(normalSkin);
+			addChild(_normalSkin);
 			
-			if (this.downSkin)
+			if (_downSkin)
 			{
-				addChild(this.downSkin)
-				downSkin.visible = false;
+				addChild(this._downSkin)
+				_downSkin.visible = false;
 			}
 			
-			if (this.label == null)
+			if (this._label == null)
 			{
-				label = new Label();
+				_label = new Label();
 				//label.dataSource = {left: 4, right: 4, top:4,bottom:4};
-				label.centerX = 0;
-				label.centerY = 0;
-				label.autoSize = true;
-				label.format = defaultTextFormat;
+				_label.centerX = 0;
+				_label.centerY = 0;
+				_label.autoSize = true;
+				_label.format = defaultTextFormat;
 			}
 			
-			addChild(label);
+			addChild(_label);
 		
 		}
 		
@@ -136,32 +137,20 @@ package me.rainui.components
 		override public function resize():void
 		{
 			super.resize();
-			
-			if (this.normalSkin)
+			this._normalSkin.width = _width;
+			this._normalSkin.height = _height;
+			if (this._downSkin)
 			{
-				var temp:DisplayObject = getChildByName("normalSkin");
-				var index:int = 1;
-				if (temp != normalSkin && temp!=null)
-				{
-					index = getChildIndex(temp);
-					removeChildByName("normalSkin");
-				}
-				if (!normalSkin.parent)
-				{
-					normalSkin.name = "normalSkin";
-					addChildAt(normalSkin,index);
-				}
-				
-				this.normalSkin.width = _width;
-				this.normalSkin.height = _height;
+				this._downSkin.width = _width;
+				this._downSkin.height = _height;
 			}
-		
+			
+			
 			//this.scrollRect = new Rectangle(0, 0, _width, _height);
 		}
 		
 		protected function onRollOver(e:MouseEvent):void
 		{
-			
 			//含redraw
 			state = HOVER;
 		}
@@ -191,12 +180,10 @@ package me.rainui.components
 			{
 				selected = !_selected;
 			}
-			//if (_clickHandler)
-			//{
-			//_clickHandler.execute();
+			if (_handler)
+				_handler();
 			//}
 			//sendEvent(Event.SELECT);
-		
 		}
 		
 		/**皮肤*/ /*public function get skinName():String
@@ -221,13 +208,14 @@ package me.rainui.components
 		
 		protected function changeLabelSize():void
 		{
-			//label.width = width - label.left - label.right;
+			//label.width = width - _label.left - _label.right;
 			//label.height = ObjectUtils.getTextField(label.format).height;
-			//label.x = label.left;
-			//label.y = (height - label.height) * 0.5 + label.top - label.bottom;
+			//label.x = _label.left;
+			//label.y = (height - _label.height) * 0.5 + _label.top - _label.bottom;
 		}
 		
 		/**是否是选择状态*/
+		[Inspectable(name="selected",type="Bealoon",defaultValue=false)]
 		public function get selected():Boolean
 		{
 			return _selected;
@@ -241,10 +229,10 @@ package me.rainui.components
 				//state = _selected ? stateMap["selected"] : stateMap["rollOut"];
 				if (_selected)
 				{
-					if (selectedSkin)
+					if (_selectedSkin)
 					{
-						normalSkin.visible = false;
-						selectedSkin.visible = true;
+						_normalSkin.visible = false;
+						_selectedSkin.visible = true;
 					}
 					else
 					{
@@ -253,10 +241,10 @@ package me.rainui.components
 				}
 				else
 				{
-					if (selectedSkin)
+					if (_selectedSkin)
 					{
-						normalSkin.visible = true;
-						selectedSkin.visible = false;
+						_normalSkin.visible = true;
+						_selectedSkin.visible = false;
 					}
 					else
 						this.transform.colorTransform = _normalColorTrans;
@@ -277,38 +265,26 @@ package me.rainui.components
 		
 		override public function redraw():void
 		{
-			clearCallLater(redraw);
-			//_bitmap.index = _state;
-			//label.color = labelColors[_state];
-			
-			
-			
-			if (downSkin)
-			{
-				if(downSkin.parent==null)
-					addChild(downSkin);
-				downSkin.visible = false;
-			}
-			
 			switch (_state)
 			{
 				case MOUSE_DOWN: 
-					if (downSkin)
+					if (_downSkin)
 					{
-						if(downSkin.parent==null)
-							addChild(downSkin);
-						downSkin.visible = false;
+						if(_downSkin.parent==null)
+							addChild(_downSkin);
+						_downSkin.visible = true;
 					}
 					else
 					{
-						if (normalSkin.parent == null)
-							addChildAt(normalSkin, 0);
-						normalSkin.visible = true;
+						if (_normalSkin.parent == null)
+							addChildAt(_normalSkin, 0);
+						_normalSkin.visible = true;
 						this.transform.colorTransform = darkColorTrans;
 					}
 					break;
 				case NORMAL: 
-					normalSkin.visible = true;
+					_normalSkin.visible = true;
+					if(_downSkin)_downSkin.visible = false;
 					if (_selected)
 						this.transform.colorTransform = darkColorTrans;
 					else
@@ -316,6 +292,8 @@ package me.rainui.components
 					break;
 				default: 
 			}
+			
+			super.redraw();
 		
 			//if (icon && _showIcon)
 			//{
@@ -338,96 +316,86 @@ package me.rainui.components
 			_toggle = value;
 		}
 		
-		override public function set disabled(value:Boolean):void
-		{
-			if (_disabled != value)
-			{
-				super.disabled = value;
-					//state = _selected ? stateMap["selected"] : stateMap["rollOut"];
-					//ObjectUtils.gray(this, _disabled);
-			}
-		}
-		
 		/**按钮标签字体*/
-		public function get labelFont():String
+		public function get _labelFont():String
 		{
-			return label.font;
+			return _label.font;
 		}
 		
-		public function set labelFont(value:String):void
+		public function set _labelFont(value:String):void
 		{
-			label.font = value
+			_label.font = value
 			callLater(changeLabelSize);
 		}
 		
 		/**按钮标签颜色(格式:upColor,overColor,downColor,disableColor)*/
-		//public function get labelColors():String
+		//public function get _labelColors():String
 		//{
 		//return String(labelColors);
 		//}
 		//
-		//public function set labelColors(value:String):void
+		//public function set _labelColors(value:String):void
 		//{
 		//labelColors = StringUtils.fillArray(labelColors, value);
 		//callLater(redraw);
 		//}
 		
 		/**按钮标签边距(格式:左边距,上边距,右边距,下边距)*/
-		//public function get labelMargin():String
+		//public function get _labelMargin():String
 		//{
 		//return String(labelMargin);
 		//}
 		//
-		//public function set labelMargin(value:String):void
+		//public function set _labelMargin(value:String):void
 		//{
 		//labelMargin = StringUtils.fillArray(labelMargin, value, int);
 		//callLater(changeLabelSize);
 		//}
 		
 		/**按钮标签描边(格式:color,alpha,blurX,blurY,strength,quality)*/
-		//public function get labelStroke():String
+		//public function get _labelStroke():String
 		//{
-		//return label.stroke;
+		//return _label.stroke;
 		//}
 		//
-		//public function set labelStroke(value:String):void
+		//public function set _labelStroke(value:String):void
 		//{
 		//label.stroke = value;
 		//}
 		
 		/**按钮标签大小*/
-		public function get labelSize():Object
+		public function get _labelSize():Object
 		{
-			return label.size;
+			return _label.size;
 		}
 		
-		public function set labelSize(value:Object):void
+		public function set _labelSize(value:Object):void
 		{
-			label.size = value
+			_label.size = value
 			callLater(changeLabelSize);
 		}
 		
 		/**按钮标签粗细*/
-		public function get labelBold():Object
+		public function get _labelBold():Object
 		{
-			return label.bold;
+			return _label.bold;
 		}
 		
-		public function set labelBold(value:Object):void
+		public function set _labelBold(value:Object):void
 		{
-			label.bold = value
+			_label.bold = value
 			callLater(changeLabelSize);
 		}
 		
 		/**字间距*/
 		public function get letterSpacing():Object
 		{
-			return label.letterSpacing;
+			return _label.letterSpacing;
 		}
 		
 		public function set letterSpacing(value:Object):void
 		{
-			label.letterSpacing = value
+			_label.letterSpacing = value
 			callLater(changeLabelSize);
 		}
 		
@@ -443,9 +411,9 @@ package me.rainui.components
 		//}
 		
 		/**按钮标签控件*/
-		//public function get label():Label
+		//public function get _label():Label
 		//{
-		//return label;
+		//return _label;
 		//}
 		
 		/**九宫格信息(格式:左边距,上边距,右边距,下边距)*/
@@ -498,13 +466,13 @@ package me.rainui.components
 		
 		public function set text(value:String):void
 		{
-			label.text = value;
+			_label.text = value;
 			
 		}
 		
 		public function get text():String
 		{
-			return label.text;
+			return _label.text;
 		}
 		
 		public function get showIcon():Boolean
@@ -517,6 +485,39 @@ package me.rainui.components
 			if (_showIcon == value) return;
 			_showIcon = value;
 			callLater(redraw);
+		}
+		
+		public function get label():Label 
+		{
+			return _label;
+		}
+		
+		public function set label(value:Label):void 
+		{
+			_label = value;
+		}
+		
+		public function get normalSkin():DisplayObject 
+		{
+			return _normalSkin;
+		}
+		
+		public function set normalSkin(value:DisplayObject):void 
+		{
+			if (_normalSkin == value) return;
+			swapContent(_normalSkin, value);
+			_normalSkin = value;
+			callLater(redraw);
+		}
+		
+		public function get downSkin():DisplayObject 
+		{
+			return _downSkin;
+		}
+		
+		public function set downSkin(value:DisplayObject):void 
+		{
+			_downSkin = value;
 		}
 	
 	}
