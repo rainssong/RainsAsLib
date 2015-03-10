@@ -23,8 +23,8 @@ package me.rainui.components
 	{
 		protected var _content:DisplayObject
 	
-		private var _contentScaleMode:String = ScaleMode.FULL_FILL;
-		private var _contentAlign:String = Align.CENTER;
+		protected var _contentScaleMode:String = ScaleMode.FULL_FILL;
+		protected var _contentAlign:String = Align.CENTER;
 		
 		public function DisplayResizer(content:DisplayObject=null)
 		{

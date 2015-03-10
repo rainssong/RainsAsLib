@@ -8,8 +8,9 @@
  * jp.nium Classes is released under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  */
-package me.rainssong.utils 
+package me.rainssong.date 
 {
+	import me.rainssong.utils.NumberCore;
 
 	
 	/**
@@ -18,72 +19,35 @@ package me.rainssong.utils
 	 */
 	public final class DateCore {
 		
-		/**
-		 * <span lang="ja">1 ミリ秒をミリ秒単位で表した定数を取得します。</span>
-		 * <span lang="en">Returns the fixed value which express the 1 millisecond by millisecond unit.</span>
-		 */
 		public static const ONE_MILLISECOND:int = 1;
 		
-		/**
-		 * <span lang="ja">ミリ秒の最大値を表す定数を取得します。</span>
-		 * <span lang="en">Returns the maximum value of the millisecond.</span>
-		 */
 		public static const MAX_MILLISECOND:int = 1000;
 		
-		/**
-		 * <span lang="ja">1 秒をミリ秒単位で表した定数を取得します。</span>
-		 * <span lang="en">Returns the fixed value of 1second by millisecond unit.</span>
-		 */
 		public static const ONE_SECOND:int = ONE_MILLISECOND * MAX_MILLISECOND;
 		
-		/**
-		 * <span lang="ja">秒の最大値を表す定数を取得します。</span>
-		 * <span lang="en">Returns the maximum value of the second.</span>
-		 */
 		public static const MAX_SECOND:int = 60;
 		
-		/**
-		 * <span lang="ja">1 分をミリ秒単位で表した定数を取得します。</span>
-		 * <span lang="en">Returns the fixed value of 1minuite by millisecond unit.</span>
-		 */
 		public static const ONE_MINUTE:int = ONE_SECOND * MAX_SECOND;
 		
-		/**
-		 * <span lang="ja">分の最大値を表す定数を取得します。</span>
-		 * <span lang="en">Returns the maximum value of the minuite.</span>
-		 */
 		public static const MAX_MINUTE:int = 60;
 		
-		/**
-		 * <span lang="ja">1 時間をミリ秒単位で表した定数を取得します。</span>
-		 * <span lang="en">Returns the fixed value of 1hour by millisecond unit.</span>
-		 */
 		public static const ONE_HOUR:int = ONE_MINUTE * MAX_MINUTE;
 		
-		/**
-		 * <span lang="ja">時間の最大値を表す定数を取得します。</span>
-		 * <span lang="en">Returns the maximum value of the hour.</span>
-		 */
 		public static const MAX_HOUR:int = 24;
 		
-		/**
-		 * <span lang="ja">1 日をミリ秒単位で表した定数を取得します。</span>
-		 * <span lang="en">Returns the fixed value of 1day by millisecond unit.</span>
-		 */
 		public static const ONE_DAY:int = ONE_HOUR * MAX_HOUR;
 		
-		/**
-		 * @private
-		 */
+		
 		static private const _MONTH_NAMES:Array = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 		
-		/**
-		 * @private
-		 */
 		static private const _DAY_NAMES:Array = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
 		
 		
-		
+		public static const DAY_NAMES:Array = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+		public static const DAYS_ABBREVIATED_NAMES:Array = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+  		public static const MONTHS_NAMES:Array = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		public static const MONTHS_ABBREVIATED_NAMES:Array = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  		public static const DAYSINMONTH:Array = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 		
 	
 		

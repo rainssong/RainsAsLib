@@ -132,13 +132,16 @@ package   me.rainssong.math
 			{
 				if (typeof(arr[i]) == "number")
 				{
-				nSum += arr[i];
+					nSum += arr[i];
 				}
 			}
 			return nSum;
 		}
 		
-		
+		public static function average(aArray:Array):Number 
+		{
+			return sum(aArray) / aArray.length;
+		}
 		
 		public static function max(arr:Array):Number
 		{
@@ -167,6 +170,14 @@ package   me.rainssong.math
 			return array;
 		}
 		
+		//public static function switchElements(aArray:Array, nIndexA:Number, nIndexB:Number):void 
+		//{
+		  //var oElementA:Object = aArray[nIndexA];
+		  //var oElementB:Object = aArray[nIndexB];
+		  //aArray.splice(nIndexA, 1, oElementB);
+		  //aArray.splice(nIndexB, 1, oElementA);
+		//}
+		
 		public static function arrayToVector(array:Array):Vector.<*>
 		{
 			return Vector.<*>(array);
@@ -176,8 +187,6 @@ package   me.rainssong.math
 		{
 			return obj.constructor.toString().search("Vector") >= 0;
 		}
-
-		
 		
 		public static function fillWith(aov:*, element:*, transfer:Boolean = true , params:Array=null ):void
 		{

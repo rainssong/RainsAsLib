@@ -7,18 +7,18 @@
 :: NOTICE: all paths are relative to project root
 
 :: Android packaging
-set AND_CERT_NAME="MitsubishiElectricDocsShow"
+set AND_CERT_NAME="RainsAsLib"
 set AND_CERT_PASS=fd
-set AND_CERT_FILE=cert\MitsubishiElectricDocsShow.p12
+set AND_CERT_FILE=cert\rainssongDev.p12
 set AND_ICONS=icons/android
 
 set AND_SIGNING_OPTIONS=-storetype pkcs12 -keystore "%AND_CERT_FILE%" -storepass %AND_CERT_PASS%
 
 :: iOS packaging
-set IOS_DIST_CERT_FILE=cert\rainssongDev.p12
-set IOS_DEV_CERT_FILE=cert\rainssongDev.p12
+set IOS_DIST_CERT_FILE=cert\RainDev.p12
+set IOS_DEV_CERT_FILE=cert\RainDev.p12
 set IOS_DEV_CERT_PASS=123456
-set IOS_PROVISION=cert\StarDev.mobileprovision
+set IOS_PROVISION=cert\RainStarDev.mobileprovision
 set IOS_ICONS=icons\
 
 set IOS_DEV_SIGNING_OPTIONS=-storetype pkcs12 -keystore "%IOS_DEV_CERT_FILE%" -storepass %IOS_DEV_CERT_PASS% -provisioning-profile %IOS_PROVISION%
@@ -50,11 +50,15 @@ for /f "tokens=2 delims=>" %%i in ('findstr "<versionNumber>" %APP_XML%') do (
 
 :: Output packages
 set DIST_PATH=bin-release
-set DIST_NAME=MitsubishiElectricDocsShow
+set DIST_NAME=RainsAsLib
 
 :: Debugging using a custom IP
-set DEBUG_IP=
-
+for /f "tokens=2 delims=:" %%i in ('ipconfig^|findstr "IPv4"') do (
+      for /f "delims=" %%i in ("%%i") do (
+	  set DEBUG_IP=%%i
+	  goto end
+	  )
+)
 
 
 :validation

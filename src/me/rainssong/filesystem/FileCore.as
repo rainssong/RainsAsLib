@@ -42,8 +42,6 @@ package me.rainssong.filesystem
 			if(options["fileMode"]!=null)fileMode=options["fileMode"]
 			stream.open(file, fileMode);
 			
-			
-			
 			switch (type) 
 			{
 				case "byteArray":

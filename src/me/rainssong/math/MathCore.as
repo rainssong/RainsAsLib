@@ -7,17 +7,61 @@ package me.rainssong.math
 	
 	public final class MathCore
 	{
-		static public const DEGREE_RADIAN_RATIO:Number = 180/Math.PI;
-		static public const RADIAN_DEGREE_RATIO:Number = Math.PI/180;
+		static public const DEGREE_RADIAN_RATIO:Number = 180 / Math.PI;
+		static public const RADIAN_DEGREE_RATIO:Number = Math.PI / 180;
 		
 		public static function getRandomNumber(min:Number, max:Number):Number
 		{
 			return Math.random() * (max - min) + min;
 		}
 		
+		/**
+		 *  Round a number. By default the number is rounded to the nearest
+		 *  integer. Specifying a roundToInterval parameter allows you to round
+		 *  to the nearest of a specified interval.
+		 *  @param  number             The number you want to round.
+		 *  @param  nRoundToInterval   (optional) The interval to which you want to
+		 *                             round the number. The default is 1.
+		 *  @return                    The number rounded to the nearest interval.
+		 */
+		public static function round(nNumber:Number, nRoundToInterval:Number = 1):Number
+		{
+			return Math.round(nNumber / nRoundToInterval) * nRoundToInterval;
+		}
+		
+		/**
+		 *  Get the floor part of a number. By default the integer part of the
+		 *  number is returned just as if calling Math.floor( ). However, by specifying
+		 *  a roundToInterval, you can get non-integer floor parts.
+		 *  to the nearest of a specified interval.
+		 *  @param  number             The number for which you want the floor part.
+		 *  @param  nRoundToInterval   (optional) The interval to which you want to
+		 *                             get the floor part of the number. The default is 1.
+		 *  @return                    The floor part of the number.
+		 */
+		public static function floor(nNumber:Number, nRoundToInterval:Number = 1):Number
+		{
+			return Math.floor(nNumber / nRoundToInterval) * nRoundToInterval;
+		}
+		
+		/**
+		 *  Get the ceiling part of a number. By default the next highested integer
+		 *  number is returned just as if calling Math.ceil( ). However, by specifying
+		 *  a roundToInterval, you can get non-integer ceiling parts.
+		 *  to the nearest of a specified interval.
+		 *  @param  number             The number for which you want the ceiling part.
+		 *  @param  nRoundToInterval   (optional) The interval to which you want to
+		 *                             get the ceiling part of the number. The default is 1.
+		 *  @return                    The ceiling part of the number.
+		 */
+		public static function ceil(nNumber:Number, nRoundToInterval:Number = 1):Number
+		{
+			return Math.ceil(nNumber / nRoundToInterval) * nRoundToInterval;
+		}
+		
 		public static function getRandomInt(min:int, max:int):int
 		{
-			return Math.floor(Math.random() * (max - min+1) + min);
+			return Math.floor(Math.random() * (max - min + 1) + min);
 		}
 		
 		/**
@@ -77,51 +121,52 @@ package me.rainssong.math
 		{
 			//return stepDegree(targetRadian * MathCore.DEGREE_RADIAN_RATIO, currentRadian * MathCore.DEGREE_RADIAN_RATIO, absolute?step*MathCore.DEGREE_RADIAN_RATIO:step, absolute);
 			var distance:Number = targetRadian - currentRadian;
-				
+			
 			while (distance >= Math.PI)
-				distance = distance-Math.PI*2;
+				distance = distance - Math.PI * 2;
 			while (distance <= -Math.PI)
-				distance = Math.PI*2 + distance;
-
-			if(absolute)
+				distance = Math.PI * 2 + distance;
+			
+			if (absolute)
 				distance = getRangedNumber(distance, -step, step);
 			else
 				distance = step * distance;
 			
-			return currentRadian+distance;
+			return currentRadian + distance;
 		}
 		
-		public static function stepDegree(tagertDegree:Number,currentDegree:Number,step:Number=1,absolute:Boolean=true):Number
+		public static function stepDegree(tagertDegree:Number, currentDegree:Number, step:Number = 1, absolute:Boolean = true):Number
 		{
 			var degreeDistance:Number = tagertDegree - currentDegree;
-				
+			
 			while (degreeDistance >= 180)
-				degreeDistance = degreeDistance-360;
+				degreeDistance = degreeDistance - 360;
 			while (degreeDistance <= -180)
 				degreeDistance = 360 + degreeDistance;
-
-			if(absolute)
+			
+			if (absolute)
 				degreeDistance = getRangedNumber(degreeDistance, -step, step);
 			else
 				degreeDistance = step * degreeDistance;
 			
-			return currentDegree+degreeDistance;
+			return currentDegree + degreeDistance;
 		}
 		
-		public static function stepNumber(target:Number,current:Number,stepValue:Number=1,stepPercent:Number=0,minDis:Number=1):Number
+		public static function stepNumber(target:Number, current:Number, stepValue:Number = 1, stepPercent:Number = 0, minDis:Number = 1):Number
 		{
 			var dis:Number = target - current;
-			stepValue *= dis > 0?1: -1;
+			stepValue *= dis > 0 ? 1 : -1;
 			var step:Number = dis * stepPercent + stepValue;
-			if ((dis-step)<=minDis && (dis-step)>=-minDis)
+			if ((dis - step) <= minDis && (dis - step) >= -minDis)
 				return target;
 			else
-				return current+step;
+				return current + step;
 		}
 		
-		public static function smartAtan2(y:Number,x:Number):Number
+		public static function smartAtan2(y:Number, x:Number):Number
 		{
-			if (x == 0) x = 0.0001;
+			if (x == 0)
+				x = 0.0001;
 			return Math.atan2(y, x);
 		}
 		
@@ -193,6 +238,16 @@ package me.rainssong.math
 			point.x /= points.length;
 			point.y /= points.length;
 			return point;
+		}
+		
+		public static function pointToPixel(point:uint,dpi:uint=96):Number
+		{
+			return Math.floor(point / 72 * dpi);
+		}
+		
+		public static function pixelToPoint(pixel:uint,dpi:uint=96):Number
+		{
+			return Math.floor(pixel/dpi*72);
 		}
 		
 		/**
@@ -277,6 +332,20 @@ package me.rainssong.math
 				return false;
 			}
 		}
+		
+		//find the number bigger than v in 2 4 8 16 32...
+		public static function nextPowerOfTwo(v:uint):uint
+        {
+            v--;
+            v |= v >> 1;
+            v |= v >> 2;
+            v |= v >> 4;
+            v |= v >> 8;
+            v |= v >> 16;
+            v++;
+            return v;
+        }
+		
 	
 	}
 }

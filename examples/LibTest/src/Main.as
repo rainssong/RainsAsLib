@@ -1,6 +1,7 @@
 package
 {
 	import adobe.utils.CustomActions;
+	import ascb.units.Converter;
 	import flash.desktop.NativeApplication;
 	import flash.desktop.NativeProcess;
 	import flash.desktop.NativeProcessStartupInfo;
@@ -13,6 +14,7 @@ package
 	import flash.utils.getQualifiedClassName;
 	import flash.utils.getTimer;
 	import me.rainssong.math.ArrayCore;
+	import me.rainssong.math.MathCore;
 	import me.rainssong.utils.functionTiming;
 	import me.rainui.components.Button;
 	import me.rainui.components.Label;
@@ -35,36 +37,10 @@ package
 		
 		public function Main():void
 		{
-			if (stage)
-				init();
-			else
-				addEventListener(Event.ADDED_TO_STAGE, init);
+			(new A()).getA();
 		}
 		
-		private function init(e:Event = null):void
-		{
-			removeEventListener(Event.ADDED_TO_STAGE, init);
-			
-			var arr:Array = [];
-			var arr2:Array = ArrayCore.getIntArray(0, 10000);
-			//functionTiming(arr.push,1000,arr2);
-			//functionTiming(arr.concat,1000,[arr2]);
-			
-			
-			var start:Number = getTimer();
-			//var arr3:Array = arr.slice();
-			var arr3:Array
-			//for (var i:int = 0; i < 1000; i++) 
-			//{
-				//arr3=arr.concat(arr2);
-				//arr3.push.apply(null,arr2);
-				arr3 = ArrayCore.concat(arr, arr2);
-			//}
-			powerTrace(arr3.length);
-			powerTrace(getTimer() - start);
-			//ArrayCore.concat
 		
-		}
 		
 		
 		

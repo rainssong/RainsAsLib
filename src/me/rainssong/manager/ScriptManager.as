@@ -15,9 +15,13 @@ package me.rainssong.manager
 		public var xmlName:String="";
 		public var scriptDic:Dictionary = new Dictionary(true);
 		private var _keyDic:Dictionary = new Dictionary(true);
+		private var _thisObj:Object;
+		private var _context:Object;
 		
 		public function ScriptManager()
 		{
+			_thisObj = this;
+			_context = ScriptManager;
 		}
 		
 		public function reset():void
@@ -68,19 +72,37 @@ package me.rainssong.manager
 			if (count >= length)
 			{
 				return;
-				powerTrace("overload",count)
+				powerTrace("overload", count);
 			}
 			
 			var motion:String = xml.motion[count].toString();
-			powerTrace(motion);
-			
-			D.eval(motion,ScriptManager,this);
-			
+			//powerTrace(motion);
+			D.eval(motion,_context,_thisObj);
 		}
 		
 		public function next():void
 		{
 			runScript(count+1);
+		}
+		
+		public function get thisObj():Object 
+		{
+			return _thisObj;
+		}
+		
+		public function set thisObj(value:Object):void 
+		{
+			_thisObj = value;
+		}
+		
+		public function get context():Object 
+		{
+			return _context;
+		}
+		
+		public function set context(value:Object):void 
+		{
+			_context = value;
 		}
 		
 	}

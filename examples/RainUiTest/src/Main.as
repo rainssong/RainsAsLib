@@ -12,6 +12,8 @@ package
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.utils.getQualifiedClassName;
+	import me.rainssong.utils.Align;
+	import me.rainssong.utils.ScaleMode;
 	import me.rainui.components.Button;
 	import me.rainui.components.Label;
 	import me.rainui.components.ScrollContainer;
@@ -39,11 +41,20 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			RainUI.init(stage,new RainTheme);
-			var btn:Button = new Button();
+			var btn:Button = new Button("我靠");
 			btn.normalSkin = RainUI.theme.getSkin("darkBlueRoundSkin");
 			addChild(btn);
 			btn.top = 100;
 			
+			var l:Label = new Label("我靠");
+			//btn.normalSkin = RainUI.theme.getSkin("darkBlueRoundSkin");
+			addChild(l);
+			l.top = 100;
+			l.left = 100;
+			l.height = 300;
+			l.borderVisible = true;
+			//l.align = Align.TOP_RIGHT;
+			l.contentScaleMode = ScaleMode.WIDTH_ONLY;
 			//this.dispatchEvent(new Event(Event.RESIZE));
 		}
 	}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <application xmlns="http://ns.adobe.com/air/application/3.9">
-  <id>cn.rainssong.RainsAsLib</id>
+  <id>me.rainssong.RainsAsLib</id>
   <versionNumber>1.0</versionNumber>
   <supportedProfiles>mobileDevice extendedDesktop</supportedProfiles>
   <filename>RainsAsLib</filename>

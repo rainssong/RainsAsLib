@@ -9,6 +9,8 @@ package me.rainui.components
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
+	import me.rainssong.utils.Align;
+	import me.rainssong.utils.ScaleMode;
 	import me.rainui.RainUI;
 	//import morn.core.utils.ObjectUtils;
 	//import morn.core.utils.StringUtils;
@@ -17,7 +19,7 @@ package me.rainui.components
 	[Event(name="change",type="flash.events.Event")]
 	
 	/**文字标签*/
-	public class Label extends Container
+	public class Label extends DisplayResizer
 	{
 		//public var deftaultTextFormat:TextFormat = new TextFormat("微软雅黑", 24, 0, null, null, null, null, null, TextFormatAlign.CENTER);
 		public var textField:TextField;
@@ -29,9 +31,9 @@ package me.rainui.components
 		//protected var _bitmap:AutoBitmap;
 		protected var _margin:Array = [0, 0, 0, 0];
 		
-		public function Label(text:String = "", dataSource:String = null)
+		public function Label(text:String = "", dataSource:Object = null)
 		{
-			super(dataSource)
+			super()
 			this.text = text;
 			//this.skinName = _skinName;
 		}
@@ -40,7 +42,10 @@ package me.rainui.components
 		{
 			mouseEnabled = false;
 			mouseChildren = true;
-			_format = new TextFormat("微软雅黑", 24, 0, null, null, null, null, null, TextFormatAlign.CENTER);
+			if (RainUI.theme)
+				_format = RainUI.theme.getTextFormat("black");
+			else
+				_format = new TextFormat("微软雅黑", 24, 0, null, null, null, null, null, TextFormatAlign.CENTER);
 			_width = 200;
 			_height = 60;
 			_autoSize = false;
@@ -49,7 +54,13 @@ package me.rainui.components
 		override protected function createChildren():void
 		{
 			//addChild(_bitmap = new AutoBitmap());
-			addChild(textField = new TextField());
+			if (textField == null)
+			{
+				addChild(textField = new TextField());
+				_contentAlign = Align.CENTER;
+				_contentScaleMode = ScaleMode.NONE;
+			}
+			_content = textField;
 		}
 		
 		override protected function initialize():void
@@ -61,24 +72,31 @@ package me.rainui.components
 			textField.selectable = false;
 			textField.autoSize = TextFieldAutoSize.LEFT;
 			
-			//_bitmap.sizeGrid = [2, 2, 2, 2];
 			callLater(resize);
 		}
 		
 		/**显示的文本*/
 		public function get text():String
 		{
-			return _text;
+			//CHANGE: 直接代理
+			//return _text;
+			return textField.text;
 		}
 		
 		public function set text(value:String):void
 		{
-			if (_text != value)
+			if (text != value)
 			{
-				_text = value || "";
+				textField.text = value;
 				callLater(redraw);
 				sendEvent(Event.CHANGE);
 			}
+			//if (_text != value)
+			//{
+				//_text = value || "";
+				//callLater(redraw);
+				//sendEvent(Event.CHANGE);
+			//}
 		}
 		
 		//protected function changeText():void
@@ -89,10 +107,9 @@ package me.rainui.components
 		
 		override public function redraw():void 
 		{
-			
 			textField.defaultTextFormat = _format;
 			textField.setTextFormat(_format);
-			textField.text = _text;
+			//textField.text = _text;
 			super.redraw();
 		}
 		
@@ -100,8 +117,8 @@ package me.rainui.components
 		{
 			super.resize();
 			
-			textField.x = 2;
-			textField.y = 2;
+			//textField.x = 2;
+			//textField.y = 2;
 			if (_autoSize)
 			{
 				if (wordWrap)
@@ -114,8 +131,8 @@ package me.rainui.components
 					textField.height = _height;
 					textField.width = textField.textWidth + 2;
 				}
-				_height = textField.height + 4 + textField.x;
-				_width = textField.width + 4 + textField.y;
+				_height = textField.height + 4 + textField.y;
+				_width = textField.width + 4 + textField.x;
 			}
 			else
 			{
@@ -270,12 +287,33 @@ package me.rainui.components
 		/**对齐方式*/
 		public function get align():String
 		{
-			return _format.align;
+			return _contentAlign;
 		}
 		
 		public function set align(value:String):void
 		{
-			_format.align = value;
+			contentAlign=value
+			switch (_contentAlign) 
+			{
+				case Align.LEFT:
+				case Align.TOP_LEFT:
+				case Align.BOTTOM_LEFT:
+					_format.align = TextFormatAlign.LEFT;
+					break;
+				case Align.TOP:
+				case Align.CENTER:
+				case Align.BOTTOM:
+					_format.align = TextFormatAlign.CENTER;
+					break;
+				case Align.RIGHT:
+				case Align.TOP_RIGHT:
+				case Align.BOTTOM_RIGHT:
+					_format.align = TextFormatAlign.RIGHT;
+					break;
+				break;
+				default:
+			}
+			
 			callLater(redraw);
 		}
 		
@@ -426,7 +464,7 @@ package me.rainui.components
 		
 		override public function get height():Number
 		{
-			if (!isNaN(_height) || Boolean(_skinName) || Boolean(_text))
+			if (!isNaN(_height) || Boolean(_skinName) || Boolean(text))
 			{
 				return super.height;
 			}

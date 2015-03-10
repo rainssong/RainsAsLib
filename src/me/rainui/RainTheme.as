@@ -6,11 +6,15 @@ package me.rainui
 	import flash.display.Shape;
 	import flash.geom.ColorTransform;
 	import flash.geom.Rectangle;
+	import flash.system.Capabilities;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	import flash.utils.Dictionary;
 	import me.rainssong.display.Scale9BitmapSprite;
 	import me.rainssong.display.ScaleBitmap;
+	import me.rainssong.manager.SystemManager;
+	import me.rainssong.math.MathCore;
+	import me.rainssong.system.SystemCore;
 	import me.rainssong.utils.Draw;
 	import me.rainssong.utils.ObjectCore;
 	import me.rainui.components.Button;
@@ -41,9 +45,9 @@ package me.rainui
 		
 		static public const darkColorTrans:ColorTransform = new ColorTransform(0.7, 0.7, 0.7, 1, 0, 0, 0, 0);
 		
-		static private const grayTextFormat:TextFormat = new TextFormat(null, 32, GRAY, null, null, null, null, null, TextFormatAlign.CENTER);
-		static private const whiteTextFormat:TextFormat = new TextFormat(null, 32, 0xffffff, null, null, null, null, null, TextFormatAlign.CENTER);
-		static private const blackTextFormat:TextFormat = new TextFormat(null, 32, 0, null, null, null, null, null, TextFormatAlign.CENTER);
+		static private const grayTextFormat:TextFormat = new TextFormat("微软雅黑", 32, GRAY, null, null, null, null, null, TextFormatAlign.CENTER);
+		static private const whiteTextFormat:TextFormat = new TextFormat("微软雅黑", 32, 0xffffff, null, null, null, null, null, TextFormatAlign.CENTER);
+		static private const blackTextFormat:TextFormat = new TextFormat("微软雅黑", 32, 0, null, null, null, null, null, TextFormatAlign.CENTER);
 		
 		private var _configDic:Dictionary = new Dictionary();
 		private var _skinDic:Dictionary = new Dictionary();
@@ -70,22 +74,29 @@ package me.rainui
 			return _skinDic[skinName]();
 		}
 		
-		public static function getTextFormat(name:String = ""):TextFormat
+		public function getTextFormat(name:String = ""):TextFormat
 		{
+			var tf:TextFormat
 			switch (name)
 			{
+				case "white": 
 				case WHITE_TEXT_FORMAT: 
-					return ObjectCore.clone(whiteTextFormat);
+					tf= ObjectCore.clone(whiteTextFormat);
 					break;
+				case "gray": 
 				case GRAY_TEXT_FORMAT: 
-					return ObjectCore.clone(grayTextFormat);
+					tf=  ObjectCore.clone(grayTextFormat);
 					break;
+				case "black": 
 				case BLACK_TEXT_FORMAT: 
-					return ObjectCore.clone(blackTextFormat);
+					tf=  ObjectCore.clone(blackTextFormat);
 					break;
 				default: 
-					return ObjectCore.clone(whiteTextFormat);
+					tf=  ObjectCore.clone(whiteTextFormat);
 			}
+			var l:Number = Math.min(RainUI.stageHeight, RainUI.stageWidth);
+			tf.size = MathCore.floor(l/20);
+			return tf;
 		}
 		
 		public function darkBlueRoundSkinFactory():DisplayObject

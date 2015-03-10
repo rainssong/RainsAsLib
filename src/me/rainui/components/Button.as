@@ -31,7 +31,7 @@ package me.rainui.components
 	/**按钮类*/
 	public class Button extends Container
 	{
-		public var defaultTextFormat:TextFormat = RainTheme.getTextFormat(RainTheme.WHITE_TEXT_FORMAT);
+		//public var defaultTextFormat:TextFormat = RainTheme.getTextFormat(RainTheme.WHITE_TEXT_FORMAT);
 		//public var defaultSkin:DisplayObject = RainUI.btnSkin;
 		public var darkColorTrans:ColorTransform = RainUI.darkColorTrans;
 		
@@ -54,12 +54,10 @@ package me.rainui.components
 		protected var _handler:Function
 		//protected var _labelColors:Array = Styles.buttonLabelColors;
 		//protected var _labelMargin:Array = Styles.buttonLabelMargin;
-		protected var _showLabel:Boolean = true;
+		//protected var _showLabel:Boolean = true;
 		protected var _state:String = NORMAL;
 		protected var _toggle:Boolean = false;
 		protected var _selected:Boolean = false;
-		
-		
 		private var _normalColorTrans:ColorTransform;
 		
 		public function Button(text:String = "",dataSource:Object=null)
@@ -114,12 +112,14 @@ package me.rainui.components
 				//label.dataSource = {left: 4, right: 4, top:4,bottom:4};
 				_label.centerX = 0;
 				_label.centerY = 0;
-				_label.autoSize = true;
-				_label.format = defaultTextFormat;
+				//_label.autoSize = true;
+				if (RainUI.theme)
+					_label.format = RainUI.theme.getTextFormat("whiteTextFormat");
+				else
+					_label.format = new TextFormat(null, 32, 0xffffff, null, null, null, null, null, TextFormatAlign.CENTER);
 			}
 			
 			addChild(_label);
-		
 		}
 		
 		override protected function initialize():void
@@ -180,7 +180,7 @@ package me.rainui.components
 			{
 				selected = !_selected;
 			}
-			if (_handler)
+			if (_handler!=null)
 				_handler();
 			//}
 			//sendEvent(Event.SELECT);
@@ -317,12 +317,12 @@ package me.rainui.components
 		}
 		
 		/**按钮标签字体*/
-		public function get _labelFont():String
+		public function get labelFont():String
 		{
 			return _label.font;
 		}
 		
-		public function set _labelFont(value:String):void
+		public function set labelFont(value:String):void
 		{
 			_label.font = value
 			callLater(changeLabelSize);
@@ -364,24 +364,24 @@ package me.rainui.components
 		//}
 		
 		/**按钮标签大小*/
-		public function get _labelSize():Object
+		public function get labelSize():Object
 		{
 			return _label.size;
 		}
 		
-		public function set _labelSize(value:Object):void
+		public function set labelSize(value:Object):void
 		{
 			_label.size = value
 			callLater(changeLabelSize);
 		}
 		
 		/**按钮标签粗细*/
-		public function get _labelBold():Object
+		public function get labelBold():Object
 		{
 			return _label.bold;
 		}
 		
-		public function set _labelBold(value:Object):void
+		public function set labelBold(value:Object):void
 		{
 			_label.bold = value
 			callLater(changeLabelSize);
@@ -518,6 +518,20 @@ package me.rainui.components
 		public function set downSkin(value:DisplayObject):void 
 		{
 			_downSkin = value;
+		}
+		
+		override public function showBorder(color:uint = 0xff0000, contentColor:int = -1):void 
+		{
+			_border.graphics.clear();
+			_border.graphics.lineStyle(1, color);
+			_border.graphics.drawRect(0, 0, width, height);
+			
+			if (contentColor > 0)
+			{
+				_label.showBorder(contentColor);
+			}
+			
+			addChild(_border);
 		}
 	
 	}

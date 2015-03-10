@@ -256,7 +256,7 @@
 		}
 		
 		//尺寸改变后调用
-		//TODO:super.resize必须在底部，否则可能导致border和bgSkin宽高不正确
+		//TIP:super.resize必须在底部，否则可能导致border和bgSkin宽高不正确
 		public function resize():void
 		{
 			clearCallLater(resize);
@@ -286,7 +286,7 @@
 			this.height = height;
 		}
 		
-		[Inspectable(name="disabled",type="Bealoon",defaultValue=false)]
+		[Inspectable(name="disabled",type="Boolean",defaultValue=false)]
 		public function set disabled(value:Boolean):void
 		{
 			if (_disabled != value)
@@ -301,6 +301,7 @@
 			return _disabled;
 		}
 		
+		[Inspectable(name="mouseChildren",type="Boolean",defaultValue=false)]
 		override public function set mouseChildren(value:Boolean):void
 		{
 			_mouseChildren = super.mouseChildren = value;
@@ -350,6 +351,7 @@
 			return _autoSize;
 		}
 		
+		[Inspectable(name="autoSize",type="Boolean",defaultValue=false)]
 		public function set autoSize(value:Boolean):void 
 		{
 			_autoSize = value;
@@ -361,6 +363,7 @@
 			return _borderVisible;
 		}
 		
+		[Inspectable(name="borderVisible",type="Boolean",defaultValue=false)]
 		public function set borderVisible(value:Boolean):void 
 		{
 			_borderVisible = value;

@@ -10,6 +10,7 @@ package me.rainui.components
 	import flash.events.TextEvent;
 	import flash.geom.Rectangle;
 	import flash.text.TextFieldType;
+	import me.rainssong.utils.Align;
 	import me.rainssong.utils.Color;
 	import me.rainssong.utils.Draw;
 	import me.rainui.RainTheme;
@@ -51,7 +52,7 @@ package me.rainui.components
 			selectable = true;
 			textField.type = TextFieldType.INPUT;
 			textField.autoSize = "none";
-			
+			_contentAlign = Align.LEFT;
 			textField.addEventListener(Event.CHANGE, onTextFieldChange);
 			textField.addEventListener(TextEvent.TEXT_INPUT, onTextFieldTextInput);
 		}

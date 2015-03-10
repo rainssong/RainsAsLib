@@ -188,7 +188,7 @@ package me.rainui.components
 		{
 			return _bottom;
 		}
-		
+		[Inspectable(name="bottom",type="Number",defaultValue=NaN)]
 		public function set bottom(value:Number):void
 		{
 			_bottom = value;
@@ -208,6 +208,7 @@ package me.rainui.components
 			return _left;
 		}
 		
+		[Inspectable(name="left",type="Number",defaultValue=NaN)]
 		public function set left(value:Number):void
 		{
 			_left = value;
@@ -227,17 +228,15 @@ package me.rainui.components
 			return _right;
 		}
 		
+		[Inspectable(name="right",type="Number",defaultValue=NaN)]
 		public function set right(value:Number):void
 		{
 			_right = value;
-			
 			_percentWidth = NaN;
 			_percentLeft = NaN;
 			_percentRight = NaN;
-			
 			_centerX = NaN;
 			_percentCenterX = NaN;
-			
 			callLater(resize);
 		}
 		
@@ -246,7 +245,7 @@ package me.rainui.components
 		{
 			return _centerX;
 		}
-		
+		[Inspectable(name="centerX",type="Number",defaultValue=NaN)]
 		public function set centerX(value:Number):void
 		{
 			_centerX = value;
@@ -265,7 +264,7 @@ package me.rainui.components
 		{
 			return _centerY;
 		}
-		
+		[Inspectable(name="centerY",type="Number",defaultValue=NaN)]
 		public function set centerY(value:Number):void
 		{
 			_centerY = value;
@@ -282,7 +281,7 @@ package me.rainui.components
 		{
 			return _percentWidth;
 		}
-		
+		[Inspectable(name="percentWidth",type="Number",defaultValue=NaN)]
 		public function set percentWidth(value:Number):void 
 		{
 			_percentWidth = value;
@@ -293,7 +292,7 @@ package me.rainui.components
 		{
 			return _percentHeight;
 		}
-		
+		[Inspectable(name="percentHeight",type="Number",defaultValue=NaN)]
 		public function set percentHeight(value:Number):void 
 		{
 			_percentHeight = value;
@@ -304,7 +303,7 @@ package me.rainui.components
 		{
 			return _percentTop;
 		}
-		
+		[Inspectable(name="percentTop",type="Number",defaultValue=NaN)]
 		public function set percentTop(value:Number):void 
 		{
 			_percentTop = value;
@@ -315,7 +314,7 @@ package me.rainui.components
 		{
 			return _percentBottom;
 		}
-		
+		[Inspectable(name="percentBottom",type="Number",defaultValue=NaN)]
 		public function set percentBottom(value:Number):void 
 		{
 			_percentBottom = value;
@@ -326,7 +325,7 @@ package me.rainui.components
 		{
 			return _percentLeft;
 		}
-		
+		[Inspectable(name="percentLeft",type="Number",defaultValue=NaN)]
 		public function set percentLeft(value:Number):void 
 		{
 			_percentLeft = value;
@@ -337,7 +336,7 @@ package me.rainui.components
 		{
 			return _percentRight;
 		}
-		
+		[Inspectable(name="percentRight",type="Number",defaultValue=NaN)]
 		public function set percentRight(value:Number):void 
 		{
 			_percentRight = value;
@@ -348,7 +347,7 @@ package me.rainui.components
 		{
 			return _minHeight;
 		}
-		
+		[Inspectable(name="minHeight",type="Number",defaultValue=NaN)]
 		public function set minHeight(value:Number):void 
 		{
 			_minHeight = value;
@@ -358,7 +357,7 @@ package me.rainui.components
 		{
 			return _maxHeight;
 		}
-		
+		[Inspectable(name="maxHeight",type="Number",defaultValue=NaN)]
 		public function set maxHeight(value:Number):void 
 		{
 			_maxHeight = value;
@@ -368,7 +367,7 @@ package me.rainui.components
 		{
 			return _percentCenterX;
 		}
-		
+		[Inspectable(name="percentCenterX",type="Number",defaultValue=NaN)]
 		public function set percentCenterX(value:Number):void 
 		{
 			_percentCenterX = value;
@@ -378,7 +377,7 @@ package me.rainui.components
 		{
 			return _percentCenterY;
 		}
-		
+		[Inspectable(name="percentCenterY",type="Number",defaultValue=NaN)]
 		public function set percentCenterY(value:Number):void 
 		{
 			_percentCenterY = value;
