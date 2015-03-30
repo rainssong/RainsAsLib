@@ -29,6 +29,7 @@
 		{
 			super();
 			this.mouseChildren = false;
+			this.buttonMode = true;
 			if (labelTF == null) labelTF = new TextField();
 			if (view) addChild(new Bitmap(BitmapDataCore.drawScaleBmd(view)));
 		}

@@ -58,7 +58,7 @@ package me.rainui.components
 		protected var _state:String = NORMAL;
 		protected var _toggle:Boolean = false;
 		protected var _selected:Boolean = false;
-		private var _normalColorTrans:ColorTransform;
+		private var _normalColorTrans:ColorTransform=new ColorTransform();
 		
 		public function Button(text:String = "",dataSource:Object=null)
 		{
@@ -83,20 +83,30 @@ package me.rainui.components
 		
 		override protected function createChildren():void
 		{
-			if (this.numChildren == 1)
-			{
-				_normalSkin = this.getChildAt(0);
-				//_width = _normalSkin.width;
-				//_height = _normalSkin.height;
-			}
 			if (_normalSkin == null)
 			{
-				var shape:Shape = new Shape();
-				Draw.rect(shape, 0, 0, 100, 100, RainTheme.BLUE);
-				Draw.rect(shape, 0, 96, 100, 4, RainTheme.DARK_BLUE);
-				shape.scale9Grid = new Rectangle(4, 4, 92, 92);
-				_normalSkin = shape;
-				_normalSkin.name = "normalSkin";
+				if (this.numChildren == 1)
+				{
+					_normalSkin = this.getChildAt(0);
+					this._width = _normalSkin.width;
+					this._height = _normalSkin.height;
+					//_width = _normalSkin.width;
+					//_height = _normalSkin.height;
+				}
+				else
+				{
+					var shape:Shape = new Shape();
+					Draw.rect(shape, 0, 0, 100, 100, RainTheme.BLUE);
+					Draw.rect(shape, 0, 96, 100, 4, RainTheme.DARK_BLUE);
+					shape.scale9Grid = new Rectangle(4, 4, 92, 92);
+					_normalSkin = shape;
+					_normalSkin.name = "normalSkin";
+				}
+			}
+			else
+			{
+				this._width = _normalSkin.width;
+				this._height = _normalSkin.height;
 			}
 			addChild(_normalSkin);
 			
@@ -105,7 +115,11 @@ package me.rainui.components
 				addChild(this._downSkin)
 				_downSkin.visible = false;
 			}
-			
+			if (_selectedSkin)
+			{
+				addChild(this._selectedSkin)
+				_selectedSkin.visible = false;
+			}
 			if (this._label == null)
 			{
 				_label = new Label();
@@ -118,7 +132,6 @@ package me.rainui.components
 				else
 					_label.format = new TextFormat(null, 32, 0xffffff, null, null, null, null, null, TextFormatAlign.CENTER);
 			}
-			
 			addChild(_label);
 		}
 		
@@ -144,30 +157,32 @@ package me.rainui.components
 				this._downSkin.width = _width;
 				this._downSkin.height = _height;
 			}
-			
-			
 			//this.scrollRect = new Rectangle(0, 0, _width, _height);
 		}
 		
 		protected function onRollOver(e:MouseEvent):void
 		{
 			//含redraw
-			state = HOVER;
+			if(_state!=SELECTED)
+				state = HOVER;
 		}
 		
 		protected function onRollOut(e:MouseEvent):void
 		{
-			state = NORMAL;
+			if(_state!=SELECTED)
+				state = NORMAL;
 		}
 		
 		protected function onMouseDown(e:MouseEvent):void
 		{
-			state = MOUSE_DOWN;
+			if(_state!=SELECTED)
+				state = MOUSE_DOWN;
 		}
 		
 		protected function onMouseUp(e:MouseEvent):void
 		{
-			state = NORMAL;
+			if(_state!=SELECTED)
+				state = NORMAL;
 		}
 		
 		protected function onClick(e:MouseEvent):void
@@ -226,29 +241,30 @@ package me.rainui.components
 			if (_selected != value)
 			{
 				_selected = value;
+				if(_selected)_state = SELECTED;
+				else _state = NORMAL;
+				callLater(redraw);
 				//state = _selected ? stateMap["selected"] : stateMap["rollOut"];
-				if (_selected)
-				{
-					if (_selectedSkin)
-					{
-						_normalSkin.visible = false;
-						_selectedSkin.visible = true;
-					}
-					else
-					{
-						this.transform.colorTransform = darkColorTrans;
-					}
-				}
-				else
-				{
-					if (_selectedSkin)
-					{
-						_normalSkin.visible = true;
-						_selectedSkin.visible = false;
-					}
-					else
-						this.transform.colorTransform = _normalColorTrans;
-				}
+				//if (_selected)
+				//{
+					//if (_selectedSkin)
+					//{
+						//_normalSkin.visible = false;
+						//_selectedSkin.visible = true;
+					//}
+					//else
+						//this.transform.colorTransform = darkColorTrans;
+				//}
+				//else
+				//{
+					//if (_selectedSkin)
+					//{
+						//_normalSkin.visible = true;
+						//_selectedSkin.visible = false;
+					//}
+					//else
+						//this.transform.colorTransform = _normalColorTrans;
+				//}
 			}
 		}
 		
@@ -285,10 +301,27 @@ package me.rainui.components
 				case NORMAL: 
 					_normalSkin.visible = true;
 					if(_downSkin)_downSkin.visible = false;
-					if (_selected)
+					if(_selectedSkin)_selectedSkin.visible = false;
+					/*if (_selected)
 						this.transform.colorTransform = darkColorTrans;
-					else
+					else*/
 						this.transform.colorTransform = _normalColorTrans;
+					break;
+				case SELECTED: 
+					if (_selectedSkin)
+					{
+						if(_selectedSkin.parent==null)
+							addChild(_selectedSkin);
+						_selectedSkin.visible = true;
+						this.transform.colorTransform = _normalColorTrans;
+					}
+					else
+					{
+						if (_normalSkin.parent == null)
+							addChildAt(_normalSkin, 0);
+						_normalSkin.visible = true;
+						this.transform.colorTransform = darkColorTrans;
+					}
 					break;
 				default: 
 			}
@@ -520,6 +553,18 @@ package me.rainui.components
 			_downSkin = value;
 		}
 		
+		public function get selectedSkin():DisplayObject 
+		{
+			return _selectedSkin;
+		}
+		
+		public function set selectedSkin(value:DisplayObject):void 
+		{
+			_selectedSkin = value;
+		}
+
+		
+	
 		override public function showBorder(color:uint = 0xff0000, contentColor:int = -1):void 
 		{
 			_border.graphics.clear();

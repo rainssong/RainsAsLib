@@ -41,8 +41,13 @@ package me.rainui.components
 		
 		override protected function createChildren():void 
 		{
-			if (_content != null)
-				this._content = new Sprite();
+			if (_content == null)
+			{
+				if (this.numChildren == 1)
+					this._content = this.getChildAt(0);
+				else
+					this._content = new Sprite();
+			}
 			super.createChildren();
 		}
 		
@@ -147,6 +152,7 @@ package me.rainui.components
 			return _contentScaleMode;
 		}
 		
+		[Inspectable(name="contentScaleMode",type="String",defaultValue=ScaleMode.FULL_FILL)]
 		public function set contentScaleMode(value:String):void
 		{
 			if (_contentScaleMode == value) return;
@@ -159,6 +165,7 @@ package me.rainui.components
 			return _contentAlign;
 		}
 		
+		[Inspectable(name="contentScaleMode",type="String",defaultValue=Align.CENTER)]
 		public function set contentAlign(value:String):void
 		{
 			if (_contentAlign == value) return;

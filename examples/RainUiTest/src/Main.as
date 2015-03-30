@@ -41,12 +41,13 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			RainUI.init(stage,new RainTheme);
-			var btn:Button = new Button("我靠");
+			var btn:Button = new Button("ABCabc");
 			btn.normalSkin = RainUI.theme.getSkin("darkBlueRoundSkin");
 			addChild(btn);
 			btn.top = 100;
 			
-			var l:Label = new Label("我靠");
+			var l:Label = new Label("ABCabc");
+			l.font = "Eaton";
 			//btn.normalSkin = RainUI.theme.getSkin("darkBlueRoundSkin");
 			addChild(l);
 			l.top = 100;

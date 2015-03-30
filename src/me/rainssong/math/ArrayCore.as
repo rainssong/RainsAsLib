@@ -349,6 +349,12 @@ package   me.rainssong.math
 				return result;
 		}
 		
+		static public function removeByElement(arr:Array,element:Object):void 
+		{
+			if (arr.indexOf(element) > -1)
+				arr.splice(arr.indexOf(element),1);
+		}
+		
 		
 		
 		

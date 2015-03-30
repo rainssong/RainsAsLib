@@ -24,9 +24,6 @@ package
 	import me.rainui.RainTheme;
 	import me.rainui.RainUI;
 	
-	
-	
-	
 	/**
 	 *  我一定是足够蛋痛才会来写这个
 	 * @author Rainssong
@@ -34,17 +31,19 @@ package
 	public class Main extends Sprite
 	{
 		
-		
 		public function Main():void
 		{
-			(new A()).getA();
+			var sum:int = 100;
+			
+			for (var i:int = 0; i < 10; ++i)
+			{
+				if (i % 2)
+					continue;
+				sum++;
+			}
+			trace(sum);
 		}
-		
-		
-		
-		
-		
-		
+	
 	}
 
 }

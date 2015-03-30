@@ -19,7 +19,8 @@ package me.rainui.components
 		
 		static public var elasticCoefficient:Number = 0.5;
 
-		private var _container:Container;
+		private var _content:DisplayObject
+		private var _container:Container=new Container();
 		private var _scrollY:Number = 0;
 		private var _scrollX:Number = 0;
 		private var _onDrag:Boolean = false;
@@ -30,16 +31,14 @@ package me.rainui.components
 		private var _lastY:Number = 0;
 		private var _speedY:Number = 0;
 		public var direction:String = ALL;
-		public var lockDirection:Boolean = true;
+		//public var lockDirection:Boolean = true;
 		public var allowOverload:Boolean = true;
-		
-		
-		
 		
 		public function ScrollContainer(content:DisplayObject=null,dataSource:Object=null) 
 		{
 			super();
-			if (content) addChild(content);
+			if (content) 
+				_content=content;
 			if (dataSource) this.dataSource = dataSource;
 		}
 		
@@ -53,16 +52,24 @@ package me.rainui.components
 		
 		override protected function createChildren():void 
 		{
-			_container = new Container();
+			//_container = new Container();
 			_container.percentWidth = 1;
 			_container.percentHeight = 1;
 			super.addChild(_container);
+			
+			if (_content)
+				addChild(_content);
 			
 			if (bgSkin == null)
 			{
 				var shape:Shape = new Shape();
 				Draw.rect(shape, 0, 0, 100, 100,RainTheme.WHITE);
 				bgSkin = shape;
+			}
+			else
+			{
+				_width = bgSkin.width;
+				_height = bgSkin.height;
 			}
 			redraw();
 		}
@@ -220,9 +227,9 @@ package me.rainui.components
 			{
 				return Math.max(_container.contentWidth+_container.x - _height,_container.x);
 			}
-			if (_container.x >0 && _container.contentWidth+_container.x>_width)
+			if (_container.x >0)
 			{
-				return Math.min(_container.contentWidth+_container.x - _height,_container.x);
+				return _container.x;
 			}
 			else 
 				return 0;
@@ -246,6 +253,22 @@ package me.rainui.components
 				return 0;
 		}
 		
+		public function get content():DisplayObject 
+		{
+			return _content;
+		}
+		
+		public function set content(value:DisplayObject):void 
+		{
+			if (_content != value)
+			{
+				if (_content != null && _content.parent)
+					removeChild(_content)
+			}
+			_content = value;
+			addChild(_content);
+		}
+		
 		override public function showBorder(color:uint = 0xff0000,conetntColor:int = -1):void 
 		{
 			super.showBorder()
@@ -254,10 +277,14 @@ package me.rainui.components
 		override public function resize():void 
 		{
 			super.resize();
-			var rect:Rectangle = this.scrollRect;
-			rect.width = _width;
-			rect.height = _height;
-			this.scrollRect = rect;
+			if (_width && _height)
+			{
+				var rect:Rectangle = this.scrollRect;
+				rect.width = _width;
+				rect.height = _height;
+				this.scrollRect = rect;
+			}
+			
 			
 			bgSkin.width = _width;
 			bgSkin.height = _height;

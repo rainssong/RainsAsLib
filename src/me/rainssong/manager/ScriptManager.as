@@ -66,7 +66,11 @@ package me.rainssong.manager
 				if (targetIndex > 0)
 					count = targetIndex;
 				else
+				{
 					powerTrace("no such key:" + line);
+					return;
+				}
+				
 			}
 			
 			if (count >= length)
