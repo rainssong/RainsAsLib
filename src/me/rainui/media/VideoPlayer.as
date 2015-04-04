@@ -1,4 +1,4 @@
-package view 
+package me.rainui.media 
 {
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
@@ -23,7 +23,6 @@ package view
 		public var video:Video;
 		public var nc:NetConnection = new NetConnection();
 		public var ns:NetStream;
-		public var bgSkin:DisplayObject
 		private var _replay:Boolean = false;
 		
 		public function VideoPlayer() 
@@ -103,6 +102,8 @@ package view
 		override public function resize():void 
 		{
 			super.resize();
+			if (video == null) return;
+			
 			if (video.videoHeight != 0 )
 			{
 				video.width = video.videoWidth;

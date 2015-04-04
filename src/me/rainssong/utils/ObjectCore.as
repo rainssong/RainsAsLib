@@ -126,7 +126,14 @@
 		{
 			var bytes:ByteArray = new ByteArray();
 			var className:String = getQualifiedClassName(source);
-			var cls:Class = getDefinitionByName(className) as Class;
+			var cls:Class
+			try{
+				cls = getDefinitionByName(className) as Class;
+			}
+			catch(e:Error)
+			{
+				return null;
+			}
 			
 			registerClassAlias(className, cls);
 			bytes.writeObject(source);
