@@ -12,8 +12,8 @@ package me.rainssong.manager
 	{
 		public var count:int = 0;
 		
-		public var xmlName:String="";
-		public var scriptDic:Dictionary = new Dictionary(true);
+		private var _xmlName:String="";
+		private var _scriptDic:Dictionary = new Dictionary(true);
 		private var _keyDic:Dictionary = new Dictionary(true);
 		private var _thisObj:Object;
 		private var _context:Object;
@@ -31,26 +31,11 @@ package me.rainssong.manager
 		
 		public function runScript(line:*=null,xmlName:String=null):void
 		{
-			//if (xmlName!=null && xmlName!=this.xmlName) 
-			//{	
-				//this.xmlName = xmlName;
-				//count = 0;
-			//} 
-			var changeXml:Boolean = false;
-			if (xmlName!=null && xmlName!=this.xmlName) 
-			{	
-				this.xmlName = xmlName;
-				count = 0;
-				changeXml = true;
-			}
+			this.xmlName = xmlName;
+			
 			
 			var xml:XML = scriptDic[this.xmlName];
 			var length:int = xml.motion.length();
-			
-			if(changeXml)
-				for (var i:int = 0; i < length; i++ )
-					if (xml.motion[i].@key.toString() != null)
-						_keyDic[xml.motion[i].@key.toString()] = i;
 			
 			if (line is Number && line>=0)
 			{
@@ -107,6 +92,36 @@ package me.rainssong.manager
 		public function set context(value:Object):void 
 		{
 			_context = value;
+		}
+		
+		public function get xmlName():String 
+		{
+			return _xmlName;
+		}
+		
+		public function set xmlName(value:String):void 
+		{
+			if (value!=null && value!=_xmlName) 
+			{	
+				_xmlName = value;
+				count = 0;
+				var xml:XML = _scriptDic[_xmlName];
+				var length:int = xml.motion.length();
+				
+				for (var i:int = 0; i < length; i++ )
+					if (xml.motion[i].@key.toString() != null)
+						_keyDic[xml.motion[i].@key.toString()] = i;
+			}
+		}
+		
+		public function get scriptDic():Dictionary 
+		{
+			return _scriptDic;
+		}
+		
+		public function set scriptDic(value:Dictionary):void 
+		{
+			_scriptDic = value;
 		}
 		
 	}
