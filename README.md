@@ -17,3 +17,4 @@ Collections
 		as3swf
 		bit101
 		SoundManager
+		D.eval

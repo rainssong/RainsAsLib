@@ -22,12 +22,12 @@ package me.rainui.components
 	public class DisplayResizer extends Container
 	{
 		protected var _content:DisplayObject
-	
 		protected var _contentScaleMode:String = ScaleMode.FULL_FILL;
 		protected var _contentAlign:String = Align.CENTER;
 		
-		public function DisplayResizer(content:DisplayObject=null)
+		public function DisplayResizer(content:DisplayObject=null,dataSource:Object=null)
 		{
+			super(dataSource);
 			if(content)
 				this.content = content;
 		}
@@ -48,6 +48,8 @@ package me.rainui.components
 				else
 					this._content = new Sprite();
 			}
+			if (_content.parent == null)
+				addChild(_content);
 			super.createChildren();
 		}
 		
@@ -69,17 +71,17 @@ package me.rainui.components
 		}
 		
 		/**
-		 * 已知问题：并未排除被除数为0的情况
+		 * BUG：并未排除被除数为0的情况
 		 */
 		override public function resize():void
 		{
 			super.resize();
 			
-			if (content==null || _width==0 || _height==0)
+			if (_content==null || _width==0 || _height==0 || _content.width==0 || _content.height==0)
 				return;
 			
-			var _scaleX:Number = _width / content.width*content.scaleX;
-			var _scaleY:Number = _height / content.height*content.scaleY;
+			var _scaleX:Number = _width / _content.width*_content.scaleX;
+			var _scaleY:Number = _height / _content.height*_content.scaleY;
 			var minScale:Number = Math.min(_scaleX, _scaleY);
 			var maxScale:Number = Math.max(_scaleX, _scaleY);
 			
@@ -88,20 +90,20 @@ package me.rainui.components
 				case ScaleMode.NONE:
 					break;
 				case ScaleMode.EXACT_FIT: 
-					content.width = _width;
-					content.height = _height;
+					_content.width = _width;
+					_content.height = _height;
 					break;
 				case ScaleMode.FULL_FILL: 
-					content.scaleX = content.scaleY = maxScale;
+					_content.scaleX = _content.scaleY = maxScale;
 					break;
 				case ScaleMode.HEIGHT_ONLY:
-					content.scaleX = content.scaleY = _scaleY;
+					_content.scaleX = _content.scaleY = _scaleY;
 					break;
 				case ScaleMode.WIDTH_ONLY:
-					content.scaleX = content.scaleY = _scaleX;
+					_content.scaleX = _content.scaleY = _scaleX;
 					break;
 				case ScaleMode.SHOW_ALL:
-					content.scaleX = content.scaleY = minScale;
+					_content.scaleX = _content.scaleY = minScale;
 					break;
 				default: 
 			}
@@ -111,17 +113,17 @@ package me.rainui.components
 				case Align.BOTTOM:
 				case Align.BOTTOM_LEFT:
 				case Align.BOTTOM_RIGHT:
-					content.y = _height - content.height;
+					_content.y = _height - _content.height;
 				break;
 				case Align.TOP:
 				case Align.TOP_LEFT:
 				case Align.TOP_RIGHT:
-					content.y = 0;
+					_content.y = 0;
 				break;
 				case Align.CENTER:
 				case Align.LEFT:
 				case Align.RIGHT:
-					content.y = (_height - content.height)*0.5;
+					_content.y = (_height - _content.height)*0.5;
 				break;
 				default:
 			}
@@ -131,17 +133,17 @@ package me.rainui.components
 				case Align.TOP_LEFT:
 				case Align.LEFT:
 				case Align.BOTTOM_LEFT :
-					content.x = 0;
+					_content.x = 0;
 				break;
 				case Align.CENTER:
 				case Align.TOP:
 				case Align.BOTTOM:
-					content.x = (_width - content.width)*0.5;
+					_content.x = (_width - _content.width)*0.5;
 				break;
 				case Align.TOP_RIGHT:
 				case Align.RIGHT:
 				case Align.BOTTOM_RIGHT:
-					content.x = _width - content.width;
+					_content.x = _width - _content.width;
 				break;
 				default:
 			}

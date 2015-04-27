@@ -1,6 +1,7 @@
 package me.rainui.components
 {
 	import flash.display.DisplayObject;
+	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import me.rainssong.math.MathCore;
@@ -37,6 +38,8 @@ package me.rainui.components
 		protected var _minWidth:Number = 0;
 		protected var _maxWidth:Number = Infinity;
 		
+		public var destroyOnRemove:Boolean = true;
+		
 		public function Container(dataSource:Object=null)
 		{
 			//this.scrollRect = new Rectangle(0, 0, 100, 100);
@@ -56,7 +59,11 @@ package me.rainui.components
 		protected function onRemoved(e:Event):void
 		{
 			if (e.target == this)
+			{
 				parent.removeEventListener(Event.RESIZE, onParentResize);
+				if (destroyOnRemove)
+					destroy();
+			}
 		}
 		
 		protected function onAdded(e:Event):void
@@ -140,11 +147,12 @@ package me.rainui.components
 		}
 		override public function set width(value:Number):void
 		{
-			super.width = value;
 			_percentWidth = NaN;
 			_percentLeft = NaN;
 			_percentRight = NaN;
-			callLater(resize);
+			super.width = value;
+			
+			//callLater(resize);
 			//var sc:Rectangle = this.scrollRect;
 			//sc.width = value;
 			//this.scrollRect = sc;
@@ -153,14 +161,8 @@ package me.rainui.components
 		//TODO:减少percent和固定值的冲突，兼容
 		override public function set height(value:Number):void
 		{
-			super.height = value;
 			_percentHeight = NaN;
-			//_percentTop = NaN;
-			//_percentBottom = NaN;
-			//var sc:Rectangle = this.scrollRect;
-			//sc.height = value;
-			//this.scrollRect = sc;
-			callLater(resize);
+			super.height = value;
 		}
 		
 		/**居父容器顶上的距离*/
@@ -173,10 +175,7 @@ package me.rainui.components
 		public function set top(value:Number):void
 		{
 			_top = value;
-			//_percentHeight = NaN;
 			_percentTop = NaN;
-			//_percentBottom = NaN;
-			
 			_centerY = NaN;
 			_percentCenterY = NaN;
 			
@@ -388,54 +387,68 @@ package me.rainui.components
 		{
 			if (parent == null)
 				return;
+				
+			var parentWidth:Number;
+			var parentHeight:Number;
+			if (parent is Stage)
+			{
+				parentWidth = stage.stageWidth; 
+				parentHeight = stage.stageHeight; 
+			}
+			else
+			{
+				parentWidth = parent.width;
+				parentHeight = parent.height;
+			}
+			
 			
 			if (!isNaN(_percentWidth))
-				_width = parent.width * _percentWidth;
+				_width = parentWidth * _percentWidth;
 			if (!isNaN(_percentHeight))
-				_height = parent.height * _percentHeight;
+				_height = parentHeight * _percentHeight;
 			
 			if (!isNaN(_percentLeft))
-				x = _percentLeft * parent.width;
+				x = _percentLeft * parentWidth;
 			else if ( !isNaN(_left))
 				x = _left;
 				
 			if (!isNaN(_percentRight))
 				if (!isNaN(_percentLeft))
-					_width = parent.width*(1-_percentRight - _percentLeft);
+					_width = parentWidth*(1-_percentRight - _percentLeft);
 				else
-					x = parent.width - (_percentRight * parent.width) - displayWidth;
+					x = parentWidth - (_percentRight * parentWidth) - displayWidth;
 			else if ( !isNaN(_right))
 				if (!isNaN(_left))
-					_width = parent.width - _left - _right;
+					_width = parentWidth - _left - _right;
 				else
-					x = parent.width - _right - displayWidth;
+					x = parentWidth - _right - displayWidth;
 				
 				
 			if (!isNaN(_percentCenterX))
-				x = (parent.width - displayWidth) * 0.5 + (_percentCenterX * parent.width);
+				x = (parentWidth - displayWidth) * 0.5 + (_percentCenterX * parentWidth);
 			else if (!isNaN(_centerX))
-				x = (parent.width - displayWidth) * 0.5 + _centerX;
+				x = (parentWidth - displayWidth) * 0.5 + _centerX;
 			
 			if (!isNaN(_percentTop))
-				y = _percentTop * parent.height;
+				y = _percentTop * parentHeight;
 			else if (!isNaN(_top))
 				y = _top;
 				
 			if (!isNaN(_percentCenterY))
-				y = (parent.height - displayHeight) * 0.5 + (_percentCenterY*parent.height);
+				y = (parentHeight - displayHeight) * 0.5 + (_percentCenterY*parentHeight);
 			else if (!isNaN(_centerY))
-				y = (parent.height - displayHeight) * 0.5 + _centerY;
+				y = (parentHeight - displayHeight) * 0.5 + _centerY;
 				
 			if (!isNaN(_percentBottom))
 				if (!isNaN(_percentTop))
-					_width = parent.width * (1 - _percentTop - _percentBottom);
+					_width = parentWidth * (1 - _percentTop - _percentBottom);
 				else
-					y = parent.height - (_percentBottom * parent.height) - displayHeight;
+					y = parentHeight - (_percentBottom * parentHeight) - displayHeight;
 			else if (!isNaN(_bottom))
 				if (!isNaN(_top))
-					_height = parent.height - _top - _bottom;
+					_height = parentHeight - _top - _bottom;
 				else
-					y = parent.height - _bottom - displayHeight;
+					y = parentHeight - _bottom - displayHeight;
 			
 			_height = MathCore.getRangedNumber(_height, _minHeight, _maxHeight);
 			_width = MathCore.getRangedNumber(_width, _minWidth, _maxWidth);

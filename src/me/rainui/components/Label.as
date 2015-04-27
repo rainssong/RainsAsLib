@@ -33,22 +33,24 @@ package me.rainui.components
 		
 		public function Label(text:String = "", dataSource:Object = null)
 		{
-			super()
+			super(null,dataSource)
 			this.text = text;
-			//this.skinName = _skinName;
 		}
 		
 		override protected function preinitialize():void
 		{
 			mouseEnabled = false;
 			mouseChildren = true;
-			if (RainUI.theme)
-				_format = RainUI.theme.getTextFormat("black");
-			else
-				_format = new TextFormat("微软雅黑", 24, 0, null, null, null, null, null, TextFormatAlign.CENTER);
+			
+			//if (RainUI.theme)
+					_format = RainUI.getTextFormat("label");
+				//else
+					//_format = new TextFormat("微软雅黑", 24, 0, null, null, null, null, null, TextFormatAlign.CENTER);
+			
 			_width = 200;
 			_height = 60;
 			_autoSize = false;
+			_contentScaleMode = ScaleMode.NONE;
 		}
 		
 		override protected function createChildren():void
@@ -57,8 +59,14 @@ package me.rainui.components
 			if (textField == null)
 			{
 				addChild(textField = new TextField());
-				_contentAlign = Align.CENTER;
-				_contentScaleMode = ScaleMode.NONE;
+				_contentAlign = Align.LEFT;
+				textField.autoSize = TextFieldAutoSize.NONE;
+			}
+			else
+			{
+				_width = textField.width;
+				_height = textField.height;
+				_format = textField.getTextFormat();
 			}
 			_content = textField;
 		}
@@ -70,7 +78,7 @@ package me.rainui.components
 			//_format.size = Styles.fontSize;
 			//_format.color = Styles.labelColor;
 			textField.selectable = false;
-			textField.autoSize = TextFieldAutoSize.LEFT;
+			
 			
 			callLater(resize);
 		}
@@ -78,9 +86,10 @@ package me.rainui.components
 		/**显示的文本*/
 		public function get text():String
 		{
-			//CHANGE: 直接代理
-			//return _text;
-			return textField.text;
+			if(textField)
+				return textField.text;
+			else
+				return "";
 		}
 		
 		public function set text(value:String):void
@@ -107,9 +116,12 @@ package me.rainui.components
 		
 		override public function redraw():void 
 		{
-			textField.defaultTextFormat = _format;
-			textField.setTextFormat(_format);
-			//textField.text = _text;
+			if (textField)
+			{
+				textField.defaultTextFormat = _format;
+				textField.setTextFormat(_format);
+			}
+			
 			super.redraw();
 		}
 		
@@ -117,27 +129,24 @@ package me.rainui.components
 		{
 			super.resize();
 			
-			//textField.x = 2;
-			//textField.y = 2;
+			if (textField == null) return;
 			if (_autoSize)
 			{
 				if (wordWrap)
 				{
-					textField.width = _width;
-					textField.height = textField.textHeight + 2;
+					textField.height = textField.textHeight + 4;
 				}
 				else
 				{
 					textField.height = _height;
-					textField.width = textField.textWidth + 2;
 				}
-				_height = textField.height + 4 + textField.y;
-				_width = textField.width + 4 + textField.x;
+				_width=textField.width + textField.x+4;
+				_height=textField.height + textField.y+4;
 			}
 			else
 			{
+				textField.height = textField.textHeight + 4;
 				textField.width = _width;
-				textField.height = _height;
 			}
 		}
 		
@@ -145,7 +154,7 @@ package me.rainui.components
 		{
 			super.showBorder(color, conetntColor);
 			_border.graphics.lineStyle(1, 0x00FF00);
-			if(conetntColor)
+			if(conetntColor && textField)
 				_border.graphics.drawRect(textField.x, textField.y, textField.width, textField.height);
 		}
 		
@@ -464,7 +473,7 @@ package me.rainui.components
 		
 		override public function get height():Number
 		{
-			if (!isNaN(_height) || Boolean(_skinName) || Boolean(text))
+			if (!isNaN(_height) || Boolean(text))
 			{
 				return super.height;
 			}
@@ -477,17 +486,6 @@ package me.rainui.components
 			//_bitmap.height = value;
 		//}
 		
-		override public function set dataSource(value:Object):void
-		{
-			_dataSource = value;
-			if (value is Number || value is String)
-			{
-				text = String(value);
-			}
-			else
-			{
-				super.dataSource = value;
-			}
-		}
+		
 	}
 }

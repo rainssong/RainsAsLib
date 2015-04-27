@@ -1,28 +1,9 @@
 package
 {
-	import adobe.utils.CustomActions;
-	import ascb.units.Converter;
-	import flash.desktop.NativeApplication;
-	import flash.desktop.NativeProcess;
-	import flash.desktop.NativeProcessStartupInfo;
-	import flash.display.Bitmap;
 	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.filesystem.File;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
-	import flash.utils.getQualifiedClassName;
 	import flash.utils.getTimer;
-	import me.rainssong.math.ArrayCore;
-	import me.rainssong.math.MathCore;
+	import flash.utils.setTimeout;
 	import me.rainssong.utils.functionTiming;
-	import me.rainui.components.Button;
-	import me.rainui.components.Label;
-	import me.rainui.components.ScrollContainer;
-	import me.rainui.components.TabBar;
-	import me.rainui.components.TextInput;
-	import me.rainui.RainTheme;
-	import me.rainui.RainUI;
 	
 	/**
 	 *  我一定是足够蛋痛才会来写这个
@@ -33,15 +14,50 @@ package
 		
 		public function Main():void
 		{
-			var sum:int = 100;
-			
-			for (var i:int = 0; i < 10; ++i)
+			setTimeout(testFunc, 1000);
+		}
+		
+		private function testFunc():void
+		{
+			functionTiming(calc);
+			//var t:Number = getTimer();
+			//calc();
+			//trace(getTimer() - t);
+		}
+		
+		private function calc():void
+		{
+			for (var k:int = 499; k > 0; k--)
+				for (var j:int = k - 1; j > (1000 - k - j); j--)
+				{
+					var i:int = 1000 - k - j;
+					if (i * i + j * j == k * k)
+					{
+						trace(i, j, k);
+						return;
+					}
+				}
+		}
+		
+		private function calc2():void
+		{
+			var a:int;
+			var b:int;
+			var c:int;
+			test();
+			trace( a, b, c);
+			function test():void
 			{
-				if (i % 2)
-					continue;
-				sum++;
+				for (a = 333; a < 500; a++)
+				{
+					b = (500000-a)/(a-1)
+					c = 1000 - a - b;
+					if (a * a + b * b == c * c)
+					{
+						return;
+					}
+				}
 			}
-			trace(sum);
 		}
 	
 	}

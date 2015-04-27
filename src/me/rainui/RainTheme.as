@@ -28,9 +28,7 @@ package me.rainui
 		static public const LIGHT_BLUE:uint = 0x4FC1E9;
 		static public const DARK_BLUE:uint = 0x3BAFDA;
 		static public const BLUE:uint = 0x48b7e0;
-		
 		static public const LIGHT_READ:uint = 0xed5565;
-		
 		static public const LIGHT_GREEN:uint = 0xa0d468;
 		
 		static public const LIGHT_GRAY:uint = 0xe3e4e8
@@ -62,6 +60,7 @@ package me.rainui
 			//_configDic
 			_skinDic["darkBlueRoundSkin"] = darkBlueRoundSkinFactory;
 			_skinDic["darkBlueRoundFlatSkin"] = darkBlueRoundFlatSkinFactory;
+			_skinDic["textInput"] = darkBlueRoundFlatSkinFactory;
 		}
 		
 		public function getConfigs(configName:String = "default"):Object
@@ -80,6 +79,7 @@ package me.rainui
 			switch (name)
 			{
 				case "white": 
+				case "button": 
 				case WHITE_TEXT_FORMAT: 
 					tf= ObjectCore.clone(whiteTextFormat);
 					break;
@@ -88,6 +88,8 @@ package me.rainui
 					tf=  ObjectCore.clone(grayTextFormat);
 					break;
 				case "black": 
+				case "textInput": 
+				case "label": 
 				case BLACK_TEXT_FORMAT: 
 					tf=  ObjectCore.clone(blackTextFormat);
 					break;
@@ -111,7 +113,6 @@ package me.rainui
 		public function darkBlueSkinFactory():DisplayObject
 		{
 			var shape:Shape = new Shape();
-			
 			Draw.rect(shape, 0, 0, 100, 100, LIGHT_BLUE);
 			Draw.rect(shape, 0, 0, 100, 96, DARK_BLUE);
 			shape.scale9Grid = new Rectangle(4, 4, 92, 92);

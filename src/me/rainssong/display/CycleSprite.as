@@ -5,6 +5,12 @@ package   me.rainssong.display
 	import me.rainssong.display.TiledSprite;
 	
 	/**
+	 * useage
+	 * var bmp:  CycleSprite = new  CycleSprite (bitmapData,width,height);
+	 * bmp.scrollX++;//or change scrollRect;
+	 */
+	
+	/**
 	 * ...
 	 * @author Rainssong
 	 */

@@ -26,16 +26,17 @@ package me.rainui.components
 		override protected function preinitialize():void 
 		{
 			super.preinitialize();
+			this._width = 300;
+			this._height = 200;
 		}
 		
 		override protected function initialize():void 
 		{
 			super.initialize();
-			this._width = 300;
-			this._height = 200;
 			this.align = Align.TOP_LEFT;
 			this.autoSize = false;
 			this.wordWrap = true;
+			this.multiline = true;
 		}
 		
 		//override public function resize():void 

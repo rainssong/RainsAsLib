@@ -1,9 +1,11 @@
 ﻿package me.rainui.components
 {
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Rectangle;
 	import me.rainui.events.RainUIEvent;
 	import me.rainui.RainUI;
@@ -16,26 +18,25 @@
 	 */
 	public class Component extends Sprite
 	{
+		//size
 		protected var _width:Number = NaN;
-		
 		protected var _height:Number = NaN;
+		protected var _autoSize:Boolean = false;
 		
+		//stats
 		protected var _disabled:Boolean = false;
-		
-		protected var _dataSource:Object;
-		
 		protected var _mouseChildren:Boolean = false;
 		protected var _mouseEnabled:Boolean = false;
 		
 		//只能等比缩放
-		protected var _scaleLock:Boolean = false;
+		//protected var _scaleLock:Boolean = false;
 		
+		//display
 		protected var _border:Shape = new Shape();
 		protected var _borderVisible:Boolean = false;
-		
-		protected var _autoSize:Boolean = false;
-		
 		protected var _bgSkin:DisplayObject;
+		
+		protected var _dataSource:Object;
 		
 		public function Component(dataSource:Object=null)
 		{
@@ -44,7 +45,6 @@
 			preinitialize();
 			createChildren();
 			initialize();
-		
 		}
 		
 		protected function initialize():void
@@ -54,10 +54,10 @@
 		
 		protected function createChildren():void
 		{
-			if (bgSkin == null)
+			if (_bgSkin == null)
 			{
-				bgSkin = new Shape();
-				addChild(bgSkin);
+				_bgSkin = new Shape();
+				addChild(_bgSkin);
 			}
 		}
 		
@@ -88,7 +88,6 @@
 			if (RainUI.render)
 				RainUI.render.clearCallLater(method);
 		}
-		
 		
 		public function sendEvent(type:String, data:* = null):void
 		{
@@ -148,10 +147,6 @@
 			{
 				return _width;
 			}
-			//else if (_contentWidth != 0)
-			//{
-				//return _contentWidth;
-			//}
 			else
 			{
 				return contentWidth;
@@ -217,17 +212,17 @@
 		
 		public function get contentHeight():Number
 		{
-			var max:Number = 0;
-			for (var i:int = numChildren - 1; i > -1; i--)
-			{
-				var comp:DisplayObject = getChildAt(i);
-				if (comp.visible)
-				{
-					max = Math.max(comp.y + comp.height * comp.scaleY, max);
-				}
-			}
-			return max;
-			//return this.getBounds(this).height;
+			//var max:Number = 0;
+			//for (var i:int = numChildren - 1; i > -1; i--)
+			//{
+				//var comp:DisplayObject = getChildAt(i);
+				//if (comp && comp.visible)
+				//{
+					//max = Math.max(comp.y + comp.height * comp.scaleY, max);
+				//}
+			//}
+			//return max;
+			return this.getBounds(this).height;
 		}
 		
 		
@@ -247,7 +242,7 @@
 		public function set scaleXY(value:Number):void
 		{
 			super.scaleX = super.scaleY = value;
-			callLater(resize);
+			//callLater(resize);
 		}
 		
 		public function get scaleXY():Number
@@ -255,8 +250,10 @@
 			return scaleX;
 		}
 		
-		//尺寸改变后调用
-		//TIP:super.resize必须在底部，否则可能导致border和bgSkin宽高不正确
+		/**
+		 * 尺寸改变后调用
+		 * TIP:super.resize必须在底部，否则可能导致border和bgSkin宽高不正确
+		**/
 		public function resize():void
 		{
 			clearCallLater(resize);
@@ -266,10 +263,10 @@
 				_bgSkin.height = _height;
 			}
 			
-			sendEvent(Event.RESIZE);
-			
 			if(_borderVisible)
 				showBorder();
+			
+			sendEvent(Event.RESIZE);
 		}
 		
 		//更新视图
@@ -291,8 +288,18 @@
 		{
 			if (_disabled != value)
 				_disabled = value;
-			mouseEnabled = !value;
+			mouseEnabled =value ? false : _mouseEnabled;
 			super.mouseChildren = value ? false : _mouseChildren;
+			
+			//BUG: change filters
+			if (value)
+			{
+				this.filters = [ new ColorMatrixFilter([.33, .33, .33, 0, 0, .33, .33, .33, 0, 0, .33, .33, .33, 0, 0, 0, 0, 0, 1, 0])];
+			}
+			else
+			{
+				this.filters = [];
+			}
 			//ObjectUtils.gray(this, _disabled);
 		}
 		
@@ -378,7 +385,6 @@
 			return _bgSkin;
 		}
 		
-		
 		public function set bgSkin(value:DisplayObject):void 
 		{
 			//swapContent(_bgSkin, value);
@@ -404,12 +410,15 @@
 			return newCon;
 		}
 		
-		
 		public function destroy():void
 		{
 			this.removeChildren();
 		}
 		
+		public function set parent(target:DisplayObjectContainer):void
+		{
+			target.addChild(this);
+		}
 		
 		
 	

@@ -16,6 +16,7 @@ package
 	import me.rainssong.utils.ScaleMode;
 	import me.rainui.components.Button;
 	import me.rainui.components.Label;
+	import me.rainui.components.Page;
 	import me.rainui.components.ScrollContainer;
 	import me.rainui.components.TabBar;
 	import me.rainui.components.TextInput;
@@ -40,23 +41,16 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
-			RainUI.init(stage,new RainTheme);
-			var btn:Button = new Button("ABCabc");
-			btn.normalSkin = RainUI.theme.getSkin("darkBlueRoundSkin");
-			addChild(btn);
-			btn.top = 100;
+			//RainUI.init(stage);
 			
-			var l:Label = new Label("ABCabc");
-			l.font = "Eaton";
-			//btn.normalSkin = RainUI.theme.getSkin("darkBlueRoundSkin");
-			addChild(l);
-			l.top = 100;
-			l.left = 100;
-			l.height = 300;
-			l.borderVisible = true;
-			//l.align = Align.TOP_RIGHT;
-			l.contentScaleMode = ScaleMode.WIDTH_ONLY;
-			//this.dispatchEvent(new Event(Event.RESIZE));
+			
+			var page:Page = new Page( { parent:this } );
+			
+			//var btn:Button = new Button("wocao", { x:465, width:416,parent:page} );
+			var textInput:TextInput = new TextInput("wocao", { x:465, width:416,parent:page,borderVisible:true} );
+			//btn.parent = page;
+			
+			
 		}
 	}
 

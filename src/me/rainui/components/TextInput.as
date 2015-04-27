@@ -9,11 +9,13 @@ package me.rainui.components
 	import flash.events.Event;
 	import flash.events.TextEvent;
 	import flash.geom.Rectangle;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
 	import me.rainssong.utils.Align;
 	import me.rainssong.utils.Color;
 	import me.rainssong.utils.Draw;
 	import me.rainui.RainTheme;
+	import me.rainui.RainUI;
 	
 	/**当用户输入文本时调度*/
 	[Event(name="textInput",type="flash.events.TextEvent")]
@@ -21,11 +23,11 @@ package me.rainui.components
 	/**输入框*/
 	public class TextInput extends Label
 	{
-		static public var defaultBgSkinRender:Function = getDefaultBgSkin;
+		//static public var defaultBgSkinRender:Function = getDefaultBgSkin;
 		
-		public function TextInput(text:String = "", skinName:String = null)
+		public function TextInput(text:String = "", dataSource:Object = null)
 		{
-			super(text, skinName);
+			super(text, dataSource);
 		}
 		
 		override protected function preinitialize():void 
@@ -37,11 +39,12 @@ package me.rainui.components
 		
 		override protected function createChildren():void
 		{
-			super.createChildren();
-			if (this.bgSkin == null)
+			if (_bgSkin == null)
 			{
-				bgSkin = getDefaultBgSkin();
+				_bgSkin = RainUI.getSkin("textInput");
 			}
+			super.createChildren();
+			
 			redraw();
 		}
 		
@@ -51,11 +54,14 @@ package me.rainui.components
 			
 			selectable = true;
 			textField.type = TextFieldType.INPUT;
-			textField.autoSize = "none";
+			//textField.autoSize = TextFieldAutoSize.LEFT;
 			_contentAlign = Align.LEFT;
+			_autoSize = false;
 			textField.addEventListener(Event.CHANGE, onTextFieldChange);
 			textField.addEventListener(TextEvent.TEXT_INPUT, onTextFieldTextInput);
 		}
+		
+
 		
 		public function get type():String
 		{
@@ -74,7 +80,8 @@ package me.rainui.components
 		
 		protected function onTextFieldChange(e:Event):void
 		{
-			text = textField.text;
+			callLater(redraw);
+			sendEvent(Event.CHANGE);
 		}
 		
 		override public function resize():void
@@ -116,14 +123,5 @@ package me.rainui.components
 			textField.maxChars = value;
 		}
 		
-		static public function getDefaultBgSkin():DisplayObject
-		{
-			var shape:Shape = new Shape();
-			shape.graphics.beginFill(RainTheme.DARK_BLUE,0.8);
-			//shape.graphics.lineStyle(4, 0x666666, 1);
-			shape.graphics.drawRoundRect(0, 0, 80, 80,10, 10);
-			shape.scale9Grid = new Rectangle(10, 10, 80 - 2 * 10 , 80 - 2 * 10);
-			return shape;
-		}
 	}
 }

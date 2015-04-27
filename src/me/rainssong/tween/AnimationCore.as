@@ -30,24 +30,8 @@ package me.rainssong.tween
 			if (!newView.parent)
 				_parent.addChildAt(newView, _parent.getChildIndex(oldView));
 			
-			if (oldView["mouseEnabled"] == true)
-			{
-				_changeMouseEnabled = true;
-				oldView["mouseEnabled"] = false;
-			}
-			else
-			{
-				_changeMouseEnabled = false;
-			}
-			if (oldView["mouseChildren"] == true)
-			{
-				_changeMouseChildren = true;
-				oldView["mouseChildren"] = false;
-			}
-			else
-			{
-				_changeMouseChildren = false;
-			}
+			oldView["mouseEnabled"] = false;
+			oldView["mouseChildren"] = false;
 			
 			if (params)
 			{
@@ -144,13 +128,20 @@ package me.rainssong.tween
 					if (_parent.getChildIndex(_newView) < _parent.getChildIndex(_oldView))
 						_parent.swapChildren(_newView, _oldView);
 					_newView.alpha = 0;
-					TweenMax.to(_newView, duration, { alpha:1, onCompleteParams: [oldView], ease: Cubic.easeInOut, delay:delay } );
+					TweenMax.to(_newView, duration, { alpha:1,onComplete: removeViewComplete,  onCompleteParams: [oldView], ease: Cubic.easeInOut, delay:delay } );
 					break;
 				case "fadeOut":
 					if (_parent.getChildIndex(_newView) > _parent.getChildIndex(_oldView))
 						_parent.swapChildren(_newView, _oldView);
 					
-					TweenMax.to(oldView, duration, { alpha:0, onCompleteParams: [oldView], ease: Cubic.easeInOut, delay:delay } );
+					TweenMax.to(oldView, duration, { alpha:0,onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut, delay:delay } );
+					break;
+				case "fadeOutIn":
+					if (_parent.getChildIndex(_newView) > _parent.getChildIndex(_oldView))
+						_parent.swapChildren(_newView, _oldView);
+					
+					TweenMax.to(_oldView, duration, { alpha:0, ease: Cubic.easeInOut, delay:delay } );
+					TweenMax.to(_newView, duration, { alpha:1,onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut, delay:duration+delay } );
 					break;
 				default: 
 			}
@@ -242,16 +233,16 @@ package me.rainssong.tween
 			if (scene.parent)
 				scene.parent.removeChild(scene);
 			
-			if (_changeMouseEnabled == true)
-			{
-				_changeMouseEnabled == false
+			//if (_changeMouseEnabled == true)
+			//{
+				//_changeMouseEnabled == false
 					//_newView["mouseEnabled"] = true;
-			}
-			if (_changeMouseChildren == true)
-			{
-				_changeMouseChildren = false;
+			//}
+			//if (_changeMouseChildren == true)
+			//{
+				//_changeMouseChildren = false;
 					//_newView["mouseChildren"] = true;
-			}
+			//}
 			
 			_oldView = null;
 			_newView = null;

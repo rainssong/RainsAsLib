@@ -20,12 +20,12 @@
 		private var _autoDestroy:Boolean = true;
 		public var disposeChildren:Boolean = false;
 		public var autoDisable:Boolean = true;
-		private var _listenerArr:Vector.<Array > ;
+		private var _listenerArr:Vector.<Array >=new Vector.<Array >   ;
 
 		public function SmartSprite()
 		{
 			super();
-			_listenerArr = new Vector.<Array >   ;
+			//_listenerArr =  ;
 			onRegister();
 			if (stage)
 			{
@@ -169,6 +169,11 @@
 		public function set scaleXY(value:Number):void
 		{
 			scaleX = scaleY = value;
+		}
+		
+		public function get scaleXY():Number
+		{
+			return scaleX;
 		}
 
 		public function set autoDestroy(value:Boolean):void

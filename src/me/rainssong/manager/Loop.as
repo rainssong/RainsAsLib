@@ -1,7 +1,5 @@
 package me.rainssong.manager 
 {
-	import com.codeTooth.actionscript.lang.utils.destroy.DestroyUtil;
-	import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
@@ -11,7 +9,7 @@ package me.rainssong.manager
 	/**
 	 * 执行器循环
 	 */
-	public class Loop implements IDestroy
+	public class Loop
 	{
 		/**
 		 * 构造函数

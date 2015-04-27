@@ -1,6 +1,5 @@
 package  
 {
-	import acheGesture.core.PropGesture;
 	import flash.display.Sprite;
 	import me.rainssong.math.MathCore;
 	import me.rainssong.utils.Draw;

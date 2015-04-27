@@ -19,6 +19,7 @@ package me.rainui.components
 	import me.rainssong.media.RainStageWebView;
 	import me.rainssong.system.SystemCore;
 	import me.rainssong.utils.Draw;
+	import me.rainssong.utils.ScaleMode;
 	import me.rainui.RainTheme;
 	import me.rainui.RainUI;
 	//import morn.core.handlers.Handler;
@@ -31,8 +32,6 @@ package me.rainui.components
 	/**按钮类*/
 	public class Button extends Container
 	{
-		//public var defaultTextFormat:TextFormat = RainTheme.getTextFormat(RainTheme.WHITE_TEXT_FORMAT);
-		//public var defaultSkin:DisplayObject = RainUI.btnSkin;
 		public var darkColorTrans:ColorTransform = RainUI.darkColorTrans;
 		
 		static public const SELECTED:String = "selected";
@@ -68,7 +67,7 @@ package me.rainui.components
 		
 		override protected function preinitialize():void
 		{
-			super.preinitialize();
+			//super.preinitialize();
 			
 			this.buttonMode = true;
 			this.useHandCursor = true;
@@ -90,17 +89,10 @@ package me.rainui.components
 					_normalSkin = this.getChildAt(0);
 					this._width = _normalSkin.width;
 					this._height = _normalSkin.height;
-					//_width = _normalSkin.width;
-					//_height = _normalSkin.height;
 				}
 				else
 				{
-					var shape:Shape = new Shape();
-					Draw.rect(shape, 0, 0, 100, 100, RainTheme.BLUE);
-					Draw.rect(shape, 0, 96, 100, 4, RainTheme.DARK_BLUE);
-					shape.scale9Grid = new Rectangle(4, 4, 92, 92);
-					_normalSkin = shape;
-					_normalSkin.name = "normalSkin";
+					_normalSkin = RainUI.getSkin("buttonNormal");
 				}
 			}
 			else
@@ -120,17 +112,14 @@ package me.rainui.components
 				addChild(this._selectedSkin)
 				_selectedSkin.visible = false;
 			}
+			
 			if (this._label == null)
 			{
 				_label = new Label();
-				//label.dataSource = {left: 4, right: 4, top:4,bottom:4};
 				_label.centerX = 0;
 				_label.centerY = 0;
-				//_label.autoSize = true;
-				if (RainUI.theme)
-					_label.format = RainUI.theme.getTextFormat("whiteTextFormat");
-				else
-					_label.format = new TextFormat(null, 32, 0xffffff, null, null, null, null, null, TextFormatAlign.CENTER);
+				_label.autoSize = true;
+				_label.format = RainUI.getTextFormat("button");
 			}
 			addChild(_label);
 		}
@@ -143,15 +132,17 @@ package me.rainui.components
 			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseUp);
 			addEventListener(MouseEvent.CLICK, onClick);
-			
 			callLater(redraw);
 		}
 		
 		override public function resize():void
 		{
 			super.resize();
-			this._normalSkin.width = _width;
-			this._normalSkin.height = _height;
+			if (_normalSkin)
+			{
+				this._normalSkin.width = _width;
+				this._normalSkin.height = _height;
+			}
 			if (this._downSkin)
 			{
 				this._downSkin.width = _width;
@@ -471,7 +462,7 @@ package me.rainui.components
 			{
 				//_bitmap.width = value;
 			}
-			callLater(changeLabelSize);
+			//callLater(changeLabelSize);
 		}
 		
 		override public function set height(value:Number):void
@@ -482,19 +473,6 @@ package me.rainui.components
 				//_bitmap.height = value;
 			}
 			callLater(changeLabelSize);
-		}
-		
-		override public function set dataSource(value:Object):void
-		{
-			_dataSource = value;
-			if (value is Number || value is String)
-			{
-				text = String(value);
-			}
-			else
-			{
-				super.dataSource = value;
-			}
 		}
 		
 		public function set text(value:String):void

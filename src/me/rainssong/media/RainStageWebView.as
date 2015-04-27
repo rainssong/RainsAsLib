@@ -2,6 +2,7 @@
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
+	import flash.events.LocationChangeEvent;
 	import flash.filesystem.File;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -40,8 +41,14 @@
 			super.onAdd(e);
 			
 			_webView.stage = this.stage;
-			
+			_webView.addEventListener(LocationChangeEvent.LOCATION_CHANGE, onLocationChange);
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
+		}
+		
+		private function onLocationChange(e:LocationChangeEvent):void 
+		{
+			//dispatchEvent(new LocationChangeEvent(LocationChangeEvent.LOCATION_CHANGE));
+			dispatchEvent(e);
 		}
 		
 		override public function hide():void 
@@ -110,6 +117,18 @@
 		
 		/* DELEGATE flash.media.StageWebView */
 		
+		public function reload():void 
+		{
+			_webView.reload();
+		}
+		
+		public function get title():String 
+		{
+			return _webView.title;
+		}
+		
+		/* DELEGATE flash.media.StageWebView */
+		
 		//override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		//{
 			//_webView.addEventListener(type, listener, useCapture, priority, useWeakReference);
@@ -146,6 +165,11 @@
 		{
 			return _webView.location;
 		}
+		
+		//public function get webView():StageWebView 
+		//{
+			//return _webView;
+		//}
 		
 	}
 
