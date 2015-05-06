@@ -20,8 +20,7 @@
 	 */
 	public class Header extends Container
 	{
-		private var _index:int = -1;
-		public var label:Label;
+		private var _label:Label;
 		
 		public function Header()
 		{
@@ -50,20 +49,15 @@
 				addChild(_bgSkin);
 			}
 			
-			if (label == null)
+			if (_label == null)
 			{
-				label = new Label("");
-				addChild(label);
-				label.centerX = 0;
-				label.centerY = 0;
-				
-				//FIX ME
-				label.format = RainUI.getTextFormat(RainTheme.WHITE_TEXT_FORMAT);
-				//else
-					//label.format = RainUI.whiteTextFormat;
-				
-				label.align = TextFormatAlign.CENTER;
-				label.autoSize = true;
+				_label = new Label("");
+				addChild(_label);
+				_label.centerX = 0;
+				_label.centerY = 0;
+				_label.format = RainUI.getTextFormat(RainTheme.WHITE_TEXT_FORMAT);
+				_label.align = TextFormatAlign.CENTER;
+				_label.autoSize = true;
 			}
 			
 			super.createChildren();
@@ -72,31 +66,6 @@
 		override protected function initialize():void
 		{
 			super.initialize();
-		}
-		
-		override public function resize():void
-		{
-			super.resize();
-			//if (bgSkin)
-			//{
-				//bgSkin.width = _width;
-				//bgSkin.height = _height;
-			//}
-		}
-		
-		override public function get bgSkin():DisplayObject
-		{
-			return super.bgSkin;
-		}
-		
-		override public function set bgSkin(value:DisplayObject):void
-		{
-			super.bgSkin = value;
-		}
-		
-		public function set index(value:int):void
-		{
-			_index = value;
 		}
 		
 		/* DELEGATE me.rainui.components.Label */
@@ -109,6 +78,16 @@
 		public function set text(value:String):void
 		{
 			label.text = value;
+		}
+		
+		public function get label():Label 
+		{
+			return _label;
+		}
+		
+		public function set label(value:Label):void 
+		{
+			_label = value;
 		}
 	
 	}

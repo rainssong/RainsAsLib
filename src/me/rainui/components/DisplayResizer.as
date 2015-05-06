@@ -19,10 +19,10 @@ package me.rainui.components
 	 * @weibo http://www.weibo.com/rainssong
 	 * 还未解决主动赋值content的Bug;
 	 */
-	public class DisplayResizer extends Container
+	dynamic public class DisplayResizer extends Container
 	{
 		protected var _content:DisplayObject
-		protected var _contentScaleMode:String = ScaleMode.FULL_FILL;
+		protected var _contentScaleMode:String = ScaleMode.SHOW_ALL;
 		protected var _contentAlign:String = Align.CENTER;
 		
 		public function DisplayResizer(content:DisplayObject=null,dataSource:Object=null)
@@ -55,12 +55,14 @@ package me.rainui.components
 		
 		override public function redraw():void 
 		{
-			super.redraw();
 			if (this._content is Loader)
 			{
 				var l:Loader = this._content as Loader;
 				l.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
 			}
+			if (_content && _content.parent == null)
+				addChild(_content);
+			super.redraw();
 		}
 		
 		private function onLoadComplete(e:Event):void
@@ -75,8 +77,6 @@ package me.rainui.components
 		 */
 		override public function resize():void
 		{
-			super.resize();
-			
 			if (_content==null || _width==0 || _height==0 || _content.width==0 || _content.height==0)
 				return;
 			
@@ -147,6 +147,8 @@ package me.rainui.components
 				break;
 				default:
 			}
+			
+			super.resize();
 		}
 		
 		public function get contentScaleMode():String
@@ -154,12 +156,12 @@ package me.rainui.components
 			return _contentScaleMode;
 		}
 		
-		[Inspectable(name="contentScaleMode",type="String",defaultValue=ScaleMode.FULL_FILL)]
+		[Inspectable(name="contentScaleMode",type="String",defaultValue=ScaleMode.SHOW_ALL)]
 		public function set contentScaleMode(value:String):void
 		{
 			if (_contentScaleMode == value) return;
 			_contentScaleMode = value;
-			callLater(resize);
+			callLater(calcSize);
 		}
 		
 		public function get contentAlign():String

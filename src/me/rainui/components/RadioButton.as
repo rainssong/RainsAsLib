@@ -9,9 +9,9 @@ package me.rainui.components
 	public class RadioButton extends Button 
 	{
 		
-		public function RadioButton(text:String="") 
+		public function RadioButton(text:String="",dataSource:Object=null) 
 		{
-			super(text);
+			super(text,dataSource);
 		}
 		
 		override protected function preinitialize():void 

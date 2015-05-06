@@ -97,10 +97,18 @@ package me.rainui
 						return shape;
 						break;
 					case "buttonNormal":
+					case "listItem":
 						Draw.rect(shape, 0, 0, 100, 100, RainTheme.BLUE);
 						Draw.rect(shape, 0, 96, 100, 4, RainTheme.DARK_BLUE);
 						shape.scale9Grid = new Rectangle(4, 4, 92, 92);
 						shape.name = "normalSkin";
+						return shape;
+						break;
+					case "list":
+						shape.graphics.beginFill(RainTheme.WHITE, 1);
+						//shape.graphics.lineStyle(4, 0x666666, 1);
+						shape.graphics.drawRect(0,0, 80, 80);
+						shape.scale9Grid = new Rectangle(10, 10, 80 - 2 * 10, 80 - 2 * 10);
 						return shape;
 						break;
 					default:

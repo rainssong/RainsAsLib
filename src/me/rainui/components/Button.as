@@ -30,7 +30,7 @@ package me.rainui.components
 	[Event(name="select",type="flash.events.Event")]
 	
 	/**按钮类*/
-	public class Button extends Container
+	dynamic  public class Button extends Container
 	{
 		public var darkColorTrans:ColorTransform = RainUI.darkColorTrans;
 		
@@ -89,29 +89,26 @@ package me.rainui.components
 					_normalSkin = this.getChildAt(0);
 					this._width = _normalSkin.width;
 					this._height = _normalSkin.height;
+					
 				}
 				else
 				{
 					_normalSkin = RainUI.getSkin("buttonNormal");
+					addChild(_normalSkin);
 				}
+				
 			}
 			else
 			{
 				this._width = _normalSkin.width;
 				this._height = _normalSkin.height;
 			}
-			addChild(_normalSkin);
+			
 			
 			if (_downSkin)
-			{
-				addChild(this._downSkin)
 				_downSkin.visible = false;
-			}
 			if (_selectedSkin)
-			{
-				addChild(this._selectedSkin)
 				_selectedSkin.visible = false;
-			}
 			
 			if (this._label == null)
 			{
@@ -120,8 +117,10 @@ package me.rainui.components
 				_label.centerY = 0;
 				_label.autoSize = true;
 				_label.format = RainUI.getTextFormat("button");
+				//_label.borderVisible = true;
+				addChild(_label);
 			}
-			addChild(_label);
+			
 		}
 		
 		override protected function initialize():void
@@ -148,7 +147,11 @@ package me.rainui.components
 				this._downSkin.width = _width;
 				this._downSkin.height = _height;
 			}
-			//this.scrollRect = new Rectangle(0, 0, _width, _height);
+			if (this._selectedSkin)
+			{
+				this._selectedSkin.width = _width;
+				this._selectedSkin.height = _height;
+			}
 		}
 		
 		protected function onRollOver(e:MouseEvent):void
@@ -235,27 +238,6 @@ package me.rainui.components
 				if(_selected)_state = SELECTED;
 				else _state = NORMAL;
 				callLater(redraw);
-				//state = _selected ? stateMap["selected"] : stateMap["rollOut"];
-				//if (_selected)
-				//{
-					//if (_selectedSkin)
-					//{
-						//_normalSkin.visible = false;
-						//_selectedSkin.visible = true;
-					//}
-					//else
-						//this.transform.colorTransform = darkColorTrans;
-				//}
-				//else
-				//{
-					//if (_selectedSkin)
-					//{
-						//_normalSkin.visible = true;
-						//_selectedSkin.visible = false;
-					//}
-					//else
-						//this.transform.colorTransform = _normalColorTrans;
-				//}
 			}
 		}
 		
@@ -272,61 +254,47 @@ package me.rainui.components
 		
 		override public function redraw():void
 		{
+			if(_normalSkin)_normalSkin.visible = false;
+			if(_downSkin)_downSkin.visible = false;
+			if(_selectedSkin)_selectedSkin.visible = false;
+			if (_hoverSkin)_hoverSkin.visible = false;
+			
 			switch (_state)
 			{
 				case MOUSE_DOWN: 
 					if (_downSkin)
 					{
-						if(_downSkin.parent==null)
-							addChild(_downSkin);
 						_downSkin.visible = true;
 					}
 					else
 					{
-						if (_normalSkin.parent == null)
-							addChildAt(_normalSkin, 0);
 						_normalSkin.visible = true;
-						this.transform.colorTransform = darkColorTrans;
+						_normalSkin.transform.colorTransform = darkColorTrans;
 					}
 					break;
 				case NORMAL: 
 					_normalSkin.visible = true;
-					if(_downSkin)_downSkin.visible = false;
-					if(_selectedSkin)_selectedSkin.visible = false;
-					/*if (_selected)
-						this.transform.colorTransform = darkColorTrans;
-					else*/
-						this.transform.colorTransform = _normalColorTrans;
+					_normalSkin.transform.colorTransform = _normalColorTrans;
 					break;
-				case SELECTED: 
+				case HOVER: 
+					if (_hoverSkin)
+						_hoverSkin.visible = true;
+					else
+						_normalSkin.visible = true;
+					break;
+				case SELECTED:
 					if (_selectedSkin)
-					{
-						if(_selectedSkin.parent==null)
-							addChild(_selectedSkin);
 						_selectedSkin.visible = true;
-						this.transform.colorTransform = _normalColorTrans;
-					}
 					else
 					{
-						if (_normalSkin.parent == null)
-							addChildAt(_normalSkin, 0);
 						_normalSkin.visible = true;
-						this.transform.colorTransform = darkColorTrans;
+						_normalSkin.transform.colorTransform = darkColorTrans;
 					}
 					break;
 				default: 
 			}
 			
 			super.redraw();
-		
-			//if (icon && _showIcon)
-			//{
-			//addChild(icon);
-			//icon.x = 10;
-			//icon.y = 10;
-			//icon.height = _height - 20;
-			//icon.scaleX = icon.scaleY;
-			//}
 		}
 		
 		/**是否是切换状态*/
@@ -351,30 +319,6 @@ package me.rainui.components
 			_label.font = value
 			callLater(changeLabelSize);
 		}
-		
-		/**按钮标签颜色(格式:upColor,overColor,downColor,disableColor)*/
-		//public function get _labelColors():String
-		//{
-		//return String(labelColors);
-		//}
-		//
-		//public function set _labelColors(value:String):void
-		//{
-		//labelColors = StringUtils.fillArray(labelColors, value);
-		//callLater(redraw);
-		//}
-		
-		/**按钮标签边距(格式:左边距,上边距,右边距,下边距)*/
-		//public function get _labelMargin():String
-		//{
-		//return String(labelMargin);
-		//}
-		//
-		//public function set _labelMargin(value:String):void
-		//{
-		//labelMargin = StringUtils.fillArray(labelMargin, value, int);
-		//callLater(changeLabelSize);
-		//}
 		
 		/**按钮标签描边(格式:color,alpha,blurX,blurY,strength,quality)*/
 		//public function get _labelStroke():String
@@ -478,7 +422,7 @@ package me.rainui.components
 		public function set text(value:String):void
 		{
 			_label.text = value;
-			
+			callLater(resize);
 		}
 		
 		public function get text():String
@@ -540,8 +484,18 @@ package me.rainui.components
 		{
 			_selectedSkin = value;
 		}
-
 		
+		public function get iconSkin():DisplayObject 
+		{
+			return _iconSkin;
+		}
+		
+		public function set iconSkin(value:DisplayObject):void 
+		{
+			if (_iconSkin && _iconSkin.parent) removeChild(_iconSkin);
+			_iconSkin = value;
+			if (_iconSkin)addChild(_iconSkin);
+		}
 	
 		override public function showBorder(color:uint = 0xff0000, contentColor:int = -1):void 
 		{
@@ -556,6 +510,8 @@ package me.rainui.components
 			
 			addChild(_border);
 		}
+		
+		
 	
 	}
 }

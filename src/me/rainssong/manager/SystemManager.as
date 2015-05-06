@@ -26,8 +26,16 @@ package  me.rainssong.manager
 				return true;
 			else return false;
 		}
+
 		
-		//BUG: Did not work
+		static public function get isAndroid():Boolean
+		{
+			if (Capabilities.os.match("Android"))
+				return true;
+			else return false;
+		}
+		
+		//TIP：always true if is air developing
 		public static function get isDebugMode():Boolean
 		{
 			try

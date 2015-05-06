@@ -61,6 +61,18 @@ package me.rainui
 			_skinDic["darkBlueRoundSkin"] = darkBlueRoundSkinFactory;
 			_skinDic["darkBlueRoundFlatSkin"] = darkBlueRoundFlatSkinFactory;
 			_skinDic["textInput"] = darkBlueRoundFlatSkinFactory;
+			_skinDic["list"] = whiteFlatSkinFactory;
+			_skinDic["buttonNormal"] = blueSkinFactory;
+		}
+		
+		private function whiteFlatSkinFactory():DisplayObject
+		{
+			var shape:Shape = new Shape();
+			shape.graphics.beginFill(RainTheme.WHITE, 1);
+			//shape.graphics.lineStyle(4, 0x666666, 1);
+			shape.graphics.drawRect(0, 0, 80, 80);
+			shape.scale9Grid = new Rectangle(10, 10, 80 - 2 * 10, 80 - 2 * 10);
+			return shape;
 		}
 		
 		public function getConfigs(configName:String = "default"):Object
@@ -81,23 +93,23 @@ package me.rainui
 				case "white": 
 				case "button": 
 				case WHITE_TEXT_FORMAT: 
-					tf= ObjectCore.clone(whiteTextFormat);
+					tf = ObjectCore.clone(whiteTextFormat);
 					break;
 				case "gray": 
 				case GRAY_TEXT_FORMAT: 
-					tf=  ObjectCore.clone(grayTextFormat);
+					tf = ObjectCore.clone(grayTextFormat);
 					break;
 				case "black": 
 				case "textInput": 
 				case "label": 
 				case BLACK_TEXT_FORMAT: 
-					tf=  ObjectCore.clone(blackTextFormat);
+					tf = ObjectCore.clone(blackTextFormat);
 					break;
 				default: 
-					tf=  ObjectCore.clone(whiteTextFormat);
+					tf = ObjectCore.clone(whiteTextFormat);
 			}
 			var l:Number = Math.min(RainUI.stageHeight, RainUI.stageWidth);
-			tf.size = MathCore.floor(l/20);
+			tf.size = MathCore.floor(l / 20);
 			return tf;
 		}
 		
@@ -119,10 +131,11 @@ package me.rainui
 			return shape;
 		}
 		
-		public function bgBlueSkinFactory():DisplayObject
+		public function blueSkinFactory():DisplayObject
 		{
 			var shape:Shape = new Shape();
-			Draw.rect(shape.graphics, 0, 0, 100, 100, BLUE);
+			Draw.rect(shape, 0, 0, 100, 100, RainTheme.BLUE);
+			Draw.rect(shape, 0, 96, 100, 4, RainTheme.DARK_BLUE);
 			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
 			return shape;
 		}
@@ -134,8 +147,6 @@ package me.rainui
 			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
 			return shape;
 		}
-		
-		
 	
 	}
 

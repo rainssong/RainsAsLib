@@ -69,6 +69,7 @@ package me.rainui.components
 				_format = textField.getTextFormat();
 			}
 			_content = textField;
+			super.createChildren();
 		}
 		
 		override protected function initialize():void
@@ -100,12 +101,6 @@ package me.rainui.components
 				callLater(redraw);
 				sendEvent(Event.CHANGE);
 			}
-			//if (_text != value)
-			//{
-				//_text = value || "";
-				//callLater(redraw);
-				//sendEvent(Event.CHANGE);
-			//}
 		}
 		
 		//protected function changeText():void
@@ -127,7 +122,7 @@ package me.rainui.components
 		
 		override public function resize():void
 		{
-			super.resize();
+			
 			
 			if (textField == null) return;
 			if (_autoSize)
@@ -140,14 +135,20 @@ package me.rainui.components
 				{
 					textField.height = _height;
 				}
-				_width=textField.width + textField.x+4;
-				_height=textField.height + textField.y+4;
+				textField.x = 0;
+				textField.y = 0;
+				textField.width = textField.textWidth + 4;
+				textField.height = textField.textHeight + 4;
+				_width=textField.width;
+				_height=textField.height;
 			}
 			else
 			{
 				textField.height = textField.textHeight + 4;
 				textField.width = _width;
 			}
+			
+			super.resize();
 		}
 		
 		override public function showBorder(color:uint = 0xff0000, conetntColor:int =-1):void
@@ -480,10 +481,24 @@ package me.rainui.components
 			return 0;
 		}
 		
-		//override public function set height(value:Number):void
+		override public function set height(value:Number):void
+		{
+			super.height = value;
+		}
+		
+		override public function set y(value:Number):void 
+		{
+			super.y = value;
+		}
+		
+		//override public function get autoSize():Boolean 
 		//{
-			//super.height = value;
-			//_bitmap.height = value;
+			//return super.autoSize;
+		//}
+		//
+		//override public function set autoSize(value:Boolean):void 
+		//{
+			//super.autoSize = value;
 		//}
 		
 		

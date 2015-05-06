@@ -5,6 +5,7 @@ package me.rainui.components
 	import flash.geom.Rectangle;
 	import me.rainssong.utils.Draw;
 	import me.rainui.RainTheme;
+	import me.rainui.RainUI;
 	/**
 	 * ...
 	 * @author Rainssong
@@ -12,23 +13,19 @@ package me.rainui.components
 	public class ListItem extends RadioButton 
 	{
 		
-		public function ListItem(text:String="") 
+		public function ListItem(text:String="",dataSource:Object=null) 
 		{
-			super(text);
-			
+			super(text,dataSource);
 		} 
 		
 		override protected function createChildren():void 
 		{
-			var shape:Shape = new Shape();
-			Draw.rect(shape, 0, 0, 100, 100, RainTheme.WHITE);
-			Draw.rect(shape, 0, 98, 100, 2, RainTheme.LIGHT_GRAY);
-			shape.scale9Grid = new Rectangle(2, 2, 96, 96);
-			normalSkin = shape;
+			if (_bgSkin == null)
+				_bgSkin = RainUI.getSkin("listItem");
 			
 			super.createChildren();
 			
-			label.format = RainTheme.getTextFormat(RainTheme.GRAY_TEXT_FORMAT);
+			//label.format = RainUI.getTextFormat(RainTheme.GRAY_TEXT_FORMAT);
 			label.align = "left";
 			label.left =10;
 			label.right = 10;

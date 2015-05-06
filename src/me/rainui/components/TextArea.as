@@ -18,9 +18,9 @@ package me.rainui.components
 	public class TextArea extends TextInput 
 	{
 		
-		public function TextArea(text:String="", skinName:String=null) 
+		public function TextArea(text:String="", dataSource:Object=null) 
 		{
-			super(text,skinName);
+			super(text,dataSource);
 		}
 		
 		override protected function preinitialize():void 

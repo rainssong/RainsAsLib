@@ -16,10 +16,12 @@ package
 	import me.rainssong.utils.ScaleMode;
 	import me.rainui.components.Button;
 	import me.rainui.components.Label;
+	import me.rainui.components.List;
 	import me.rainui.components.Page;
 	import me.rainui.components.ScrollContainer;
 	import me.rainui.components.TabBar;
 	import me.rainui.components.TextInput;
+	import me.rainui.data.ListCollection;
 	import me.rainui.RainTheme;
 	import me.rainui.RainUI;
 	
@@ -41,14 +43,16 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
-			//RainUI.init(stage);
+			RainUI.init(stage);
 			
 			
-			var page:Page = new Page( { parent:this } );
+			//var page:Page = new Page( { parent:this } );
 			
 			//var btn:Button = new Button("wocao", { x:465, width:416,parent:page} );
-			var textInput:TextInput = new TextInput("wocao", { x:465, width:416,parent:page,borderVisible:true} );
+			var textInput:Label = new Label("wocao", {parent:stage, x:465, width:600,borderVisible:true,align:Align.LEFT} );
 			//btn.parent = page;
+			
+			//new List(["11", "22", "33", "33", "33", "33", "33", "33"], { parent:this } );
 			
 			
 		}

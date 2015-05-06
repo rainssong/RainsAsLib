@@ -16,7 +16,7 @@
 	 * @timeStamp 2014/5/12 11:24
 	 * @blog http://blog.sina.com.cn/rainssong
 	 */
-	public class Component extends Sprite
+	dynamic public class Component extends Sprite
 	{
 		//size
 		protected var _width:Number = NaN;
@@ -40,11 +40,12 @@
 		
 		public function Component(dataSource:Object=null)
 		{
-			this.dataSource = dataSource;
+			super();
 			mouseChildren = tabEnabled = tabChildren = false;
 			preinitialize();
 			createChildren();
 			initialize();
+			this.dataSource = dataSource;
 		}
 		
 		protected function initialize():void
@@ -57,8 +58,8 @@
 			if (_bgSkin == null)
 			{
 				_bgSkin = new Shape();
-				addChild(_bgSkin);
 			}
+			addChildAt(_bgSkin,0);
 		}
 		
 		protected function preinitialize():void
@@ -250,13 +251,17 @@
 			return scaleX;
 		}
 		
+		public function calcSize():void
+		{
+			
+		}
+		
 		/**
 		 * 尺寸改变后调用
 		 * TIP:super.resize必须在底部，否则可能导致border和bgSkin宽高不正确
 		**/
 		public function resize():void
 		{
-			clearCallLater(resize);
 			if (_bgSkin)
 			{
 				_bgSkin.width = _width;
@@ -267,6 +272,7 @@
 				showBorder();
 			
 			sendEvent(Event.RESIZE);
+			clearCallLater(resize);
 		}
 		
 		//更新视图
@@ -274,7 +280,7 @@
 		public function redraw():void
 		{
 			clearCallLater(redraw);
-			resize();
+			calcSize();
 		}
 		
 		public function setSize(width:Number, height:Number):void
@@ -390,12 +396,11 @@
 			//swapContent(_bgSkin, value);
 			if (_bgSkin == value) return;
 			if (_bgSkin && _bgSkin.parent)
-			{
 				_bgSkin.parent.removeChild(_bgSkin)
-			}
+				
 			addChildAt(value, 0);
 			_bgSkin = value;
-			callLater(redraw);
+			callLater(resize);
 		}
 		
 		public function swapContent(oldCon:DisplayObject, newCon:DisplayObject):DisplayObject

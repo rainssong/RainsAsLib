@@ -49,8 +49,8 @@ package me.rainui.components
 		
 		private function onLoadComplete(e:Event):void 
 		{
-			bitmap.bitmapData=Bitmap( _loader.content).bitmapData
-			callLater(resize);
+			bitmap.bitmapData = Bitmap( _loader.content).bitmapData
+			callLater(redraw);
 		}
 		
 		/**图片地址*/

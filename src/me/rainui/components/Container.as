@@ -71,7 +71,7 @@ package me.rainui.components
 			if (e.target == this)
 			{
 				parent.addEventListener(Event.RESIZE, onParentResize);
-				callLater(resize);
+				callLater((calcSize));
 			}
 			else
 				return;
@@ -79,7 +79,7 @@ package me.rainui.components
 		
 		protected function onParentResize(e:Event):void
 		{
-			callLater(resize);
+			callLater(calcSize);
 		}
 		
 		/**添加显示对象*/
@@ -163,6 +163,11 @@ package me.rainui.components
 		{
 			_percentHeight = NaN;
 			super.height = value;
+		}
+		
+		override public function get height():Number
+		{
+			return super.height;
 		}
 		
 		/**居父容器顶上的距离*/
@@ -383,7 +388,7 @@ package me.rainui.components
 		}
 		
 		//resize后自动更新位置，注意super.resize必须先行
-		override public function resize():void
+		override public function calcSize():void
 		{
 			if (parent == null)
 				return;
@@ -400,7 +405,6 @@ package me.rainui.components
 				parentWidth = parent.width;
 				parentHeight = parent.height;
 			}
-			
 			
 			if (!isNaN(_percentWidth))
 				_width = parentWidth * _percentWidth;
@@ -453,7 +457,7 @@ package me.rainui.components
 			_height = MathCore.getRangedNumber(_height, _minHeight, _maxHeight);
 			_width = MathCore.getRangedNumber(_width, _minWidth, _maxWidth);
 			
-			super.resize();
+			resize();
 		}
 	
 	}

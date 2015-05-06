@@ -71,8 +71,13 @@ package me.rainui.components
 		
 		public function set index(value:int):void 
 		{
+			if (value < 0)
+				if( _radioBtnVec[_index])
+					_radioBtnVec[_index].selected = false;
+			else
+				_radioBtnVec[value].selected = true;
+			
 			_index = value;
-			_radioBtnVec[value].selected = true;
 		}
 		
 		private function onSelect(e:RainUIEvent):void

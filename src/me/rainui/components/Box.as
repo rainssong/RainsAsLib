@@ -53,14 +53,14 @@ package me.rainui.components {
 		
 		/**增加显示对象到某对象上面*/
 		public function insertAbove(element:DisplayObject, compare:DisplayObject):void {
-			removeElement(element);
+			//removeElement(element);
 			var index:int = getChildIndex(compare);
 			addChildAt(element, Math.min(index + 1, numChildren));
 		}
 		
 		/**增加显示对象到某对象下面*/
 		public function insertBelow(element:DisplayObject, compare:DisplayObject):void {
-			removeElement(element);
+			//removeElement(element);
 			var index:int = getChildIndex(compare);
 			addChildAt(element, Math.max(index, 0));
 		}

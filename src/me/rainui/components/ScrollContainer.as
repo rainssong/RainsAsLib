@@ -36,10 +36,8 @@ package me.rainui.components
 		
 		public function ScrollContainer(content:DisplayObject=null,dataSource:Object=null) 
 		{
-			super();
-			if (content) 
-				_content=content;
-			if (dataSource) this.dataSource = dataSource;
+			super(dataSource);
+			this.content=content;
 		}
 		
 		override protected function preinitialize():void 
@@ -60,18 +58,19 @@ package me.rainui.components
 			if (_content)
 				addChild(_content);
 			
-			if (bgSkin == null)
+			if (_bgSkin == null)
 			{
 				var shape:Shape = new Shape();
 				Draw.rect(shape, 0, 0, 100, 100,RainTheme.WHITE);
-				bgSkin = shape;
+				_bgSkin = shape;
 			}
 			else
 			{
 				_width = bgSkin.width;
 				_height = bgSkin.height;
 			}
-			redraw();
+			//redraw();
+			super.createChildren();
 		}
 		
 		override protected function initialize():void 
@@ -260,6 +259,8 @@ package me.rainui.components
 		
 		public function set content(value:DisplayObject):void 
 		{
+			if (value == null)
+				return;
 			if (_content != value)
 			{
 				if (_content != null && _content.parent)
