@@ -23,7 +23,7 @@ package  me.rainWorld.entity.creature.animal
 		public function HumanModel() 
 		{
 			super();
-			this.mass = 50;
+			this.mass = 60;
 		}
 		
 	}

@@ -32,7 +32,7 @@
 		//protected var _scaleLock:Boolean = false;
 		
 		//display
-		protected var _border:Shape = new Shape();
+		protected var _border:Shape=new Shape();
 		protected var _borderVisible:Boolean = false;
 		protected var _bgSkin:DisplayObject;
 		
@@ -397,12 +397,13 @@
 			if (_bgSkin == value) return;
 			if (_bgSkin && _bgSkin.parent)
 				_bgSkin.parent.removeChild(_bgSkin)
-				
 			addChildAt(value, 0);
 			_bgSkin = value;
+			
 			callLater(resize);
 		}
 		
+		//FIXME:not really swap when oldView has no parent
 		public function swapContent(oldCon:DisplayObject, newCon:DisplayObject):DisplayObject
 		{
 			var index:int = this.numChildren
@@ -411,7 +412,8 @@
 				index= getChildIndex(oldCon);
 				oldCon.parent.removeChild(oldCon)
 			}
-			addChildAt(newCon, index);
+			if(newCon)
+				addChildAt(newCon, index);
 			return newCon;
 		}
 		

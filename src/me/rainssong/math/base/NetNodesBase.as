@@ -1,8 +1,7 @@
-package com.codeTooth.actionscript.algorithm.pathSearching.base
+package me.rainssong.math.base
 {
-	import com.codeTooth.actionscript.lang.errors.AbstractError;
-	import com.codeTooth.actionscript.lang.utils.destroy.DestroyUtil;
-	import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
+	import me.rainssong.utils.IDestroy;
+	
 	/**
 	 * 网格节点基类
 	 */

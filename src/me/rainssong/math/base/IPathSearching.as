@@ -1,4 +1,4 @@
-package com.codeTooth.actionscript.algorithm.pathSearching.base
+package me.rainssong.math.base
 {
 	import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
 	/**

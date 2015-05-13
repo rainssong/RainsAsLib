@@ -57,7 +57,7 @@ package me.rainui.components
 		protected var _state:String = NORMAL;
 		protected var _toggle:Boolean = false;
 		protected var _selected:Boolean = false;
-		private var _normalColorTrans:ColorTransform=new ColorTransform();
+		protected var _normalColorTrans:ColorTransform=new ColorTransform();
 		
 		public function Button(text:String = "",dataSource:Object=null)
 		{
@@ -273,8 +273,11 @@ package me.rainui.components
 					}
 					break;
 				case NORMAL: 
-					_normalSkin.visible = true;
-					_normalSkin.transform.colorTransform = _normalColorTrans;
+					if (_normalSkin)
+					{
+						_normalSkin.visible = true;
+						_normalSkin.transform.colorTransform = _normalColorTrans;
+					}
 					break;
 				case HOVER: 
 					if (_hoverSkin)
@@ -459,7 +462,9 @@ package me.rainui.components
 		
 		public function set normalSkin(value:DisplayObject):void 
 		{
-			if (_normalSkin == value) return;
+			//if (_normalSkin == value) return;
+			//swapContent(_normalSkin, value);
+			
 			swapContent(_normalSkin, value);
 			_normalSkin = value;
 			callLater(redraw);
@@ -482,7 +487,9 @@ package me.rainui.components
 		
 		public function set selectedSkin(value:DisplayObject):void 
 		{
+			swapContent(_selectedSkin, value);
 			_selectedSkin = value;
+			callLater(redraw);
 		}
 		
 		public function get iconSkin():DisplayObject 
@@ -492,9 +499,11 @@ package me.rainui.components
 		
 		public function set iconSkin(value:DisplayObject):void 
 		{
-			if (_iconSkin && _iconSkin.parent) removeChild(_iconSkin);
+			//if (_iconSkin && _iconSkin.parent) removeChild(_iconSkin);
+			//_iconSkin = value;
+			//if (_iconSkin)addChild(_iconSkin);
+			swapContent(_iconSkin, value);
 			_iconSkin = value;
-			if (_iconSkin)addChild(_iconSkin);
 		}
 	
 		override public function showBorder(color:uint = 0xff0000, contentColor:int = -1):void 

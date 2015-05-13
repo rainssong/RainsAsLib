@@ -1,8 +1,6 @@
-package com.codeTooth.actionscript.algorithm.pathSearching.base
+package me.rainssong.math.base
 {
-	import com.codeTooth.actionscript.lang.utils.Common;
-	import com.codeTooth.actionscript.lang.utils.destroy.DestroyUtil;
-	import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
+	import me.rainssong.utils.IDestroy;
 	/**
 	 * 路径节点
 	 */

@@ -1,6 +1,5 @@
-package com.codeTooth.actionscript.lang.utils.loop 
+package me.rainssong.manager 
 {
-	import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
 	
 	/**
 	 * 循环执行器接口

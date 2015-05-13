@@ -1,8 +1,8 @@
-package com.codeTooth.actionscript.algorithm.pathSearching.aStarLike
+package me.rainssong.math.aStarLike
 {
-	import com.codeTooth.actionscript.algorithm.pathSearching.base.NetNodesBase;
-	import com.codeTooth.actionscript.algorithm.pathSearching.base.Node;
-	import com.codeTooth.actionscript.algorithm.pathSearching.base.SearchingDirection;
+	import me.rainssong.math.base.NetNodesBase;
+	import me.rainssong.math.base.Node;
+	import me.rainssong.math.base.SearchingDirection;
 	
 	/**
 	 * AStar栅格点数据

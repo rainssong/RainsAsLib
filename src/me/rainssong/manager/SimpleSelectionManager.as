@@ -10,8 +10,6 @@ package me.rainssong.manager
 	 */
 	[Event(name="unselectObject", type="com.codeTooth.actionscript.interaction.selection.SimpleSelectionManagerEvent")]
 	
-	import com.codeTooth.actionscript.lang.exceptions.NullPointerException;
-	import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
 	import flash.display.Shape;
 	
 	import flash.display.DisplayObjectContainer;

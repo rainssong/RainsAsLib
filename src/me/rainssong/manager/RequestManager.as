@@ -4,6 +4,7 @@ package
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
+	import flash.net.URLRequestMethod;
 	import flash.utils.Dictionary;
 	import me.rainssong.events.ObjectEvent;
 	import me.rainssong.events.RequestEvent;

@@ -1,7 +1,6 @@
 package me.rainssong.math 
 {
 
-	import com.codeTooth.actionscript.lang.exceptions.UnknownTypeException;
 	import flash.utils.ByteArray;
 	import me.rainssong.utils.StringCore;
 

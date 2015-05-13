@@ -1,12 +1,6 @@
-package com.codeTooth.actionscript.algorithm.pathSearching.aStarLike
+package me.rainssong.math.aStarLike
 {
-	import com.codeTooth.actionscript.algorithm.pathSearching.base.IPathSearching;
-	import com.codeTooth.actionscript.algorithm.pathSearching.base.NetNodesBase;
-	import com.codeTooth.actionscript.algorithm.pathSearching.base.Node;
-	import com.codeTooth.actionscript.algorithm.pathSearching.base.SearchingDirection;
-	import com.codeTooth.actionscript.lang.exceptions.NullPointerException;
-	import com.codeTooth.actionscript.lang.utils.Common;
-	import com.codeTooth.actionscript.lang.utils.destroy.DestroyUtil;
+	import me.rainssong.math.base.IPathSearching;
 	
 	/**
 	 * 类AStar寻路（并非真正的AStar寻路，在简单地型中要比AStar快）

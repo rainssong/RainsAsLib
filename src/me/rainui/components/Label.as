@@ -431,6 +431,18 @@ package me.rainui.components
 			text += newText;
 		}
 		
+		/* DELEGATE flash.text.TextField */
+		
+		public function get htmlText():String 
+		{
+			return textField.htmlText;
+		}
+		
+		public function set htmlText(value:String):void 
+		{
+			textField.htmlText = value;
+		}
+		
 		/**皮肤*/
 		//public function get skinName():String
 		//{

@@ -1,12 +1,12 @@
-package com.codeTooth.actionscript.algorithm.pathSearching.aStar
+package me.rainssong.math.aStar
 {
-	import com.codeTooth.actionscript.algorithm.pathSearching.aStarLike.NetNodes;
-	import com.codeTooth.actionscript.algorithm.pathSearching.base.IPathSearching;
-	import com.codeTooth.actionscript.algorithm.pathSearching.base.NetNodesBase;
-	import com.codeTooth.actionscript.algorithm.pathSearching.base.Node;
-	import com.codeTooth.actionscript.algorithm.pathSearching.base.SearchingDirection;
-	import com.codeTooth.actionscript.lang.utils.Common;
-	import com.codeTooth.actionscript.lang.utils.destroy.DestroyUtil;
+	import me.rainssong.math.aStarLike.NetNodes;
+	import me.rainssong.math.base.IPathSearching;
+	import me.rainssong.math.base.NetNodesBase;
+	import me.rainssong.math.base.Node;
+	import me.rainssong.math.base.SearchingDirection;
+	import me.rainssong.utils.DestroyUtil;
+	
 	
 	public class AStar implements IPathSearching
 	{
@@ -28,14 +28,14 @@ package com.codeTooth.actionscript.algorithm.pathSearching.aStar
 		
 		public function AStar(rows:uint, cols:uint, netNodes:NetNodesBase = null)
 		{
-			_netNodes = netNodes == null ? new NetNodes(rows, cols, Common.DELIM, SearchingDirection.EIGHT) : netNodes;
+			_netNodes = netNodes == null ? new NetNodes(rows, cols, ",", SearchingDirection.EIGHT) : netNodes;
 			_openList = new Vector.<Node>();
 			_closelist = new Vector.<Node>();
 			_roadsList = new Vector.<Vector.<int>>();
 			_road = new Vector.<int>();
 			_roadsList[0] = _road;
-			_startPoint = new Node(0, 0, Common.DELIM);;
-			_endPoint = new Node(0, 0, Common.DELIM);
+			_startPoint = new Node(0, 0, ",");
+			_endPoint = new Node(0, 0, ",");
 		}
 		
 		public function addUnwalkable(row:int, col:int):Boolean

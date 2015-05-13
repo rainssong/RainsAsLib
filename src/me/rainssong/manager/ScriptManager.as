@@ -31,6 +31,7 @@ package me.rainssong.manager
 		
 		public function runScript(line:*=null,xmlName:String=null):void
 		{
+			
 			this.xmlName = xmlName;
 			
 			
@@ -48,7 +49,7 @@ package me.rainssong.manager
 			else if (line is String)
 			{
 				var targetIndex:int = _keyDic[line];
-				if (targetIndex > 0)
+				if (targetIndex >= 0)
 					count = targetIndex;
 				else
 				{

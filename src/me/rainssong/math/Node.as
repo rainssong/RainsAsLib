@@ -1,13 +1,11 @@
-package com.codeTooth.actionscript.adt.quadTree
+package me.rainssong.math
 {
-	import com.codeTooth.actionscript.lang.exceptions.NullPointerException;
-	import com.codeTooth.actionscript.lang.utils.Assert;
-	import com.codeTooth.actionscript.lang.utils.destroy.DestroyUtil;
-	import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
 	
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
+	import me.rainssong.utils.DestroyUtil;
+	import me.rainssong.utils.IDestroy;
 
 	internal class Node implements IDestroy
 	{

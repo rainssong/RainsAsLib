@@ -1,9 +1,9 @@
 package me.rainssong.manager
 {
-	import com.codeTooth.actionscript.dependencyInjection.core.Item;
-	import com.codeTooth.actionscript.lang.exceptions.NullPointerException;
-	import com.codeTooth.actionscript.lang.utils.destroy.DestroyUtil;
-	import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
+	//import com.codeTooth.actionscript.dependencyInjection.core.Item;
+	//import com.codeTooth.actionscript.lang.exceptions.NullPointerException;
+	//import com.codeTooth.actionscript.lang.utils.destroy.DestroyUtil;
+	//import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
 	
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
@@ -79,7 +79,7 @@ package me.rainssong.manager
 }
 
 
-import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
+//import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
 
 class Item implements IDestroy
 {

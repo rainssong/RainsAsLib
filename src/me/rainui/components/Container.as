@@ -55,6 +55,12 @@ package me.rainui.components
 			this.mouseChildren = true;
 		}
 		
+		override protected function initialize():void 
+		{
+			super.initialize();
+			callLater(calcSize);
+		}
+		
 		
 		protected function onRemoved(e:Event):void
 		{
@@ -71,7 +77,7 @@ package me.rainui.components
 			if (e.target == this)
 			{
 				parent.addEventListener(Event.RESIZE, onParentResize);
-				callLater((calcSize));
+				callLater(calcSize);
 			}
 			else
 				return;
@@ -161,7 +167,6 @@ package me.rainui.components
 		//TODO:减少percent和固定值的冲突，兼容
 		override public function set height(value:Number):void
 		{
-			_percentHeight = NaN;
 			super.height = value;
 		}
 		
@@ -180,7 +185,7 @@ package me.rainui.components
 		public function set top(value:Number):void
 		{
 			_top = value;
-			_percentTop = NaN;
+			//_percentTop = NaN;
 			_centerY = NaN;
 			_percentCenterY = NaN;
 			
@@ -198,7 +203,7 @@ package me.rainui.components
 			_bottom = value;
 			//_percentHeight = NaN;
 			//_percentTop = NaN;
-			_percentBottom = NaN;
+			//_percentBottom = NaN;
 			
 			_centerY = NaN;
 			_percentCenterY = NaN;
@@ -217,7 +222,7 @@ package me.rainui.components
 		{
 			_left = value;
 			_percentWidth = NaN;
-			_percentLeft = NaN;
+			//_percentLeft = NaN;
 			_percentRight = NaN;
 			
 			_centerX = NaN;
@@ -238,7 +243,7 @@ package me.rainui.components
 			_right = value;
 			_percentWidth = NaN;
 			_percentLeft = NaN;
-			_percentRight = NaN;
+			//_percentRight = NaN;
 			_centerX = NaN;
 			_percentCenterX = NaN;
 			callLater(resize);
@@ -406,13 +411,20 @@ package me.rainui.components
 				parentHeight = parent.height;
 			}
 			
+			if (_autoSize)
+			{
+				hideBorder();
+				_width = contentWidth;
+				_height = contentHeight
+			}
+			
 			if (!isNaN(_percentWidth))
 				_width = parentWidth * _percentWidth;
 			if (!isNaN(_percentHeight))
 				_height = parentHeight * _percentHeight;
 			
 			if (!isNaN(_percentLeft))
-				x = _percentLeft * parentWidth;
+				x = _percentLeft * parentWidth+(_left?_left:0);
 			else if ( !isNaN(_left))
 				x = _left;
 				
@@ -420,7 +432,7 @@ package me.rainui.components
 				if (!isNaN(_percentLeft))
 					_width = parentWidth*(1-_percentRight - _percentLeft);
 				else
-					x = parentWidth - (_percentRight * parentWidth) - displayWidth;
+					x = parentWidth - (_percentRight * parentWidth)-(right?right:0)- displayWidth;
 			else if ( !isNaN(_right))
 				if (!isNaN(_left))
 					_width = parentWidth - _left - _right;
@@ -434,7 +446,7 @@ package me.rainui.components
 				x = (parentWidth - displayWidth) * 0.5 + _centerX;
 			
 			if (!isNaN(_percentTop))
-				y = _percentTop * parentHeight;
+				y = _percentTop * parentHeight+(_top?top:0);
 			else if (!isNaN(_top))
 				y = _top;
 				
@@ -447,7 +459,7 @@ package me.rainui.components
 				if (!isNaN(_percentTop))
 					_width = parentWidth * (1 - _percentTop - _percentBottom);
 				else
-					y = parentHeight - (_percentBottom * parentHeight) - displayHeight;
+					y = parentHeight - (_percentBottom * parentHeight) - displayHeight-(_bottom?_bottom:0);
 			else if (!isNaN(_bottom))
 				if (!isNaN(_top))
 					_height = parentHeight - _top - _bottom;
