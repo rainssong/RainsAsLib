@@ -38,7 +38,7 @@ package me.rainui.components
 		protected var _isVerticalLayout:Boolean = true;
 		protected var _cellSize:Number = 60;
 		
-		protected var _radioGroup:RadioGroup = new RadioGroup();
+		protected var _radioGroup:RadioGroup 
 		
 		public function List(items:* = null, dataSource:Object = null)
 		{
@@ -50,9 +50,21 @@ package me.rainui.components
 		{
 			if (_itemRender == null)
 				_itemRender = ListItem;
-			
-			//_radioGroup.addEventListener(RainUIEvent.SELECT, onSelect);
+				
+			_radioGroup = new RadioGroup();
+			_radioGroup.addEventListener(RainUIEvent.SELECT, onSelect);
+			_radioGroup.addEventListener(RainUIEvent.CHANGE, onChange);
 			super.createChildren();
+		}
+		
+		private function onSelect(e:RainUIEvent):void 
+		{
+			dispatchEvent(e.clone());
+		}
+		
+		private function onChange(e:RainUIEvent):void 
+		{
+			dispatchEvent(e.clone());
 		}
 	
 		
@@ -72,7 +84,7 @@ package me.rainui.components
 					////_items[i].selected = false;
 				//}
 			//}
-			dispatchEvent(new Event("select"));
+			//dispatchEvent(new Event("select"));
 		}
 		
 		public function get items():ListCollection
@@ -118,6 +130,16 @@ package me.rainui.components
 		{
 			_itemRender = value;
 			callLater(redraw);
+		}
+		
+		public function getItemView():ListItem
+		{
+			if (_itemRender is Class)
+				return new _itemRender();
+			if (_itemRender is Function)
+				return _itemRender();
+			else
+				return null;
 		}
 		
 		/**X方向单元格数量*/
@@ -168,7 +190,7 @@ package me.rainui.components
 			callLater(redraw);
 		}
 		
-		protected function redraw():void
+		override public function redraw():void
 		{
 			if (_itemRender)
 			{
@@ -187,7 +209,9 @@ package me.rainui.components
 				
 				for (var i:int = 0; i < _items.length; i++)
 				{
-					var c:ListItem = new ListItem(String(_items.getItemAt(i)), _items.getItemAt(i));
+					var c:ListItem = getItemView();
+					c.text=String(_items.getItemAt(i)), _items.getItemAt(i);
+					c.dataSource=_items.getItemAt(i);
 					addChild(c);
 					c.y = _cellSize * i;
 					c.height = _cellSize;

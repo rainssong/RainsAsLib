@@ -1,5 +1,6 @@
 package me.rainssong.math.base
 {
+	import me.rainssong.utils.DestroyUtil;
 	import me.rainssong.utils.IDestroy;
 	
 	/**
@@ -73,7 +74,7 @@ package me.rainssong.math.base
 		 */
 		protected function createNodes(rows:uint, cols:uint, delim:String):void
 		{
-			throw new AbstractError();
+			//throw new AbstractError();
 		}
 		
 		//----------------------------------------------------------------------------------------------------------------------

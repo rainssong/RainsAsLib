@@ -1,10 +1,9 @@
 package me.rainssong.math.base
 {
-	import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
 	/**
 	 * 寻路算法接口
 	 */
-	public interface IPathSearching extends IDestroy
+	public interface IPathSearching
 	{
 		/**
 		 * 添加一个不可行走点

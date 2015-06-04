@@ -34,7 +34,6 @@ package me.rainssong.manager
 			
 			this.xmlName = xmlName;
 			
-			
 			var xml:XML = scriptDic[this.xmlName];
 			var length:int = xml.motion.length();
 			

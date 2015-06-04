@@ -58,10 +58,14 @@ package me.rainui
 		public function init():void
 		{
 			//_configDic
-			_skinDic["darkBlueRoundSkin"] = darkBlueRoundSkinFactory;
-			_skinDic["darkBlueRoundFlatSkin"] = darkBlueRoundFlatSkinFactory;
-			_skinDic["textInput"] = darkBlueRoundFlatSkinFactory;
+			//_skinDic["darkBlueRoundSkin"] = darkBlueRoundSkinFactory;
+			//_skinDic["darkBlueRoundFlatSkin"] = darkBlueRoundFlatSkinFactory;
+			_skinDic["textInput"] = whiteRoundSkinFactory;
 			_skinDic["list"] = whiteFlatSkinFactory;
+			_skinDic["listItem"] = blueSkinFactory;
+			_skinDic["bg"] = whiteFlatSkinFactory;
+			_skinDic["progressBar"] = blueFlatSkinFactory;
+			_skinDic["progressBarBg"] = darkGrayFlatSkinFactory;
 			_skinDic["buttonNormal"] = blueSkinFactory;
 		}
 		
@@ -71,6 +75,15 @@ package me.rainui
 			shape.graphics.beginFill(RainTheme.WHITE, 1);
 			//shape.graphics.lineStyle(4, 0x666666, 1);
 			shape.graphics.drawRect(0, 0, 80, 80);
+			shape.scale9Grid = new Rectangle(10, 10, 80 - 2 * 10, 80 - 2 * 10);
+			return shape;
+		}
+		
+		private function whiteRoundSkinFactory():DisplayObject
+		{
+			var shape:Shape = new Shape();
+			shape.graphics.beginFill(RainTheme.WHITE, 1);
+			shape.graphics.drawRoundRect(0, 0, 80, 80, 10, 10);
 			shape.scale9Grid = new Rectangle(10, 10, 80 - 2 * 10, 80 - 2 * 10);
 			return shape;
 		}
@@ -140,10 +153,26 @@ package me.rainui
 			return shape;
 		}
 		
+		public function blueFlatSkinFactory():DisplayObject
+		{
+			var shape:Shape = new Shape();
+			Draw.rect(shape, 0, 0, 100, 100, RainTheme.BLUE);
+			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
+			return shape;
+		}
+		
 		public function darkBlueRoundFlatSkinFactory():DisplayObject
 		{
 			var shape:Shape = new Shape();
 			Draw.drawGraphics(shape.graphics, shape.graphics.drawRoundRect, DARK_BLUE, 0, 0, 100, 100, 4, 4);
+			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
+			return shape;
+		}
+		
+		public function darkGrayFlatSkinFactory():DisplayObject
+		{
+			var shape:Shape = new Shape();
+			Draw.rect(shape, 0, 0, 100, 100, RainTheme.DARK_GRAY);
 			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
 			return shape;
 		}

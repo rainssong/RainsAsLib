@@ -9,6 +9,7 @@ package
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import me.rainssong.fileSystem.ResumeDownloader;
+	import me.rainssong.net.ResumeDownloader;
 	
 	
 	
@@ -31,7 +32,7 @@ package
 			
 			// entry point
 			var d:ResumeDownloader = new ResumeDownloader();
-			d.download("http://sms.doctor120.net/ray/download/v15中文.zip", File.applicationDirectory.resolvePath("1.jpg").nativePath);
+			d.download("www.baidu.com", File.applicationDirectory.resolvePath("1.jpg").nativePath);
 		}
 		
 		

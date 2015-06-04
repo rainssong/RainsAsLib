@@ -1,5 +1,6 @@
 package me.rainssong.math.base
 {
+	import me.rainssong.utils.DestroyUtil;
 	import me.rainssong.utils.IDestroy;
 	/**
 	 * 路径节点

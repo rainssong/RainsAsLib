@@ -39,7 +39,7 @@ package me.rainui.components
 			_content = new Bitmap();
 			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
 			_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onLoadError);
-			super.createChildren();
+			//super.createChildren();
 		}
 		
 		private function onLoadError(e:IOErrorEvent):void 

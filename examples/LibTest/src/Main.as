@@ -14,50 +14,20 @@ package
 		
 		public function Main():void
 		{
-			setTimeout(testFunc, 1000);
-		}
+			var swt1:Sprite = new Sprite()
+			
+			addChild(swt1);
+			
+			swt1.graphics.lineStyle(2, 0x000000);
+			
+			swt1.graphics.moveTo(swt1.x, swt1.y);
+			
 		
-		private function testFunc():void
-		{
-			functionTiming(calc);
-			//var t:Number = getTimer();
-			//calc();
-			//trace(getTimer() - t);
-		}
-		
-		private function calc():void
-		{
-			for (var k:int = 499; k > 0; k--)
-				for (var j:int = k - 1; j > (1000 - k - j); j--)
-				{
-					var i:int = 1000 - k - j;
-					if (i * i + j * j == k * k)
-					{
-						trace(i, j, k);
-						return;
-					}
-				}
-		}
-		
-		private function calc2():void
-		{
-			var a:int;
-			var b:int;
-			var c:int;
-			test();
-			trace( a, b, c);
-			function test():void
-			{
-				for (a = 333; a < 500; a++)
-				{
-					b = (500000-a)/(a-1)
-					c = 1000 - a - b;
-					if (a * a + b * b == c * c)
-					{
-						return;
-					}
-				}
-			}
+			
+			var conX1:Number = 1
+			var conY1:Number = 2
+			
+			swt1.graphics.curveTo(conX1, conY1, 10, 12);
 		}
 	
 	}

@@ -18,6 +18,7 @@ package
 	import me.rainui.components.Label;
 	import me.rainui.components.List;
 	import me.rainui.components.Page;
+	import me.rainui.components.ProgressBar;
 	import me.rainui.components.ScrollContainer;
 	import me.rainui.components.TabBar;
 	import me.rainui.components.TextInput;
@@ -43,16 +44,20 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
-			RainUI.init(stage);
+			RainUI.init(stage,new RainTheme);
 			
 			
-			//var page:Page = new Page( { parent:this } );
+			var page:Page = new Page( { parent:stage } );
 			
-			//var btn:Button = new Button("wocao", { x:465, width:416,parent:page} );
-			var textInput:Label = new Label("wocao", {parent:stage, x:465, width:600,borderVisible:true,align:Align.LEFT} );
-			//btn.parent = page;
+			var btn:Button = new Button("Button", { parent:page, x:100, y:100 } );
 			
+			var label:Label = new Label("Label", { parent:page, x:100, y:200, align:Align.LEFT } );
+			
+			var progress:ProgressBar = new ProgressBar("ProgressBar", {parent:page, x:100, y:300} );
+			progress.percent = 0.8;
 			//new List(["11", "22", "33", "33", "33", "33", "33", "33"], { parent:this } );
+			
+			
 			
 			
 		}

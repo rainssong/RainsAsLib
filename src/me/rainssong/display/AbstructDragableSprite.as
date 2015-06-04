@@ -8,7 +8,6 @@
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import me.rainssong.display.MySprite;
-	import me.rainssong.utils.superTrace;
 	
 	/**
 	 * ...

@@ -20,7 +20,7 @@ package me.rainui.components
 	 * ...
 	 * @author Rainssong
 	 */
-	public class RadioGroup  extends EventDispatcher
+	public class RadioGroup extends EventDispatcher
 	{
 		//public var btnSkinClass:Class = Button;
 		private var _radioBtnVec:Vector.<RadioButton> = new Vector.<RadioButton>();
@@ -40,7 +40,7 @@ package me.rainui.components
 		{
 			//_radioBtnVec = value;
 			radioBtnVec.length = 0;
-			for (var i:int = 0; i < value.length; i++) 
+			for (var i:int = 0; i < value.length; i++)
 			{
 				addButton(value[i]);
 			}
@@ -59,47 +59,26 @@ package me.rainui.components
 		{
 			if (_radioBtnVec.indexOf(radioButton) > -1)
 			{
-				_radioBtnVec.splice(_radioBtnVec.indexOf(radioButton),1);
+				_radioBtnVec.splice(_radioBtnVec.indexOf(radioButton), 1);
 				radioButton.removeEventListener(RainUIEvent.SELECT, onSelect);
 			}
 		}
 		
-		public function get index():int 
+		public function get index():int
 		{
 			return _index;
 		}
 		
-		public function set index(value:int):void 
+		public function set index(value:int):void
 		{
-			if (value < 0)
-				if( _radioBtnVec[_index])
-					_radioBtnVec[_index].selected = false;
-			else
-				_radioBtnVec[value].selected = true;
 			
-			_index = value;
-		}
-		
-		private function onSelect(e:RainUIEvent):void
-		{
-			var btn:RadioButton = e.currentTarget as RadioButton;
-			
-			var index:int = _radioBtnVec.indexOf(btn);
-			
-			select(index);
-		}
-		
-		public function select(value:int):void
-		{
-			dispatchEvent(new RainUIEvent(RainUIEvent.SELECT, value));
 			if (_index == value)
 			{
-				
+				return;
 			}
 			else
 			{
 				_index = value;
-				dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, value));
 				for (var i:int = 0; i < _radioBtnVec.length; i++)
 				{
 					var btn:RadioButton = _radioBtnVec[i];
@@ -108,7 +87,25 @@ package me.rainui.components
 					else
 						btn.selected = false;
 				}
+				dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, value));
 			}
+			
+			dispatchEvent(new RainUIEvent(RainUIEvent.SELECT, value));
+		
+		}
+		
+		private function onSelect(e:RainUIEvent):void
+		{
+			var btn:RadioButton = e.currentTarget as RadioButton;
+			
+			var i:int = _radioBtnVec.indexOf(btn);
+			
+			index = i;
+		}
+		
+		public function select(i:int):void
+		{
+			index = i;
 		}
 	
 	}

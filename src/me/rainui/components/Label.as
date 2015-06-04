@@ -67,6 +67,7 @@ package me.rainui.components
 				_width = textField.width;
 				_height = textField.height;
 				_format = textField.getTextFormat();
+				_text = textField.text;
 			}
 			_content = textField;
 			super.createChildren();
@@ -75,12 +76,7 @@ package me.rainui.components
 		override protected function initialize():void
 		{
 			textField.defaultTextFormat = _format;
-			//_format.font = Styles.fontName;
-			//_format.size = Styles.fontSize;
-			//_format.color = Styles.labelColor;
 			textField.selectable = false;
-			
-			
 			callLater(resize);
 		}
 		
@@ -429,6 +425,18 @@ package me.rainui.components
 		public function appendText(newText:String):void
 		{
 			text += newText;
+		}
+		
+		/* DELEGATE flash.text.TextField */
+		
+		public function get embedFonts():Boolean 
+		{
+			return textField.embedFonts;
+		}
+		
+		public function set embedFonts(value:Boolean):void 
+		{
+			textField.embedFonts = value;
 		}
 		
 		/* DELEGATE flash.text.TextField */

@@ -46,6 +46,18 @@ package me.rainssong.utils
 			return _dic[key];
 		}
 		
+		public function deleteKey(key:*):void
+		{
+			_dic[key] = undefined;
+			_revDic[_dic[key]] = undefined;
+		}
+		
+		public function deleteValue(value:*):void
+		{
+			_revDic[value] = undefined;
+			_dic[_revDic[value]] = undefined;
+		}
+		
 		override flash_proxy function deleteProperty(name:*):Boolean 
 		{
 			_revDic[_dic[name]] = undefined;

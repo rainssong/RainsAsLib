@@ -7,6 +7,7 @@ package
 	import flash.geom.*;
 	import flash.events.*;
 	import flash.text.*;
+	import me.rainssong.display.LCDRender;
 	
 	[SWF(width="740",height="540",backgroundColor="0",frameRate="10")]
 	

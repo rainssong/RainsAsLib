@@ -77,9 +77,9 @@
 		public static function sort(str:String, ... args):String
 		{
 			var resortArr:Array = str.split("");
-			superTrace("old resortArr:" + resortArr);
+			powerTrace("old resortArr:" + resortArr);
 			resortArr.sort.apply(null, args);
-			superTrace("new resortArr:" + resortArr);
+			powerTrace("new resortArr:" + resortArr);
 			return String(resortArr);
 		}
 		

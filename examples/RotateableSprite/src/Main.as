@@ -4,6 +4,8 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import me.rainssong.display.MouseRotatableSprite;
+	import me.rainssong.display.SpeedRotatableSprite;
+	import me.rainssong.display.TargetRotatableSprite;
 
 	
 	/**
@@ -30,7 +32,13 @@ package
 			temp.graphics.beginGradientFill(GradientType.LINEAR, [0xFF0000, 0x00FF00], [1, 1], [0, 255]);
 			temp.graphics.drawCircle(0, 0, 100);
 			
-			addChild(temp);
+			var temp2:SpeedRotatableSprite = new SpeedRotatableSprite();
+			temp2.x = 500;
+			temp2.y = 200;
+			temp2.graphics.beginGradientFill(GradientType.LINEAR, [0xFF0000, 0x00FF00], [1, 1], [0, 255]);
+			temp2.graphics.drawCircle(0, 0, 100);
+			
+			addChild(temp2);
 			
 		}
 		

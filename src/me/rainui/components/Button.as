@@ -74,8 +74,6 @@ package me.rainui.components
 			this.mouseChildren = false
 			this.mouseEnabled = true;
 			
-			_normalColorTrans = this.transform.colorTransform;
-			
 			this._width = 200;
 			this._height = 60;
 		}
@@ -96,7 +94,6 @@ package me.rainui.components
 					_normalSkin = RainUI.getSkin("buttonNormal");
 					addChild(_normalSkin);
 				}
-				
 			}
 			else
 			{
@@ -104,23 +101,22 @@ package me.rainui.components
 				this._height = _normalSkin.height;
 			}
 			
-			
 			if (_downSkin)
 				_downSkin.visible = false;
 			if (_selectedSkin)
 				_selectedSkin.visible = false;
 			
-			if (this._label == null)
+			if (label == null)
 			{
 				_label = new Label();
 				_label.centerX = 0;
 				_label.centerY = 0;
 				_label.autoSize = true;
 				_label.format = RainUI.getTextFormat("button");
-				//_label.borderVisible = true;
 				addChild(_label);
 			}
 			
+			_normalColorTrans = _normalSkin.transform.colorTransform;
 		}
 		
 		override protected function initialize():void
@@ -297,6 +293,8 @@ package me.rainui.components
 				default: 
 			}
 			
+			
+			
 			super.redraw();
 		}
 		
@@ -382,10 +380,17 @@ package me.rainui.components
 		//}
 		
 		/**按钮标签控件*/
-		//public function get _label():Label
-		//{
-		//return _label;
-		//}
+		public function get label():Label
+		{
+			return _label;
+		}
+		
+		public function set label(value:Label):void
+		{
+			swapContent(_label, value);
+			_label = value;
+			callLater(redraw);
+		}
 		
 		/**九宫格信息(格式:左边距,上边距,右边距,下边距)*/
 		//public function get sizeGrid():String
@@ -443,16 +448,6 @@ package me.rainui.components
 			if (_showIcon == value) return;
 			_showIcon = value;
 			callLater(redraw);
-		}
-		
-		public function get label():Label 
-		{
-			return _label;
-		}
-		
-		public function set label(value:Label):void 
-		{
-			_label = value;
 		}
 		
 		public function get normalSkin():DisplayObject 
@@ -518,6 +513,18 @@ package me.rainui.components
 			}
 			
 			addChild(_border);
+		}
+		
+		/* DELEGATE me.rainui.components.Label */
+		
+		public function get htmlText():String 
+		{
+			return _label.htmlText;
+		}
+		
+		public function set htmlText(value:String):void 
+		{
+			_label.htmlText = value;
 		}
 		
 		

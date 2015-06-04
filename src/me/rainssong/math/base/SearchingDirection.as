@@ -52,7 +52,7 @@ package me.rainssong.math.base
 		{
 			if (!_allowInstance)
 			{
-				throw new IllegalOperationException("Cannot create instance");
+				//throw new IllegalOperationException("Cannot create instance");
 			}
 			_type = type;
 		}
