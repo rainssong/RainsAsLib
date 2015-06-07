@@ -28,8 +28,9 @@ package
 			
 			RainUI.init(stage);
 			
-			list = new List(["1", "2", "3", "44444"], { parent:stage } );
+			list = new List(["1", "2", "3", "44444", "55555", "66666"], { parent:stage } );
 			list.itemRender = ir;
+			list.btnGroup.max = 3;
 		}
 		
 		public function ir():ListItem

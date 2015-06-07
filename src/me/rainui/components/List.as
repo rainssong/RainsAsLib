@@ -10,7 +10,9 @@ package me.rainui.components
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import me.rainui.data.ListCollection;
+	import me.rainui.events.CollectionEvent;
 	import me.rainui.events.RainUIEvent;
+	import me.rainui.managers.RadioGroup;
 	import me.rainui.RainUI;
 	
 	/**选择单元格改变后触发*/
@@ -38,7 +40,7 @@ package me.rainui.components
 		protected var _isVerticalLayout:Boolean = true;
 		protected var _cellSize:Number = 60;
 		
-		protected var _radioGroup:RadioGroup 
+		protected var _btnGroup:RadioGroup 
 		
 		public function List(items:* = null, dataSource:Object = null)
 		{
@@ -51,9 +53,9 @@ package me.rainui.components
 			if (_itemRender == null)
 				_itemRender = ListItem;
 				
-			_radioGroup = new RadioGroup();
-			_radioGroup.addEventListener(RainUIEvent.SELECT, onSelect);
-			_radioGroup.addEventListener(RainUIEvent.CHANGE, onChange);
+			_btnGroup = new RadioGroup();
+			_btnGroup.addEventListener(RainUIEvent.SELECT, onSelect);
+			_btnGroup.addEventListener(RainUIEvent.CHANGE, onChange);
 			super.createChildren();
 		}
 		
@@ -70,21 +72,7 @@ package me.rainui.components
 		
 		public function select(index:int):void
 		{
-			//if (index >= _items.length)
-				//index = 0;
-			//for (var i:int = 0; i < _items.length; i++)
-			//{
-				//if (i == index)
-				//{
-					////_items[i].selected = true;
-					//index = i;
-				//}
-				//else
-				//{
-					////_items[i].selected = false;
-				//}
-			//}
-			//dispatchEvent(new Event("select"));
+			
 		}
 		
 		public function get items():ListCollection
@@ -94,6 +82,15 @@ package me.rainui.components
 		
 		public function set items(value:*):void
 		{
+			if(this._items)
+			{
+				//this._dataProvider.removeEventListener(CollectionEvent.ADD_ITEM, onAddItem);
+				//this._dataProvider.removeEventListener(CollectionEvent.REMOVE_ITEM, onRemoveItem);
+				//this._dataProvider.removeEventListener(CollectionEvent.REPLACE_ITEM, onReplaceItem);
+				//this._dataProvider.removeEventListener(CollectionEvent.RESET, onResetItem);
+				this._items.removeEventListener(Event.CHANGE, onChange);
+			}
+			
 			if (value is Array)
 				_items = new ListCollection(value);
 			else if ( value is ListCollection)
@@ -102,11 +99,19 @@ package me.rainui.components
 				return;
 				
 			index = -1;
+			
+			
+			if(this._items)
+			{
+				//this._dataProvider.addEventListener(CollectionEvent.ADD_ITEM, dataProvider_addItemHandler);
+				//this._dataProvider.addEventListener(CollectionEvent.REMOVE_ITEM, dataProvider_removeItemHandler);
+				//this._dataProvider.addEventListener(CollectionEvent.REPLACE_ITEM, dataProvider_replaceItemHandler);
+				//this._dataProvider.addEventListener(CollectionEvent.RESET, dataProvider_resetHandler);
+				this._items.addEventListener(Event.CHANGE, onChange);
+			}
+			
 			if(_items != null)
 				callLater(redraw);
-		
-			_items.addEventListener(RainUIEvent.CHANGE, onItemsChange);
-			//reLayout();
 		}
 		
 		private function onItemsChange(e:RainUIEvent):void 
@@ -120,7 +125,7 @@ package me.rainui.components
 			this.direction = ScrollContainer.VERTICAL;
 		}
 		
-		/**单元格渲染器，可以设置为XML或类对象*/
+		/**单元格渲染器，可以设置为XML或类或函数*/
 		public function get itemRender():*
 		{
 			return _itemRender;
@@ -202,7 +207,7 @@ package me.rainui.components
 					cell.removeEventListener(MouseEvent.ROLL_OUT, onCellMouse);
 					cell.removeEventListener(MouseEvent.MOUSE_DOWN, onCellMouse);
 					cell.removeEventListener(MouseEvent.MOUSE_UP, onCellMouse);
-					_radioGroup.removeButton(cell);
+					_btnGroup.removeButton(cell);
 					cell.remove();
 				}
 				_cells.length = 0;
@@ -218,7 +223,7 @@ package me.rainui.components
 					c.percentWidth = 1;
 					cells.push(c);
 					addCell(c);
-					_radioGroup.addButton(c);
+					_btnGroup.addButton(c);
 					//group.addEventListener(Event.RESIZE, onGroupResize);
 				}
 			}
@@ -342,14 +347,14 @@ package me.rainui.components
 		/**选择索引*/
 		public function get index():int
 		{
-			return _radioGroup.index;
+			return _btnGroup.index;
 		}
 		
 		public function set index(value:int):void
 		{
 			if (index != value)
 			{
-				_radioGroup.index = value;
+				_btnGroup.index = value;
 				sendEvent(RainUIEvent.SELECT, value);
 			}
 		}
@@ -525,6 +530,11 @@ package me.rainui.components
 		{
 			exeCallLater(redraw);
 			return _cells;
+		}
+		
+		public function get btnGroup():RadioGroup 
+		{
+			return _btnGroup;
 		}
 		
 		//override public function commitMeasure():void

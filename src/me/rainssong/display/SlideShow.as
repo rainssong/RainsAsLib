@@ -7,7 +7,7 @@
 	import flash.geom.Rectangle;
 	import me.rainssong.events.DataEvent;
 	import me.rainssong.events.SlideEvent;
-	import me.rainssong.utils.superTrace;
+	import me.rainssong.utils.powerTrace;
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -258,7 +258,7 @@
 				if (!_slideArr[index].hasContent && _slideContentArr[index])
 				{
 					_slideArr[index].reload(_slideContentArr[index]);
-					superTrace("读取资源:" + _slideContentArr[index])
+					powerTrace("读取资源:" + _slideContentArr[index])
 					
 				}
 			}
@@ -288,7 +288,7 @@
 		
 			//if (index == 1)
 			//{
-			//superTrace("moveSlide2",_slideArr[index].x);
+			//powerTrace("moveSlide2",_slideArr[index].x);
 			//}
 		}
 		
@@ -419,7 +419,7 @@
 				_targetIndex = _slideContentArr.length - 1;
 			
 			rollTo(_targetIndex, 0.5);
-			superTrace("更新ContentArr");
+			powerTrace("更新ContentArr");
 		}
 		
 		public function get slideArr():Array

@@ -45,7 +45,7 @@ package me.rainui.components
 			super.preinitialize();
 			this._width = 400;
 			this._height = 400;
-			this.scrollRect = new Rectangle(0, 0, _width, _height);
+			
 		}
 		
 		override protected function createChildren():void 
@@ -64,11 +64,11 @@ package me.rainui.components
 				Draw.rect(shape, 0, 0, 100, 100,RainTheme.WHITE);
 				_bgSkin = shape;
 			}
-			else
-			{
-				_width = bgSkin.width;
-				_height = bgSkin.height;
-			}
+			//else
+			//{
+				//_width = bgSkin.width;
+				//_height = bgSkin.height;
+			//}
 			//redraw();
 			super.createChildren();
 		}
@@ -80,6 +80,7 @@ package me.rainui.components
 			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseUp);
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			this.scrollRect = new Rectangle(0, 0, _width, _height);
 		}
 		
 		private function onEnterFrame(e:Event):void 
@@ -203,8 +204,6 @@ package me.rainui.components
 			_lastY = mouseY;
 			
 			_onDrag = true;
-			
-			
 		}
 		
 		

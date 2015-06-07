@@ -30,7 +30,7 @@ package  me.rainssong.manager
 		
 		static public function get isAndroid():Boolean
 		{
-			if (Capabilities.os.match("Android"))
+			if (Capabilities.os.toLocaleLowerCase().match("android"))
 				return true;
 			else return false;
 		}

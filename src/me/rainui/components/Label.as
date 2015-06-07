@@ -118,8 +118,6 @@ package me.rainui.components
 		
 		override public function resize():void
 		{
-			
-			
 			if (textField == null) return;
 			if (_autoSize)
 			{
@@ -140,7 +138,8 @@ package me.rainui.components
 			}
 			else
 			{
-				textField.height = textField.textHeight + 4;
+				//
+				textField.height = Math.max(_height,textField.textHeight+4);
 				textField.width = _width;
 			}
 			

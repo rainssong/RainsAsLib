@@ -2,6 +2,7 @@ package me.rainui.components
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.events.Event;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormatAlign;
 	import me.rainssong.utils.Align;
@@ -37,6 +38,12 @@ package me.rainui.components
 			this.autoSize = false;
 			this.wordWrap = true;
 			this.multiline = true;
+			textField.addEventListener(Event.SCROLL, onTextFieldScroll);
+		}
+		
+		private function onTextFieldScroll(e:Event):void 
+		{
+			
 		}
 		
 		//override public function resize():void 

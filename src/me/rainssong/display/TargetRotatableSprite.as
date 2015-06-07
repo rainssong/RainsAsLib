@@ -3,7 +3,6 @@
 	import com.greensock.TweenLite;
 	import flash.events.Event;
 	import me.rainssong.display.MouseRotatableSprite;
-	import me.rainssong.utils.superTrace;
 	
 	/**
 	 * ...

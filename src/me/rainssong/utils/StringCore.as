@@ -97,6 +97,39 @@
             return !str.length;
         }
 		
+		public function isBlank(s:String = null):Boolean
+		{
+			var str:String = trim(s);
+			var i:int = 0;
+			if (str.length == 0)
+			{
+				return true;
+			}
+			while (i < str.length)
+			{
+				if (str.charCodeAt(0) != 32)
+				{
+					return false;
+				}
+				i++;
+			}
+			return true;
+		}
+		
+		public static function isEmail(email:String):Boolean
+		{
+			var pattern:RegExp = /^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+			return email.match(pattern) != null;
+		}
+		
+		/**
+		 * Validate as "http://" or "https://".
+		 */
+		public static function isURL(str:String):Boolean
+		{
+			return (str.substring(0, 7) == "http://" || str.substring(0, 8) == "https://");
+		}
+		
 		public static function deleteProtocol(url:String):String
 		{
 			return url.replace(/[a-zA-z]+:\/\//, "");
@@ -120,11 +153,6 @@
 			result = result.split("?")[0];
 			return result;
 		}
-		
-		//static public function webToLocal(url:String):String
-		//{
-			//return FileCore.File ? FileCore.File.applicationStorageDirectory.resolvePath(StringCore.deleteProtocol(url)).nativePath : null;
-		//}
 		
 		public static function wordCount(str:String):uint
 		{

@@ -29,10 +29,9 @@ package me.rainui.components
 			if (_toggle && !_selected)
 			{
 				selected = true;
-				_state = SELECTED;
 				callLater(redraw);
-				sendEvent(RainUIEvent.SELECT);
 			} 
+			
 		}
 		
 		

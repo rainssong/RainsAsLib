@@ -33,7 +33,7 @@ package me.rainui.components
 		override protected function preinitialize():void 
 		{
 			super.preinitialize();
-			_autoSize = false;
+			//_autoSize = false;
 			//mouseEnabled = true;
 		}
 		

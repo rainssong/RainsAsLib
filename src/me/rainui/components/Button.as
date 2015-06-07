@@ -20,6 +20,7 @@ package me.rainui.components
 	import me.rainssong.system.SystemCore;
 	import me.rainssong.utils.Draw;
 	import me.rainssong.utils.ScaleMode;
+	import me.rainui.events.RainUIEvent;
 	import me.rainui.RainTheme;
 	import me.rainui.RainUI;
 	//import morn.core.handlers.Handler;
@@ -220,7 +221,7 @@ package me.rainui.components
 		}
 		
 		/**是否是选择状态*/
-		[Inspectable(name="selected",type="Bealoon",defaultValue=false)]
+		[Inspectable(name="selected",type="Boolean",defaultValue=false)]
 		public function get selected():Boolean
 		{
 			return _selected;
@@ -231,10 +232,15 @@ package me.rainui.components
 			if (_selected != value)
 			{
 				_selected = value;
-				if(_selected)_state = SELECTED;
+				if (_selected)
+				{
+					_state = SELECTED;
+					sendEvent(RainUIEvent.SELECT);
+				}
 				else _state = NORMAL;
 				callLater(redraw);
 			}
+			sendEvent(RainUIEvent.CHANGE);
 		}
 		
 		protected function get state():String

@@ -17,7 +17,7 @@ package
 	import me.rainssong.utils.Draw;
 	import mx.core.ByteArrayAsset;
 	
-	public class Main extends Sprite
+	public class Circleing extends Sprite
 	{
 		
 		//public const mathSin:Function = Math.sin;
@@ -32,7 +32,7 @@ package
 		private var cos:Number = Math.cos(radian)
 		private var sin:Number = Math.sin(radian)
 		
-		public function Main():void
+		public function Circleing():void
 		{
 			addChild(circle1);
 			circle1.addChild(circle2);

@@ -97,6 +97,12 @@ package me.rainssong.math
  
 			return matrix;
 		}
+		
+		public static function hitTestRect( r1:Rectangle, r2:Rectangle ):Boolean
+		{
+			return r1.top < r2.bottom && r1.bottom > r2.top
+				&& r1.left < r2.right && r1.right > r2.left;
+		}
  
 	}
  

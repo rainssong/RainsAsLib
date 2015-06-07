@@ -1,4 +1,4 @@
-package view 
+package me.rainssong.controls 
 {
 	import flash.display.DisplayObject;
 	import me.rainssong.display.SmartSprite;
@@ -10,14 +10,14 @@ package view
 	 * @timeStamp 2014/1/10 12:02
 	 * @blog http://blog.sina.com.cn/rainssong
 	 */
-	public class NewEllipseMenu extends SmartSprite 
+	public class EllipseMenu extends SmartSprite 
 	{
 		private var _items:Array;
 		private var _radians:Number = 0;
 		public var  a:Number = 300;
 		public var  b:Number = -50;
 		
-		public function NewEllipseMenu(items:Array) 
+		public function EllipseMenu(items:Array) 
 		{
 			super();
 			_items = items;
