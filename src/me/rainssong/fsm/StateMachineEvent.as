@@ -1,4 +1,4 @@
-package stateMachine
+package me.rainssong.fsm
 {
 	import flash.events.Event;
 	

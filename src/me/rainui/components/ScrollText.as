@@ -42,14 +42,12 @@ package me.rainui.components
 			_label.autoSize = false;
 			_label.wordWrap = true;
 			_label.multiline = true;
-			_label.bgSkin.alpha = 0;
+			//_label.bgSkin.alpha = 0;
 			//_label.borderVisible = true;
 			//content = _label;
 			addChild(_label)
-			
-			this.bgSkin = RainUI.getSkin("textInput");
-		
 			super.createChildren();
+			//this.bgSkin.alpha = 0;
 		}
 		
 		override protected function initialize():void 

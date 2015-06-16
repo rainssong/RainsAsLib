@@ -92,11 +92,6 @@
 			return finalObject;
 		}
 		
-		public static function getClassName(target:*):String
-		{
-			return getQualifiedClassName(target).split("::").pop();
-		}
-		
 		public static function getClassPath(target:*):String
 		{
 			return getQualifiedClassName(target).replace(new RegExp("::", "g"), ".");
@@ -111,6 +106,23 @@
 		//return Boolean( StringUtil.toProperType( describeType( target ).attribute( "isDynamic" ) ) );
 		//
 		//}
+		
+		/**
+		 * Get the <code>String</code> name of any <code>Object</code>.
+		 * 
+		 * @param	Obj		The <code>Object</code> object in question.
+		 * @param	Simple	Returns only the class name, not the package or packages.
+		 * 
+		 * @return	The name of the <code>Class</code> as a <code>String</code> object.
+		 */
+		static public function getClassName(Obj:Object,Simple:Boolean=false):String
+		{
+			var string:String = getQualifiedClassName(Obj);
+			string = string.replace("::",".");
+			if(Simple)
+				string = string.substr(string.lastIndexOf(".")+1);
+			return string;
+		}
 		
 		public static function isExtended(target:*, cls:Class):Boolean
 		{

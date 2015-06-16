@@ -91,6 +91,11 @@ package me.rainssong.manager
 			return _isPaused;
 		}
 		
+		public function get timeDelta():Number 
+		{
+			return _timeDelta;
+		}
+		
 	}
 
 }

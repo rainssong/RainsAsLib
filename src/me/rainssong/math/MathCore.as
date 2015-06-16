@@ -218,6 +218,18 @@ package me.rainssong.math
 			return aov[int(aov.length * Math.random())];
 		}
 		
+		/**
+		 * Generates a random number based on the seed provided.
+		 * 
+		 * @param	Seed	A number between 0 and 1, used to generate a predictable random number (very optional).
+		 * 
+		 * @return	A <code>Number</code> between 0 and 1.
+		 */
+		static public function srand(Seed:Number):Number
+		{
+			return ((69621 * int(Seed * 0x7FFFFFFF)) % 0x7FFFFFFF) / 0x7FFFFFFF;
+		}
+		
 		public static function isEven(number:Number):Boolean
 		{
 			

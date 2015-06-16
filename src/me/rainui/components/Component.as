@@ -37,6 +37,7 @@
 		protected var _bgSkin:DisplayObject;
 		
 		protected var _dataSource:Object;
+		public static var defaultData:Object;
 		
 		public function Component(dataSource:Object=null)
 		{
@@ -426,8 +427,6 @@
 		{
 			target.addChild(this);
 		}
-		
-		
 	
 	}
 }

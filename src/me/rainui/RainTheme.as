@@ -58,8 +58,8 @@ package me.rainui
 		public function init():void
 		{
 			//_configDic
-			//_skinDic["darkBlueRoundSkin"] = darkBlueRoundSkinFactory;
-			//_skinDic["darkBlueRoundFlatSkin"] = darkBlueRoundFlatSkinFactory;
+			_skinDic["darkBlueRoundSkin"] = darkBlueRoundSkinFactory;
+			_skinDic["darkBlueRoundFlatSkin"] = darkBlueRoundFlatSkinFactory;
 			_skinDic["textInput"] = whiteRoundSkinFactory;
 			_skinDic["list"] = whiteFlatSkinFactory;
 			_skinDic["listItem"] = blueSkinFactory;

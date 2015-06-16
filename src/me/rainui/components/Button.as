@@ -13,6 +13,7 @@ package me.rainui.components
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.geom.Rectangle;
+	import flash.media.Sound;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	import me.rainssong.manager.SystemManager;
@@ -40,6 +41,15 @@ package me.rainui.components
 		static public const HOVER:String = "hover";
 		static public const NORMAL:String = "normal";
 		static public const DISABLED:String = "disabled";
+		public var clickHandler:Function;
+		public var upHandler:Function;
+		public var downHandler:Function;
+		public var overHandler:Function;
+		public var outHandler:Function;
+		public var soundOver:Sound;
+		public var soundDown:Sound;
+		public var soundUp:Sound;
+		public var soundOut:Sound;
 		
 		protected var _label:Label;
 		protected var _normalSkin:DisplayObject;
@@ -51,7 +61,6 @@ package me.rainui.components
 		
 		protected var _showIcon:Boolean = false;
 		
-		protected var _handler:Function
 		//protected var _labelColors:Array = Styles.buttonLabelColors;
 		//protected var _labelMargin:Array = Styles.buttonLabelMargin;
 		//protected var _showLabel:Boolean = true;
@@ -122,6 +131,17 @@ package me.rainui.components
 		
 		override protected function initialize():void
 		{
+			clickHandler = null;
+			upHandler = null;
+			downHandler = null;
+			outHandler = null;
+			overHandler = null;
+			
+			soundOver = null;
+			soundOut = null;
+			soundDown = null;
+			soundUp = null;
+			
 			addEventListener(MouseEvent.ROLL_OVER, onRollOver);
 			addEventListener(MouseEvent.ROLL_OUT, onRollOut);
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -186,8 +206,8 @@ package me.rainui.components
 			{
 				selected = !_selected;
 			}
-			if (_handler!=null)
-				_handler();
+			if (clickHandler!=null)
+				clickHandler();
 			//}
 			//sendEvent(Event.SELECT);
 		}
@@ -211,14 +231,6 @@ package me.rainui.components
 		   callLater(changeLabelSize);
 		   }
 		 }*/
-		
-		protected function changeLabelSize():void
-		{
-			//label.width = width - _label.left - _label.right;
-			//label.height = ObjectUtils.getTextField(label.format).height;
-			//label.x = _label.left;
-			//label.y = (height - _label.height) * 0.5 + _label.top - _label.bottom;
-		}
 		
 		/**是否是选择状态*/
 		[Inspectable(name="selected",type="Boolean",defaultValue=false)]
@@ -324,7 +336,7 @@ package me.rainui.components
 		public function set labelFont(value:String):void
 		{
 			_label.font = value
-			callLater(changeLabelSize);
+			callLater(redraw);
 		}
 		
 		/**按钮标签描边(格式:color,alpha,blurX,blurY,strength,quality)*/
@@ -347,7 +359,7 @@ package me.rainui.components
 		public function set labelSize(value:Object):void
 		{
 			_label.size = value
-			callLater(changeLabelSize);
+			callLater(redraw);
 		}
 		
 		/**按钮标签粗细*/
@@ -359,7 +371,7 @@ package me.rainui.components
 		public function set labelBold(value:Object):void
 		{
 			_label.bold = value
-			callLater(changeLabelSize);
+			callLater(redraw);
 		}
 		
 		/**字间距*/
@@ -371,7 +383,7 @@ package me.rainui.components
 		public function set letterSpacing(value:Object):void
 		{
 			_label.letterSpacing = value
-			callLater(changeLabelSize);
+			callLater(redraw);
 		}
 		
 		/**点击处理器(无默认参数)*/
@@ -430,7 +442,7 @@ package me.rainui.components
 			{
 				//_bitmap.height = value;
 			}
-			callLater(changeLabelSize);
+			callLater(redraw);
 		}
 		
 		public function set text(value:String):void

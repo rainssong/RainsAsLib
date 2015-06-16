@@ -61,7 +61,7 @@ package me.rainui.components
 			if (_bgSkin == null)
 			{
 				var shape:Shape = new Shape();
-				Draw.rect(shape, 0, 0, 100, 100,RainTheme.WHITE);
+				//Draw.rect(shape, 0, 0, 100, 100,RainTheme.WHITE);
 				_bgSkin = shape;
 			}
 			//else

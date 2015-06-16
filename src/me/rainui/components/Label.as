@@ -42,10 +42,7 @@ package me.rainui.components
 			mouseEnabled = false;
 			mouseChildren = true;
 			
-			//if (RainUI.theme)
-					_format = RainUI.getTextFormat("label");
-				//else
-					//_format = new TextFormat("微软雅黑", 24, 0, null, null, null, null, null, TextFormatAlign.CENTER);
+			_format = RainUI.getTextFormat("label");
 			
 			_width = 200;
 			_height = 60;
@@ -76,6 +73,7 @@ package me.rainui.components
 		override protected function initialize():void
 		{
 			textField.defaultTextFormat = _format;
+			//textField.setTextFormat(_format);
 			textField.selectable = false;
 			callLater(resize);
 		}
@@ -83,17 +81,18 @@ package me.rainui.components
 		/**显示的文本*/
 		public function get text():String
 		{
-			if(textField)
-				return textField.text;
-			else
-				return "";
+			//if(textField)
+				//return textField.text;
+			//else
+			return _text;
 		}
 		
 		public function set text(value:String):void
 		{
 			if (text != value)
 			{
-				textField.text = value;
+				_text = value;
+				//textField.text = value;
 				callLater(redraw);
 				sendEvent(Event.CHANGE);
 			}
@@ -110,8 +109,10 @@ package me.rainui.components
 			if (textField)
 			{
 				textField.defaultTextFormat = _format;
-				textField.setTextFormat(_format);
+				//textField.setTextFormat(_format);
 			}
+			
+			textField.htmlText = _text;
 			
 			super.redraw();
 		}
@@ -274,7 +275,8 @@ package me.rainui.components
 		public function set color(value:Object):void
 		{
 			_format.color = value;
-			callLater(redraw);
+			//redraw();
+			callLater(redraw)
 		}
 		
 		/**字体类型*/
@@ -286,7 +288,9 @@ package me.rainui.components
 		public function set font(value:String):void
 		{
 			_format.font = value;
+			textField.defaultTextFormat = _format;
 			callLater(redraw);
+			//redraw();
 		}
 		
 		/**对齐方式*/
@@ -368,6 +372,7 @@ package me.rainui.components
 		{
 			_format.size = value;
 			callLater(redraw);
+			//redraw();
 		}
 		
 		/**下划线类型*/
@@ -428,6 +433,18 @@ package me.rainui.components
 		
 		/* DELEGATE flash.text.TextField */
 		
+		public function getTextFormat(beginIndex:int = -1, endIndex:int = -1):flash.text.TextFormat 
+		{
+			return textField.getTextFormat(beginIndex, endIndex);
+		}
+		
+		public function setTextFormat(format:TextFormat, beginIndex:int = -1, endIndex:int = -1):void 
+		{
+			textField.setTextFormat(format, beginIndex, endIndex);
+		}
+		
+		/* DELEGATE flash.text.TextField */
+		
 		public function get embedFonts():Boolean 
 		{
 			return textField.embedFonts;
@@ -447,7 +464,13 @@ package me.rainui.components
 		
 		public function set htmlText(value:String):void 
 		{
-			textField.htmlText = value;
+			if (textField.htmlText != value)
+			{
+				//textField.htmlText = value;
+				_text = value;
+				sendEvent(Event.CHANGE);
+				callLater(redraw);
+			}
 		}
 		
 		/**皮肤*/

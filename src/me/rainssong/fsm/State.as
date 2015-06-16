@@ -1,4 +1,4 @@
-package stateMachine
+package me.rainssong.fsm
 {
 	public class State
 	{
