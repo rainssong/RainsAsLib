@@ -82,7 +82,7 @@ package me.rainui.managers
 			//if (indexs.length <_min)
 				//btn.selected = true;
 				
-			dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, _index));
+			//dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, _index));
 		}
 	
 	}

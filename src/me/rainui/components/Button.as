@@ -248,11 +248,16 @@ package me.rainui.components
 				{
 					_state = SELECTED;
 					sendEvent(RainUIEvent.SELECT);
+					
 				}
-				else _state = NORMAL;
+				else
+				{
+					_state = NORMAL;
+				}
+				sendEvent(RainUIEvent.CHANGE);
 				callLater(redraw);
 			}
-			sendEvent(RainUIEvent.CHANGE);
+			
 		}
 		
 		protected function get state():String

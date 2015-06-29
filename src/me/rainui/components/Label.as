@@ -31,7 +31,7 @@ package me.rainui.components
 		//protected var _bitmap:AutoBitmap;
 		protected var _margin:Array = [0, 0, 0, 0];
 		
-		public function Label(text:String = "", dataSource:Object = null)
+		public function Label(text:String = "Label", dataSource:Object = null)
 		{
 			super(null,dataSource)
 			this.text = text;
@@ -81,9 +81,6 @@ package me.rainui.components
 		/**显示的文本*/
 		public function get text():String
 		{
-			//if(textField)
-				//return textField.text;
-			//else
 			return _text;
 		}
 		

@@ -34,6 +34,7 @@ package
 			
 			//ta = new TextArea("123456\rkkkkkkk\r我日我日我日我日我日我日我日我日我日我日我日\rasdfghjklqwertyuiop", { parent:stage } );
 			new ScrollText("123456\rkkkkkkk\r我日我日我日我日我日我日我日我日我日我日我日\rasdfghjklqwertyuiop", { parent:stage } );
+			new TextArea("123456\rkkkkkkk\r我日我日我日我日我日我日我日我日我日我日我日\rasdfghjklqwertyuiop", { parent:stage,x:300 } );
 			//new ScrollContainer(null, { parent:stage } );
 			//var _textInput:TextInput = new TextInput("123");
 			//_textInput.width = 300;

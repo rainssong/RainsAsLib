@@ -42,6 +42,8 @@ package me.rainui.components
 		
 		protected var _btnGroup:RadioGroup 
 		
+		protected var _labelField:String = "";
+		
 		public function List(items:* = null, dataSource:Object = null)
 		{
 			super(null,dataSource);
@@ -215,7 +217,10 @@ package me.rainui.components
 				for (var i:int = 0; i < _items.length; i++)
 				{
 					var c:ListItem = getItemView();
-					c.text=String(_items.getItemAt(i)), _items.getItemAt(i);
+					if (_labelField)
+						c.text = String(_items.getItemAt(i)[_labelField]);
+					else
+						c.text = String(_items.getItemAt(i));
 					c.dataSource=_items.getItemAt(i);
 					addChild(c);
 					c.y = _cellSize * i;
@@ -535,6 +540,16 @@ package me.rainui.components
 		public function get btnGroup():RadioGroup 
 		{
 			return _btnGroup;
+		}
+		
+		public function get labelField():String 
+		{
+			return _labelField;
+		}
+		
+		public function set labelField(value:String):void 
+		{
+			_labelField = value;
 		}
 		
 		//override public function commitMeasure():void

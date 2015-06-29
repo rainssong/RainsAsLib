@@ -1,6 +1,8 @@
 package
 {
+	import com.bit101.components.Window;
 	import flash.display.Sprite;
+	import flash.geom.Vector3D;
 	import flash.utils.getTimer;
 	import flash.utils.setTimeout;
 	import me.rainssong.utils.functionTiming;
@@ -14,9 +16,14 @@ package
 		
 		public function Main():void
 		{
-			
+			var pc:PieCircle=new PieCircle()
+			addChild(pc);
+			pc.init(300);
+			pc.setDegree(50)
+			pc.y = 300;
+			pc.x = 300;
 		}
-	
+		
 	}
-
 }
+	

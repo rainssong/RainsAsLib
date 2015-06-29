@@ -28,6 +28,7 @@ package me.rainui.managers
 		//private var _index:int = -1;
 		protected var _max:int = 3;
 		protected var _min:int = 0;
+		protected var _indices:Vector.<int> = new Vector.<int>;
 		
 		public function ToggleGroup()
 		{
@@ -82,36 +83,7 @@ package me.rainui.managers
 			}
 		}
 		
-		//public function get index():int
-		//{
-			//return _index;
-		//}
-		//
-		//public function set index(value:int):void
-		//{
-			//
-			//if (_index == value)
-			//{
-				//return;
-			//}
-			//else
-			//{
-				//_index = value;
-				//for (var i:int = 0; i < _btnVec.length; i++)
-				//{
-					//var btn:Button = _btnVec[i];
-					//if (i == _index)
-						//btn.selected = true;
-					//else
-						//btn.selected = false;
-				//}
-				//dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, value));
-			//}
-			//
-			//dispatchEvent(new RainUIEvent(RainUIEvent.SELECT, value));
-		//}
-		
-		public function get indexs():Vector.<int>
+		public function get indices():Vector.<int>
 		{
 			var arr:Vector.<int> = new Vector.<int>();
 			for (var i:int = 0; i < btnVec.length; i++) 
@@ -122,7 +94,7 @@ package me.rainui.managers
 			return arr;
 		}
 		
-		public function set indexs(vec:Vector.<int>):void
+		public function set indices(vec:Vector.<int>):void
 		{
 			for (var i:int = 0; i < vec.length; i++) 
 			{
@@ -153,17 +125,17 @@ package me.rainui.managers
 		protected function onChange(e:RainUIEvent):void
 		{
 			var btn:Button = e.currentTarget as Button;
-			if (indexs.length > _max)
+			if (indices.length > _max)
 				btn.selected = false;
-			if (indexs.length <_min)
+			if (indices.length <_min)
 				btn.selected = true;
 				
-			dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, indexs));
+			//dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, indices));
 		}
 		
 		protected function onSelect(e:RainUIEvent):void
 		{
-			dispatchEvent(new RainUIEvent(RainUIEvent.SELECT, e.data));
+			//dispatchEvent(new RainUIEvent(RainUIEvent.SELECT, e.data));
 		}
 		
 		public function select(i:int):void

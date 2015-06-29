@@ -25,7 +25,7 @@ package me.rainui.components
 	{
 		//static public var defaultBgSkinRender:Function = getDefaultBgSkin;
 		
-		public function TextInput(text:String = "", dataSource:Object = null)
+		public function TextInput(text:String = "textInput", dataSource:Object = null)
 		{
 			super(text, dataSource);
 		}
@@ -53,6 +53,7 @@ package me.rainui.components
 			super.initialize();
 			
 			selectable = true;
+			editable = true;
 			textField.type = TextFieldType.INPUT;
 			//textField.autoSize = TextFieldAutoSize.LEFT;
 			_contentAlign = Align.LEFT;
@@ -81,6 +82,7 @@ package me.rainui.components
 		protected function onTextFieldChange(e:Event):void
 		{
 			callLater(redraw);
+			_text = textField.text;
 			sendEvent(Event.CHANGE);
 		}
 		

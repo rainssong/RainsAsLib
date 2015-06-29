@@ -183,9 +183,14 @@ package   me.rainssong.math
 			return Vector.<*>(array);
 		}
 		
-		public static function isVector(obj:*):Boolean
+		//public static function isVector(obj:*):Boolean
+		//{
+			//return obj.constructor.toString().search("Vector") >= 0;
+		//}
+		
+		public static function isVector(value:*):Boolean
 		{
-			return obj.constructor.toString().search("Vector") >= 0;
+			return value && (value is Vector.<*> || value is Vector.<int> || value is Vector.<uint> || value is Vector.<Number>);
 		}
 		
 		public static function fillWith(aov:*, element:*, transfer:Boolean = true , params:Array=null ):void

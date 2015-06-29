@@ -32,6 +32,11 @@ package me.rainui.components
 				this.content = content;
 		}
 		
+		override protected function onParentResize(param0:Event):void 
+		{
+			super.onParentResize(param0);
+		}
+		
 		override protected function preinitialize():void 
 		{
 			super.preinitialize();
@@ -90,8 +95,8 @@ package me.rainui.components
 				case ScaleMode.NONE:
 					break;
 				case ScaleMode.EXACT_FIT: 
-					_content.width = _width;
-					_content.height = _height;
+					_content.scaleX = _scaleX;
+					_content.scaleY = _scaleY;
 					break;
 				case ScaleMode.FULL_FILL: 
 					_content.scaleX = _content.scaleY = maxScale;

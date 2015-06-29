@@ -8,6 +8,7 @@ package
 	import me.rainui.components.List;
 	import me.rainui.components.ListItem;
 	import me.rainui.components.Page;
+	import me.rainui.events.RainUIEvent;
 	import me.rainui.RainTheme;
 	import me.rainui.RainUI;
 	
@@ -30,7 +31,13 @@ package
 			
 			list = new List(["1", "2", "3", "44444", "55555", "66666"], { parent:stage } );
 			list.itemRender = ir;
-			list.btnGroup.max = 3;
+			list.btnGroup.max = 1;
+			list.addEventListener(RainUIEvent.CHANGE, onChange);
+		}
+		
+		private function onChange(e:RainUIEvent):void 
+		{
+			powerTrace("change");
 		}
 		
 		public function ir():ListItem
