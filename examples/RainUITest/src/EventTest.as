@@ -31,7 +31,7 @@ package
 	public class EventTest extends Sprite
 	{
 		
-		[Embed(source = "../../../assets/rain_logo.png")]
+		[Embed(source="../../../embeds/rain_logo.png")]
 		public var logoClass:Class;
 		
 		public function EventTest():void

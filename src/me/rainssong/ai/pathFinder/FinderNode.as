@@ -1,5 +1,6 @@
-package model 
+package me.rainssong.ai.pathFinder 
 {
+	import model.Node;
 	/**
 	 * ...
 	 * @author Rainssong

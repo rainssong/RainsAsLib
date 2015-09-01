@@ -16,6 +16,8 @@ package  me.rainWorld.concept.physics
 		public var width:Number=100;
 		public var height:Number = 100;
 		public var length:Number = 100;
+		public var gravity:Number = 98;
+		
 		public const contents:Array = [];
 		
 		public function SpaceModel() 
@@ -35,6 +37,7 @@ package  me.rainWorld.concept.physics
 			contents.splice(index, 1);
 			content.environment = null;
 		}
+		
 	}
 
 }

@@ -207,7 +207,7 @@ package me.rainui.components
 				selected = !_selected;
 			}
 			if (clickHandler!=null)
-				clickHandler();
+				clickHandler(e);
 			//}
 			//sendEvent(Event.SELECT);
 		}

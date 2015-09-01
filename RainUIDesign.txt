@@ -1,5 +1,8 @@
 Todo:
-	检查calcSize和resize顺序问题
+	让RainUI自带Render
+	目前文字大小的获取有问题:如果不是noscale模式,那么通过分辨率计算出的字体大小不准确
+	由Theme给组件提供默认数据,组件不再从theme处获取。
+	ScrollContainer增加不足居中的选项（超载分为leftrightupbottom）
 
 工作流：
 创建组件
@@ -56,4 +59,6 @@ Image：
 1pt=Math.floor(96/72pixel)
 
 2015-04-27
-最优雅的方案还是侦听stage进行render触发
+最优雅的方案还是侦听stage进行render触发,
+
+2015-07-18

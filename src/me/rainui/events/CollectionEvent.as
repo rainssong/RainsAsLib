@@ -14,7 +14,7 @@ package me.rainui.events
 	 * take advantage of the Starling's event object pooling. The object passed
 	 * to an event listener will be of type <code>starling.events.Event</code>.
 	 */
-	public class CollectionEvent
+	public class CollectionEvent extends RainUIEvent
 	{
 		/**
 		 * Dispatched when the data provider's source is completely replaced.

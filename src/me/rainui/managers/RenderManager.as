@@ -1,4 +1,6 @@
 ﻿package me.rainui.managers {
+	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.utils.Dictionary;
 	import me.rainssong.utils.Handler;
@@ -18,20 +20,23 @@
 		//private var _handlers:Array.<Function> = [];
 		private var _handlerDic:Dictionary = new Dictionary();
 		
+		private var _renderED:DisplayObject = new Sprite();
+		
 		private function invalidate():void {
-			RainUI.stage.addEventListener(Event.RENDER, onValidate);
+			_renderED.addEventListener(Event.RENDER, onValidate);
 			//render有一定几率无法触发，这里加上保险处理
-			RainUI.stage.addEventListener(Event.ENTER_FRAME, onValidate);
-			if (RainUI.stage) {
+			_renderED.addEventListener(Event.ENTER_FRAME, onValidate);
+			if (RainUI.stage) 
+			{
 				RainUI.stage.invalidate();
 			}
 		}
 		
 		private function onValidate(e:Event):void {
-			RainUI.stage.removeEventListener(Event.RENDER, onValidate);
-			RainUI.stage.removeEventListener(Event.ENTER_FRAME, onValidate);
+			_renderED.removeEventListener(Event.RENDER, onValidate);
+			_renderED.removeEventListener(Event.ENTER_FRAME, onValidate);
 			renderAll();
-			RainUI.stage.dispatchEvent(new Event(RainUIEvent.RENDER_COMPLETED));
+			_renderED.dispatchEvent(new Event(RainUIEvent.RENDER_COMPLETED));
 		}
 		
 		/**执行所有延迟调用*/
@@ -62,6 +67,20 @@
 		public function clearCallLater(method:Function):void {
 			if (_handlerDic[method] != null) {
 				delete _handlerDic[method];
+			}
+		}
+		
+		public function get renderED():DisplayObject 
+		{
+			return _renderED;
+		}
+		
+		public function set renderED(value:DisplayObject):void 
+		{
+			if (_renderED)
+			{
+				_renderED.removeEventListener(Event.RENDER, onValidate);
+				_renderED.removeEventListener(Event.ENTER_FRAME, onValidate);
 			}
 		}
 	}

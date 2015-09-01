@@ -25,7 +25,7 @@ package me.rainssong.manager
 			_so.flush();
 		}
 		
-		flash_proxy function setData(name:*, value:*):void 
+		public function setData(name:*, value:*):void 
 		{
 			_so.data[name] = value;
 			_so.flush();
@@ -36,7 +36,7 @@ package me.rainssong.manager
 			return _so.data[name] ;
 		}
 		 
-		flash_proxy function getData(name:*):* 
+		public function getData(name:*):* 
 		{
 			return _so.data[name] ;
 		}

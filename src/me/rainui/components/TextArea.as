@@ -41,6 +41,13 @@ package me.rainui.components
 			textField.addEventListener(Event.SCROLL, onTextFieldScroll);
 		}
 		
+		override public function resize():void 
+		{
+			super.resize();
+			textField.height = _height;
+			textField.width = _width;
+		}
+		
 		private function onTextFieldScroll(e:Event):void 
 		{
 			

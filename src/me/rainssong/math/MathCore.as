@@ -104,11 +104,11 @@ package me.rainssong.math
 		 * @param	cycle
 		 * @return
 		 */
-		public static function getCycledNumber(number:Number, a:Number, b:Number = 0):Number
+		public static function getCycledNumber(number:Number, a:Number, b:Number = 0, includeB:Boolean = false ):Number
 		{
 			var min:Number = Math.min(a, b);
 			var max:Number = Math.max(a, b);
-			var distance:Number = max - min;
+			var distance:Number = max - min+includeB;
 			var value:Number = number % distance;
 			while (value < min)
 				value += distance;

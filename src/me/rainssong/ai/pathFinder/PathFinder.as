@@ -1,4 +1,4 @@
-package model 
+package me.rainssong.ai.pathFinder 
 {
 	import flash.geom.Point;
 	import flash.utils.Dictionary;

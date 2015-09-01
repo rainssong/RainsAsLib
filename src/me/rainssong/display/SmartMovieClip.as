@@ -15,7 +15,7 @@
 	{
 		private var _autoDestroy:Boolean = true;
 		public var autoDisable:Boolean = true;
-		private var _listenerArr:Vector.<Array>;
+		private var _listenerArr:Vector.<Array >=new Vector.<Array >   ;
 		private var _isEnable:Boolean = true;
 		
 		
@@ -83,6 +83,13 @@
 			removeChildren();
 			
 			if (!autoDestroy && parent) parent.removeChild(this);
+		}
+		
+		public function remove():void
+		{
+			if (! parent)
+				return;
+			parent.removeChild(this);
 		}
 		
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 

@@ -41,6 +41,11 @@ package me.rainui.components
 				_bgSkin = RainUI.getSkin("progressBarBg");
 				addChild(_bgSkin)
 			}
+			else
+			{
+				_width = _bgSkin.width;
+				_height = _bgSkin.height;
+			}
 			if (_barContainer == null)
 			{
 				_barContainer = new DisplayResizer();
@@ -66,7 +71,7 @@ package me.rainui.components
 				addChild(_label);
 			}
 			
-			callLater(redraw);
+			callLater(calcSize);
 		}
 		
 		override public function redraw():void 

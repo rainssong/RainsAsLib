@@ -62,8 +62,10 @@ package me.rainui
 			_skinDic["darkBlueRoundFlatSkin"] = darkBlueRoundFlatSkinFactory;
 			_skinDic["textInput"] = whiteRoundSkinFactory;
 			_skinDic["list"] = whiteFlatSkinFactory;
-			_skinDic["listItem"] = blueSkinFactory;
 			_skinDic["bg"] = whiteFlatSkinFactory;
+			_skinDic["component"] = whiteFlatSkinFactory;
+			_skinDic["listItem"] = blueSkinFactory;
+			
 			_skinDic["progressBar"] = blueFlatSkinFactory;
 			_skinDic["progressBarBg"] = darkGrayFlatSkinFactory;
 			_skinDic["buttonNormal"] = blueSkinFactory;
@@ -121,8 +123,9 @@ package me.rainui
 				default: 
 					tf = ObjectCore.clone(whiteTextFormat);
 			}
-			var l:Number = Math.min(RainUI.stageHeight, RainUI.stageWidth);
-			tf.size = MathCore.floor(l / 20);
+			//var l:Number = Math.min(RainUI.stageHeight, RainUI.stageWidth);
+			//tf.size = MathCore.floor(l / 20);
+			tf.size = 24;
 			return tf;
 		}
 		

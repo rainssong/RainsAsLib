@@ -19,8 +19,13 @@ package me.rainssong.events
 		static public const RESUME:String = "resume";
 		static public const PAUSE:String = "pause";
 		static public const REPLAY:String = "replay";
+		
 		static public const LOAD_COMPLETE:String = "loadComplete";
 		static public const SAVE_COMPLETE:String = "saveComplete";
+		
+		static public const WIN:String = "win";
+		static public const LOSE:String = "lose";
+		static public const NEXT_LEVEL:String = "nextLevel";
 	
 		
 		public function GameEvent(type:String,data:*=null, bubbles:Boolean = false, cancelable:Boolean = false)

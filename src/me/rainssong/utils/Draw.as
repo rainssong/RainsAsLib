@@ -177,9 +177,7 @@ package me.rainssong.utils
 				return true;
 			}
 			else
-			{
 				return false;
-			}
 		}
 		
 		static public function spriteBmp(bmd:BitmapData, scale:Number = 1, x:Number = 0, y:Number = 0):Sprite

@@ -8,7 +8,7 @@ package me.rainui {
 	public class Config {
 		//------------------静态配置------------------		
 		/**游戏帧率*/
-		public static var GAME_FPS:int = 50;
+		public static var GAME_FPS:int = 60;
 		/**动画默认播放间隔*/
 		public static var MOVIE_INTERVAL:int = 100;
 		//------------------动态配置------------------

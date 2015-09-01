@@ -58,7 +58,8 @@
 		{
 			if (_bgSkin == null)
 			{
-				_bgSkin = new Shape();
+				_bgSkin = RainUI.getSkin("bg");
+				_bgSkin.visible = false;
 			}
 			addChildAt(_bgSkin,0);
 		}
@@ -175,7 +176,7 @@
 			//}
 			//
 			//return max;
-			return this.getBounds(this).width
+			return this.getBounds(this).width*scaleX;
 		}
 		
 		
@@ -224,7 +225,7 @@
 				//}
 			//}
 			//return max;
-			return this.getBounds(this).height;
+			return this.getBounds(this).height*scaleY;
 		}
 		
 		
@@ -232,13 +233,13 @@
 		override public function set scaleX(value:Number):void
 		{
 			super.scaleX = value;
-			//callLater(resize);
+			sendEvent(Event.RESIZE);
 		}
 		
 		override public function set scaleY(value:Number):void
 		{
 			super.scaleY = value;
-			//callLater(resize);
+			sendEvent(Event.RESIZE);
 		}
 		
 		public function set scaleXY(value:Number):void

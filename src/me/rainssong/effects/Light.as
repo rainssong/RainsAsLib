@@ -1,4 +1,4 @@
-﻿package com.kerry.effect {
+﻿package me.rainssong.effects {
 	import flash.display.Sprite;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

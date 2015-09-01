@@ -17,6 +17,9 @@ package  me.rainWorld.entity
 		//内部的数据
 		public var position:Vector3D = new Vector3D();
 		public var speed:Vector3D = new Vector3D();
+		public var velocity:Vector3D = new Vector3D();
+		public var angSpeed:Number = 0;
+		public var rotation:Number = 0;
 		public var width:Number=0;
 		public var height:Number = 0;
 		public var length:Number = 0;

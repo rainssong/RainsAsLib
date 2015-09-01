@@ -53,10 +53,14 @@ package me.rainui.components
 			//_container = new Container();
 			_container.percentWidth = 1;
 			_container.percentHeight = 1;
-			super.addChild(_container);
+			addChild(_container);
 			
 			if (_content)
-				addChild(_content);
+			{
+				addContent(_content);
+				this._width = _content.width;
+				this._height = _content.height;
+			}
 			
 			if (_bgSkin == null)
 			{
@@ -90,6 +94,8 @@ package me.rainui.components
 				onDrag();
 			else
 				offDrag();
+				
+			//powerTrace(_container.x, _container.y);
 		}
 		
 		public function onDrag():void 
@@ -106,6 +112,7 @@ package me.rainui.components
 			
 			var _overloadY:Number = overloadY;
 			var _overloadX:Number = overloadX;
+			
 			//var rect:Rectangle = _container.scrollRect;
 			//rect.y += _speedX;
 			//rect.x += _speedX;
@@ -131,6 +138,7 @@ package me.rainui.components
 			var _overloadY:Number = overloadY;
 			var _overloadX:Number = overloadX;
 			
+			//powerTrace(_overloadX.toFixed(0),_overloadY.toFixed(0));
 			
 			if (_overloadY!=0)
 			{
@@ -208,14 +216,19 @@ package me.rainui.components
 		}
 		
 		
-		override public function addChild(child:DisplayObject):DisplayObject 
-		{
-			_container.addChild(child);
+		//override public function addChild(child:DisplayObject):DisplayObject 
+		//{
+			//_container.addChild(child);
 			//var rect:Rectangle = _container.getRect(this);
-			return child;
+			//return child;
+		//}
+		
+		public function addContent(child:DisplayObject):DisplayObject
+		{
+			return _container.addChild(child);
 		}
 		
-		override public function removeChild(child:DisplayObject):DisplayObject 
+		public function removeContent(child:DisplayObject):DisplayObject 
 		{
 			return _container.removeChild(child);
 		}
@@ -224,32 +237,32 @@ package me.rainui.components
 		{
 			if (_container.x < 0 && _container.contentWidth+_container.x <_width)
 			{
-				return Math.max(_container.contentWidth+_container.x - _height,_container.x);
+				return Math.max(_container.contentWidth+_container.x - _width,_container.x);
 			}
-			if (_container.x >0)
+			if (_container.x >0 && _container.contentWidth+_container.x >_width)
 			{
-				return _container.x;
+				return Math.min(_container.contentWidth+_container.x - _width,_container.x);
 			}
-			else 
-				return 0;
+			
+				
+			return 0;
 		}
 		
 		public function get overloadY():Number
 		{
 			if (_container.y < 0 && _container.contentHeight+_container.y <_height)
 			{
-				return Math.max(_container.contentHeight+_container.y - _height,_container.y);
+				return Math.max(_container.contentHeight+_container.y -_height ,_container.y);
 			}
-			//if (_container.y >0 && _container.height+_container.y>_height)
-			//{
-				//return Math.min(_container.height+_container.y - _height,_container.y);
-			//}
-			if (_container.y >0)
+			if (_container.y >0 && _container.contentHeight+_container.y >_height)
 			{
-				return _container.y;
+				return Math.min(_container.contentHeight+_container.y -_height ,_container.y);
 			}
-			else 
-				return 0;
+			
+			
+			return 0;
+				
+			
 		}
 		
 		public function get content():DisplayObject 
@@ -264,15 +277,15 @@ package me.rainui.components
 			if (_content != value)
 			{
 				if (_content != null && _content.parent)
-					removeChild(_content)
+					removeContent(_content)
 			}
 			_content = value;
-			addChild(_content);
+			addContent(_content);
 		}
 		
-		override public function showBorder(color:uint = 0xff0000,conetntColor:int = -1):void 
+		public function get container():Container 
 		{
-			super.showBorder()
+			return _container;
 		}
 		
 		override public function resize():void 

@@ -146,7 +146,6 @@
 			{
 				return null;
 			}
-			
 			registerClassAlias(className, cls);
 			bytes.writeObject(source);
 			bytes.position = 0;
@@ -177,6 +176,18 @@
 			}
 			
 			return true;
+		}
+		
+		static public function setParams(fromObj:Object, toObj:Object):Object
+		{
+			for (var prop:String in fromObj)
+			{
+				if (toObj.hasOwnProperty(prop))
+				{
+					toObj[prop] = fromObj[prop];
+				}
+			}
+			return toObj;
 		}
 	}
 }

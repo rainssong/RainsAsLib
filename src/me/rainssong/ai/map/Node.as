@@ -1,4 +1,4 @@
-package model 
+package me.rainssong.ai.map 
 {
 	/**
 	 * ...
@@ -16,6 +16,18 @@ package model
 			this.y = y;
 		}
 		
+		public function equal(node:Node):Boolean
+		{
+			if (x == node.x && y == node.y)
+			return true;
+			else
+			return false;
+		}
+		
+		public function clone():Node
+		{
+			return new Node(x, y);
+		}
 	}
 
 }

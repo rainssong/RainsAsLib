@@ -2,7 +2,7 @@
  * Morn UI Version 2.2.0707 http://www.mornui.com/
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
-package morn.core.utils {
+package me.rainui.utils {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;

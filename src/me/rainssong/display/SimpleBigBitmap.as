@@ -15,7 +15,7 @@ package me.rainssong.display
 	 * 简单的无尺寸限制的位图。不支持缩放。
 	 * 由多张位图拼接而成。
 	 */
-	public class SimpleBigBitmap extends Sprite implements IDestroy
+	public class SimpleBigBitmap extends Sprite
 	{
 		public static const CELL_SIZE:int = 2880;
 		

@@ -10,6 +10,7 @@ package me.rainssong.application
 	import flash.system.Capabilities;
 	import flash.utils.getDefinitionByName;
 	import me.rainssong.manager.SharedObjectProxy;
+	import me.rainssong.manager.SystemManager;
 	import me.rainssong.system.SystemCore;
 
 
@@ -18,10 +19,12 @@ package me.rainssong.application
  */
 	public class ApplicationManager
 	{
-		static public const NORMAL_EDITION:String = "normalEdition";
-		static public const AIR_DESKTOP_EDITION:String = "airDesktopEdition";
-		static public const AIR_MOBILE_EDITION:String = "airMobileEdition";
-		static public const TEST_EDITION:String = "testEdition";
+		static public const NORMAL_EDITION:String = "NormalEdition";
+		static public const DESKTOP_EDITION:String = "DesktopEdition";
+		static public const MOBILE_EDITION:String = "MobileEdition";
+		static public const TEST_EDITION:String = "TestEdition";
+		static public const ALPHA_EDITION:String = "AlphaEdition";
+		static public const BETA_EDITION:String = "BetaEdition";
 		
 		public static var edition:String = NORMAL_EDITION;
 		static private var inited:Boolean = false;
@@ -29,6 +32,8 @@ package me.rainssong.application
 		public static var stage:Stage
 		public static var stageWidth:Number = 0;
 		public static var stageHeight:Number = 0;
+		
+		protected static var _version:String = "1.0";
 		
 		
 		public static function init(stage:Stage):void
@@ -56,6 +61,8 @@ package me.rainssong.application
 		static public function set fullScreen(value:Boolean):void
 		{
 			if (value == fullScreen)
+				return;
+			if (SystemManager.isWebPlayer)
 				return;
 			if(value)
 				stage.displayState  = StageDisplayState.FULL_SCREEN_INTERACTIVE;
@@ -95,6 +102,16 @@ package me.rainssong.application
 		public static function get STANDALONE_PLAYER():Boolean 
 		{
 			return Capabilities.playerType == "External" || Capabilities.playerType == "StandAlone";
+		}
+		
+		static public function get version():String 
+		{
+			return _version;
+		}
+		
+		static public function set version(value:String):void 
+		{
+			_version = value;
 		}
 		
 		public static function isNewVersion(newVer:String = "1.0", oldVer:String = ""):Boolean

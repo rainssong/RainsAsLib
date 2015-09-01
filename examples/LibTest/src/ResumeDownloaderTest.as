@@ -17,10 +17,10 @@ package
 	 * ...
 	 * @author rainssong
 	 */
-	public class Main extends Sprite 
+	public class ResumeDownloaderTest extends Sprite 
 	{
 		
-		public function Main():void 
+		public function ResumeDownloaderTest():void 
 		{
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;

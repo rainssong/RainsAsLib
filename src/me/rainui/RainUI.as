@@ -32,7 +32,7 @@ package me.rainui
 		static public var stageRoximativeWidth:Number = 0;
 		public static var theme:RainTheme
 		
-		public static var render:RenderManager
+		public static var render:RenderManager = new RenderManager();
 		
 		static public var darkColorTrans:ColorTransform = new ColorTransform(0.7, 0.7, 0.7, 1, 0, 0, 0, 0);
 		
@@ -63,7 +63,7 @@ package me.rainui
 			stageRoximativeHeight = Math.round(stageHeight / 100) * 100;
 			stageRoximativeWidth = Math.round(stageWidth / 100) * 100;
 			
-			RainUI.render = new RenderManager();
+			RainUI.render.renderED = stage;
 			RainUI.theme = theme;
 			
 			stage.addEventListener(Event.RESIZE, onStageResize);
@@ -86,82 +86,14 @@ package me.rainui
 				theme = new RainTheme();
 			}
 			return theme.getSkin(name);
-			//else
-			//{
-				//var shape:Shape = new Shape();
-				//switch (name)
-				//{
-					//case "textInput": 
-					//case "textIArea": 
-					//case "bg": 
-						//
-						//shape.graphics.beginFill(RainTheme.WHITE, 1);
-						////shape.graphics.lineStyle(4, 0x666666, 1);
-						//shape.graphics.drawRoundRect(0, 0, 80, 80, 10, 10);
-						//shape.scale9Grid = new Rectangle(10, 10, 80 - 2 * 10, 80 - 2 * 10);
-						//return shape;
-						//break;
-					//case "buttonNormal":
-					//case "listItem":
-						//Draw.rect(shape, 0, 0, 100, 100, RainTheme.BLUE);
-						//Draw.rect(shape, 0, 96, 100, 4, RainTheme.DARK_BLUE);
-						//shape.scale9Grid = new Rectangle(4, 4, 92, 92);
-						//shape.name = "normalSkin";
-						//return shape;
-						//break;
-					//case "list":
-						//shape.graphics.beginFill(RainTheme.WHITE, 1);
-						////shape.graphics.lineStyle(4, 0x666666, 1);
-						//shape.graphics.drawRect(0,0, 80, 80);
-						//shape.scale9Grid = new Rectangle(10, 10, 80 - 2 * 10, 80 - 2 * 10);
-						//return shape;
-						//break;
-						//
-					//case "progressBar":
-						//Draw.rect(shape, 0, 0, 100, 100, RainTheme.BLUE);
-						//shape.scale9Grid = new Rectangle(4, 4, 92, 92);
-						//shape.name = "normalSkin";
-						//return shape;
-						//break;
-					//default:
-				//
-				//}
-				//return shape;
-			//}
 		}
 		
 		static public function getTextFormat(name:String = ""):TextFormat
 		{
-			if (theme)
-				return theme.getTextFormat(name);
-			else
-			{
-				var tf:TextFormat
-				switch (name)
-				{
-					case "label":
-					case "textInput":
-						tf = new TextFormat("微软雅黑", null, Color.Black);
-						break;
-					case "button":
-						tf = new TextFormat("微软雅黑", null, Color.White);
-						break;
-					default: 
-						tf = new TextFormat("微软雅黑", null, Color.Black);
-				}
+			if (theme == null)
+				theme = new RainTheme();
 				
-				if (RainUI.stage)
-				{
-					
-					var l:Number = Math.min(RainUI.stageHeight, RainUI.stageWidth);
-					tf.size = MathCore.floor(l / 20);
-				}
-				else
-				{
-					tf.size = 24;
-				}
-				return tf;
-			}
+			return theme.getTextFormat(name);
 		}
 		
 		static private function onStageResize(e:Event):void

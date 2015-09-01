@@ -1,25 +1,25 @@
-package model 
+package me.rainssong.ai.map 
 {
-	import adobe.utils.CustomActions;
+	import me.rainssong.rainMVC.model.Model;
 	/**
 	 * ...
 	 * @author Rainssong
 	 */
-	public class Map 
+	public class Map extends Model
 	{
-		public var width:int = 20;
-		public var height:int = 20;
-		public var nodes:Vector.<Vector.<Node>> = new Vector.<Vector.<Node>>();
+		private var _width:int = 20;
+		private var _height:int = 20;
+		private var _nodes:Vector.<Vector.<Node>> = new Vector.<Vector.<Node>>();
 		
 		public function Map(width:int,height:int) 
 		{
-			this.width = width;
-			this.height = height;
-			for (var i:int = 0; i < height; i++) 
+			_width = width;
+			_height = height;
+			for (var i:int = 0; i < _height; i++) 
 			{
-				var line:Vector.<Node> = new Vector.<Node>(100);
-				nodes.push(line);
-				for (var j:int = 0; j < width; j++) 
+				var line:Vector.<Node> = new Vector.<Node>(width);
+				_nodes.push(line);
+				for (var j:int = 0; j < _width; j++) 
 				{
 					line[j] = new Node(j, i);
 				}
@@ -29,10 +29,20 @@ package model
 		public function getNode(x:int, y:int ):Node
 		{
 			if (x<0 || x>=width)
-			return null;
+				return null;
 			if (y<0 || y>=height)
-			return null;
-			return nodes[y][x];
+				return null;
+			return _nodes[y][x];
+		}
+		
+		public function get height():int 
+		{
+			return _height;
+		}
+		
+		public function get width():int 
+		{
+			return _width;
 		}
 		
 	}

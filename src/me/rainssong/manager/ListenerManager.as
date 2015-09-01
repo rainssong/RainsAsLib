@@ -7,8 +7,10 @@ package me.rainssong.manager
 	
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
+	import me.rainssong.utils.DestroyUtil;
+	import me.rainssong.utils.ObjectCore;
 
-	public class ListenerManager implements IDestroy
+	public class ListenerManager
 	{
 		private var _target:IEventDispatcher = null;
 		
@@ -18,7 +20,7 @@ package me.rainssong.manager
 		{
 			if(target == null)
 			{
-				throw new NullPointerException("Null input target parameter.");
+				throw new Error("Null input target parameter.");
 			}
 			
 			_target = target;
@@ -81,7 +83,7 @@ package me.rainssong.manager
 
 //import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
 
-class Item implements IDestroy
+class Item
 {
 	public var type:String = null;
 	

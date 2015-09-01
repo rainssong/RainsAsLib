@@ -29,7 +29,6 @@ package me.rainui.media
 		{
 			super();
 			addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
-			
 		}
 		
 		private function onEnterFrame(e:Event):void 

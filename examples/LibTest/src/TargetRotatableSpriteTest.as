@@ -12,10 +12,10 @@ package
 	 * ...
 	 * @author rainssong
 	 */
-	public class Main extends Sprite 
+	public class TargetRotatableSpriteTest extends Sprite 
 	{
 		
-		public function Main():void 
+		public function TargetRotatableSpriteTest():void 
 		{
 			if (stage) init();
 			else addEventListener(Event.ADDED_TO_STAGE, init);
