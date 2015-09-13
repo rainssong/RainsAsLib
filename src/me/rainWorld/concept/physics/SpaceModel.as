@@ -38,6 +38,14 @@ package  me.rainWorld.concept.physics
 			content.environment = null;
 		}
 		
+		public function removeAllContent():void
+		{
+			while (contents)
+			{
+				removeContent(contents[0]);
+			}
+		}
+		
 	}
 
 }

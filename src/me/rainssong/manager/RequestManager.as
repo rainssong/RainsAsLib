@@ -1,10 +1,13 @@
-package
+package me.rainssong.manager
 {
 	import flash.events.ErrorEvent;
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	import flash.utils.Dictionary;
 	import me.rainssong.events.ObjectEvent;
 	import me.rainssong.events.RequestEvent;
@@ -27,15 +30,14 @@ package
 		private function onError(e:IOErrorEvent):void
 		{
 			var url:String = _loaderRevDic[e.target];
-			dispatchEvent(new RequestIOErrorEvent(e.type, url, e.bubbles, e.cancelable, e.text, e.id));
-			//SingletonManager.eventBus.dispatchEvent(new ToolBoxEvent(ToolBoxEvent.LOAD_FAILED, {msg: e.type, api: _loaderRevDic[e.target]}))
+			dispatchEvent(new RequestIOErrorEvent(e.type, url, e.bubbles, e.cancelable));
 		}
 		
 		private function onComplete(e:Event):void
 		{
 			var url:String = _loaderRevDic[e.target];
 			var data:Object = e.target.data;
-			dispatchEvent(new RequestEvent(e.type, url, data, e.bubbles, e.cancelable, e.text, e.id));
+			dispatchEvent(new RequestEvent(e.type, url, data, e.bubbles, e.cancelable));
 		}
 		
 		public function hasLoader(url:String):Boolean
@@ -48,7 +50,7 @@ package
 			return _loaderDic[url];
 		}
 		
-		public function createLoader(url:String):Boolean
+		public function createLoader(url:String):URLLoader
 		{
 			var loader:URLLoader = new URLLoader()
 			_loaderDic[url] = loader;
@@ -56,6 +58,8 @@ package
 			
 			loader.addEventListener(Event.COMPLETE, onComplete);
 			loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
+			
+			return loader;
 		}
 		
 		public function destroyLoader(url:String):void

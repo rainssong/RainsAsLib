@@ -12,7 +12,6 @@ package me.rainssong.events
 		public function RequestIOErrorEvent(type:String,url:String, bubbles:Boolean=false, cancelable:Boolean=false, text:String="", id:int=0) 
 		{
 			super(type, bubbles, cancelable, text, id);
-			
 		}
 		
 	}

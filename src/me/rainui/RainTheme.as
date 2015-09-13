@@ -4,6 +4,7 @@ package me.rainui
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
+	import flash.display.StageScaleMode;
 	import flash.geom.ColorTransform;
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
@@ -123,9 +124,13 @@ package me.rainui
 				default: 
 					tf = ObjectCore.clone(whiteTextFormat);
 			}
-			//var l:Number = Math.min(RainUI.stageHeight, RainUI.stageWidth);
-			//tf.size = MathCore.floor(l / 20);
-			tf.size = 24;
+			if (RainUI.stage.scaleMode == StageScaleMode.NO_SCALE)
+			{
+				var l:Number = Math.min(RainUI.stageHeight, RainUI.stageWidth);
+				tf.size = MathCore.floor(l / 20);
+			}
+			else
+				tf.size = 24;
 			return tf;
 		}
 		

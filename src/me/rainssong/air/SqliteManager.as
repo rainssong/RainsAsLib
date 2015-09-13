@@ -95,6 +95,7 @@ package me.rainssong.air
 			var result:SQLResult = execute(sql, prefetch, responder);
 			
 			var data:Array = result?result.data:[];
+			data ||= [];
             return data;
         }
       
@@ -124,7 +125,7 @@ package me.rainssong.air
 		/**
 		 * 创建一个数据表
 		 * @param	name 表名称
-		 * @param	template 字段与字段类型对象，例如{name:*,age:*}
+		 * @param	template 字段与字段类型对象，例如{name:"*",age:"*"}
 		 */
 		public function creatTable(name:String,template:Object):void {
 			//创建数据库表;

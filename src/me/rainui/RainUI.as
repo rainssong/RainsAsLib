@@ -42,7 +42,7 @@ package me.rainui
 		
 		public function RainUI()
 		{
-		
+			
 		}
 		
 		public static function init(stage:Stage, theme:RainTheme = null):void
@@ -102,6 +102,16 @@ package me.rainui
 			stageHeight = stage.stageHeight;
 			stageRoximativeHeight = Math.round(stageHeight / 500) * 500;
 			stageRoximativeWidth = Math.round(stageWidth / 500) * 500;
+		}
+		
+		public static function defaultSkinFactory():DisplayObject
+		{
+			var shape:Shape = new Shape();
+			shape.graphics.lineStyle(1, 0);
+			shape.graphics.beginFill(RainTheme.WHITE, 1);
+			shape.graphics.drawRoundRect(0, 0, 80, 80, 10, 10);
+			shape.scale9Grid = new Rectangle(10, 10, 80 - 2 * 10, 80 - 2 * 10);
+			return shape;
 		}
 	
 	}

@@ -50,6 +50,7 @@ package me.rainssong.tween
 			
 			switch (effect)
 			{
+				//BUG:
 				case "none": 
 					removeViewComplete(_oldView);
 				break;

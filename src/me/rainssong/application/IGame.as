@@ -12,6 +12,7 @@ package   me.rainssong.application
 		 function resume():void
 		 function gameOver():void
 		 function gameStart():void
+		 function restart():void
 		 function save(index:uint=0):void
 		 function load(index:uint=0):void
 		
