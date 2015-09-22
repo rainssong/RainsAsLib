@@ -243,8 +243,6 @@ package me.rainui.components
 			{
 				return Math.min(_container.contentWidth+_container.x - _width,_container.x);
 			}
-			
-				
 			return 0;
 		}
 		
@@ -258,11 +256,7 @@ package me.rainui.components
 			{
 				return Math.min(_container.contentHeight+_container.y -_height ,_container.y);
 			}
-			
-			
 			return 0;
-				
-			
 		}
 		
 		public function get content():DisplayObject 
@@ -286,6 +280,36 @@ package me.rainui.components
 		public function get container():Container 
 		{
 			return _container;
+		}
+		
+		public function get scrollY():Number 
+		{
+			return -_container.y;
+		}
+		
+		public function set scrollY(value:Number):void 
+		{
+			_container.y=-value;
+		}
+		
+		public function get maxScrollY():Number 
+		{
+			return _container.contentHeight -_height ;
+		}
+		
+		public function get scrollX():Number 
+		{
+			return -_container.x;
+		}
+		
+		public function set scrollX(value:Number):void 
+		{
+			_container.x=-value;
+		}
+		
+		public function get maxScrollX():Number 
+		{
+			return _container.contentWidth -_width ;
 		}
 		
 		override public function resize():void 

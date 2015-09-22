@@ -127,5 +127,23 @@ package me.rainssong.application
 			}
 			return false;
 		}
+		
+		public static function versionCompair(oldVer:String, newVer:String):int
+		{
+			var newArr:Array = newVer.split(".").concat("0","0","0","0")
+		
+			var oldArr:Array =	oldVer.split(".").concat("0","0","0","0");
+			
+			for (var i:int = 0; i < 4; i++)
+			{
+				if (Number(newArr[i]) > Number(oldArr[i]))
+					return 1;
+				else if (Number(newArr[i]) < Number(oldArr[i]))
+					return -1;
+				else
+					continue;
+			}
+			return 0;
+		}
 	}
 }

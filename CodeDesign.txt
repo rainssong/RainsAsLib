@@ -4,8 +4,8 @@
 
 Todo：
 GameBase
-RainUI:
-	Button:handler
 AI
 DetalingShow-delay
 ElementFormat研究
+AppStoreManager，获取信息、版本、评价地址等等
+DebugPanel 滚动条

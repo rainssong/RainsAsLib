@@ -480,9 +480,6 @@ package me.rainui.components
 		
 		public function set normalSkin(value:DisplayObject):void 
 		{
-			//if (_normalSkin == value) return;
-			//swapContent(_normalSkin, value);
-			
 			swapContent(_normalSkin, value);
 			_normalSkin = value;
 			callLater(redraw);
@@ -548,6 +545,18 @@ package me.rainui.components
 		public function set htmlText(value:String):void 
 		{
 			_label.htmlText = value;
+		}
+		
+		public function get hoverSkin():DisplayObject 
+		{
+			return _hoverSkin;
+		}
+		
+		public function set hoverSkin(value:DisplayObject):void 
+		{
+			swapContent(_hoverSkin, value);
+			_hoverSkin = value;
+			callLater(redraw);
 		}
 		
 		

@@ -29,12 +29,15 @@ package me.rainui
 		static public const LIGHT_BLUE:uint = 0x4FC1E9;
 		static public const DARK_BLUE:uint = 0x3BAFDA;
 		static public const BLUE:uint = 0x48b7e0;
+		
 		static public const LIGHT_READ:uint = 0xed5565;
 		static public const LIGHT_GREEN:uint = 0xa0d468;
 		
 		static public const LIGHT_GRAY:uint = 0xe3e4e8
 		static public const GRAY:uint = 0xb4b4b4;
 		static public const DARK_GRAY:uint = 0x989898;
+		
+		static public const LIGHT_BLACK:uint = 0x434a54;
 		
 		static public const WHITE:uint = 0xFFFFFF;
 		
@@ -64,9 +67,10 @@ package me.rainui
 			_skinDic["textInput"] = whiteRoundSkinFactory;
 			_skinDic["list"] = whiteFlatSkinFactory;
 			_skinDic["bg"] = whiteFlatSkinFactory;
+			_skinDic["panelBg"] = lightBlackFlatSkinFactory;
+			_skinDic["blueBg"] = blueFlatSkinFactory;
 			_skinDic["component"] = whiteFlatSkinFactory;
 			_skinDic["listItem"] = blueSkinFactory;
-			
 			_skinDic["progressBar"] = blueFlatSkinFactory;
 			_skinDic["progressBarBg"] = darkGrayFlatSkinFactory;
 			_skinDic["buttonNormal"] = blueSkinFactory;
@@ -81,6 +85,8 @@ package me.rainui
 			shape.scale9Grid = new Rectangle(10, 10, 80 - 2 * 10, 80 - 2 * 10);
 			return shape;
 		}
+		
+		
 		
 		private function whiteRoundSkinFactory():DisplayObject
 		{
@@ -124,7 +130,7 @@ package me.rainui
 				default: 
 					tf = ObjectCore.clone(whiteTextFormat);
 			}
-			if (RainUI.stage.scaleMode == StageScaleMode.NO_SCALE)
+			if (RainUI.stage && RainUI.stage.scaleMode == StageScaleMode.NO_SCALE)
 			{
 				var l:Number = Math.min(RainUI.stageHeight, RainUI.stageWidth);
 				tf.size = MathCore.floor(l / 20);
@@ -149,6 +155,15 @@ package me.rainui
 			Draw.rect(shape, 0, 0, 100, 100, LIGHT_BLUE);
 			Draw.rect(shape, 0, 0, 100, 96, DARK_BLUE);
 			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
+			return shape;
+		}
+		
+		public function lightBlackFlatSkinFactory():DisplayObject
+		{
+			var shape:Shape = new Shape();
+			Draw.rect(shape, 0, 0, 100, 100, LIGHT_BLACK);
+			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
+			shape.alpha = 0.8;
 			return shape;
 		}
 		
