@@ -88,6 +88,9 @@ package me.rainui.components
 		{
 			if (text != value)
 			{
+				if (value == null)
+					value = "";
+					
 				_text = value;
 				//textField.text = value;
 				callLater(redraw);
@@ -464,6 +467,8 @@ package me.rainui.components
 			if (textField.htmlText != value)
 			{
 				//textField.htmlText = value;
+				if (value == null)
+					powerTrace("null");
 				_text = value;
 				sendEvent(Event.CHANGE);
 				callLater(redraw);

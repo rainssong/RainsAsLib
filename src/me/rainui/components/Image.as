@@ -36,7 +36,15 @@ package me.rainui.components
 		
 		override protected function createChildren():void
 		{
-			_content = new Bitmap();
+			if (this.numChildren == 1)
+			{
+				if (this.getChildAt(0) is Bitmap)
+					_content = this.getChildAt(0) as Bitmap;
+			}
+			else
+			{
+				_content = new Bitmap();
+			}
 			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
 			_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onLoadError);
 			//super.createChildren();

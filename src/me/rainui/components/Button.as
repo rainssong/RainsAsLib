@@ -46,6 +46,8 @@ package me.rainui.components
 		public var downHandler:Function;
 		public var overHandler:Function;
 		public var outHandler:Function;
+		public var selectHandler:Function;
+		public var unselectHandler:Function;
 		public var soundOver:Sound;
 		public var soundDown:Sound;
 		public var soundUp:Sound;
@@ -102,7 +104,7 @@ package me.rainui.components
 				else
 				{
 					_normalSkin = RainUI.getSkin("buttonNormal");
-					addChild(_normalSkin);
+					
 				}
 			}
 			else
@@ -110,6 +112,7 @@ package me.rainui.components
 				this._width = _normalSkin.width;
 				this._height = _normalSkin.height;
 			}
+			addChild(_normalSkin);
 			
 			if (_downSkin)
 				_downSkin.visible = false;
@@ -248,11 +251,14 @@ package me.rainui.components
 				{
 					_state = SELECTED;
 					sendEvent(RainUIEvent.SELECT);
-					
+					if (selectHandler)
+						selectHandler();
 				}
 				else
 				{
 					_state = NORMAL;
+					if (unselectHandler)
+						unselectHandler();
 				}
 				sendEvent(RainUIEvent.CHANGE);
 				callLater(redraw);

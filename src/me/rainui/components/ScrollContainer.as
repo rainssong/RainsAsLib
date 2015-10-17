@@ -33,6 +33,7 @@ package me.rainui.components
 		public var direction:String = ALL;
 		//public var lockDirection:Boolean = true;
 		public var allowOverload:Boolean = true;
+		public var touchScroll:Boolean = true;
 		
 		public function ScrollContainer(content:DisplayObject=null,dataSource:Object=null) 
 		{
@@ -205,7 +206,24 @@ package me.rainui.components
 			_container.mouseChildren = true;
 		}
 		
+		override public function stopDrag():void 
+		{
+			_onDrag = false;
+			_container.mouseChildren = true;
+		}
+		
 		private function onMouseDown(e:MouseEvent):void 
+		{
+			_startX = mouseX;
+			_startY = mouseY;
+			_lastX = mouseX;
+			_lastY = mouseY;
+			
+			if(touchScroll)
+				_onDrag = true;
+		}
+		
+		override public function startDrag(lockCenter:Boolean=false, bounds:Rectangle=null):void 
 		{
 			_startX = mouseX;
 			_startY = mouseY;
@@ -231,6 +249,16 @@ package me.rainui.components
 		public function removeContent(child:DisplayObject):DisplayObject 
 		{
 			return _container.removeChild(child);
+		}
+		
+		public function removeContentAt(index:int):DisplayObject 
+		{
+			return _container.removeChildAt(index);
+		}
+		
+		public function removeAllContent(exceptIndex:int):void 
+		{
+			_container.removeAllChild();
 		}
 		
 		public function get overloadX():Number

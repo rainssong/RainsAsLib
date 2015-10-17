@@ -21,15 +21,28 @@ package me.rainui.components
 		
 		override protected function createChildren():void 
 		{
-			if (_bgSkin == null)
-				_bgSkin = RainUI.getSkin("listItem");
+			if (_normalSkin == null)
+				_normalSkin = RainUI.getSkin("listItem");
 			
 			super.createChildren();
 			
-			//label.format = RainUI.getTextFormat(RainTheme.GRAY_TEXT_FORMAT);
+			label.format = RainUI.getTextFormat(RainTheme.GRAY_TEXT_FORMAT);
 			label.align = Align.LEFT;
 			label.left =10;
 			label.right = 10;
+			
+			selectHandler = onSelect;
+			unselectHandler = onUnselect;
+		}
+		
+		private function onSelect():void 
+		{
+			label.color = RainTheme.WHITE;
+		}
+		
+		private function onUnselect():void 
+		{
+			label.color = RainTheme.GRAY;
 		}
 		
 		

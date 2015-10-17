@@ -222,7 +222,7 @@ package me.rainui.components
 					else
 						c.text = String(_items.getItemAt(i));
 					c.dataSource=_items.getItemAt(i);
-					addChild(c);
+					addContent(c);
 					c.y = _cellSize * i;
 					c.height = _cellSize;
 					c.percentWidth = 1;

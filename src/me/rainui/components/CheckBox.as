@@ -20,6 +20,11 @@ package me.rainui.components
 			_toggle = true;
 		}
 		
+		override public function redraw():void 
+		{
+			super.redraw();
+		}
+		
 	}
 
 }

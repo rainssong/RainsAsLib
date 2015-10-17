@@ -70,7 +70,7 @@ package me.rainui
 			_skinDic["panelBg"] = lightBlackFlatSkinFactory;
 			_skinDic["blueBg"] = blueFlatSkinFactory;
 			_skinDic["component"] = whiteFlatSkinFactory;
-			_skinDic["listItem"] = blueSkinFactory;
+			_skinDic["listItem"] = listItemSkinFactory;
 			_skinDic["progressBar"] = blueFlatSkinFactory;
 			_skinDic["progressBarBg"] = darkGrayFlatSkinFactory;
 			_skinDic["buttonNormal"] = blueSkinFactory;
@@ -82,11 +82,28 @@ package me.rainui
 			shape.graphics.beginFill(RainTheme.WHITE, 1);
 			//shape.graphics.lineStyle(4, 0x666666, 1);
 			shape.graphics.drawRect(0, 0, 80, 80);
+			
 			shape.scale9Grid = new Rectangle(10, 10, 80 - 2 * 10, 80 - 2 * 10);
 			return shape;
 		}
 		
+		private function whiteSkinFactory():DisplayObject
+		{
+			var shape:Shape = new Shape();
+			Draw.rect(shape, 0, 0, 100, 100, RainTheme.WHITE);
+			Draw.rect(shape, 0, 96, 100, 4, RainTheme.GRAY);
+			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
+			return shape;
+		}
 		
+		private function listItemSkinFactory():DisplayObject
+		{
+			var shape:Shape = new Shape();
+			Draw.rect(shape, 0, 0, 100, 100, RainTheme.WHITE);
+			Draw.rect(shape, 0, 98, 100, 2, RainTheme.GRAY);
+			shape.scale9Grid = new Rectangle(4, 4, 92, 92);
+			return shape;
+		}
 		
 		private function whiteRoundSkinFactory():DisplayObject
 		{

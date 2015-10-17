@@ -27,7 +27,7 @@
 		static public const SWIPE_COMPLETE:String = "swipeComplete";
 		static public const NEXT:String = "next";
 		
-		private var _slideContentArr:Array;
+		private var _slideContentArr:Array=[];
 		private var _targetIndex:int = 0;
 		private var _slideContainer:MySprite;
 		private var _slideArr:Array;
@@ -222,6 +222,12 @@
 		
 		public function refreash():void
 		{
+			if (_slideContentArr == [] )
+			return
+			if (_slideContentArr.length == 0 )
+			return;
+			
+			
 			for (var i:int = 0; i < _slideContentArr.length; i++)
 			{
 				destroySlide(i);
@@ -379,6 +385,8 @@
 		
 		public function get isLocked():Boolean
 		{
+			//if (_slideArr.length == 0) return false;
+			//else 
 			return _slideArr[currentIndex].isLocked;
 		}
 		

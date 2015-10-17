@@ -67,14 +67,10 @@ package me.rainssong.manager
 			_so.close();
 		}
 		
-		/* DELEGATE flash.net.SharedObject */
-		
 		public function flush(minDiskSpace:int = 0):String 
 		{
 			return _so.flush(minDiskSpace);
 		}
-		
-		/* DELEGATE flash.net.SharedObject */
 		
 		public function get data():Object 
 		{
