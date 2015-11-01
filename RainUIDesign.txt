@@ -2,6 +2,7 @@ Todo:
 	涂鸦风格、未来风格UI（日系）
 	由Theme给组件提供默认数据,组件不再从theme处获取。
 	ScrollContainer增加不足居中的选项（超载分为leftrightupbottom）
+	ScrollContainer SmartRender，只刷新显示部分的组件视图
 
 工作流：
 创建组件

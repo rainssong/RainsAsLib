@@ -251,13 +251,13 @@ package me.rainui.components
 				{
 					_state = SELECTED;
 					sendEvent(RainUIEvent.SELECT);
-					if (selectHandler)
+					if (selectHandler!=null)
 						selectHandler();
 				}
 				else
 				{
 					_state = NORMAL;
-					if (unselectHandler)
+					if (unselectHandler!=null)
 						unselectHandler();
 				}
 				sendEvent(RainUIEvent.CHANGE);

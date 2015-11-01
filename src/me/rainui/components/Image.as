@@ -59,6 +59,7 @@ package me.rainui.components
 		{
 			bitmap.bitmapData = Bitmap( _loader.content).bitmapData
 			callLater(redraw);
+			dispatchEvent(e.clone());
 		}
 		
 		/**图片地址*/

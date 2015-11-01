@@ -1,6 +1,5 @@
 ﻿package me.rainssong.utils
 {
-
 	
 	/**
 	 * ...
@@ -64,7 +63,7 @@
 		
 		public function StringCore()
 		{
-			
+		
 		}
 		
 		/**
@@ -88,14 +87,14 @@
 		 * @param	str
 		 * @return
 		 */
-		public static function isEmpty(str:String) : Boolean
-        {
-            if (str == null)
-            {
-                return true;
-            }
-            return !str.length;
-        }
+		public static function isEmpty(str:String):Boolean
+		{
+			if (str == null)
+			{
+				return true;
+			}
+			return !str.length;
+		}
 		
 		public function isBlank(s:String = null):Boolean
 		{
@@ -135,16 +134,20 @@
 			return url.replace(/[a-zA-z]+:\/\//, "");
 		}
 		
-		public static function getFileName( url:String ):String {
+		public static function getFileName(url:String):String
+		{
 			// Find the location of the period.
-			var fullName:String=url.substr( url.lastIndexOf( '/' )+1 );
-			var extensionIndex:Number = fullName.lastIndexOf( '.' );
-			if ( extensionIndex == -1 ) {
+			var fullName:String = url.substr(url.lastIndexOf('/') + 1);
+			var extensionIndex:Number = fullName.lastIndexOf('.');
+			if (extensionIndex == -1)
+			{
 				// Oops, there is no period. Just return the filename.
 				return fullName;
-			} else {
-				return fullName.substr( 0, extensionIndex );
-			} 
+			}
+			else
+			{
+				return fullName.substr(0, extensionIndex);
+			}
 		}
 		
 		public static function getExtension(url:String):String
@@ -191,7 +194,7 @@
 		} // end function
 		
 		/**
-		 * 
+		 *
 		 * @param	str
 		 * @return the content between tags
 		 */
@@ -204,47 +207,46 @@
 			return str.replace(/<\/?[^>]+>/igm, "");
 		} // end function
 		
-		public static function isNumeric(str:String) : Boolean
-        {
-            if (str == null)
-            {
-                return false;
-            }
-            var exp:RegExp = /^[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?$/;
-            return exp.test(str);
-        }// end function
-		
-		 public static function reverseWords(str:String) : String
-        {
-            if (str == null)
-            {
-                return "";
-            }
-            return str.split(/\s+/).reverse().join("");
-        }// end function
-		
-		 public static function reverse(str:String) : String
-        {
-            if (str == null)
-            {
-                return "";
-            }
-            return str.split("").reverse().join("");
-        }// end function
-		
-		static public function webToLocal(url:String):String 
+		public static function isNumeric(str:String):Boolean
 		{
-			return url.split("://").pop().replace(":","//");
+			if (str == null)
+			{
+				return false;
+			}
+			var exp:RegExp = /^[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?$/;
+			return exp.test(str);
+		} // end function
+		
+		public static function reverseWords(str:String):String
+		{
+			if (str == null)
+			{
+				return "";
+			}
+			return str.split(/\s+/).reverse().join("");
+		} // end function
+		
+		public static function reverse(str:String):String
+		{
+			if (str == null)
+			{
+				return "";
+			}
+			return str.split("").reverse().join("");
+		} // end function
+		
+		static public function webToLocal(url:String):String
+		{
+			return url.split("://").pop().replace(":", "//");
 		}
-
 		
 		static public function getRandomChinese():String
 		{
-			var charNumber:int=int(Math.random ()*(0x9000-0x5000))+0x5000;
-			return (String.fromCharCode (charNumber));
+			var charNumber:int = int(Math.random() * (0x9000 - 0x5000)) + 0x5000;
+			return (String.fromCharCode(charNumber));
 		}
 		
-		static public function toNumber(str:String):Number 
+		static public function toNumber(str:String):Number
 		{
 			return Number(str.replace(/\D/g, ""));
 		}
@@ -253,5 +255,74 @@
 		//{
 		//return url.split(/[\\/] / ).slice( -1)[0];
 		//}
+		
+		/**
+		 *  Substitutes "{n}" tokens within the specified string
+		 *  with the respective arguments passed in.
+		 *
+		 *  Note that this uses String.replace and "$" can have special
+		 *  meaning in the argument strings escape by using "$$".
+		 *
+		 *  @param str The string to make substitutions in.
+		 *  This string can contain special tokens of the form
+		 *  <code>{n}</code>, where <code>n</code> is a zero based index,
+		 *  that will be replaced with the additional parameters
+		 *  found at that index if specified.
+		 *
+		 *  @param rest Additional parameters that can be substituted
+		 *  in the <code>str</code> parameter at each <code>{n}</code>
+		 *  location, where <code>n</code> is an integer (zero based)
+		 *  index value into the array of values specified.
+		 *  If the first parameter is an array this array will be used as
+		 *  a parameter list.
+		 *  This allows reuse of this routine in other methods that want to
+		 *  use the ... rest signature.
+		 *  For example <pre>
+		 *     public function myTracer(str:String, ... rest):void
+		 *     {
+		 *         label.text += StringUtil.substitute(str, rest) + "\n";
+		 *     } </pre>
+		 *
+		 *  @return New string with all of the <code>{n}</code> tokens
+		 *  replaced with the respective arguments specified.
+		 *
+		 *  @example
+		 *
+		 *  var str:String = "here is some info '{0}' and {1}";
+		 *  trace(StringUtil.substitute(str, 15.4, true));
+		 *
+		 *  // this will output the following string:
+		 *  // "here is some info '15.4' and true"
+		 *
+		 *  @langversion 3.0
+		 *  @playerversion Flash 9
+		 *  @playerversion AIR 1.1
+		 *  @productversion Flex 3
+		 */
+		public static function substitute(str:String, ... rest):String
+		{
+			if (str == null)
+				return '';
+			
+			// Replace all of the parameters in the msg string.
+			var len:uint = rest.length;
+			var args:Array;
+			if (len == 1 && rest[0] is Array)
+			{
+				args = rest[0] as Array;
+				len = args.length;
+			}
+			else
+			{
+				args = rest;
+			}
+			
+			for (var i:int = 0; i < len; i++)
+			{
+				str = str.replace(new RegExp("\\{" + i + "\\}", "g"), args[i]);
+			}
+			
+			return str;
+		}
 	}
 }

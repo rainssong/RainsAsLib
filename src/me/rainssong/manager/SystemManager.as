@@ -10,7 +10,7 @@ package  me.rainssong.manager
 		
 		public function SystemManager() 
 		{
-			throw Error(this+"static class!");
+			throw Error(this+"is static class!");
 		}
 		
 		static public function get isWindows():Boolean
@@ -23,6 +23,20 @@ package  me.rainssong.manager
 		static public function get isIOS():Boolean
 		{
 			if (Capabilities.os.match("iPhone") || Capabilities.os.match("iPad") )
+				return true;
+			else return false;
+		}
+		
+		static public function get isIphone():Boolean
+		{
+			if (Capabilities.os.match("iPhone") )
+				return true;
+			else return false;
+		}
+		
+		static public function get isIpad():Boolean
+		{
+			if (Capabilities.os.match("iPad") )
 				return true;
 			else return false;
 		}

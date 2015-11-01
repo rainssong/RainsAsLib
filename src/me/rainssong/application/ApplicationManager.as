@@ -25,6 +25,8 @@ package me.rainssong.application
 		static public const TEST_EDITION:String = "TestEdition";
 		static public const ALPHA_EDITION:String = "AlphaEdition";
 		static public const BETA_EDITION:String = "BetaEdition";
+		static public const TRIAL_EDITION:String = "TrialEdition";
+		static public const FREE_EDITION:String = "FreeEdition";
 		
 		public static var edition:String = NORMAL_EDITION;
 		static private var inited:Boolean = false;
@@ -33,7 +35,7 @@ package me.rainssong.application
 		public static var stageWidth:Number = 0;
 		public static var stageHeight:Number = 0;
 		
-		protected static var _version:String = "1.0";
+		protected static var _version:String = null;
 		
 		
 		public static function init(stage:Stage):void
@@ -106,7 +108,17 @@ package me.rainssong.application
 		
 		static public function get version():String 
 		{
+			if(_version!=null)
 			return _version;
+			else
+			{
+				CONFIG::air
+				{
+					return AirManager.appVersion;
+				}
+				return "1.0.0";
+			}
+			
 		}
 		
 		static public function set version(value:String):void 
