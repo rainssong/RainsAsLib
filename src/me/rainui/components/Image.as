@@ -3,6 +3,7 @@ package me.rainui.components
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
+	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
@@ -36,14 +37,20 @@ package me.rainui.components
 		
 		override protected function createChildren():void
 		{
-			if (this.numChildren == 1)
+			if (this.numChildren == 1 && getChildAt(0) is Bitmap)
 			{
-				if (this.getChildAt(0) is Bitmap)
-					_content = this.getChildAt(0) as Bitmap;
+				//if (this.getChildAt(0) is Bitmap)
+				_content = this.getChildAt(0) as Bitmap;
+			}
+			if(_content==null)
+			{
+				_content = new Bitmap();
+				addChild(_content);
 			}
 			else
 			{
-				_content = new Bitmap();
+				_width = _content.width;
+				_height = _content.height;
 			}
 			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
 			_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onLoadError);
@@ -58,7 +65,7 @@ package me.rainui.components
 		private function onLoadComplete(e:Event):void 
 		{
 			bitmap.bitmapData = Bitmap( _loader.content).bitmapData
-			callLater(redraw);
+			redraw();
 			dispatchEvent(e.clone());
 		}
 		
@@ -105,12 +112,8 @@ package me.rainui.components
 		
 		public function set bitmapData(value:BitmapData):void
 		{
-			//if (!(value is BitmapData))
-			//{
-				//powerTrace("wrong value");
-				//return;
-			//}
-			bitmap.bitmapData = value;
+			if(bitmap)
+				bitmap.bitmapData = value;
 			callLater(resize);
 			//sendEvent(RainUIEvent.IMAGE_LOADED);
 		}
@@ -181,7 +184,8 @@ package me.rainui.components
 		public function dispose(clearFromLoader:Boolean = false):void
 		{
 			//App.asset.disposeBitmapData(_url);
-			bitmap.bitmapData = null;
+			if(bitmap)
+				bitmap.bitmapData = null;
 			if (clearFromLoader)
 			{
 				//App.loader.clearResLoaded(_url);

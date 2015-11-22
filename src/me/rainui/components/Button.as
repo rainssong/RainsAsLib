@@ -92,27 +92,20 @@ package me.rainui.components
 		
 		override protected function createChildren():void
 		{
-			if (_normalSkin == null)
+			if (this.numChildren == 1)
 			{
-				if (this.numChildren == 1)
-				{
-					_normalSkin = this.getChildAt(0);
-					this._width = _normalSkin.width;
-					this._height = _normalSkin.height;
-					
-				}
-				else
-				{
-					_normalSkin = RainUI.getSkin("buttonNormal");
-					
-				}
+				_normalSkin = this.getChildAt(0);
+			}
+			 if (_normalSkin == null)
+			{
+				_normalSkin = RainUI.getSkin("buttonNormal");
+				addChild(_normalSkin);
 			}
 			else
 			{
 				this._width = _normalSkin.width;
 				this._height = _normalSkin.height;
 			}
-			addChild(_normalSkin);
 			
 			if (_downSkin)
 				_downSkin.visible = false;
@@ -244,6 +237,9 @@ package me.rainui.components
 		
 		public function set selected(value:Boolean):void
 		{
+			
+			var e:RainUIEvent 
+			
 			if (_selected != value)
 			{
 				_selected = value;
@@ -251,19 +247,25 @@ package me.rainui.components
 				{
 					_state = SELECTED;
 					sendEvent(RainUIEvent.SELECT);
-					if (selectHandler!=null)
-						selectHandler();
+					if (selectHandler != null)
+					{
+						e= new RainUIEvent(RainUIEvent.SELECT, null, true, false);
+						selectHandler(e );
+					}
+						
 				}
 				else
 				{
 					_state = NORMAL;
-					if (unselectHandler!=null)
-						unselectHandler();
+					if (unselectHandler != null)
+					{
+						e= new RainUIEvent(RainUIEvent.SELECT, null, true, false);
+						unselectHandler(e);
+					}
 				}
 				sendEvent(RainUIEvent.CHANGE);
 				callLater(redraw);
 			}
-			
 		}
 		
 		protected function get state():String
@@ -321,7 +323,6 @@ package me.rainui.components
 					break;
 				default: 
 			}
-			
 			
 			
 			super.redraw();
@@ -476,6 +477,7 @@ package me.rainui.components
 		{
 			if (_showIcon == value) return;
 			_showIcon = value;
+			
 			callLater(redraw);
 		}
 		
@@ -520,9 +522,7 @@ package me.rainui.components
 		
 		public function set iconSkin(value:DisplayObject):void 
 		{
-			//if (_iconSkin && _iconSkin.parent) removeChild(_iconSkin);
-			//_iconSkin = value;
-			//if (_iconSkin)addChild(_iconSkin);
+			
 			swapContent(_iconSkin, value);
 			_iconSkin = value;
 		}

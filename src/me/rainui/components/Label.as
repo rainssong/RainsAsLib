@@ -53,6 +53,13 @@ package me.rainui.components
 		override protected function createChildren():void
 		{
 			//addChild(_bitmap = new AutoBitmap());
+			if (numChildren == 1 && getChildAt(0) is TextField)
+			{
+				textField = getChildAt(0) as TextField;
+				_contentAlign = Align.LEFT;
+				textField.autoSize = TextFieldAutoSize.NONE;
+			}
+			
 			if (textField == null)
 			{
 				addChild(textField = new TextField());
@@ -66,6 +73,7 @@ package me.rainui.components
 				_format = textField.getTextFormat();
 				_text = textField.text;
 			}
+			
 			_content = textField;
 			super.createChildren();
 		}
@@ -81,7 +89,8 @@ package me.rainui.components
 		/**显示的文本*/
 		public function get text():String
 		{
-			return _text;
+			textField.htmlText = _text;
+			return textField.text;
 		}
 		
 		public function set text(value:String):void
@@ -275,8 +284,11 @@ package me.rainui.components
 		public function set color(value:Object):void
 		{
 			_format.color = value;
+			
+			//此方案用于全局填色，一次执行，所以不可放入redraw中
+			textField.setTextFormat(_format);
 			//redraw();
-			callLater(redraw)
+			//callLater(redraw)
 		}
 		
 		/**字体类型*/

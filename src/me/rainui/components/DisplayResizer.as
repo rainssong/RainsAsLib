@@ -46,15 +46,22 @@ package me.rainui.components
 		
 		override protected function createChildren():void 
 		{
+			if (this.numChildren == 1)
+					this._content = this.getChildAt(0);
+					
 			if (_content == null)
 			{
-				if (this.numChildren == 1)
-					this._content = this.getChildAt(0);
-				else
-					this._content = new Sprite();
+				this._content = new Sprite();
 			}
+			else
+			{
+				_width = _content.width;
+				_height = _content.height;
+			}
+			
 			if (_content.parent == null)
 				addChild(_content);
+				
 			super.createChildren();
 		}
 		

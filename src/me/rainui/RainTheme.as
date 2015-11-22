@@ -38,6 +38,7 @@ package me.rainui
 		static public const DARK_GRAY:uint = 0x989898;
 		
 		static public const LIGHT_BLACK:uint = 0x434a54;
+		static public const BLACK:uint = 0;
 		
 		static public const WHITE:uint = 0xFFFFFF;
 		
@@ -49,7 +50,7 @@ package me.rainui
 		
 		static private const grayTextFormat:TextFormat = new TextFormat("微软雅黑", 32, GRAY, null, null, null, null, null, TextFormatAlign.CENTER);
 		static private const whiteTextFormat:TextFormat = new TextFormat("微软雅黑", 32, 0xffffff, null, null, null, null, null, TextFormatAlign.CENTER);
-		static private const blackTextFormat:TextFormat = new TextFormat("微软雅黑", 32, 0, null, null, null, null, null, TextFormatAlign.CENTER);
+		static private const blackTextFormat:TextFormat = new TextFormat("微软雅黑", 32, BLACK, null, null, null, null, null, TextFormatAlign.CENTER);
 		
 		private var _configDic:Dictionary = new Dictionary();
 		private var _skinDic:Dictionary = new Dictionary();

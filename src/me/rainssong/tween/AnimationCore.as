@@ -11,8 +11,7 @@ package me.rainssong.tween
 	
 	public class AnimationCore
 	{
-		static private var _changeMouseEnabled:Boolean = false;
-		static private var _changeMouseChildren:Boolean = false;
+		
 		static private var _newView:DisplayObject;
 		static private var _oldView:DisplayObject;
 		static private var _blackBmp:Bitmap = new Bitmap(new BitmapData(100, 100, false, 0));
@@ -376,7 +375,7 @@ package me.rainssong.tween
 			if (vars == null)
 				vars = {};
 			
-			view.alpha = 0;
+			vars.alpha = 0;
 			
 			TweenMax.to(_blackBmp, duration, vars);
 		}
@@ -398,6 +397,31 @@ package me.rainssong.tween
 			vars.alpha = 0;
 			
 			TweenMax.to(_blackBmp, duration, vars);
+		}
+		
+		static public function fadeIn(view:DisplayObject,duration:Number=0.4, vars:Object = null):void
+		{
+			
+			
+			view.alpha = 0;
+			
+			if (vars == null)
+				vars = {};
+			
+			vars.alpha = 1;
+			
+			TweenMax.to(view, duration, vars);
+		}
+		
+		static public function fadeOut(view:DisplayObject,duration:Number=0.4, vars:Object = null):void
+		{
+			
+			if (vars == null)
+				vars = {};
+			
+			vars.alpha = 0;
+			
+			TweenMax.to(view, duration, vars);
 		}
 	
 	}

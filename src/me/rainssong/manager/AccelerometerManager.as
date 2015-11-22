@@ -1,6 +1,5 @@
 package me.rainssong.manager
 {
-	import com.reintroducing.sound.SoundManager;
 	import flash.events.AccelerometerEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

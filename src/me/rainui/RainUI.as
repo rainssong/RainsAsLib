@@ -49,33 +49,26 @@ package me.rainui
 		{
 			RainUI.stage = stage;
 			
-			if (SystemCore.isWindows)
-			{
+			//if (SystemCore.isWindows)
+			//{
 				stageWidth = stage.stageWidth;
 				stageHeight = stage.stageHeight;
-			}
-			else
-			{
-				stageWidth = Capabilities.screenResolutionX;
-				stageHeight = Capabilities.screenResolutionY;
-			}
+			//}
+			//else
+			//{
+				//BUG:在横向设备上，宽高错误
+				//stageWidth = Capabilities.screenResolutionX;
+				//stageHeight = Capabilities.screenResolutionY;
+			//}
 			
-			stageRoximativeHeight = Math.round(stageHeight / 100) * 100;
-			stageRoximativeWidth = Math.round(stageWidth / 100) * 100;
+			//stageRoximativeHeight = Math.round(stageHeight / 100) * 100;
+			//stageRoximativeWidth = Math.round(stageWidth / 100) * 100;
+			onStageResize();
 			
 			RainUI.render.renderED = stage;
 			RainUI.theme = theme;
 			
 			stage.addEventListener(Event.RESIZE, onStageResize);
-		
-			//stage.frameRate = Config.frameRate;
-			//stage.scaleMode = StageScaleMode.NO_SCALE
-			//stage.align = StageAlign.TOP_LEFT;
-			//stage.tabChildren = false;
-		
-			//stage.addChild(dialog);
-			//stage.addChild(tip);
-			//stage.addChild(log);
 		
 		}
 		
@@ -96,12 +89,22 @@ package me.rainui
 			return theme.getTextFormat(name);
 		}
 		
-		static private function onStageResize(e:Event):void
+		static private function onStageResize(e:Event=null):void
 		{
 			stageWidth = stage.stageWidth;
 			stageHeight = stage.stageHeight;
 			stageRoximativeHeight = Math.round(stageHeight / 500) * 500;
 			stageRoximativeWidth = Math.round(stageWidth / 500) * 500;
+		}
+		
+		static public function get stageMinLength():Number
+		{
+			return stageWidth > stageHeight?stageHeight:stageWidth;
+		}
+		
+		static public function get stageMaxLength():Number
+		{
+			return stageWidth > stageHeight?stageWidth:stageHeight;
 		}
 		
 		public static function defaultSkinFactory():DisplayObject

@@ -5,6 +5,7 @@ package me.rainui.components
 	import flash.geom.Rectangle;
 	import me.rainssong.utils.Align;
 	import me.rainssong.utils.Draw;
+	import me.rainui.events.RainUIEvent;
 	import me.rainui.RainTheme;
 	import me.rainui.RainUI;
 	/**
@@ -21,8 +22,8 @@ package me.rainui.components
 		
 		override protected function createChildren():void 
 		{
-			if (_normalSkin == null)
-				_normalSkin = RainUI.getSkin("listItem");
+			//if (_normalSkin == null)
+				//_normalSkin = RainUI.getSkin("listItem");
 			
 			super.createChildren();
 			
@@ -35,14 +36,14 @@ package me.rainui.components
 			unselectHandler = onUnselect;
 		}
 		
-		private function onSelect():void 
+		private function onSelect(e:RainUIEvent=null):void 
 		{
-			label.color = RainTheme.WHITE;
+			label.color = RainTheme.LIGHT_BLACK;
 		}
 		
-		private function onUnselect():void 
+		private function onUnselect(e:RainUIEvent=null):void 
 		{
-			label.color = RainTheme.GRAY;
+			label.color=RainTheme.GRAY;
 		}
 		
 		

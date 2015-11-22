@@ -3,6 +3,8 @@ Todo:
 	由Theme给组件提供默认数据,组件不再从theme处获取。
 	ScrollContainer增加不足居中的选项（超载分为leftrightupbottom）
 	ScrollContainer SmartRender，只刷新显示部分的组件视图
+	WHRatio 锁定宽高比
+	
 
 工作流：
 创建组件
@@ -42,9 +44,9 @@ move（坐标改变）——resize触发(100%触发)，内部参数触发
 
 类：
 Component：基本类，提供所有通用属性
-Catiner
+Container
 Button：
-Scene：全屏视图
+Page：自动铺满
 Dialog：
 Image：
 
@@ -60,5 +62,3 @@ Image：
 
 2015-04-27
 最优雅的方案还是侦听stage进行render触发,
-
-2015-07-18

@@ -66,7 +66,14 @@ package me.rainssong.manager
 			
 			var motion:String = xml.motion[count].toString();
 			//powerTrace(motion);
-			D.eval(motion,_context,_thisObj);
+			try{
+				D.eval(motion, _context, _thisObj);
+			}
+			catch (e:Error)
+			{
+				trace(e.getStackTrace());
+				throw e;
+			}
 		}
 		
 		public function next():void
