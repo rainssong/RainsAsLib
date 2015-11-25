@@ -62,3 +62,9 @@ Image：
 
 2015-04-27
 最优雅的方案还是侦听stage进行render触发,
+
+2015-11-23
+等比缩放遇到问题,UI本身不支持根据最小还是最大宽高进行变形.
+可能需要新的API percentWtoMin percentWtoMax
+或者 percentW(0.5,"width",target); target默认为Parent; 这个方案优雅得多，但是依旧
+或者 直接算式pwecentW="targe.width*0.3"

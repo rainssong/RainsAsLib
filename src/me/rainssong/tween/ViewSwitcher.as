@@ -146,8 +146,8 @@ package me.rainssong.tween
 					if (_parent.getChildIndex(newView) > _parent.getChildIndex(oldView))
 						_parent.swapChildren(newView, oldView);
 					
-					vars1.delay = params.duration * 0.5 + delay;
-					vars2.duration = params.duration * 0.5;
+					vars1.delay = duration * 0.5 + delay;
+					vars2.duration = duration * 0.5;
 					vars1.onComplete = onComplete;
 					vars1.onCompleteParams = onCompleteParams;
 					
@@ -312,8 +312,6 @@ package me.rainssong.tween
 					break;
 				default: 
 			}
-			
-			
 		}
 		
 		private function removeOldView():void
@@ -338,6 +336,28 @@ package me.rainssong.tween
 			
 			_oldView = null;
 			_newView = null;
+		}
+		
+		public static function addView(container:DisplayObjectContainer, newView:DisplayObject, effect:String = "move", params:Object = null):ViewSwitcher
+		{
+			var vs:ViewSwitcher = new ViewSwitcher();
+			vs.addView(container,newView,effect,params);
+			return vs;
+		}
+		
+		public static function removeView(view:DisplayObject, effect:String = "move", params:Object = null):ViewSwitcher
+		{
+			var vs:ViewSwitcher = new ViewSwitcher();
+			vs.removeView(view,effect,params);
+			return vs;
+		}
+		
+		public static function switchView(oldView:DisplayObject, newView:DisplayObject, effect:String = "move", params:Object = null ):ViewSwitcher
+		{
+			var vs:ViewSwitcher = new ViewSwitcher();
+			vs.switchView(oldView, newView, effect, params);
+			
+			return vs;
 		}
 	}
 }

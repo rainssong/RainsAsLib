@@ -6,6 +6,7 @@ package me.rainui.components
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	import me.rainssong.application.ApplicationBase;
 	import me.rainssong.utils.Align;
 	import me.rainssong.utils.Directions;
@@ -24,6 +25,7 @@ package me.rainui.components
 		protected var _content:DisplayObject
 		protected var _contentScaleMode:String = ScaleMode.SHOW_ALL;
 		protected var _contentAlign:String = Align.CENTER;
+		public var contentBorderColor:int = -1;
 		
 		public function DisplayResizer(content:DisplayObject=null,dataSource:Object=null)
 		{
@@ -199,6 +201,19 @@ package me.rainui.components
 			swapContent(_content, value);
 			_content = value;
 			callLater(redraw);
+		}
+		
+		override public function showBorder(param0:uint = 16711680, param1:int = -1):void 
+		{
+			
+			super.showBorder(param0, param1);
+			
+			if (contentBorderColor > 0)
+			{
+				var contentRect:Rectangle = getBounds(this);
+				_border.graphics.lineStyle(1, contentBorderColor);
+				_border.graphics.drawRect(contentRect.x, contentRect.y, contentRect.width, contentRect.height);
+			}
 		}
 	
 	}

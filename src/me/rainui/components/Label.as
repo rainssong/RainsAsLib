@@ -89,7 +89,7 @@ package me.rainui.components
 		/**显示的文本*/
 		public function get text():String
 		{
-			textField.htmlText = _text;
+			redraw();
 			return textField.text;
 		}
 		
@@ -313,7 +313,8 @@ package me.rainui.components
 		
 		public function set align(value:String):void
 		{
-			contentAlign=value
+			contentAlign = value
+			
 			switch (_contentAlign) 
 			{
 				case Align.LEFT:

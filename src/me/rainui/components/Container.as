@@ -17,6 +17,7 @@ package me.rainui.components
 		//百分比优先级高于绝对值
 		protected var _percentWidth:Number = NaN;
 		protected var _percentHeight:Number = NaN;
+		protected var _whRatio:Number = NaN;
 		
 		protected var _top:Number = NaN;
 		protected var _percentTop:Number = NaN;
@@ -390,6 +391,26 @@ package me.rainui.components
 		public function set percentCenterY(value:Number):void 
 		{
 			_percentCenterY = value;
+		}
+		
+		public function get minWidth():Number 
+		{
+			return _minWidth;
+		}
+		
+		public function set minWidth(value:Number):void 
+		{
+			_minWidth = value;
+		}
+		
+		public function get maxWidth():Number 
+		{
+			return _maxWidth;
+		}
+		
+		public function set maxWidth(value:Number):void 
+		{
+			_maxWidth = value;
 		}
 		
 		//resize后自动更新位置，注意super.resize必须先行

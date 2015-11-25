@@ -55,7 +55,7 @@ package me.rainssong.manager
 			_isPaused = true;
 		}
 		
-		public function onEnterFrame(e:Event):void
+		protected function onEnterFrame(e:Event):void
 		{
 			_currentTime = getTimer();
 			_timeDelta = (_currentTime - _lastTime) * 0.001 * timeScale;
