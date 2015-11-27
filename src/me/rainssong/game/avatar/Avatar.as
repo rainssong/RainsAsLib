@@ -1,4 +1,4 @@
-package me.rainssong.fonts.game.avatar
+package me.rainssong.game.avatar
 {
 	import com.codeTooth.actionscript.game.action.Action;
 	import com.codeTooth.actionscript.game.action.ActionData;

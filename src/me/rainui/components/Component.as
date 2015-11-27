@@ -7,6 +7,8 @@
 	import flash.events.Event;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Rectangle;
+	import flash.utils.Dictionary;
+	import me.rainssong.model.ListenerModel;
 	import me.rainui.events.RainUIEvent;
 	import me.rainui.RainUI;
 	
@@ -39,6 +41,8 @@
 		protected var _dataSource:Object;
 		public static var defaultData:Object;
 		
+		protected var _listeners:Dictionary = new Dictionary(true);
+		
 		public function Component(dataSource:Object=null)
 		{
 			super();
@@ -52,6 +56,24 @@
 		protected function initialize():void
 		{
 			
+		}
+		
+		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
+		{
+			_listeners[type+listener] = new ListenerModel(type, listener, useCapture, priority, useWeakReference);
+			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
+		}
+		
+		override public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
+		{
+			delete _listeners[type+listener];
+			super.removeEventListener(type, listener, useCapture);
+		}
+		
+		override public function removeAllEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
+		{
+			for each (var item:ListenerModel in _listeners) 
+				removeEventListener(item.type, item.listener, item.useCapture);
 		}
 		
 		protected function createChildren():void
@@ -421,6 +443,7 @@
 		
 		public function destroy():void
 		{
+			removeAllEventListener();
 			this.removeChildren();
 		}
 		

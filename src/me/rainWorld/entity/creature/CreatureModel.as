@@ -15,10 +15,15 @@ package me.rainWorld.entity.creature
 		private var _hungry:Number = 0;
 		private var _energy:Number = 1;
 		
+		//可修改为状态机
 		protected var _posture:String = "stand";
 		protected var _emotion:String = "normal";
 		
 		protected var _items:Array = [];
+		
+		protected var _intelligence:Number = 0;
+		
+		protected var _sex:String = "none";
 		
 		
 		public function CreatureModel() 
@@ -92,9 +97,6 @@ package me.rainWorld.entity.creature
 		{
 			return _isAlive;
 		}
-		
-		
-		
 		
 	}
 

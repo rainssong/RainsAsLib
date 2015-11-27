@@ -4,7 +4,9 @@ Todo:
 	ScrollContainer增加不足居中的选项（超载分为leftrightupbottom）
 	ScrollContainer SmartRender，只刷新显示部分的组件视图
 	WHRatio 锁定宽高比
-	
+	增加一个content层，用于统计非组件视图宽高。
+	改为自动缩和自动放
+	增加属性,是否自动比例缩放？
 
 工作流：
 创建组件
