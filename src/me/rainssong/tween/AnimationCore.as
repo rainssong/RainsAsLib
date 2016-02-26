@@ -7,6 +7,7 @@ package me.rainssong.tween
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.sampler.NewObjectSample;
+	import flash.utils.setTimeout;
 	import me.rainssong.utils.Directions;
 	
 	public class AnimationCore
@@ -231,10 +232,10 @@ package me.rainssong.tween
 					TweenMax.to(_blackBmp, duration, {alpha: 0, onComplete: removeBlack, ease: Cubic.easeInOut, delay: delay});
 					
 					function removeBlack()
-				{
+					{	
 					if (_blackBmp.parent)
 						_blackBmp.parent.removeChild(_blackBmp);
-				}
+					}
 					break;
 				default: 
 			}
@@ -384,6 +385,7 @@ package me.rainssong.tween
 		{
 			var _parent:DisplayObjectContainer = view.parent;
 			
+			//if (_blackBmp.parent)_blackBmp.parent.removeChild(_blackBmp) 
 			_parent.addChild(_blackBmp);
 			_blackBmp.x = view.x;
 			_blackBmp.y = view.y;
@@ -397,6 +399,8 @@ package me.rainssong.tween
 			vars.alpha = 0;
 			
 			TweenMax.to(_blackBmp, duration, vars);
+			
+			//setTimeout(function() { if (_blackBmp.parent)_blackBmp.parent.removeChild(_blackBmp) }, duration * 1000);
 		}
 		
 		static public function fadeIn(view:DisplayObject,duration:Number=0.4, vars:Object = null):void

@@ -2,6 +2,7 @@ package me.rainWorld.entity.creature
 {
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
+	import flash.utils.Dictionary;
 	import me.rainWorld.entity.EntityModel;
 	/**
 	 * ...
@@ -25,6 +26,7 @@ package me.rainWorld.entity.creature
 		
 		protected var _sex:String = "none";
 		
+		protected var _relations:Dictionary = new Dictionary(false);
 		
 		public function CreatureModel() 
 		{

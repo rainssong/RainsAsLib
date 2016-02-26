@@ -3,14 +3,19 @@ Todo:
 	由Theme给组件提供默认数据,组件不再从theme处获取。
 	ScrollContainer增加不足居中的选项（超载分为leftrightupbottom）
 	ScrollContainer SmartRender，只刷新显示部分的组件视图
-	WHRatio 锁定宽高比
+	WHRatio 锁定宽高比(暂时取消)
 	增加一个content层，用于统计非组件视图宽高。
 	改为自动缩和自动放
-	增加属性,是否自动比例缩放？
+	增加属性,是否自动比例缩放？(基于点的UI设计)
+	PageNavigator
+	TouchRect
+	Theme决定 初始化的缩放值（由stage宽高 dpi 决定）
+	用标签标记刷新的视图内容
+	参考CSS覆盖
 
 工作流：
 创建组件
-组件获取原始视图->失败则获取主题视图（自带视图）
+组件获取原始视图和数据->失败则获取主题视图（自带视图）
 显示
 用户修改外观和事件处理
 更新显示
@@ -64,9 +69,3 @@ Image：
 
 2015-04-27
 最优雅的方案还是侦听stage进行render触发,
-
-2015-11-23
-等比缩放遇到问题,UI本身不支持根据最小还是最大宽高进行变形.
-可能需要新的API percentWtoMin percentWtoMax
-或者 percentW(0.5,"width",target); target默认为Parent; 这个方案优雅得多，但是依旧
-或者 直接算式pwecentW="targe.width*0.3"

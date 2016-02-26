@@ -10,7 +10,7 @@ package me.rainssong.manager
 	import flash.utils.Dictionary;
 	
 	/**
-	 * ...
+	 * TODO:增加参数选择keydown还是keyup，支持通配符
 	 * @author Rainssong
 	 */
 	public class KeyboardManager
@@ -90,7 +90,6 @@ package me.rainssong.manager
 		
 		private static function onKeyDown(e:KeyboardEvent):void
 		{
-			
 			_keyDictionary[e.keyCode] = true;
 			if (_funDictionary[e.keyCode])
 				_funDictionary[e.keyCode]();
@@ -100,10 +99,6 @@ package me.rainssong.manager
 		{
 			_keyDictionary[e.keyCode] = false;
 		}
-		
-		
-		
-		
 	
 	}
 

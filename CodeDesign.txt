@@ -1,18 +1,19 @@
 库设计原则：
 	1.不保护严重BUG,非法数据根据情况报错或警告
-	2.
+
 
 Todo：
 GameBase
-AI
+游戏基础AI
 AIR用条件编译进行兼容
+ResourceManager--> LanguageManager
 
 DetalingShow-delay
 ElementFormat研究
 AppStoreManager，获取信息、版本、评价地址等等
 DebugPanel 滚动条
 
-ResourceManager--> LanguageManager
+
 
 
 BUG:

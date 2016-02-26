@@ -12,7 +12,7 @@ package  me.rainWorld.entity
 	/**
 	 *  狭义实体
 	 */
-	public class EntityModel extends ChaosModel
+	dynamic public class EntityModel extends ChaosModel
 	{
 		//内部的数据
 		public var position:Vector3D = new Vector3D();

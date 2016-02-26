@@ -1,4 +1,4 @@
-﻿package com.kerry.effect {
+﻿package me.rainssong.effects {
 	import flash.display.BitmapData;
 	import flash.display.BitmapDataChannel;
 	import flash.display.BlendMode;

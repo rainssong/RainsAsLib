@@ -6,6 +6,7 @@ package me.rainui.managers
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import me.rainssong.utils.Draw;
 	import me.rainui.RainUI;
 	
@@ -19,7 +20,7 @@ package me.rainui.managers
 	public class PopUpManager 
 	{
 		static private var _root:DisplayObjectContainer
-		static private var _overlayView:DisplayObject
+		private var _overlayView:DisplayObject
 		
 		public function PopUpManager() 
 		{
@@ -27,6 +28,11 @@ package me.rainui.managers
 		}
 		
 		static public function addPopUp(popUp:DisplayObject, isModal:Boolean = true, isCentered:Boolean = true):DisplayObject
+		{
+			return new PopUpManager().addPopUp(popUp, isModal, isCentered);
+		}
+		
+		public function addPopUp(popUp:DisplayObject, isModal:Boolean = true, isCentered:Boolean = true):DisplayObject
 		{
 			
 			if (_root == null)
@@ -57,7 +63,7 @@ package me.rainui.managers
 
 			//this._popUps.push(popUp);
 			_root.addChild(popUp);
-			popUp.addEventListener(Event.REMOVED_FROM_STAGE, popUp_removedFromStageHandler);
+			popUp.addEventListener(Event.REMOVED_FROM_STAGE, popUp_removedFromStageHandler,false,16);
 
 			//if(this._popUps.length == 1)
 			//{
@@ -93,7 +99,7 @@ package me.rainui.managers
 		/**
 		 * @private
 		 */
-		static private function popUp_removedFromStageHandler(event:Event):void
+		private function popUp_removedFromStageHandler(event:Event):void
 		{
 			var popUp:DisplayObject = DisplayObject(event.currentTarget);
 			popUp.removeEventListener(Event.REMOVED_FROM_STAGE, popUp_removedFromStageHandler);

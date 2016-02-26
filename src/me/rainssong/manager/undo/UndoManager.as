@@ -8,7 +8,7 @@
 // in accordance with the terms of the license agreement accompanying it.
 //
 ////////////////////////////////////////////////////////////////////////////////
-package flashx.undo
+package me.rainssong.manager.undo
 {
 			
 	/** 

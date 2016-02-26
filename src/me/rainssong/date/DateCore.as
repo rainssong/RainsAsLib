@@ -1,23 +1,23 @@
 ﻿/**
  * jp.nium Classes
- * 
+ *
  * @author Copyright (C) 2007-2010 taka:nium.jp, All Rights Reserved.
  * @version 4.0.22
  * @see http://classes.nium.jp/
- * 
+ *
  * jp.nium Classes is released under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  */
-package me.rainssong.date 
+package me.rainssong.date
 {
 	import me.rainssong.utils.NumberCore;
-
 	
 	/**
 	 * <span lang="ja">DateCore クラスは、日付データ操作のためのユーティリティクラスです。</span>
 	 * <span lang="en">The DateCore class is an utility class for date data operation.</span>
 	 */
-	public final class DateCore {
+	public final class DateCore
+	{
 		
 		public static const ONE_MILLISECOND:int = 1;
 		
@@ -37,38 +37,35 @@ package me.rainssong.date
 		
 		public static const ONE_DAY:int = ONE_HOUR * MAX_HOUR;
 		
+		static private const _MONTH_NAMES:Array = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 		
-		static private const _MONTH_NAMES:Array = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-		
-		static private const _DAY_NAMES:Array = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
-		
+		static private const _DAY_NAMES:Array = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		
 		public static const DAY_NAMES:Array = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		public static const DAYS_ABBREVIATED_NAMES:Array = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-  		public static const MONTHS_NAMES:Array = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		public static const MONTHS_NAMES:Array = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 		public static const MONTHS_ABBREVIATED_NAMES:Array = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  		public static const DAYSINMONTH:Array = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-		
-	
+		public static const DAYSINMONTH:Array = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 		
 		/**
 		 * <span lang="ja">対象の月の最大日数を返します。</span>
 		 * <span lang="en">Returns the maximum day of the month.</span>
-		 * 
+		 *
 		 * @param date
 		 * <span lang="ja">最大日数を取得したい Date インスタンスです。</span>
 		 * <span lang="en">The date istance to get the maximum day.</span>
 		 * @return
 		 * <span lang="ja">最大日数です。</span>
 		 * <span lang="en">The maximum day.</span>
-		 * 
+		 *
 		 * @example <listing version="3.0">
 		 * </listing>
 		 */
-		public static function getMaxDateLength( date:Date ):int {
-			var newDate:Date = new Date( date );
-			newDate.setMonth( date.getMonth() + 1 );
-			newDate.setDate( 0 );
+		public static function getMaxDateLength(date:Date):int
+		{
+			var newDate:Date = new Date(date);
+			newDate.setMonth(date.getMonth() + 1);
+			newDate.setDate(0);
 			return newDate.getDate();
 		}
 		
@@ -78,7 +75,8 @@ package me.rainssong.date
 		 * @return
 		 * @example <listing version="3.0">
 		 */
-		public static function format( date:Date, str:String="%Y-%M2-%D2 %h2:%m2:%s2" ):String {
+		public static function format(date:Date, str:String = "%Y-%M2-%D2 %h2:%m2:%s2"):String
+		{
 			var _fullYear:int = date.getFullYear();
 			var _month:int = date.getMonth();
 			var _date:int = date.getDate();
@@ -87,30 +85,30 @@ package me.rainssong.date
 			var _hhour:int = _hour % 12;
 			var _minutes:int = date.getMinutes();
 			var _seconds:int = date.getSeconds();
-			var _ampm:Boolean = ( _hour < 12 );
+			var _ampm:Boolean = (_hour < 12);
 			
-			str = str.replace( new RegExp( "%ampm", "g" ), _ampm ? "am" : "pm" );
-			str = str.replace( new RegExp( "%AMPM", "g" ), _ampm ? "AM" : "PM" );
-			str = str.replace( new RegExp( "%D2", "g" ), NumberCore.digit( _date, 2 ) );
-			str = str.replace( new RegExp( "%D", "g" ), _date.toString() );
-			str = str.replace( new RegExp( "%Mn", "g" ), _MONTH_NAMES[_month] );
-			str = str.replace( new RegExp( "%M2", "g" ), NumberCore.digit( _month+1, 2 ) );
-			str = str.replace( new RegExp( "%M", "g" ), _month.toString() );
-			str = str.replace( new RegExp( "%Y2", "g" ), NumberCore.digit( _fullYear, 2 ) );
-			str = str.replace( new RegExp( "%Y", "g" ), _fullYear.toString() );
-			str = str.replace( new RegExp( "%hh2", "g" ), NumberCore.digit( _hhour, 2 ) );
-			str = str.replace( new RegExp( "%h2", "g" ), NumberCore.digit( _hour, 2 ) );
-			str = str.replace( new RegExp( "%hh", "g" ), _hhour.toString() );
-			str = str.replace( new RegExp( "%h", "g" ), _hour.toString() );
-			str = str.replace( new RegExp( "%m2", "g" ), NumberCore.digit( _minutes, 2 ) );
-			str = str.replace( new RegExp( "%m", "g" ), _minutes.toString() );
+			str = str.replace(new RegExp("%ampm", "g"), _ampm ? "am" : "pm");
+			str = str.replace(new RegExp("%AMPM", "g"), _ampm ? "AM" : "PM");
+			str = str.replace(new RegExp("%D2", "g"), NumberCore.digit(_date, 2));
+			str = str.replace(new RegExp("%D", "g"), _date.toString());
+			str = str.replace(new RegExp("%Mn", "g"), _MONTH_NAMES[_month]);
+			str = str.replace(new RegExp("%M2", "g"), NumberCore.digit(_month + 1, 2));
+			str = str.replace(new RegExp("%M", "g"), _month.toString());
+			str = str.replace(new RegExp("%Y2", "g"), NumberCore.digit(_fullYear, 2));
+			str = str.replace(new RegExp("%Y", "g"), _fullYear.toString());
+			str = str.replace(new RegExp("%hh2", "g"), NumberCore.digit(_hhour, 2));
+			str = str.replace(new RegExp("%h2", "g"), NumberCore.digit(_hour, 2));
+			str = str.replace(new RegExp("%hh", "g"), _hhour.toString());
+			str = str.replace(new RegExp("%h", "g"), _hour.toString());
+			str = str.replace(new RegExp("%m2", "g"), NumberCore.digit(_minutes, 2));
+			str = str.replace(new RegExp("%m", "g"), _minutes.toString());
 			
-			str = str.replace( new RegExp( "%s2", "g" ), NumberCore.digit( _seconds, 2 ) );
-			str = str.replace( new RegExp( "%s", "g" ), _seconds.toString());
+			str = str.replace(new RegExp("%s2", "g"), NumberCore.digit(_seconds, 2));
+			str = str.replace(new RegExp("%s", "g"), _seconds.toString());
 			
-			str = str.replace( new RegExp( "%md", "g" ), getMaxDateLength( date ).toString() );
-			str = str.replace( new RegExp( "%day", "g" ), _day.toString() );
-			str = str.replace( new RegExp( "%DN", "g" ), _DAY_NAMES[_day] );
+			str = str.replace(new RegExp("%md", "g"), getMaxDateLength(date).toString());
+			str = str.replace(new RegExp("%day", "g"), _day.toString());
+			str = str.replace(new RegExp("%DN", "g"), _DAY_NAMES[_day]);
 			
 			return str;
 		}
@@ -118,33 +116,33 @@ package me.rainssong.date
 		/**
 		 * <span lang="ja">W3CDTF 形式のストリングから Date インスタンスを生成して返します。</span>
 		 * <span lang="en"></span>
-		 * 
+		 *
 		 * @param date
 		 * <span lang="en">W3CDTF 形式のストリングです。</span>
 		 * <span lang="en"></span>
 		 * @return
 		 * <span lang="ja">生成された Date インスタンスです。</span>
 		 * <span lang="en"></span>
-		 * 
+		 *
 		 * @example <listing version="3.0">
 		 * </listing>
 		 */
-		public static function praseW3CDTF( time:String ):Date 
+		public static function praseW3CDTF(time:String):Date
 		{
-			var results:Array = new RegExp( "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})Z$", "g" ).exec( time ) || [];
+			var results:Array = new RegExp("^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})Z$", "g").exec(time) || [];
 			
 			var date:Date = new Date();
-			date.fullYear = parseInt( results[1] );
-			date.month = parseInt( results[2] ) - 1;
-			date.date = parseInt( results[3] );
-			date.hours = parseInt( results[4] );
-			date.minutes = parseInt( results[5] );
-			date.seconds = parseInt( results[6] );
+			date.fullYear = parseInt(results[1]);
+			date.month = parseInt(results[2]) - 1;
+			date.date = parseInt(results[3]);
+			date.hours = parseInt(results[4]);
+			date.minutes = parseInt(results[5]);
+			date.seconds = parseInt(results[6]);
 			
 			return date;
 		}
 		
-		public static function toW3CDTF(d:Date,includeMilliseconds:Boolean=false):String
+		public static function toW3CDTF(d:Date, includeMilliseconds:Boolean = false):String
 		{
 			var date:Number = d.getUTCDate();
 			var month:Number = d.getUTCMonth();
@@ -194,6 +192,71 @@ package me.rainssong.date
 			}
 			sb += "-00:00";
 			return sb;
+		}
+		
+		static public function stringToDate(dateString:String,formatString:String):Date
+		{
+			//var results:Array = new RegExp("^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})Z$", "g").exec(time) || [];
+			//"15-12-20 16:43:10 00"
+			var monthNames:Array = MONTHS_NAMES;
+			
+			var isUTC:Boolean = dateString.search("UTC") >= 0;
+			
+			var noMonths:int = monthNames.length;
+			//月份修改为数字
+			for (var i:int = 0; i < noMonths; i++)
+			{
+				dateString = dateString.replace(monthNames[i], (i + 1).toString());
+				dateString = dateString.replace(monthNames[i].substr(0, 3), (i + 1).toString());
+			}
+			
+			var dateArr:Array = dateString.split(/[:-\s]/);
+			var formatArr:Array = formatString.split(/[:-\s]/);
+			
+			var date:Date = new Date();
+			
+			
+			for (i = 0; i < formatArr.length; i++) 
+			{
+				var str:String = formatArr[i];
+				switch (str) 
+				{
+					case "YY":
+						date.fullYear = 2000 + Number(dateArr[i]);
+					break;
+					case "YYYY":
+						date.fullYear = Number(dateArr[i]);
+					break;
+					case "MM":
+					case "M":
+						date.month = Number(dateArr[i])-1;
+					break;
+					case "DD":
+					case "D":
+						date.date = Number(dateArr[i]);
+					break;
+					case "h":
+					case "hh":
+						date.hours = Number(dateArr[i]);
+					break;
+					case "m":
+					case "mm":
+						date.minutes = Number(dateArr[i]);
+					break;
+					case "s":
+					case "ss":
+						date.seconds = Number(dateArr[i]);
+					break;
+					case "ms":
+						date.milliseconds = Number(dateArr[i]);
+					break;
+					default:
+				}
+			}
+			
+			
+			
+			return date;
 		}
 	}
 }

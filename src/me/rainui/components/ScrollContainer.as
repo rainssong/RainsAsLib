@@ -1,10 +1,12 @@
 package me.rainui.components 
 {
+	import com.greensock.motionPaths.Direction;
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import me.rainssong.utils.Directions;
 	import me.rainssong.utils.Draw;
 	import me.rainui.RainTheme;
 	/**
@@ -34,6 +36,10 @@ package me.rainui.components
 		//public var lockDirection:Boolean = true;
 		public var allowOverload:Boolean = true;
 		public var touchScroll:Boolean = true;
+		
+		
+		protected var _mouseWheelScrollDirection:String = ALL;
+		protected var _mouseWheelScrollStep:Number = 5;
 		
 		public function ScrollContainer(content:DisplayObject=null,dataSource:Object=null) 
 		{
@@ -85,8 +91,26 @@ package me.rainui.components
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseUp);
+			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
 			this.scrollRect = new Rectangle(0, 0, _width, _height);
+		}
+		
+		private function onMouseWheel(e:MouseEvent):void 
+		{
+			if (_mouseWheelScrollDirection == VERTICAL)
+				_speedY = e.delta * _mouseWheelScrollStep;
+			else if (_mouseWheelScrollDirection == HORIZONTAL)
+				_speedX = e.delta * _mouseWheelScrollStep;
+			else
+			{
+				if (_container.contentWidth <= _width+10)
+					_speedY = e.delta * _mouseWheelScrollStep;
+				else
+					_speedX = e.delta * _mouseWheelScrollStep;
+			}
+				
+				
 		}
 		
 		private function onEnterFrame(e:Event):void 

@@ -73,6 +73,18 @@
 			this.mouseEnabled = true;
 		
 		}
+		
+		/* DELEGATE flash.text.TextField */
+		
+		public function get text():String 
+		{
+			return labelTF.text;
+		}
+		
+		public function set text(value:String):void 
+		{
+			labelTF.text = value;
+		}
 	
 		//private function removeAt():void 
 //		{

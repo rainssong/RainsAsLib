@@ -31,8 +31,11 @@ package me.rainui.components
 		//protected var _bitmap:AutoBitmap;
 		protected var _margin:Array = [0, 0, 0, 0];
 		
+		static public var defaultStyleFactory:Function;
+		
 		public function Label(text:String = "Label", dataSource:Object = null)
 		{
+			
 			super(null,dataSource)
 			this.text = text;
 		}
@@ -43,9 +46,9 @@ package me.rainui.components
 			mouseChildren = true;
 			
 			_format = RainUI.getTextFormat("label");
-			
-			_width = 200;
-			_height = 60;
+			size = 32 * RainUI.scale;
+			this._width = 200*RainUI.scale;
+			this._height = 60*RainUI.scale;
 			_autoSize = false;
 			_contentScaleMode = ScaleMode.NONE;
 		}
@@ -65,17 +68,26 @@ package me.rainui.components
 				addChild(textField = new TextField());
 				_contentAlign = Align.LEFT;
 				textField.autoSize = TextFieldAutoSize.NONE;
+				_content = textField;
+				
+				super.createChildren();
+				this._width = 200*RainUI.scale;
+				this._height = 60*RainUI.scale;
 			}
 			else
 			{
+				
 				_width = textField.width;
 				_height = textField.height;
 				_format = textField.getTextFormat();
 				_text = textField.text;
+				_content = textField;
+				super.createChildren();
 			}
 			
-			_content = textField;
-			super.createChildren();
+			
+			
+			
 		}
 		
 		override protected function initialize():void
@@ -84,6 +96,9 @@ package me.rainui.components
 			//textField.setTextFormat(_format);
 			textField.selectable = false;
 			callLater(resize);
+			
+			if (defaultStyleFactory!=null)
+				defaultStyleFactory(this);
 		}
 		
 		/**显示的文本*/
@@ -117,11 +132,12 @@ package me.rainui.components
 		{
 			if (textField)
 			{
+				//BUG:多色由富文本组件完成
 				textField.defaultTextFormat = _format;
 				//textField.setTextFormat(_format);
 			}
 			
-			textField.htmlText = _text;
+			textField.text = _text;
 			
 			super.redraw();
 		}

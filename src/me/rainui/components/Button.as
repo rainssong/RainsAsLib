@@ -18,7 +18,6 @@ package me.rainui.components
 	import flash.text.TextFormatAlign;
 	import me.rainssong.manager.SystemManager;
 	import me.rainssong.media.RainStageWebView;
-	import me.rainssong.system.SystemCore;
 	import me.rainssong.utils.Draw;
 	import me.rainssong.utils.ScaleMode;
 	import me.rainui.events.RainUIEvent;
@@ -63,13 +62,12 @@ package me.rainui.components
 		
 		protected var _showIcon:Boolean = false;
 		
-		//protected var _labelColors:Array = Styles.buttonLabelColors;
-		//protected var _labelMargin:Array = Styles.buttonLabelMargin;
-		//protected var _showLabel:Boolean = true;
 		protected var _state:String = NORMAL;
 		protected var _toggle:Boolean = false;
 		protected var _selected:Boolean = false;
-		protected var _normalColorTrans:ColorTransform=new ColorTransform();
+		protected var _normalColorTrans:ColorTransform = new ColorTransform();
+		
+		public static var defaultStyleFactory:Function;
 		
 		public function Button(text:String = "",dataSource:Object=null)
 		{
@@ -86,8 +84,8 @@ package me.rainui.components
 			this.mouseChildren = false
 			this.mouseEnabled = true;
 			
-			this._width = 200;
-			this._height = 60;
+			//this._width = 200*RainUI.scale;
+			//this._height = 60*RainUI.scale;
 		}
 		
 		override protected function createChildren():void
@@ -100,11 +98,19 @@ package me.rainui.components
 			{
 				_normalSkin = RainUI.getSkin("buttonNormal");
 				addChild(_normalSkin);
+				this._width = 200*RainUI.scale;
+				this._height = 60*RainUI.scale;
 			}
 			else
 			{
-				this._width = _normalSkin.width;
-				this._height = _normalSkin.height;
+				_normalSkin.scaleX *=  RainUI.scale;
+				_normalSkin.scaleY *=  RainUI.scale;
+			}
+			
+			if (isNaN(_width))
+			{
+				this._width = _normalSkin.width
+				this._height = _normalSkin.height
 			}
 			
 			if (_downSkin)
@@ -118,7 +124,8 @@ package me.rainui.components
 				_label.centerX = 0;
 				_label.centerY = 0;
 				_label.autoSize = true;
-				_label.format = RainUI.getTextFormat("button");
+				_label.size = RainUI.scale * 32;
+				_label.color = 0xffffff;
 				addChild(_label);
 			}
 			
@@ -127,6 +134,8 @@ package me.rainui.components
 		
 		override protected function initialize():void
 		{
+			super.initialize();
+			
 			clickHandler = null;
 			upHandler = null;
 			downHandler = null;

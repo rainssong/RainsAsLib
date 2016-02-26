@@ -11,7 +11,7 @@
     <movie version="17" />
     <movie minorVersion="0" />
     <movie platform="AIR" />
-    <movie background="#8080FF" />
+    <movie background="#00FF00" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -70,11 +70,11 @@
   </intrinsics>
   <!-- Assets to embed into the output SWF -->
   <library>
-    <!-- example: <asset path="..." id="..." update="..." glyphs="..." mode="..." place="..." sharepoint="..." /> -->
+    <asset path="bin\BlackAndWhiteCity.rar" />
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="examples\ViewSwitcherTest.as" />
+    <compile path="examples\RainUITest\src\ListExample.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>

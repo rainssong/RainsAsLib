@@ -32,19 +32,19 @@ package me.rainui.components
 			label.left =10;
 			label.right = 10;
 			
-			selectHandler = onSelect;
-			unselectHandler = onUnselect;
+			//selectHandler = onSelect;
+			//unselectHandler = onUnselect;
 		}
 		
-		private function onSelect(e:RainUIEvent=null):void 
-		{
-			label.color = RainTheme.LIGHT_BLACK;
-		}
-		
-		private function onUnselect(e:RainUIEvent=null):void 
-		{
-			label.color=RainTheme.GRAY;
-		}
+		//private function onSelect(e:RainUIEvent=null):void 
+		//{
+			//label.color = RainTheme.LIGHT_BLACK;
+		//}
+		//
+		//private function onUnselect(e:RainUIEvent=null):void 
+		//{
+			//label.color=RainTheme.GRAY;
+		//}
 		
 		
 		

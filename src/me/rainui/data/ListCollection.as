@@ -90,7 +90,7 @@ package me.rainui.data
 
 		public function updateItemAt(index:int):void
 		{
-			sendEvent(ListEvent.UPDATE_ITEM, false, index);
+			sendEvent(ListEvent.UPDATE_ITEM,index, false );
 		}
 		
 		public function sendEvent(type:String, data:*=null, bubbles:Boolean = false, cancelable:Boolean = false):void

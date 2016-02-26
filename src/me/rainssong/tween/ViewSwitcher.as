@@ -70,7 +70,7 @@ package me.rainssong.tween
 			{
 				//BUG:
 				case "none": 
-					removeOldView();
+					
 					break;
 				case "move": 
 					
@@ -151,8 +151,12 @@ package me.rainssong.tween
 					vars1.onComplete = onComplete;
 					vars1.onCompleteParams = onCompleteParams;
 					
+					//BUG:bitmap没有消失
 					addView(_parent, newView, "fadeFromBlack", vars1);
 					removeView(oldView, "fadeToBlack", vars2);
+					
+					//_parent.removeChild(oldView);
+					//_parent.addChild(newView);
 					
 					break;
 				default: 
@@ -274,7 +278,6 @@ package me.rainssong.tween
 					setTimeout(removeOldView,(duration+delay)*1000);
 					break;
 				case "fadeToBlackOut": 
-					
 					
 					AnimationCore.fadeToBlack(view, duration * 0.5,  { delay:delay, ease:ease});
 					AnimationCore.blackToTrans(view, duration * 0.5,  { delay:delay, ease:ease});

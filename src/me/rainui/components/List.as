@@ -23,6 +23,7 @@ package me.rainui.components
 	/**列表*/
 	public class List extends ScrollContainer
 	{
+		public static var defaultStyleFactory:Function;
 		//protected var _content:Box;
 		//protected var _scrollContainer:ScrollContainer;
 		protected var _itemRender:*;
@@ -43,6 +44,8 @@ package me.rainui.components
 		protected var _btnGroup:RadioGroup 
 		
 		protected var _labelField:String = "";
+		
+		protected var _rendersFlag:Boolean = false;
 		
 		public function List(items:* = null, dataSource:Object = null)
 		{
@@ -136,6 +139,7 @@ package me.rainui.components
 		public function set itemRender(value:*):void
 		{
 			_itemRender = value;
+			_rendersFlag = true;
 			callLater(redraw);
 		}
 		
@@ -199,18 +203,13 @@ package me.rainui.components
 		
 		override public function redraw():void
 		{
-			if (_itemRender)
+			if (_itemRender && _rendersFlag)
 			{
+				_rendersFlag = false;
 				//销毁老单元格
 				for each (var cell:ListItem in _cells)
 				{
-					cell.removeEventListener(MouseEvent.CLICK, onCellMouse);
-					cell.removeEventListener(MouseEvent.ROLL_OVER, onCellMouse);
-					cell.removeEventListener(MouseEvent.ROLL_OUT, onCellMouse);
-					cell.removeEventListener(MouseEvent.MOUSE_DOWN, onCellMouse);
-					cell.removeEventListener(MouseEvent.MOUSE_UP, onCellMouse);
-					_btnGroup.removeButton(cell);
-					cell.remove();
+					removeCell(cell);
 				}
 				_cells.length = 0;
 				
@@ -229,10 +228,20 @@ package me.rainui.components
 					cells.push(c);
 					addCell(c);
 					_btnGroup.addButton(c);
-					//group.addEventListener(Event.RESIZE, onGroupResize);
 				}
 			}
 			super.redraw();
+		}
+		
+		public function removeCell(cell:ListItem):void 
+		{
+			cell.removeEventListener(MouseEvent.CLICK, onCellMouse);
+			cell.removeEventListener(MouseEvent.ROLL_OVER, onCellMouse);
+			cell.removeEventListener(MouseEvent.ROLL_OUT, onCellMouse);
+			cell.removeEventListener(MouseEvent.MOUSE_DOWN, onCellMouse);
+			cell.removeEventListener(MouseEvent.MOUSE_UP, onCellMouse);
+			_btnGroup.removeButton(cell);
+			cell.remove();
 		}
 		
 		protected function addCell(cell:ListItem):void

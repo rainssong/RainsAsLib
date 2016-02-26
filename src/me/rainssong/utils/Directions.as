@@ -16,6 +16,8 @@ package me.rainssong.utils
 		static public const LEFT:String = "left";
 		static public const STAY:String = "stay";
 		static public const ANY:String = "any";
+		static public const HORIZONTAL:String = "horizontal";
+		static public const VERTICAL:String = "vertical";
 		
 		public function Directions() 
 		{

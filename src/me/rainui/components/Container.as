@@ -68,8 +68,9 @@ package me.rainui.components
 			if (e.target == this)
 			{
 				parent.removeEventListener(Event.RESIZE, onParentResize);
+				//等待事件
 				if (destroyOnRemove)
-					destroy();
+					callLater(destroy);
 			}
 		}
 		
@@ -190,7 +191,7 @@ package me.rainui.components
 			_centerY = NaN;
 			_percentCenterY = NaN;
 			
-			callLater(resize);
+			callLater(calcSize);
 		}
 		
 		/**居父容器底部的距离*/
@@ -209,7 +210,7 @@ package me.rainui.components
 			_centerY = NaN;
 			_percentCenterY = NaN;
 			
-			callLater(resize);
+			callLater(calcSize);
 		}
 		
 		/**居父容器左边的距离*/
@@ -228,7 +229,7 @@ package me.rainui.components
 			
 			_centerX = NaN;
 			_percentCenterX = NaN;
-			callLater(resize);
+			callLater(calcSize);
 			
 		}
 		
@@ -247,7 +248,7 @@ package me.rainui.components
 			//_percentRight = NaN;
 			_centerX = NaN;
 			_percentCenterX = NaN;
-			callLater(resize);
+			callLater(calcSize);
 		}
 		
 		/**水平居中偏移位置*/
@@ -295,7 +296,7 @@ package me.rainui.components
 		public function set percentWidth(value:Number):void 
 		{
 			_percentWidth = value;
-			callLater(resize);
+			callLater(calcSize);
 		}
 		
 		public function get percentHeight():Number 
@@ -306,7 +307,7 @@ package me.rainui.components
 		public function set percentHeight(value:Number):void 
 		{
 			_percentHeight = value;
-			callLater(resize);
+			callLater(calcSize);
 		}
 		
 		public function get percentTop():Number 
@@ -317,7 +318,7 @@ package me.rainui.components
 		public function set percentTop(value:Number):void 
 		{
 			_percentTop = value;
-			callLater(resize);
+			callLater(calcSize);
 		}
 		
 		public function get percentBottom():Number 
@@ -328,7 +329,7 @@ package me.rainui.components
 		public function set percentBottom(value:Number):void 
 		{
 			_percentBottom = value;
-			callLater(resize);
+			callLater(calcSize);
 		}
 		
 		public function get percentLeft():Number 
@@ -339,7 +340,7 @@ package me.rainui.components
 		public function set percentLeft(value:Number):void 
 		{
 			_percentLeft = value;
-			callLater(resize);
+			callLater(calcSize);
 		}
 		
 		public function get percentRight():Number 
@@ -350,7 +351,7 @@ package me.rainui.components
 		public function set percentRight(value:Number):void 
 		{
 			_percentRight = value;
-			callLater(resize);
+			callLater(calcSize);
 		}
 		
 		public function get minHeight():Number 

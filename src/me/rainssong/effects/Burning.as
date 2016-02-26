@@ -1,4 +1,4 @@
-﻿package com.kerry.effect {
+﻿package me.rainssong.effects {
 	import com.codeTooth.actionscript.lang.utils.destroy.DestroyUtil;
 	import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
 	import flash.display.Bitmap;

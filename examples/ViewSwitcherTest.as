@@ -25,20 +25,33 @@ package
 			super();
 			
 			KeyboardManager.startListen(stage);
-			KeyboardManager.regFunction(onKey, Keyboard.SPACE);
+			KeyboardManager.regFunction(onA, Keyboard.A);
+			KeyboardManager.regFunction(onS, Keyboard.S);
+			KeyboardManager.regFunction(onD, Keyboard.D);
+			KeyboardManager.regFunction(onR, Keyboard.R);
 			addChild(bmp1);
 		}
 		
-		private function onKey():void 
+		private function onA():void 
 		{
-			
-			var vs:ViewSwitcher = new ViewSwitcher();
-			vs.switchView(bmp1,bmp2,"fadeBlack",{delay:0.5,duration:1});
-			//vs.removeView(bmp1,"move");
-			
-			//AnimationCore.blackToTrans(this)
+			ViewSwitcher.switchView(bmp1,bmp2,"fadeBlack",{delay:0.5,duration:1});
 		}
 		
+		private function onS():void 
+		{
+			ViewSwitcher.switchView(bmp1,bmp2,"fadeOut",{delay:0.5,duration:1});
+		}
+		private function onD():void 
+		{
+			ViewSwitcher.switchView(bmp1,bmp2,"fadeOutIn",{delay:0.5,duration:1});
+		}
+		
+		private function onR():void 
+		{
+			ViewSwitcher.switchView(bmp2,bmp1,"none",{duration:0});
+		}
 	}
+	
+	
 
 }

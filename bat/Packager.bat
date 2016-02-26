@@ -71,6 +71,9 @@ echo uninstalling...
 call adt -uninstallApp -platform %PLAT% -appid %APP_ID%
 echo installing...
 call adt -installApp -platform %PLAT% -package %OUTPUT%
+if "%PLAT%"=="android" (
+echo -launching...
+adt -launchApp -platform %PLAT% -appid %APP_ID%)
 goto end
 
 

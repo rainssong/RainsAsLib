@@ -2,6 +2,7 @@ package
 {
 	import flash.display.Shape;
 	import flash.geom.Rectangle;
+	import flash.utils.setTimeout;
 	import me.rainssong.utils.Align;
 	import me.rainssong.utils.Color;
 	import me.rainssong.utils.Draw;
@@ -29,7 +30,12 @@ package
 			
 			RainUI.init(stage);
 			
-			list = new List(["1", "2", "3", "44444", "55555", "66666"], { parent:stage } );
+			setTimeout(init,200)
+		}
+		
+		private function init():void 
+		{
+			list = new List(["1", "2", "3", "44444", "55555", "66666", "66666", "66666", "66666", "66666", "66666", "66666"], { parent:stage } );
 			list.itemRender = ir;
 			list.btnGroup.max = 1;
 			list.addEventListener(RainUIEvent.CHANGE, onChange);
@@ -53,6 +59,9 @@ package
 			l.label.color = Color.rgb( 77, 77, 77);
 			l.label.centerX = 0;
 			l.label.centerY = 0;
+			l.label.size = 44;
+			
+			l.unselectHandler = null;
 			return l;
 		}
 		

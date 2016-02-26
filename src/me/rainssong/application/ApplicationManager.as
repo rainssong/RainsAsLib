@@ -41,20 +41,21 @@ package me.rainssong.application
 		public static function init(stage:Stage):void
 		{
 			ApplicationManager.stage = stage;
-			if (SystemCore.isWindows)
-			{
-				stageWidth = stage.fullScreenWidth;
-				stageHeight = stage.fullScreenHeight;
-			}
-			else
-			{
-				stageWidth = Capabilities.screenResolutionX;
-				stageHeight = Capabilities.screenResolutionY;
-			}
+			//if (SystemCore.isWindows)
+			//{
+				//stageWidth = stage.fullScreenWidth;
+				//stageHeight = stage.fullScreenHeight;
+			//}
+			//else
+			//{
+				//stageWidth = Capabilities.screenResolutionX;
+				//stageHeight = Capabilities.screenResolutionY;
+			//}
+			onStageResize();
 			stage.addEventListener(Event.RESIZE, onStageResize);
 		}
 		
-		static private function onStageResize(e:Event):void 
+		static private function onStageResize(e:Event=null):void 
 		{
 			stageWidth = stage.stageWidth;
 			stageHeight = stage.stageHeight;

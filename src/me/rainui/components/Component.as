@@ -1,5 +1,6 @@
 ﻿package me.rainui.components
 {
+	import com.adobe.protocols.dict.events.DefinitionHeaderEvent;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Shape;
@@ -11,6 +12,7 @@
 	import me.rainssong.model.ListenerModel;
 	import me.rainui.events.RainUIEvent;
 	import me.rainui.RainUI;
+	import me.rainui.utils.ScaleMethod;
 	
 	/**
 	 * ...
@@ -23,6 +25,7 @@
 		//size
 		protected var _width:Number = NaN;
 		protected var _height:Number = NaN;
+		
 		protected var _autoSize:Boolean = false;
 		
 		//stats
@@ -43,6 +46,20 @@
 		
 		protected var _listeners:Dictionary = new Dictionary(true);
 		
+		//新增属性，免除计算像素的步骤
+		protected var _dotWidth:Number;
+		protected var _dotHeight:Number;
+		
+		protected var _autoExpand:Boolean = false;
+		protected var _autoShrink:Boolean = false;
+		
+		public static var defaultStyleFactory:Function;
+		
+		protected var _styleFactory:Function;
+		
+		protected var _styleName:String = "Component";
+		
+		
 		public function Component(dataSource:Object=null)
 		{
 			super();
@@ -53,10 +70,7 @@
 			this.dataSource = dataSource;
 		}
 		
-		protected function initialize():void
-		{
-			
-		}
+		
 		
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
@@ -70,10 +84,16 @@
 			super.removeEventListener(type, listener, useCapture);
 		}
 		
-		override public function removeAllEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
+		public function removeAllEventListener():void 
 		{
 			for each (var item:ListenerModel in _listeners) 
 				removeEventListener(item.type, item.listener, item.useCapture);
+		}
+		
+		protected function preinitialize():void
+		{
+			//_width = 100;
+			//_height = 100;
 		}
 		
 		protected function createChildren():void
@@ -86,10 +106,10 @@
 			addChildAt(_bgSkin,0);
 		}
 		
-		protected function preinitialize():void
+		protected function initialize():void
 		{
-			//_width = 100;
-			//_height = 100;
+			if (styleFactory != null )
+				styleFactory(this);
 		}
 		
 		public function callLater(method:Function, args:Array = null):void
@@ -451,6 +471,39 @@
 		{
 			target.addChild(this);
 		}
+		
+		public function get dotWidth():Number 
+		{
+			return _dotWidth;
+		}
+		
+		public function set dotWidth(value:Number):void 
+		{
+			_dotWidth = value;
+		}
+		
+		public function get dotHeight():Number 
+		{
+			return _dotHeight;
+		}
+		
+		public function set dotHeight(value:Number):void 
+		{
+			_dotHeight = value;
+		}
+		
+		public function get styleFactory():Function 
+		{
+			return _styleFactory || Component.defaultStyleFactory;
+		}
+		
+		public function set styleFactory(value:Function):void 
+		{
+			_styleFactory = value;
+		}
+		
+		
+		
 	
 	}
 }
