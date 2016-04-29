@@ -1,23 +1,23 @@
-package 
+package me.rainWorld.entity.creature.animal.part 
 {
-	import flash.display.Sprite;
-	import me.rainssong.math.ArrayCore;
+	import me.rainWorld.entity.EntityModel;
 	
 	
 	/**
-	 * @date 2016/1/8 10:12
+	 * @date 2016/3/1 2:56
 	 * @author rainssong
 	 * @blog http://blog.sina.com.cn/rainssong
 	 * @homepage http://rainsgameworld.sinaapp.com
 	 * @weibo http://www.weibo.com/rainssong
 	 */
-	public class Main extends Sprite 
+	public class BodyModel extends EntityModel 
 	{
 		
-		public function Main() 
+		
+		public function BodyModel() 
 		{
 			super();
-			ArrayCore.getIntArray
+			
 		}
 		
 	}

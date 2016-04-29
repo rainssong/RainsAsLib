@@ -7,6 +7,7 @@
 	import flash.geom.Rectangle;
 	import me.rainssong.events.DataEvent;
 	import me.rainssong.events.SlideEvent;
+	import me.rainssong.utils.ScaleMode;
 	import me.rainssong.utils.powerTrace;
 	
 	import flash.display.MovieClip;
@@ -38,6 +39,8 @@
 		private var _slideHeight:Number;
 		
 		private var _mask:Shape
+		
+		protected var _scaleMode:String = ScaleMode.NONE;
 		
 		//不允许删除当前页
 		public function SlideShow(slideWidth:Number = 1024, slideHeight:Number = 768)
@@ -433,6 +436,16 @@
 		public function get slideArr():Array
 		{
 			return _slideArr;
+		}
+		
+		public function get scaleMode():String 
+		{
+			return _scaleMode;
+		}
+		
+		public function set scaleMode(value:String):void 
+		{
+			_scaleMode = value;
 		}
 	
 	}

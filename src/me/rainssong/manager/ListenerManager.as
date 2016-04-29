@@ -4,6 +4,7 @@ package me.rainssong.manager
 	
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
+	import me.rainssong.model.ListenerModel;
 	import me.rainssong.utils.DestroyUtil;
 	import me.rainssong.utils.ObjectCore;
 
@@ -11,7 +12,7 @@ package me.rainssong.manager
 	{
 		private var _target:IEventDispatcher = null;
 		
-		private var _items:Vector.<Item> = null;
+		private var _items:Vector.<ListenerModel>
 		
 		public function ListenerManager(target:IEventDispatcher)
 		{
@@ -21,7 +22,7 @@ package me.rainssong.manager
 			}
 			
 			_target = target;
-			_items = new Vector.<Item>();
+			_items = new Vector.<ListenerModel>
 		}
 		
 		public function getTarget():IEventDispatcher
@@ -29,39 +30,54 @@ package me.rainssong.manager
 			return _target;
 		}
 		
-		public function addListener(type:String, listener:Function, useCapture:Boolean, priority:int = 0, useWeakReference:Boolean = false):void
+		public function createListener(type:String, listener:Function, useCapture:Boolean=false, priority:int = 0, useWeakReference:Boolean = false):ListenerModel
 		{
-			var item:Item = new Item();
-			item.type = type;
-			item.listener = listener;
-			item.useCapture = useCapture;
+			var item:ListenerModel = new ListenerModel(_target, type, listener, useCapture, priority, useCapture);
+			
 			_items.push(item);
-			_target.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			
+			return item;
+		}
+		
+		public function getListener(type:String, listener:Function, useCapture:Boolean = false):ListenerModel
+		{
+			for (var i:int = _items.length - 1; i >= 0;i-- ) 
+			{
+				var item:ListenerModel = _items[i]
+				if(item.type == type && item.listener == listener && item.useCapture == useCapture)
+				{
+					return item;
+				}
+			}
+			return null;
+		}
+		
+		public function addListener(type:String, listener:Function, useCapture:Boolean=false, priority:int = 0, useWeakReference:Boolean = false):void
+		{
+			createListener(type, listener, useCapture, priority, useCapture).add();
 		}
 		
 		public function removeListener(type:String, listener:Function, useCapture:Boolean = false):Boolean
 		{
-			for each(var item:Item in _items)
+			var lm:ListenerModel = getListener(type, listener, useCapture)
+			if (lm != null)
 			{
-				if(item.type == type && item.listener == listener && item.useCapture == useCapture)
-				{
-					_target.removeEventListener(item.type, item.listener, item.useCapture);
-					delete _items[type];
-					item.destroy();
-					return true;
-				}
+				lm.remove();
+				return true
 			}
-			
-			return false;
+			else
+				return false;
 		}
 		
 		public function removeAllListeners():void
 		{
-			for each(var item:Item in _items)
+			for each(var item:ListenerModel in _items)
 			{
-				_target.removeEventListener(item.type, item.listener, item.useCapture);
+				item.remove()
 			}
-			DestroyUtil.destroyVector(_items);
+			_items.length = 0;
+			//DestroyUtil.destroyVector(_items);
+			
 		}
 		
 		
@@ -74,23 +90,5 @@ package me.rainssong.manager
 				_target = null;
 			}
 		}
-	}
-}
-
-
-//import com.codeTooth.actionscript.lang.utils.destroy.IDestroy;
-
-class Item
-{
-	public var type:String = null;
-	
-	public var listener:Function = null;
-	
-	public var useCapture:Boolean = false;
-	
-	public function destroy():void
-	{
-		type = null;
-		listener = null;
 	}
 }

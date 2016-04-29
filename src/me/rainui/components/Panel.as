@@ -17,6 +17,15 @@ package me.rainui.components
 			super(dataSource);
 		}
 		
+		override protected function preinitialize():void 
+		{
+			if(isNaN(_width))
+				_width = 400 * RainUI.scale;
+			if(isNaN(_height))
+			_height = 200*RainUI.scale;
+			super.preinitialize();
+		}
+		
 		override protected function createChildren():void 
 		{
 			_bgSkin = RainUI.getSkin("panelBg");

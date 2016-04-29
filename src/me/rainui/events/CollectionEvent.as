@@ -41,5 +41,7 @@ package me.rainui.events
 		 * Dispatched when an item in the collection has changed.
 		 */
 		public static const UPDATE_ITEM:String = "updateItem";
+		
+		static public const UPDATE_ALL:String = "updateAll";
 	}
 }

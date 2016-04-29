@@ -157,6 +157,9 @@
 			this.primaryTextFormat = new TextFormat("微软雅黑,Helvetica", this.fontSize, BLACK);
 			this.disabledTextFormat = new TextFormat("微软雅黑,Helvetica", this.fontSize, GRAY);
 			this.lightTextFormat = new TextFormat("微软雅黑,Helvetica", this.fontSize, WHITE);
+			
+			
+			
 			//this.centeredTextFormat = new TextFormat("微软雅黑", this.fontSize, BLACK,TextFormatAlign.CENTER);
 			//this.centeredDisabledTextFormat = new BitmapFontTextFormat(FONT_NAME, this.fontSize, DISABLED_TEXT_COLOR, TextFormatAlign.CENTER);
 			//this.headingTextFormat = new BitmapFontTextFormat(FONT_NAME, this.largeFontSize, PRIMARY_TEXT_COLOR);
@@ -181,20 +184,19 @@
 		{
 			//com.width = 200*RainUI.scale;
 			//com.height = 60*RainUI.scale;
-			com.format = primaryTextFormat;
+			com.format = ObjectCore.clone(primaryTextFormat);
 		}
 		
 		public function buttonStyleFactory(comp:Button):void 
 		{
-			comp.normalSkin = blueSkinFactory();
-			//comp.width = controlWidth;
-			//comp.height = controlHeight;
+			//不能修改皮肤，除非因为存在用户定义好的情况
+			//comp.normalSkin = blueSkinFactory();
 			
 			comp.label.centerX = 0;
 			comp.label..centerY = 0;
 			comp.label.autoSize = true;
 			comp.label.size = RainUI.scale * 32;
-			comp.label..color = 0xffffff;
+			comp.label.color = 0xffffff;
 		}
 		
 		public function listStyleFactory(comp:List):void 
@@ -304,7 +306,7 @@
 					break;
 				case "gray": 
 				case GRAY_TEXT_FORMAT: 
-					tf = ObjectCore.clone(grayTextFormat);
+					tf = new TextFormat("微软雅黑", 32, GRAY, null, null, null, null, null, TextFormatAlign.CENTER);
 					break;
 				case "black": 
 				case "textInput": 
@@ -416,6 +418,11 @@
 		public function get maxScale():Number 
 		{
 			return _maxScale;
+		}
+		
+		public function set scale(value:Number):void 
+		{
+			_scale = value;
 		}
 	
 	}

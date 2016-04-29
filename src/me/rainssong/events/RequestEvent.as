@@ -10,10 +10,9 @@ package me.rainssong.events
 	{
 		public var url:String;
 		static public const COMPLETE:String = Event.COMPLETE;
-		static public const IOERROR_EVENT:String = IOErrorEvent.IO_ERROR;
+		
 		public function RequestEvent(type:String,url:String="", data:*=null, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{
-			
 			super(type, data, bubbles, cancelable);
 			this.url = url;
 		}

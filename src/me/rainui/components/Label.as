@@ -55,12 +55,12 @@ package me.rainui.components
 		
 		override protected function createChildren():void
 		{
-			//addChild(_bitmap = new AutoBitmap());
+			
 			if (numChildren == 1 && getChildAt(0) is TextField)
 			{
 				textField = getChildAt(0) as TextField;
-				_contentAlign = Align.LEFT;
-				textField.autoSize = TextFieldAutoSize.NONE;
+				//_contentAlign = Align.LEFT;
+				//textField.autoSize = TextFieldAutoSize.NONE;
 			}
 			
 			if (textField == null)
@@ -70,7 +70,7 @@ package me.rainui.components
 				textField.autoSize = TextFieldAutoSize.NONE;
 				_content = textField;
 				
-				super.createChildren();
+				
 				this._width = 200*RainUI.scale;
 				this._height = 60*RainUI.scale;
 			}
@@ -82,13 +82,38 @@ package me.rainui.components
 				_format = textField.getTextFormat();
 				_text = textField.text;
 				_content = textField;
-				super.createChildren();
+				
+				size = textField.getTextFormat().size;
+				
+				switch(_format.align)
+				{
+					case TextFormatAlign.CENTER:
+					case TextFormatAlign.JUSTIFY:
+						_contentAlign = Align.CENTER;
+					break;
+					case TextFormatAlign.START:
+					case TextFormatAlign.LEFT:
+						_contentAlign = Align.LEFT;
+					break;
+					case TextFormatAlign.RIGHT:
+					case TextFormatAlign.END:
+						_contentAlign = Align.RIGHT;
+					break;
+					default:
+						_contentAlign = Align.CENTER;
+				}
+				
+				//_autoSize = textField.autoSize
+				
 			}
 			
-			
-			
-			
+			super.createChildren();
 		}
+		
+		//public function get styleFactory():void
+		//{
+			//
+		//}
 		
 		override protected function initialize():void
 		{
@@ -97,8 +122,8 @@ package me.rainui.components
 			textField.selectable = false;
 			callLater(resize);
 			
-			if (defaultStyleFactory!=null)
-				defaultStyleFactory(this);
+			//if (defaultStyleFactory!=null)
+				//defaultStyleFactory(this);
 		}
 		
 		/**显示的文本*/
@@ -164,8 +189,9 @@ package me.rainui.components
 			}
 			else
 			{
-				//
-				textField.height = Math.max(_height,textField.textHeight+4);
+				//BUG:这样会导致变高，垂直局中无效
+				//textField.height = Math.max(_height,textField.textHeight+4);
+				textField.height =textField.textHeight+4;
 				textField.width = _width;
 			}
 			
@@ -303,6 +329,7 @@ package me.rainui.components
 			
 			//此方案用于全局填色，一次执行，所以不可放入redraw中
 			textField.setTextFormat(_format);
+			textField.defaultTextFormat = _format;
 			//redraw();
 			//callLater(redraw)
 		}

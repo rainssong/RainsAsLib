@@ -3,22 +3,24 @@ package me.rainWorld.entity.creature
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
 	import flash.utils.Dictionary;
+	import me.rainWorld.concept.emotion.Emotion;
+	import me.rainWorld.concept.emotion.EmotionBase;
 	import me.rainWorld.entity.EntityModel;
 	/**
 	 * ...
 	 * @author Rainssong
 	 */
-	public class CreatureModel extends EntityModel 
+	dynamic public class CreatureModel extends EntityModel 
 	{
 		private var _isAlive:Boolean = false;
 		private var _lifetime:Number=0;
 		private var _health:Number = 1;
-		private var _hungry:Number = 0;
+		private var _hungary:Number = 0;
 		private var _energy:Number = 1;
 		
 		//可修改为状态机
 		protected var _posture:String = "stand";
-		protected var _emotion:String = "normal";
+		protected var _emotion:Emotion = null;
 		
 		protected var _items:Array = [];
 		

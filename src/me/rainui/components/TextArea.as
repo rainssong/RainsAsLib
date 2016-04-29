@@ -27,8 +27,8 @@ package me.rainui.components
 		override protected function preinitialize():void 
 		{
 			super.preinitialize();
-			this._width = 300;
-			this._height = 200;
+			this._width = 300*RainUI.scale;
+			this._height = 200*RainUI.scale;
 		}
 		
 		override protected function initialize():void 

@@ -91,7 +91,7 @@ package me.rainui.components
 		}
 		
 		/**添加显示对象*/
-		public function addElement(element:DisplayObject, x:Number, y:Number):void
+		public function addElement(element:DisplayObject, x:Number=0, y:Number=0):void
 		{
 			element.x = x;
 			element.y = y;
@@ -99,7 +99,7 @@ package me.rainui.components
 		}
 		
 		/**增加显示对象到index层*/
-		public function addElementAt(element:DisplayObject, index:int, x:Number, y:Number):void
+		public function addElementAt(element:DisplayObject, index:int,x:Number=0, y:Number=0):void
 		{
 			element.x = x;
 			element.y = y;
@@ -429,8 +429,8 @@ package me.rainui.components
 			}
 			else
 			{
-				parentWidth = parent.width;
-				parentHeight = parent.height;
+				parentWidth = parent.width/parent.scaleX;
+				parentHeight = parent.height/parent.scaleY;
 			}
 			
 			if (_autoSize)

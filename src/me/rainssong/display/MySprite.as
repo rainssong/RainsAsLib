@@ -18,12 +18,12 @@
 	{
 		private var _autoDestroy:Boolean = true;
 		public var autoDisable:Boolean = true;
-		private var _listenerArr:Vector.<Array>;
+		private var _listenerArr:Vector.<Array>=new Vector.<Array>;
 		
 		public function MySprite()
 		{
 			super();
-			_listenerArr = new Vector.<Array>;
+			
 			onRegister();
 		}
 		

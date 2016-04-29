@@ -7,11 +7,15 @@ accordance with the terms of the accompanying license agreement.
 */
 package me.rainui.components
 {
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TouchEvent;
+	import me.rainssong.utils.Align;
 	import me.rainui.data.ListCollection;
+	import me.rainui.events.RainUIEvent;
 	import me.rainui.managers.PopUpManager;
+	import me.rainui.RainUI;
 
 
 
@@ -161,6 +165,9 @@ package me.rainui.components
 		 *     ]);
 		 * }</listing>
 		 */
+		
+		 public var btnGroup:ButtonGroup
+		 
 		public static function show(message:String, title:String = null, buttons:ListCollection = null,
 			icon:DisplayObject = null, isModal:Boolean = true, isCentered:Boolean = true,
 			customAlertFactory:Function = null, customOverlayFactory:Function = null):Alert
@@ -173,6 +180,8 @@ package me.rainui.components
 			var alert:Alert = new Alert();
 			alert.title = title;
 			alert.message = message;
+			alert.buttonsDataProvider = buttons;
+			
 			//alert.buttonsDataProvider = buttons;
 			//alert.icon = icon;
 			//factory = customOverlayFactory;
@@ -205,13 +214,65 @@ package me.rainui.components
 		
 		protected var _titleLabel:Label;
 		protected var _contentLabel:Label;
+
+		
+		override protected function preinitialize():void 
+		{
+			if(isNaN(_width))
+				_width = 440 * RainUI.scale;
+				
+			_gap = 10 * RainUI.scale;
+			
+			super.preinitialize();
+			
+		}
 		
 		override protected function createChildren():void 
 		{
-			_titleLabel = new Label(DEFAULT_CHILD_NAME_HEADER,{parent:this,centerX:0,top:2});
-			_contentLabel = new Label(DEFAULT_CHILD_NAME_MESSAGE);
+			_titleLabel = new Label(DEFAULT_CHILD_NAME_HEADER,{parent:this,centerX:0,top:0,color:0xffffff});
+			_contentLabel = new Label(DEFAULT_CHILD_NAME_MESSAGE,{parent:this,centerX:0,top:34*RainUI.scale,percentWidth:0.9,align:Align.CENTER,color:0xffffff});
+			
+			if (this.btnGroup == null)
+			{
+				this.btnGroup = new ButtonGroup()
+				btnGroup.addEventListener(RainUIEvent.SELECT, onSelect);
+			}
+			
+			if (_buttonsDataProvider)
+			{
+				this.addChild(btnGroup);
+				this.btnGroup.items = _buttonsDataProvider;
+				this.btnGroup.bottom = _gap;
+				this.btnGroup.centerX = 0;
+				this.btnGroup.autoSize = true;
+			}
 			
 			super.createChildren();
+		}
+		
+		private function onSelect(e:RainUIEvent):void 
+		{
+			this.remove();
+		}
+		
+		override public function redraw():void 
+		{
+			_titleLabel.text = _title || "";
+			_contentLabel.text = _message || "";
+			
+			if (_buttonsDataProvider)
+			{
+				this.addChild(btnGroup);
+				this.btnGroup.autoSize = true;
+				this.btnGroup.items = _buttonsDataProvider;
+				this.btnGroup.bottom = 10;
+				this.btnGroup.centerX = 0;
+				//btnGroup.borderVisible = true;
+				
+			}
+			
+			
+			super.redraw();
 		}
 
 		/**
@@ -269,6 +330,7 @@ package me.rainui.components
 				return;
 			}
 			this._title = value;
+			callLater(redraw);
 			//this.invalidate(INVALIDATION_FLAG_DATA);
 		}
 
@@ -295,7 +357,7 @@ package me.rainui.components
 				return;
 			}
 			this._message = value;
-			this.redraw();
+			callLater(redraw);
 		}
 
 		/**
@@ -392,7 +454,7 @@ package me.rainui.components
 				return;
 			}
 			this._buttonsDataProvider = value;
-			this.invalidate(INVALIDATION_FLAG_STYLES);
+			callLater(redraw);
 		}
 
 		/**
@@ -626,18 +688,18 @@ package me.rainui.components
 		 * @see #buttonGroupFactory
 		 * @see feathers.controls.ButtonGroup
 		 */
-		public function get buttonGroupProperties():Object
-		{
-			return super.footerProperties;
-		}
+		//public function get buttonGroupProperties():Object
+		//{
+			//return super.footerProperties;
+		//}
 
 		/**
 		 * @private
 		 */
-		public function set buttonGroupProperties(value:Object):void
-		{
-			super.footerProperties = value;
-		}
+		//public function set buttonGroupProperties(value:Object):void
+		//{
+			//super.footerProperties = value;
+		//}
 
 		/**
 		 * @private
@@ -656,7 +718,7 @@ package me.rainui.components
 		/**
 		 * @private
 		 */
-		override protected function draw():void
+		/*override protected function draw():void
 		{
 			var dataInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_DATA);
 			var stylesInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STYLES)
@@ -679,16 +741,16 @@ package me.rainui.components
 
 			super.draw();
 
-			//if(this._icon)
-			//{
-				//if(this._icon is IValidating)
-				//{
-					//IValidating(this._icon).validate();
-				//}
-				//this._icon.x = this._paddingLeft;
-				//this._icon.y = this._topViewPortOffset + (this._viewPort.height - this._icon.height) / 2;
-			//}
-		}
+			if(this._icon)
+			{
+				if(this._icon is IValidating)
+				{
+					IValidating(this._icon).validate();
+				}
+				this._icon.x = this._paddingLeft;
+				this._icon.y = this._topViewPortOffset + (this._viewPort.height - this._icon.height) / 2;
+			}
+		}*/
 
 		/**
 		 * @private
@@ -798,10 +860,10 @@ package me.rainui.components
 		 */
 		protected function createButtonGroup():void
 		{
-			if(this.buttonGroupFooter)
-			{
-				this.buttonGroupFooter.removeEventListener(MouseEvent.CLICK, buttonsFooter_triggeredHandler);
-			}
+			//if(this.buttonGroupFooter)
+			//{
+				//this.buttonGroupFooter.removeEventListener(MouseEvent.CLICK, buttonsFooter_triggeredHandler);
+			//}
 			//super.createFooter();
 			//this.buttonGroupFooter = ButtonGroup(this.footer);
 			//this.buttonGroupFooter.addEventListener(Event.TRIGGERED, buttonsFooter_triggeredHandler);
@@ -810,10 +872,10 @@ package me.rainui.components
 		/**
 		 * @private
 		 */
-		override protected function createFooter():void
-		{
-			this.createButtonGroup();
-		}
+		//override protected function createFooter():void
+		//{
+			//this.createButtonGroup();
+		//}
 
 		/**
 		 * Creates and adds the <code>messageTextRenderer</code> sub-component and

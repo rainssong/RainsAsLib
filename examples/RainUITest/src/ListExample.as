@@ -36,9 +36,11 @@ package
 		private function init():void 
 		{
 			list = new List(["1", "2", "3", "44444", "55555", "66666", "66666", "66666", "66666", "66666", "66666", "66666"], { parent:stage } );
-			list.itemRender = ir;
+			//list.itemRender = ir;
 			list.btnGroup.max = 1;
 			list.addEventListener(RainUIEvent.CHANGE, onChange);
+			
+			//addChild(new ListItem("122112"));
 		}
 		
 		private function onChange(e:RainUIEvent):void 

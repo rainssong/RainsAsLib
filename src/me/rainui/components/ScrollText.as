@@ -26,6 +26,30 @@ package me.rainui.components
 			this.text = text;
 		}
 		
+		/* DELEGATE me.rainui.components.Label */
+		
+		public function get size():Object 
+		{
+			return _label.size;
+		}
+		
+		public function set size(value:Object):void 
+		{
+			_label.size = value;
+		}
+		
+		/* DELEGATE me.rainui.components.Label */
+		
+		public function get color():Object 
+		{
+			return _label.color;
+		}
+		
+		public function set color(value:Object):void 
+		{
+			_label.color = value;
+		}
+		
 		override protected function preinitialize():void 
 		{
 			super.preinitialize();
@@ -36,8 +60,10 @@ package me.rainui.components
 		override protected function createChildren():void
 		{
 			_label = new Label();
-			_label.width = 300;
-			_label.height = 200;
+			//_label.width=300;
+			//_label.height=200;
+			_label.percentWidth=1;
+			_label.percentHeight = 1;
 			_label.align = Align.TOP_LEFT;
 			_label.autoSize = false;
 			_label.wordWrap = true;
@@ -45,8 +71,13 @@ package me.rainui.components
 			//_label.bgSkin.alpha = 0;
 			//_label.borderVisible = true;
 			//content = _label;
-			addChild(_label)
+			//addChild(_label)
+			_content = _label;
+			//addContent(_label)
+			
 			super.createChildren();
+			
+			
 			//this.bgSkin.alpha = 0;
 		}
 		

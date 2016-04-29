@@ -21,15 +21,18 @@ package me.rainui.managers
 	{
 		static private var _root:DisplayObjectContainer
 		private var _overlayView:DisplayObject
+		private var _pop:DisplayObject
 		
 		public function PopUpManager() 
 		{
 			
 		}
 		
-		static public function addPopUp(popUp:DisplayObject, isModal:Boolean = true, isCentered:Boolean = true):DisplayObject
+		static public function addPopUp(popUp:DisplayObject, isModal:Boolean = true, isCentered:Boolean = true):PopUpManager
 		{
-			return new PopUpManager().addPopUp(popUp, isModal, isCentered);
+			var m:PopUpManager = new PopUpManager()
+			m.addPopUp(popUp, isModal, isCentered);
+			return m;
 		}
 		
 		public function addPopUp(popUp:DisplayObject, isModal:Boolean = true, isCentered:Boolean = true):DisplayObject
@@ -62,7 +65,7 @@ package me.rainui.managers
 			
 
 			//this._popUps.push(popUp);
-			_root.addChild(popUp);
+			_root.addChild(_pop=popUp);
 			popUp.addEventListener(Event.REMOVED_FROM_STAGE, popUp_removedFromStageHandler,false,16);
 
 			//if(this._popUps.length == 1)
@@ -103,7 +106,7 @@ package me.rainui.managers
 		{
 			var popUp:DisplayObject = DisplayObject(event.currentTarget);
 			popUp.removeEventListener(Event.REMOVED_FROM_STAGE, popUp_removedFromStageHandler);
-			
+			_pop = null;
 			//var index:int = this._popUps.indexOf(popUp);
 			//this._popUps.splice(index, 1);
 			//var overlay:DisplayObject = DisplayObject(this._popUpToOverlay[popUp]);
@@ -142,6 +145,11 @@ package me.rainui.managers
 		static public function set root(value:DisplayObjectContainer):void 
 		{
 			_root = value;
+		}
+		
+		public function get isActive():Boolean
+		{
+			return _pop != null;
 		}
 		
 	}

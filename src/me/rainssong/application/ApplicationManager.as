@@ -129,11 +129,11 @@ package me.rainssong.application
 		
 		public static function isNewVersion(newVer:String = "1.0", oldVer:String = ""):Boolean
 		{
-			var newArr:Array = newVer.split(".").concat("0","0","0")
+			var newArr:Array = newVer.split(".").concat("0","0","0","0")
 		
-			var oldArr:Array =	oldVer.split(".").concat("0","0","0");
+			var oldArr:Array =	oldVer.split(".").concat("0","0","0","0")
 			
-			for (var i:int = 0; i < 3; i++)
+			for (var i:int = 0; i < 4; i++)
 			{
 				if (Number(newArr[i]) > Number(oldArr[i]))
 					return true;

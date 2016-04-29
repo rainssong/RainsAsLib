@@ -59,7 +59,7 @@
 		
 		override public function show():void 
 		{
-			super.hide();
+			super.show();
 			_webView.stage = this.stage;
 		}
 		

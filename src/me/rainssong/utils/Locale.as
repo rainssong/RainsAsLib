@@ -91,7 +91,7 @@ package me.rainssong.utils
 		
 		public function getString(id:String):String
 		{
-			if (_messages[id] != null)
+			if (_messages!=null  &&  _messages[id] != null)
 				return _messages[id];
 			else
 				return id;

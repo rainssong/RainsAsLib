@@ -59,7 +59,8 @@ package me.rainui.components
 		
 		private function onLoadError(e:IOErrorEvent):void 
 		{
-			powerTrace(e.text)
+			powerTrace(e.text);
+			dispatchEvent(e.clone());
 		}
 		
 		private function onLoadComplete(e:Event):void 
@@ -184,8 +185,12 @@ package me.rainui.components
 		public function dispose(clearFromLoader:Boolean = false):void
 		{
 			//App.asset.disposeBitmapData(_url);
-			if(bitmap)
+			if (bitmap)
+			{
+				bitmap.bitmapData.dispose();
 				bitmap.bitmapData = null;
+			}
+				
 			if (clearFromLoader)
 			{
 				//App.loader.clearResLoaded(_url);

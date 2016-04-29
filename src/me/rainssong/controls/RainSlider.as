@@ -7,7 +7,6 @@
 	import flash.events.MouseEvent;
 	import me.rainssong.display.MySprite;
 	import me.rainssong.math.MathCore;
-	import me.rainssong.utils.superTrace;
 	
 	public class RainSlider extends MySprite
 	{

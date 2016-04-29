@@ -31,7 +31,7 @@ package me.rainui.components
 	[Event(name="select",type="flash.events.Event")]
 	
 	/**按钮类*/
-	dynamic  public class Button extends Container
+	dynamic  public class TestButton extends Container
 	{
 		public var darkColorTrans:ColorTransform = RainUI.darkColorTrans;
 		
@@ -70,7 +70,7 @@ package me.rainui.components
 		//要考虑用户已经设置的情况
 		public static var defaultStyleFactory:Function;
 		
-		public function Button(text:String = "",dataSource:Object=null)
+		public function TestButton(text:String = "",dataSource:Object=null)
 		{
 			super(dataSource);
 			this.text = text;
@@ -80,10 +80,10 @@ package me.rainui.components
 		{
 			super.preinitialize();
 			
-			this.buttonMode = true;
-			this.useHandCursor = true;
-			this.mouseChildren = false
-			this.mouseEnabled = true;
+			//this.buttonMode = true;
+			//this.useHandCursor = true;
+			//this.mouseChildren = false
+			//this.mouseEnabled = true;
 			
 			//this._width = 200*RainUI.scale;
 			//this._height = 60*RainUI.scale;
@@ -93,34 +93,34 @@ package me.rainui.components
 		{
 			
 			
-			if (this.numChildren == 1 && _normalSkin==null)
-			{
-				_normalSkin = this.getChildAt(0);
-			}
-			 if (_normalSkin == null)
-			{
-				_normalSkin = RainUI.getSkin("buttonNormal");
-				addChild(_normalSkin);
-				this._width = 200*RainUI.scale;
-				this._height = 60*RainUI.scale;
-			}
-			else
-			{
-				_normalSkin.scaleX *=  RainUI.scale;
-				_normalSkin.scaleY *=  RainUI.scale;
-			}
-			
-			if (isNaN(_width))
-			{
-				this._width = _normalSkin.width
-				this._height = _normalSkin.height
-			}
-			
-			if (_downSkin)
-				_downSkin.visible = false;
-			if (_selectedSkin)
-				_selectedSkin.visible = false;
-			
+			//if (this.numChildren == 1 && _normalSkin==null)
+			//{
+				//_normalSkin = this.getChildAt(0);
+			//}
+			 //if (_normalSkin == null)
+			//{
+				//_normalSkin = RainUI.getSkin("buttonNormal");
+				//addChild(_normalSkin);
+				//this._width = 200*RainUI.scale;
+				//this._height = 60*RainUI.scale;
+			//}
+			//else
+			//{
+				//_normalSkin.scaleX *=  RainUI.scale;
+				//_normalSkin.scaleY *=  RainUI.scale;
+			//}
+			//
+			//if (isNaN(_width))
+			//{
+				//this._width = _normalSkin.width
+				//this._height = _normalSkin.height
+			//}
+			//
+			//if (_downSkin)
+				//_downSkin.visible = false;
+			//if (_selectedSkin)
+				//_selectedSkin.visible = false;
+			//
 			if (label == null)
 			{
 				_label = new Label();
@@ -135,7 +135,7 @@ package me.rainui.components
 			//if (defaultStyleFactory!=null)
 				//defaultStyleFactory(this);
 			
-			_normalColorTrans = _normalSkin.transform.colorTransform;
+			//_normalColorTrans = _normalSkin.transform.colorTransform;
 			
 			super.createChildren();
 		}
@@ -144,86 +144,46 @@ package me.rainui.components
 		{
 			super.initialize();
 			
-			clickHandler = null;
-			upHandler = null;
-			downHandler = null;
-			outHandler = null;
-			overHandler = null;
-			
-			soundOver = null;
-			soundOut = null;
-			soundDown = null;
-			soundUp = null;
-			
-			addEventListener(MouseEvent.ROLL_OVER, onRollOver);
-			addEventListener(MouseEvent.ROLL_OUT, onRollOut);
-			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-			addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseUp);
-			addEventListener(MouseEvent.CLICK, onClick);
-			callLater(redraw);
+			//clickHandler = null;
+			//upHandler = null;
+			//downHandler = null;
+			//outHandler = null;
+			//overHandler = null;
+			//
+			//soundOver = null;
+			//soundOut = null;
+			//soundDown = null;
+			//soundUp = null;
+			//
+			//addEventListener(MouseEvent.ROLL_OVER, onRollOver);
+			//addEventListener(MouseEvent.ROLL_OUT, onRollOut);
+			//addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+			//addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			//addEventListener(MouseEvent.RELEASE_OUTSIDE, onMouseUp);
+			//addEventListener(MouseEvent.CLICK, onClick);
+			//callLater(redraw);
 		}
 		
 		override public function resize():void
 		{
 			super.resize();
-			if (_normalSkin)
-			{
-				this._normalSkin.width = _width;
-				this._normalSkin.height = _height;
-			}
-			if (this._downSkin)
-			{
-				this._downSkin.width = _width;
-				this._downSkin.height = _height;
-			}
-			if (this._selectedSkin)
-			{
-				this._selectedSkin.width = _width;
-				this._selectedSkin.height = _height;
-			}
-		}
-		
-		protected function onRollOver(e:MouseEvent):void
-		{
-			//含redraw
-			if(_state!=SELECTED)
-				state = HOVER;
-		}
-		
-		protected function onRollOut(e:MouseEvent):void
-		{
-			if(_state!=SELECTED)
-				state = NORMAL;
-		}
-		
-		protected function onMouseDown(e:MouseEvent):void
-		{
-			if(_state!=SELECTED)
-				state = MOUSE_DOWN;
-		}
-		
-		protected function onMouseUp(e:MouseEvent):void
-		{
-			if(_state!=SELECTED)
-				state = NORMAL;
-		}
-		
-		protected function onClick(e:MouseEvent):void
-		{
-			if ((_toggle == false && _selected) || _disabled)
-			{
-				return;
-			}
-			if (_toggle)
-			{
-				selected = !_selected;
-			}
-			if (clickHandler!=null)
-				clickHandler(e);
+			//if (_normalSkin)
+			//{
+				//this._normalSkin.width = _width;
+				//this._normalSkin.height = _height;
 			//}
-			//sendEvent(Event.SELECT);
+			//if (this._downSkin)
+			//{
+				//this._downSkin.width = _width;
+				//this._downSkin.height = _height;
+			//}
+			//if (this._selectedSkin)
+			//{
+				//this._selectedSkin.width = _width;
+				//this._selectedSkin.height = _height;
+			//}
 		}
+		
 		
 		/**皮肤*/ /*public function get skinName():String
 		   {
@@ -246,45 +206,45 @@ package me.rainui.components
 		 }*/
 		
 		/**是否是选择状态*/
-		[Inspectable(name="selected",type="Boolean",defaultValue=false)]
-		public function get selected():Boolean
-		{
-			return _selected;
-		}
-		
-		public function set selected(value:Boolean):void
-		{
-			
-			var e:RainUIEvent 
-			
-			if (_selected != value)
-			{
-				_selected = value;
-				if (_selected)
-				{
-					_state = SELECTED;
-					sendEvent(RainUIEvent.SELECT);
-					if (selectHandler != null)
-					{
-						e= new RainUIEvent(RainUIEvent.SELECT, null, true, false);
-						selectHandler(e );
-					}
-						
-				}
-				else
-				{
-					_state = NORMAL;
-					if (unselectHandler != null)
-					{
-						e= new RainUIEvent(RainUIEvent.SELECT, null, true, false);
-						unselectHandler(e);
-					}
-				}
-				sendEvent(RainUIEvent.CHANGE);
-				callLater(redraw);
-			}
-		}
-		
+		//[Inspectable(name="selected",type="Boolean",defaultValue=false)]
+		//public function get selected():Boolean
+		//{
+			//return _selected;
+		//}
+		//
+		//public function set selected(value:Boolean):void
+		//{
+			//
+			//var e:RainUIEvent 
+			//
+			//if (_selected != value)
+			//{
+				//_selected = value;
+				//if (_selected)
+				//{
+					//_state = SELECTED;
+					//sendEvent(RainUIEvent.SELECT);
+					//if (selectHandler != null)
+					//{
+						//e= new RainUIEvent(RainUIEvent.SELECT, null, true, false);
+						//selectHandler(e );
+					//}
+						//
+				//}
+				//else
+				//{
+					//_state = NORMAL;
+					//if (unselectHandler != null)
+					//{
+						//e= new RainUIEvent(RainUIEvent.SELECT, null, true, false);
+						//unselectHandler(e);
+					//}
+				//}
+				//sendEvent(RainUIEvent.CHANGE);
+				//callLater(redraw);
+		//}
+			//}
+		//
 		protected function get state():String
 		{
 			return _state;

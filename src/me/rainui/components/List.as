@@ -45,7 +45,7 @@ package me.rainui.components
 		
 		protected var _labelField:String = "";
 		
-		protected var _rendersFlag:Boolean = false;
+		protected var _rendersFlag:Boolean = true;
 		
 		public function List(items:* = null, dataSource:Object = null)
 		{
@@ -216,7 +216,7 @@ package me.rainui.components
 				for (var i:int = 0; i < _items.length; i++)
 				{
 					var c:ListItem = getItemView();
-					if (_labelField)
+					if (_labelField.length>0)
 						c.text = String(_items.getItemAt(i)[_labelField]);
 					else
 						c.text = String(_items.getItemAt(i));
@@ -559,6 +559,16 @@ package me.rainui.components
 		public function set labelField(value:String):void 
 		{
 			_labelField = value;
+		}
+		
+		public function get cellSize():Number 
+		{
+			return _cellSize;
+		}
+		
+		public function set cellSize(value:Number):void 
+		{
+			_cellSize = value;
 		}
 		
 		//override public function commitMeasure():void

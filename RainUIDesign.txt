@@ -1,17 +1,22 @@
 Todo:
+	ScrollContainer无法完全归位√
 	涂鸦风格、未来风格UI（日系）
 	由Theme给组件提供默认数据,组件不再从theme处获取。
 	ScrollContainer增加不足居中的选项（超载分为leftrightupbottom）
 	ScrollContainer SmartRender，只刷新显示部分的组件视图
-	WHRatio 锁定宽高比(暂时取消)
-	增加一个content层，用于统计非组件视图宽高。
-	改为自动缩和自动放
-	增加属性,是否自动比例缩放？(基于点的UI设计)
+	WHRatio 锁定宽高比(取消)
+	增加一个content层，用于统计非组件视图宽高。√
+	autoSize改为autoZoomIn和AutoZoomOut
+	基于点的UI设计
 	PageNavigator
 	TouchRect
 	Theme决定 初始化的缩放值（由stage宽高 dpi 决定）
-	用标签标记刷新的视图内容
+	用标签标记刷新的视图内容,有calllater已经不需要
 	参考CSS覆盖
+	EventHandlerManager（自动销毁）:addEventHandler(target,Event.COMPLETE,handler);
+	ButtonGroup
+	DefaultTheme(在未手动选择主题的情况下，自动创建一个)
+	
 
 工作流：
 创建组件
@@ -21,6 +26,7 @@ Todo:
 更新显示
 
 功能：
+事件自动销毁(addExtenalHandler)
 自带皮肤
 动态换肤
 低耦合
@@ -68,4 +74,6 @@ Image：
 1pt=Math.floor(96/72pixel)
 
 2015-04-27
-最优雅的方案还是侦听stage进行render触发,
+最优雅的方案还是侦听stage进行render触发
+2016-03-20
+如果有内容则不执行defaultStyleFactory?width height到底根据实际还是原始?

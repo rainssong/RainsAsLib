@@ -21,17 +21,17 @@ package me.rainui.components
 		
 		static public var elasticCoefficient:Number = 0.5;
 
-		private var _content:DisplayObject
-		private var _container:Container=new Container();
-		private var _scrollY:Number = 0;
-		private var _scrollX:Number = 0;
-		private var _onDrag:Boolean = false;
-		private var _startX:Number = 0;
-		private var _lastX:Number = 0;
-		private var _speedX:Number = 0;
-		private var _startY:Number = 0;
-		private var _lastY:Number = 0;
-		private var _speedY:Number = 0;
+		protected var _content:DisplayObject
+		protected var _container:Container=new Container();
+		protected var _scrollY:Number = 0;
+		protected var _scrollX:Number = 0;
+		protected var _onDrag:Boolean = false;
+		protected var _startX:Number = 0;
+		protected var _lastX:Number = 0;
+		protected var _speedX:Number = 0;
+		protected var _startY:Number = 0;
+		protected var _lastY:Number = 0;
+		protected var _speedY:Number = 0;
 		public var direction:String = ALL;
 		//public var lockDirection:Boolean = true;
 		public var allowOverload:Boolean = true;
@@ -99,15 +99,15 @@ package me.rainui.components
 		private function onMouseWheel(e:MouseEvent):void 
 		{
 			if (_mouseWheelScrollDirection == VERTICAL)
-				_speedY = e.delta * _mouseWheelScrollStep;
+				_speedY += e.delta * _mouseWheelScrollStep;
 			else if (_mouseWheelScrollDirection == HORIZONTAL)
-				_speedX = e.delta * _mouseWheelScrollStep;
+				_speedX += e.delta * _mouseWheelScrollStep;
 			else
 			{
 				if (_container.contentWidth <= _width+10)
-					_speedY = e.delta * _mouseWheelScrollStep;
+					_speedY += e.delta * _mouseWheelScrollStep;
 				else
-					_speedX = e.delta * _mouseWheelScrollStep;
+					_speedX += e.delta * _mouseWheelScrollStep;
 			}
 				
 				
@@ -175,6 +175,7 @@ package me.rainui.components
 				//回归
 				else
 				{
+					
 					_speedY = _overloadY * -0.5;
 				}
 			}
@@ -200,10 +201,14 @@ package me.rainui.components
 				_speedX *= 0.9;
 			
 			
-			//if (Math.abs(_speedY) < 0.5)
-			//{
-				//_speedY
-			//}
+			if (Math.abs(_speedY) < 0.5)
+			{
+				_speedY = 0;
+			}
+			if (Math.abs(_speedX) < 0.5)
+			{
+				_speedX = 0;
+			}
 			
 			if(direction!=HORIZONTAL)
 				if (_overloadY<=1 && _overloadY>=-1 && _overloadY!=0)

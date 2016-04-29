@@ -12,6 +12,16 @@ package me.rainssong.filesystem
 	 */
 	public class FileCore
 	{
+		static public const BYTE_ARRAY:String = "byteArray";
+		static public const MULTI_BYTE:String = "multiByte";
+		static public const BYTE:String = "byte";
+		static public const BOOLEAN:String = "boolean";
+		static public const FLOAT:String = "float";
+		static public const DOUBLE:String = "double";
+		static public const INT:String = "int";
+		static public const OBJECT:String = "object";
+		static public const SHORT:String = "short";
+		static public const UNSIGNED_INT:String = "unsignedInt";
 		
 		public function FileCore()
 		{
@@ -73,9 +83,6 @@ package me.rainssong.filesystem
 					stream.writeShort(content);
 				break;
 				case "unsignedInt":
-					stream.writeShort(content);
-				break;
-				case "short":
 					stream.writeUnsignedInt(content);
 				break;
 				

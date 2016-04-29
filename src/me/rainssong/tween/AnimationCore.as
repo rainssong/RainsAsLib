@@ -6,7 +6,9 @@ package me.rainssong.tween
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.StageScaleMode;
 	import flash.sampler.NewObjectSample;
+	import flash.system.Capabilities;
 	import flash.utils.setTimeout;
 	import me.rainssong.utils.Directions;
 	
@@ -53,6 +55,9 @@ package me.rainssong.tween
 				
 			}
 			
+			var _scaleMode:String = _parent.stage.scaleMode;
+			_parent.stage.scaleMode = StageScaleMode.NO_SCALE;
+			
 			switch (effect)
 			{
 				//BUG:
@@ -71,6 +76,7 @@ package me.rainssong.tween
 						TweenMax.to(oldView, duration, {x: _parent.stage.stageWidth, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut, delay: delay});
 						break;
 					case Directions.UP: 
+						
 						TweenMax.from(newView, duration, {y: _parent.stage.stageHeight, ease: Cubic.easeInOut, delay: delay});
 						TweenMax.to(oldView, duration, {y: -_parent.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [oldView], ease: Cubic.easeInOut, delay: delay});
 						break;
@@ -176,6 +182,8 @@ package me.rainssong.tween
 					break;
 				default: 
 			}
+			
+			_parent.stage.scaleMode = _scaleMode;
 			
 			return newView;
 		}
@@ -311,6 +319,11 @@ package me.rainssong.tween
 						TweenMax.to(view, duration, {y: view.stage.stageHeight, onComplete: removeViewComplete, onCompleteParams: [view], ease: Cubic.easeInOut, delay: delay});
 				}
 					break;
+				case "none":
+					
+					removeViewComplete(view);
+					break;
+				
 				default: 
 			}
 		

@@ -1,14 +1,17 @@
 ﻿package me.rainui.components
 {
+	import adobe.utils.CustomActions;
 	import com.adobe.protocols.dict.events.DefinitionHeaderEvent;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.IEventDispatcher;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
+	import me.rainssong.manager.ListenerManager;
 	import me.rainssong.model.ListenerModel;
 	import me.rainui.events.RainUIEvent;
 	import me.rainui.RainUI;
@@ -31,7 +34,7 @@
 		//stats
 		protected var _disabled:Boolean = false;
 		protected var _mouseChildren:Boolean = false;
-		protected var _mouseEnabled:Boolean = false;
+		protected var _mouseEnabled:Boolean = true;
 		
 		//只能等比缩放
 		//protected var _scaleLock:Boolean = false;
@@ -44,7 +47,7 @@
 		protected var _dataSource:Object;
 		public static var defaultData:Object;
 		
-		protected var _listeners:Dictionary = new Dictionary(true);
+		protected var _listeners:Vector.<ListenerModel>=new Vector.<ListenerModel>
 		
 		//新增属性，免除计算像素的步骤
 		protected var _dotWidth:Number;
@@ -70,24 +73,47 @@
 			this.dataSource = dataSource;
 		}
 		
-		
+		protected  function addExternalListener(target:IEventDispatcher,type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
+		{
+			var lm:ListenerModel=new ListenerModel(target,type, listener, useCapture, priority, useWeakReference)
+			lm.add()
+			_listeners.push ( lm);
+		}
 		
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void 
 		{
-			_listeners[type+listener] = new ListenerModel(type, listener, useCapture, priority, useWeakReference);
+			_listeners.push ( new ListenerModel(this,type, listener, useCapture, priority, useWeakReference));
+			//_listeners[type+listener] = new ListenerModel(type, listener, useCapture, priority, useWeakReference);
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
 		
 		override public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void 
 		{
-			delete _listeners[type+listener];
+			//delete _listeners[type];
+			//super.removeEventListener(type, listener, useCapture);
+			for (var i:int = _listeners.length-1; i >=0; i--) 
+			{
+				var lm:ListenerModel=_listeners[i]
+				if (lm.type == type && lm.listener == listener && lm.useCapture == useCapture)
+					_listeners.splice(i, 1);
+			}
 			super.removeEventListener(type, listener, useCapture);
 		}
 		
-		public function removeAllEventListener():void 
+		/**
+		 * 无target则全部清除
+		 * @param	target
+		 */
+		public function removeAllEventListener(target:IEventDispatcher=null):void 
 		{
-			for each (var item:ListenerModel in _listeners) 
-				removeEventListener(item.type, item.listener, item.useCapture);
+			//for each (var item:ListenerModel in _listeners) 
+				//removeEventListener(item.type, item.listener, item.useCapture);
+			for (var i:int = _listeners.length-1; i >=0; i--) 
+			{
+				var lm:ListenerModel = _listeners[i];
+				if(target==null || target ==lm.target)
+					lm.target.removeEventListener(lm.type, lm.listener, lm.useCapture);
+			}
 		}
 		
 		protected function preinitialize():void
@@ -134,10 +160,10 @@
 				RainUI.render.clearCallLater(method);
 		}
 		
-		public function sendEvent(type:String, data:* = null):void
+		public function sendEvent(type:String, data:* = null,bubbles:Boolean=false, cancelable:Boolean=false):void
 		{
 			if (hasEventListener(type))
-				dispatchEvent(new RainUIEvent(type, data));
+				dispatchEvent(new RainUIEvent(type, data,bubbles,cancelable));
 		}
 		
 		public function remove():void
@@ -161,13 +187,15 @@
 		
 		override public function set x(value:Number):void
 		{
-			super.x = Math.round(value);
+			//super.x = Math.round(value);
+			super.x = value
 			callLater(sendEvent, [RainUIEvent.MOVE]);
 		}
 		
 		override public function set y(value:Number):void
 		{
-			super.y = Math.round(value);
+			//super.y = Math.round(value);
+			super.y = value;
 			callLater(sendEvent, [RainUIEvent.MOVE]);
 		}
 		
@@ -209,15 +237,7 @@
 		
 		public function get contentWidth():Number
 		{
-			//var max:Number = 0;
-			//for (var i:int = numChildren - 1; i > -1; i--)
-			//{
-				//var comp:DisplayObject = getChildAt(i);
-				//if (comp.visible)
-					//max = Math.max(comp.x + comp.width * comp.scaleX, max);
-			//}
-			//
-			//return max;
+			
 			return this.getBounds(this).width*scaleX;
 		}
 		
@@ -453,10 +473,11 @@
 			var index:int = this.numChildren
 			if (oldCon && oldCon.parent)
 			{
-				index= getChildIndex(oldCon);
+				index = getChildIndex(oldCon);
+				addChildAt(newCon, index);
 				oldCon.parent.removeChild(oldCon)
 			}
-			if(newCon)
+			else if(newCon && newCon.parent!=this)
 				addChildAt(newCon, index);
 			return newCon;
 		}

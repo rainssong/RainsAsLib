@@ -48,7 +48,7 @@
 			var data:String =  _xml.quest[index].data.toString();
 			for (var i:int = 0; i < _xml.quest[index].option.length(); i++ )
 			{
-				options.push(_xml.quest[index].option[i].toString())
+				options.push(_xml.quest[index].option[i].text())
 			}
 			
 			var minChoose:int = _xml.quest[index].@minChoose?_xml.quest[index].@minChoose:1;
