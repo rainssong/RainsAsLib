@@ -5,6 +5,7 @@
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.StageScaleMode;
+	import flash.events.Event;
 	import flash.geom.ColorTransform;
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
@@ -20,6 +21,7 @@
 	import me.rainui.components.Button;
 	import me.rainui.components.Label;
 	import me.rainui.components.List;
+	import me.rainui.events.RainUIEvent;
 	import me.rainui.utils.ScaleMethod;
 	
 	/**
@@ -94,7 +96,7 @@
 		static public var designHeight:Number = 768;
 		
 		
-		public function RainTheme(scaleMethod:String="dpi")
+		public function RainTheme(scaleMethod:String=ScaleMethod.DPI)
 		{
 			_scaleMethod = scaleMethod;
 			
@@ -121,11 +123,19 @@
 			_skinDic["buttonNormal"] = blueSkinFactory; 
 			
 			
-			
-			initScale();
+			calcScale();
 			initStyle();
 			initDimensions();
-			initFonts();
+			initFonts()
+			
+			
+			if (RainUI.stage)
+				RainUI.stage.addEventListener(Event.RESIZE, onStageResize);
+		}
+		
+		private function onStageResize(e:Event):void 
+		{
+			calcScale();
 		}
 		
 		protected function initDimensions():void
@@ -206,9 +216,10 @@
 			//comp.height = controlHeight;
 		}
 		
-		protected function initScale():void
+		protected function calcScale():void
 		{
-			if (RainUI.stage.scaleMode != StageScaleMode.NO_SCALE)
+			
+			if (RainUI.stage == null || RainUI.stage.scaleMode != StageScaleMode.NO_SCALE)
 			{
 				this._textScale = 1;
 				this._scale = 1;
@@ -220,25 +231,34 @@
 			this._heightScale =  RainUI.stageHeight/RainUI.designHeight;
 			this._maxScale =  Math.max(_widthScale, _heightScale);
 			this._minScale =   Math.min(_widthScale, _heightScale);
+			
+			var scale:Number = _scale;
+			
 			switch (_scaleMethod) 
 			{
 				case ScaleMethod.DPI:
-					_scale = this._dpiScale ;
+					scale = this._dpiScale ;
 					
 				break;
 				case ScaleMethod.WIDTH:
-					_scale = this._widthScale ;
+					scale = this._widthScale ;
 				break;
 				case ScaleMethod.HEIGHT:
-					_scale = this._heightScale ;
+					scale = this._heightScale ;
 				break;
 				case ScaleMethod.MAX_LENGTH:
-					_scale = this._maxScale ;
+					scale = this._maxScale ;
 				break;
 				case ScaleMethod.MIN_LENGTH:
-					_scale = this._minScale ;
+					scale = this._minScale ;
 				break;
 				default:
+			}
+			
+			if (scale != _scale)
+			{
+				this._scale = scale;
+				RainUI.dispatcher.dispatchEvent(new RainUIEvent(RainUIEvent.SCALE_CHANGE, _scale));
 			}
 			
 			this._textScale = this._scale / RainUI.stage.contentsScaleFactor;

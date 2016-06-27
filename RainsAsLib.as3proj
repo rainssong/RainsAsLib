@@ -8,9 +8,9 @@
     <movie fps="60" />
     <movie width="1024" />
     <movie height="768" />
-    <movie version="17" />
+    <movie version="18" />
     <movie minorVersion="0" />
-    <movie platform="AIR" />
+    <movie platform="Flash Player" />
     <movie background="#00FF00" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
@@ -74,7 +74,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="examples\LibTest\src\ButtonGroupTest.as" />
+    <compile path="examples\RainUITest\src\ComponentTest.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
@@ -87,7 +87,7 @@
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="True" />
-    <option testMovie="OpenDocument" />
+    <option testMovie="Default" />
     <option testMovieCommand="RunDesktop.bat" />
   </options>
   <!-- Plugin storage -->

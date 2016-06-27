@@ -5,6 +5,7 @@ package me.rainui.components
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import me.rainssong.math.MathCore;
+	import me.rainui.RainUI;
 	import me.rainui.components.Component
 	import me.rainui.events.RainUIEvent;
 	
@@ -16,22 +17,33 @@ package me.rainui.components
 	{
 		//百分比优先级高于绝对值
 		protected var _percentWidth:Number = NaN;
+		protected var _widthAnchorDisplayObject:DisplayObject;
 		protected var _percentHeight:Number = NaN;
-		protected var _whRatio:Number = NaN;
+		protected var _heightAnchorDisplayObject:DisplayObject;
+		//新增属性，免除计算像素的步骤
+		protected var _dotWidth:Number = NaN;
+		protected var _dotHeight:Number = NaN;
 		
 		protected var _top:Number = NaN;
 		protected var _percentTop:Number = NaN;
+		protected var _topAnchorDisplayObject:DisplayObject;
+		
 		protected var _bottom:Number = NaN;
 		protected var _percentBottom:Number = NaN;
+		protected var _bottomAnchorDisplayObject:DisplayObject;
 		protected var _left:Number = NaN;
 		protected var _percentLeft:Number = NaN;
+		protected var _leftAnchorDisplayObject:DisplayObject;
 		protected var _right:Number = NaN;
 		protected var _percentRight:Number = NaN;
+		protected var _rightAnchorDisplayObject:DisplayObject;
 		
 		protected var _centerX:Number = NaN;
 		protected var _percentCenterX:Number = NaN;
+		protected var _centerAnchorDisplayObject:DisplayObject;
 		protected var _centerY:Number = NaN;
 		protected var _percentCenterY:Number = NaN;
+		protected var _centerYAnchorDisplayObject:DisplayObject;
 		
 		protected var _minHeight:Number = 0;
 		protected var _maxHeight:Number = Infinity;
@@ -41,27 +53,31 @@ package me.rainui.components
 		
 		public var destroyOnRemove:Boolean = true;
 		
-		public function Container(dataSource:Object=null)
+		public function Container(dataSource:Object = null)
 		{
 			//this.scrollRect = new Rectangle(0, 0, 100, 100);
 			super(dataSource)
 			addEventListener(Event.ADDED, onAdded);
 			addEventListener(Event.REMOVED, onRemoved);
-			
+			addExternalListener(RainUI.dispatcher, RainUIEvent.SCALE_CHANGE, onScaleChange);
 		}
 		
-		override protected function preinitialize():void 
+		protected function onScaleChange(e:RainUIEvent):void
+		{
+			callLater(calcSize);
+		}
+		
+		override protected function preinitialize():void
 		{
 			super.preinitialize();
 			this.mouseChildren = true;
 		}
 		
-		override protected function initialize():void 
+		override protected function initialize():void
 		{
 			super.initialize();
 			callLater(calcSize);
 		}
-		
 		
 		protected function onRemoved(e:Event):void
 		{
@@ -91,7 +107,7 @@ package me.rainui.components
 		}
 		
 		/**添加显示对象*/
-		public function addElement(element:DisplayObject, x:Number=0, y:Number=0):void
+		public function addElement(element:DisplayObject, x:Number = 0, y:Number = 0):void
 		{
 			element.x = x;
 			element.y = y;
@@ -99,7 +115,7 @@ package me.rainui.components
 		}
 		
 		/**增加显示对象到index层*/
-		public function addElementAt(element:DisplayObject, index:int,x:Number=0, y:Number=0):void
+		public function addElementAt(element:DisplayObject, index:int, x:Number = 0, y:Number = 0):void
 		{
 			element.x = x;
 			element.y = y;
@@ -153,22 +169,24 @@ package me.rainui.components
 			var index:int = getChildIndex(compare);
 			addChildAt(element, Math.max(index, 0));
 		}
+		
 		override public function set width(value:Number):void
 		{
 			_percentWidth = NaN;
 			_percentLeft = NaN;
 			_percentRight = NaN;
+			_dotWidth = NaN;
 			super.width = value;
-			
-			//callLater(resize);
-			//var sc:Rectangle = this.scrollRect;
-			//sc.width = value;
-			//this.scrollRect = sc;
+		
 		}
 		
-		//TODO:减少percent和固定值的冲突，兼容
 		override public function set height(value:Number):void
 		{
+			_percentHeight = NaN;
+			_percentTop = NaN;
+			_percentBottom = NaN;
+			_dotHeight = NaN;
+			
 			super.height = value;
 		}
 		
@@ -178,7 +196,7 @@ package me.rainui.components
 		}
 		
 		/**居父容器顶上的距离*/
-		[Inspectable(name="top",type="Number",defaultValue=NaN)]
+		[Inspectable(name = "top", type = "Number", defaultValue = NaN)]
 		public function get top():Number
 		{
 			return _top;
@@ -199,13 +217,11 @@ package me.rainui.components
 		{
 			return _bottom;
 		}
-		[Inspectable(name="bottom",type="Number",defaultValue=NaN)]
+		
+		[Inspectable(name = "bottom", type = "Number", defaultValue = NaN)]
 		public function set bottom(value:Number):void
 		{
 			_bottom = value;
-			//_percentHeight = NaN;
-			//_percentTop = NaN;
-			//_percentBottom = NaN;
 			
 			_centerY = NaN;
 			_percentCenterY = NaN;
@@ -219,7 +235,7 @@ package me.rainui.components
 			return _left;
 		}
 		
-		[Inspectable(name="left",type="Number",defaultValue=NaN)]
+		[Inspectable(name = "left", type = "Number", defaultValue = NaN)]
 		public function set left(value:Number):void
 		{
 			_left = value;
@@ -230,7 +246,7 @@ package me.rainui.components
 			_centerX = NaN;
 			_percentCenterX = NaN;
 			callLater(calcSize);
-			
+		
 		}
 		
 		/**居父容器右边的距离*/
@@ -239,7 +255,7 @@ package me.rainui.components
 			return _right;
 		}
 		
-		[Inspectable(name="right",type="Number",defaultValue=NaN)]
+		[Inspectable(name = "right", type = "Number", defaultValue = NaN)]
 		public function set right(value:Number):void
 		{
 			_right = value;
@@ -256,7 +272,8 @@ package me.rainui.components
 		{
 			return _centerX;
 		}
-		[Inspectable(name="centerX",type="Number",defaultValue=NaN)]
+		
+		[Inspectable(name = "centerX", type = "Number", defaultValue = NaN)]
 		public function set centerX(value:Number):void
 		{
 			_centerX = value;
@@ -275,7 +292,8 @@ package me.rainui.components
 		{
 			return _centerY;
 		}
-		[Inspectable(name="centerY",type="Number",defaultValue=NaN)]
+		
+		[Inspectable(name = "centerY", type = "Number", defaultValue = NaN)]
 		public function set centerY(value:Number):void
 		{
 			_centerY = value;
@@ -284,134 +302,207 @@ package me.rainui.components
 			_percentTop = NaN;
 			_percentBottom = NaN;
 			_top = NaN;
-			_bottom=NaN
+			_bottom = NaN
 			callLater(resize);
 		}
 		
-		public function get percentWidth():Number 
+		public function get percentWidth():Number
 		{
 			return _percentWidth;
 		}
-		[Inspectable(name="percentWidth",type="Number",defaultValue=NaN)]
-		public function set percentWidth(value:Number):void 
+		
+		[Inspectable(name = "percentWidth", type = "Number", defaultValue = NaN)]
+		public function set percentWidth(value:Number):void
 		{
 			_percentWidth = value;
 			callLater(calcSize);
 		}
 		
-		public function get percentHeight():Number 
+		public function get percentHeight():Number
 		{
 			return _percentHeight;
 		}
-		[Inspectable(name="percentHeight",type="Number",defaultValue=NaN)]
-		public function set percentHeight(value:Number):void 
+		
+		[Inspectable(name = "percentHeight", type = "Number", defaultValue = NaN)]
+		public function set percentHeight(value:Number):void
 		{
 			_percentHeight = value;
 			callLater(calcSize);
 		}
 		
-		public function get percentTop():Number 
+		public function get percentTop():Number
 		{
 			return _percentTop;
 		}
-		[Inspectable(name="percentTop",type="Number",defaultValue=NaN)]
-		public function set percentTop(value:Number):void 
+		
+		[Inspectable(name = "percentTop", type = "Number", defaultValue = NaN)]
+		public function set percentTop(value:Number):void
 		{
 			_percentTop = value;
 			callLater(calcSize);
 		}
 		
-		public function get percentBottom():Number 
+		public function get percentBottom():Number
 		{
 			return _percentBottom;
 		}
-		[Inspectable(name="percentBottom",type="Number",defaultValue=NaN)]
-		public function set percentBottom(value:Number):void 
+		
+		[Inspectable(name = "percentBottom", type = "Number", defaultValue = NaN)]
+		public function set percentBottom(value:Number):void
 		{
 			_percentBottom = value;
 			callLater(calcSize);
 		}
 		
-		public function get percentLeft():Number 
+		public function get percentLeft():Number
 		{
 			return _percentLeft;
 		}
-		[Inspectable(name="percentLeft",type="Number",defaultValue=NaN)]
-		public function set percentLeft(value:Number):void 
+		
+		[Inspectable(name = "percentLeft", type = "Number", defaultValue = NaN)]
+		public function set percentLeft(value:Number):void
 		{
 			_percentLeft = value;
 			callLater(calcSize);
 		}
 		
-		public function get percentRight():Number 
+		public function get percentRight():Number
 		{
 			return _percentRight;
 		}
-		[Inspectable(name="percentRight",type="Number",defaultValue=NaN)]
-		public function set percentRight(value:Number):void 
+		
+		[Inspectable(name = "percentRight", type = "Number", defaultValue = NaN)]
+		public function set percentRight(value:Number):void
 		{
 			_percentRight = value;
 			callLater(calcSize);
 		}
 		
-		public function get minHeight():Number 
+		public function get minHeight():Number
 		{
 			return _minHeight;
 		}
-		[Inspectable(name="minHeight",type="Number",defaultValue=NaN)]
-		public function set minHeight(value:Number):void 
+		
+		[Inspectable(name = "minHeight", type = "Number", defaultValue = NaN)]
+		public function set minHeight(value:Number):void
 		{
 			_minHeight = value;
 		}
 		
-		public function get maxHeight():Number 
+		public function get maxHeight():Number
 		{
 			return _maxHeight;
 		}
-		[Inspectable(name="maxHeight",type="Number",defaultValue=NaN)]
-		public function set maxHeight(value:Number):void 
+		
+		[Inspectable(name = "maxHeight", type = "Number", defaultValue = NaN)]
+		public function set maxHeight(value:Number):void
 		{
 			_maxHeight = value;
 		}
 		
-		public function get percentCenterX():Number 
+		public function get percentCenterX():Number
 		{
 			return _percentCenterX;
 		}
-		[Inspectable(name="percentCenterX",type="Number",defaultValue=NaN)]
-		public function set percentCenterX(value:Number):void 
+		
+		[Inspectable(name = "percentCenterX", type = "Number", defaultValue = NaN)]
+		public function set percentCenterX(value:Number):void
 		{
 			_percentCenterX = value;
 		}
 		
-		public function get percentCenterY():Number 
+		public function get percentCenterY():Number
 		{
 			return _percentCenterY;
 		}
-		[Inspectable(name="percentCenterY",type="Number",defaultValue=NaN)]
-		public function set percentCenterY(value:Number):void 
+		
+		[Inspectable(name = "percentCenterY", type = "Number", defaultValue = NaN)]
+		public function set percentCenterY(value:Number):void
 		{
 			_percentCenterY = value;
 		}
 		
-		public function get minWidth():Number 
+		public function get minWidth():Number
 		{
 			return _minWidth;
 		}
 		
-		public function set minWidth(value:Number):void 
+		public function set minWidth(value:Number):void
 		{
 			_minWidth = value;
 		}
 		
-		public function get maxWidth():Number 
+		public function get maxWidth():Number
 		{
 			return _maxWidth;
 		}
 		
-		public function set maxWidth(value:Number):void 
+		public function set maxWidth(value:Number):void
 		{
 			_maxWidth = value;
+		}
+		
+		public function get dotWidth():Number
+		{
+			return _dotWidth;
+		}
+		
+		public function set dotWidth(value:Number):void
+		{
+			if (value == _dotWidth)
+				return;
+			
+			_percentWidth = NaN;
+			_percentLeft = NaN;
+			_percentRight = NaN;
+			_dotWidth = value;
+			
+			callLater(calcSize);
+		}
+		
+		public function get dotHeight():Number
+		{
+			return _dotHeight;
+		}
+		
+		public function set dotHeight(value:Number):void
+		{
+			if (value == _dotHeight)
+				return;
+			
+			_percentHeight = NaN;
+			_percentTop = NaN;
+			_percentBottom = NaN;
+			_dotHeight = value;
+			
+			callLater(calcSize);
+		}
+		
+		public function get widthAnchorDisplayObject():DisplayObject
+		{
+			return _widthAnchorDisplayObject;
+		}
+		
+		public function set widthAnchorDisplayObject(value:DisplayObject):void
+		{
+			if (value == _widthAnchorDisplayObject)
+				return;
+			_widthAnchorDisplayObject = value;
+			callLater(calcSize);
+		}
+		
+		public function get heightAnchorDisplayObject():DisplayObject
+		{
+			return _heightAnchorDisplayObject;
+		}
+		
+		public function set heightAnchorDisplayObject(value:DisplayObject):void
+		{
+			if (value == _heightAnchorDisplayObject)
+				return;
+			_heightAnchorDisplayObject = value;
+			callLater(calcSize);
+		
 		}
 		
 		//resize后自动更新位置，注意super.resize必须先行
@@ -419,19 +510,24 @@ package me.rainui.components
 		{
 			if (parent == null)
 				return;
-				
+			
 			var parentWidth:Number;
 			var parentHeight:Number;
 			if (parent is Stage)
 			{
-				parentWidth = stage.stageWidth; 
-				parentHeight = stage.stageHeight; 
+				parentWidth = stage.stageWidth;
+				parentHeight = stage.stageHeight;
 			}
 			else
 			{
-				parentWidth = parent.width/parent.scaleX;
-				parentHeight = parent.height/parent.scaleY;
+				parentWidth = parent.width / parent.scaleX;
+				parentHeight = parent.height / parent.scaleY;
 			}
+			
+			if (_dotWidth)
+				_width = _dotWidth * RainUI.scale;
+			if (_dotHeight)
+				_height = _dotHeight * RainUI.scale;
 			
 			if (_autoSize)
 			{
@@ -441,47 +537,46 @@ package me.rainui.components
 			}
 			
 			if (!isNaN(_percentWidth))
-				_width = parentWidth * _percentWidth;
+				_width = (_widthAnchorDisplayObject==null?parentWidth:_widthAnchorDisplayObject.width) * _percentWidth;
 			if (!isNaN(_percentHeight))
-				_height = parentHeight * _percentHeight;
+				_height =  (_heightAnchorDisplayObject==null?parentHeight:_heightAnchorDisplayObject.height) * _percentHeight;
 			
 			if (!isNaN(_percentLeft))
-				x = _percentLeft * parentWidth+(_left?_left:0);
-			else if ( !isNaN(_left))
+				x = _percentLeft * parentWidth + (_left ? _left : 0);
+			else if (!isNaN(_left))
 				x = _left;
-				
+			
 			if (!isNaN(_percentRight))
 				if (!isNaN(_percentLeft))
-					_width = parentWidth*(1-_percentRight - _percentLeft);
+					_width = parentWidth * (1 - _percentRight - _percentLeft);
 				else
-					x = parentWidth - (_percentRight * parentWidth)-(right?right:0)- displayWidth;
-			else if ( !isNaN(_right))
+					x = parentWidth - (_percentRight * parentWidth) - (right ? right : 0) - displayWidth;
+			else if (!isNaN(_right))
 				if (!isNaN(_left))
 					_width = parentWidth - _left - _right;
 				else
 					x = parentWidth - _right - displayWidth;
-				
-				
+			
 			if (!isNaN(_percentCenterX))
 				x = (parentWidth - displayWidth) * 0.5 + (_percentCenterX * parentWidth);
 			else if (!isNaN(_centerX))
 				x = (parentWidth - displayWidth) * 0.5 + _centerX;
 			
 			if (!isNaN(_percentTop))
-				y = _percentTop * parentHeight+(_top?top:0);
+				y = _percentTop * parentHeight + (_top ? top : 0);
 			else if (!isNaN(_top))
 				y = _top;
-				
+			
 			if (!isNaN(_percentCenterY))
-				y = (parentHeight - displayHeight) * 0.5 + (_percentCenterY*parentHeight);
+				y = (parentHeight - displayHeight) * 0.5 + (_percentCenterY * parentHeight);
 			else if (!isNaN(_centerY))
 				y = (parentHeight - displayHeight) * 0.5 + _centerY;
-				
+			
 			if (!isNaN(_percentBottom))
 				if (!isNaN(_percentTop))
 					_width = parentWidth * (1 - _percentTop - _percentBottom);
 				else
-					y = parentHeight - (_percentBottom * parentHeight) - displayHeight-(_bottom?_bottom:0);
+					y = parentHeight - (_percentBottom * parentHeight) - displayHeight - (_bottom ? _bottom : 0);
 			else if (!isNaN(_bottom))
 				if (!isNaN(_top))
 					_height = parentHeight - _top - _bottom;

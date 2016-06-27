@@ -29,7 +29,7 @@ package
 	 */
 	public class ScrollContainerTest extends Sprite 
 	{
-		[Embed(source = "../../../embeds/rain_logo.png")]
+		[Embed(source = "../../../embeds/rain_logo.jpg")]
 		public static const ImgClass:Class
 		public var sc:ScrollContainer
 		

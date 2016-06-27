@@ -26,13 +26,19 @@ package me.rainui.managers
 		//public var btnSkinClass:Class = Button;
 		protected var _btnVec:Vector.<Button> = new Vector.<Button>();
 		//private var _index:int = -1;
-		protected var _max:int = 3;
+		protected var _max:int = Infinity;
 		protected var _min:int = 0;
 		protected var _indices:Vector.<int> = new Vector.<int>;
 		
-		public function ToggleGroup()
+		public function ToggleGroup(btnVec:Vector.<Button> = null ,min:int=3,max:int=Infinity)
 		{
 			super();
+			
+			if (btnVec)
+				this.btnVec = btnVec;
+			
+			this.max = max;
+			this.min = max;
 		}
 		
 		public function get btnVec():Vector.<Button>

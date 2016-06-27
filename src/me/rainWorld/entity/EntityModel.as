@@ -14,6 +14,7 @@ package  me.rainWorld.entity
 	 */
 	dynamic public class EntityModel extends ChaosModel
 	{
+		protected var _name:String = "unknown";
 		//内部的数据
 		public var position:Vector3D = new Vector3D();
 		public var speed:Vector3D = new Vector3D();
@@ -37,6 +38,16 @@ package  me.rainWorld.entity
 		public function update():void
 		{
 			
+		}
+
+		public function get name():String
+		{
+			return _name;
+		}
+
+		public function set name(value:String):void
+		{
+			_name = value;
 		}
 		
 		

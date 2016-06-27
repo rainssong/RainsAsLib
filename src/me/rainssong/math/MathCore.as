@@ -215,6 +215,7 @@ package me.rainssong.math
 		
 		public static function randomSelect(aov:*):*
 		{
+			if(aov.length==0)return null;
 			return aov[int(aov.length * Math.random())];
 		}
 		

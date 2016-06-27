@@ -14,7 +14,5 @@ AppStoreManager，获取信息、版本、评价地址等等
 DebugPanel 滚动条
 
 
-
-
 BUG:
 	AnimationCore 动画中，未能阻止oldView继续运作，在此过程中oldView可多次触发AnimationCore，导致bug
