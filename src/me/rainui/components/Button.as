@@ -92,11 +92,20 @@ package me.rainui.components
 		override protected function createChildren():void
 		{
 			
-			
-			if (this.numChildren == 1 && _normalSkin==null)
+			switch (this.numChildren) 
 			{
-				_normalSkin = this.getChildAt(0);
+				case 1:
+					if (_normalSkin == null)
+						_normalSkin = this.getChildAt(0);
+				break;
+				default:
 			}
+			
+			
+			if (styleFactory!=null)
+				styleFactory(this);
+			
+			
 			 if (_normalSkin == null)
 			{
 				_normalSkin = RainUI.getSkin("buttonNormal");
@@ -129,11 +138,8 @@ package me.rainui.components
 				_label.autoSize = true;
 				_label.size = RainUI.scale * 32;
 				_label.color = 0xffffff;
-				addChild(_label);
 			}
-			
-			//if (defaultStyleFactory!=null)
-				//defaultStyleFactory(this);
+			addChild(_label);
 			
 			_normalColorTrans = _normalSkin.transform.colorTransform;
 			
@@ -219,8 +225,14 @@ package me.rainui.components
 			{
 				selected = !_selected;
 			}
-			if (clickHandler!=null)
-				clickHandler(e);
+			if (clickHandler != null)
+			{
+				if(clickHandler.length==1)
+					clickHandler(e);
+				else
+					clickHandler();
+			}
+				
 			//}
 			//sendEvent(Event.SELECT);
 		}
@@ -580,6 +592,16 @@ package me.rainui.components
 			swapContent(_hoverSkin, value);
 			_hoverSkin = value;
 			callLater(redraw);
+		}
+		
+		override public function get styleFactory():Function 
+		{
+			return _styleFactory || defaultStyleFactory;
+		}
+		
+		override public function set styleFactory(value:Function):void 
+		{
+			_styleFactory = value;
 		}
 		
 		

@@ -229,8 +229,11 @@ package me.rainui.components
 		
 		override protected function createChildren():void 
 		{
-			_titleLabel = new Label(DEFAULT_CHILD_NAME_HEADER,{parent:this,centerX:0,top:0,color:0xffffff});
-			_contentLabel = new Label(DEFAULT_CHILD_NAME_MESSAGE,{parent:this,centerX:0,top:34*RainUI.scale,percentWidth:0.9,align:Align.CENTER,color:0xffffff});
+			_titleLabel = new Label(DEFAULT_CHILD_NAME_HEADER,{parent:this,centerX:0,top:0,color:0xffffff,percentWidth:0.9});
+			_contentLabel = new Label(DEFAULT_CHILD_NAME_MESSAGE,{parent:this,centerX:0,percentWidth:0.9,align:Align.CENTER,color:0xffffff});
+			
+			//_titleLabel = new Label(DEFAULT_CHILD_NAME_HEADER,{parent:this,centerX:0,top:0,color:0xffffff});
+			//_contentLabel = new Label(DEFAULT_CHILD_NAME_MESSAGE,{parent:this,centerX:0,top:34*RainUI.scale,percentWidth:0.9,align:Align.CENTER,color:0xffffff});
 			
 			if (this.btnGroup == null)
 			{
@@ -247,6 +250,8 @@ package me.rainui.components
 				this.btnGroup.autoSize = true;
 			}
 			
+			
+			
 			super.createChildren();
 		}
 		
@@ -260,6 +265,13 @@ package me.rainui.components
 			_titleLabel.text = _title || "";
 			_contentLabel.text = _message || "";
 			
+			_titleLabel.redraw();
+			//_contentLabel.y = _titleLabel.y + _titleLabel.height+ _gap;
+			//_contentLabel.redraw();
+			//
+			//btnGroup.y = _contentLabel.y + _contentLabel.height + _gap;
+			//btnGroup.redraw();
+			
 			if (_buttonsDataProvider)
 			{
 				this.addChild(btnGroup);
@@ -268,9 +280,10 @@ package me.rainui.components
 				this.btnGroup.bottom = 10;
 				this.btnGroup.centerX = 0;
 				//btnGroup.borderVisible = true;
-				
 			}
 			
+			_width = this.contentWidth+20;
+			_height = this.contentHeight+20;
 			
 			super.redraw();
 		}

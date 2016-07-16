@@ -31,6 +31,10 @@ package me.rainui.events {
 		//-----------------List-----------------
 		/**项渲染*/
 		public static const ITEM_RENDER:String = "listRender";
+		/**
+		 * 缩放值改变
+		 */
+		static public const SCALE_CHANGE:String = "scaleChange";
 		
 		
 		public function RainUIEvent(type:String, data:*, bubbles:Boolean = false, cancelable:Boolean = false) {

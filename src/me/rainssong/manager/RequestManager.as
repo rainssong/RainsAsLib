@@ -102,16 +102,8 @@ package me.rainssong.manager
 		public function sendRequest(data:Object, url:String, type:String = URLRequestMethod.POST,delay:Number=10000):void
 		{
 			
-			//if (!NetworkInfo.isSupported )
-			//{
-				//dispatchEvent(new RequestIOErrorEvent(IOErrorEvent.IO_ERROR, url,false,false,"NetworkInfo not supported"));
-				//powerTrace("无网络");
-				//return;
-			//}
-			
 			if (!hasLoader(url))
 				createLoader(url);
-			//MonsterDebugger.log("sendRequest:" , data, url, type);
 			
 			
 			
@@ -132,8 +124,16 @@ package me.rainssong.manager
 			}
 			else
 			{
-				request.data = JSON.stringify(data);
-				request.contentType = "application/json";
+				//request.data = JSON.stringify(data);
+				//request.contentType = "application/json";
+				uv = new URLVariables();
+				
+				for (i in data)
+					uv[i] = data[i];
+				
+				request.data = uv;
+				
+				request.contentType = "application/x-www-form-urlencoded";
 			}
 			
 			//powerTrace(url, JSON.stringify(data));

@@ -1,10 +1,12 @@
 package me.rainssong.display 
 {
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import me.rainssong.display.AbstructDragableSprite;
 	import me.rainssong.events.DragEvent;
+	import me.rainssong.utils.Draw;
 	import me.rainssong.utils.superTrace;
 	
 	/**
@@ -29,7 +31,6 @@ package me.rainssong.display
 		
 		protected function onMouseDown(e:MouseEvent):void 
 		{
-			
 			startDragging(e.stageX, e.stageY);
 			
 		}

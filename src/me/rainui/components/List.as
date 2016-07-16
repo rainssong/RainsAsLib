@@ -98,7 +98,7 @@ package me.rainui.components
 			
 			if (value is Array)
 				_items = new ListCollection(value);
-			else if ( value is ListCollection)
+			if ( value is ListCollection)
 				_items = value;
 			else
 				return;
@@ -587,7 +587,7 @@ package me.rainui.components
 		{
 			if (index > -1 && index < _items.length)
 			{
-				return _items[index];
+				return _items.getItemAt(index);
 			}
 			return null;
 		}

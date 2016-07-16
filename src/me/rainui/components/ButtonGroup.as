@@ -529,11 +529,18 @@ package me.rainui.components
 		 */
 		protected function layoutButtons():void
 		{
-			for (var i:int = 0; i < _buttons.length; i++) 
-			{
-				_buttons[i].x = i * (_buttons[i].width + gap);
-				_buttons[i].y = 0;
-			}
+			if(_direction==Directions.HORIZONTAL)
+				for (var i:int = 0; i < _buttons.length; i++) 
+				{
+					_buttons[i].x = i * (_buttons[i].width + gap);
+					_buttons[i].y = 0;
+				}
+			else
+				for (i = 0; i < _buttons.length; i++) 
+				{
+					_buttons[i].x =0;
+					_buttons[i].y = i * (_buttons[i].height + gap);
+				}
 		}
 
 		/**

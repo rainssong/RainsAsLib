@@ -24,15 +24,22 @@ package me.rainui.managers
 	public class ToggleGroup extends EventDispatcher
 	{
 		//public var btnSkinClass:Class = Button;
+		//BUG:赋值无意义
 		protected var _btnVec:Vector.<Button> = new Vector.<Button>();
 		//private var _index:int = -1;
-		protected var _max:int = 3;
+		protected var _max:int = 9999;
 		protected var _min:int = 0;
 		protected var _indices:Vector.<int> = new Vector.<int>;
 		
-		public function ToggleGroup()
+		public function ToggleGroup(btnVec:Vector.<Button> = null ,min:int=3,max:int=9999)
 		{
 			super();
+			
+			if (btnVec)
+				this.btnVec = btnVec;
+			
+			this.max = max;
+			this.min = max;
 		}
 		
 		public function get btnVec():Vector.<Button>
@@ -122,20 +129,22 @@ package me.rainui.managers
 			_min = value;
 		}
 		
+		
+		//BUG:在一次切换操作未完成时，会出现0选择或者双选择的情况
 		protected function onChange(e:RainUIEvent):void
 		{
 			var btn:Button = e.currentTarget as Button;
-			if (indices.length > _max)
-				btn.selected = false;
-			if (indices.length <_min)
-				btn.selected = true;
+			//if (indices.length > _max)
+				//btn.selected = false;
+			//if (indices.length <_min)
+				//btn.selected = true;
 				
-			//dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, indices));
+			dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, indices));
 		}
 		
 		protected function onSelect(e:RainUIEvent):void
 		{
-			//dispatchEvent(new RainUIEvent(RainUIEvent.SELECT, e.data));
+			dispatchEvent(new RainUIEvent(RainUIEvent.SELECT, e.data));
 		}
 		
 		public function select(i:int):void

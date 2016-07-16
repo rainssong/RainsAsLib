@@ -34,6 +34,7 @@ package me.rainssong.application
 		public static var stage:Stage
 		public static var stageWidth:Number = 0;
 		public static var stageHeight:Number = 0;
+		static public var platform:String="";
 		
 		protected static var _version:String = null;
 		

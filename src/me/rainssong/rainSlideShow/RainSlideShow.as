@@ -225,6 +225,9 @@
 			{
 				destroySlide(i);
 			}
+			
+			if (_slideContentArr.length == 0)
+			return;
 			//destroySlide(currentIndex + 1);
 			//destroySlide(currentIndex - 1);
 			//destroySlide(currentIndex);
@@ -257,7 +260,7 @@
 				if (!_slideArr[index].hasContent && _slideContentArr[index])
 				{
 					_slideArr[index].reload(_slideContentArr[index]);
-					superTrace("读取资源:" + _slideContentArr[index])
+					powerTrace("读取资源:" + _slideContentArr[index])
 					
 				}
 			}
@@ -419,12 +422,17 @@
 				_targetIndex = _slideContentArr.length - 1;
 			
 			rollTo(_targetIndex, 0.5);
-			superTrace("更新ContentArr");
+			powerTrace("更新ContentArr");
 		}
 		
 		public function get slideArr():Array
 		{
 			return _slideArr;
+		}
+		
+		public function get targetIndex():int 
+		{
+			return _targetIndex;
 		}
 	
 	}

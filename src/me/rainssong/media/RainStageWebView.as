@@ -1,6 +1,7 @@
 ﻿package me.rainssong.media
 {
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.LocationChangeEvent;
 	import flash.filesystem.File;
@@ -9,12 +10,14 @@
 	import flash.html.HTMLLoader;
 	import flash.media.StageWebView;
 	import me.rainssong.display.SmartSprite;
+	import me.rainssong.utils.HtmlCreator;
+	import me.rainui.RainUI;
 	
 	/**
 	 * ...
 	 * @author Rainssong
 	 */
-	public class RainStageWebView extends SmartSprite
+	public class RainStageWebView extends  SmartSprite
 	{
 		
 		public var webWidth:Number;
@@ -27,6 +30,7 @@
 			super();
 			webWidth= width;
 			webHeight = height;
+			this.autoDestroy=false
 			//addChild(_webView)
 		}
 		
@@ -53,14 +57,16 @@
 		
 		override public function hide():void 
 		{
-			super.hide();
 			_webView.stage = null;
+			super.hide();
+			
 		}
 		
 		override public function show():void 
 		{
-			super.show();
 			_webView.stage = this.stage;
+			super.show();
+			
 		}
 		
 		private function onEnterFrame(e:Event):void
@@ -122,6 +128,16 @@
 			_webView.reload();
 		}
 		
+		public function unload():void
+		{
+			
+			
+			//webview.loadURL(File.applicationStorageDirectory.resolvePath("temp.html").nativePath);
+			_webView.loadURL (HtmlCreator.createFile("").nativePath);
+		}
+		
+
+		
 		public function get title():String 
 		{
 			return _webView.title;
@@ -164,6 +180,11 @@
 		public function get location():String
 		{
 			return _webView.location;
+		}
+		
+		public function set location(url:String):void
+		{
+			_webView.loadURL(url);
 		}
 		
 		//public function get webView():StageWebView 

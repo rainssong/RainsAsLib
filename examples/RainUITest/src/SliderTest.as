@@ -11,6 +11,7 @@ package
 	import me.rainui.components.List;
 	import me.rainui.components.ListItem;
 	import me.rainui.components.Page;
+	import me.rainui.components.Slider;
 	import me.rainui.data.ListCollection;
 	import me.rainui.events.RainUIEvent;
 	import me.rainui.RainTheme;
@@ -24,10 +25,10 @@ package
 	 * @homepage http://rainsgameworld.sinaapp.com
 	 * @weibo http://www.weibo.com/rainssong
 	 */
-	public class AlertTest extends Page 
+	public class SliderTest extends Page 
 	{
 		
-		public function AlertTest() 
+		public function SliderTest() 
 		{
 			super();
 			
@@ -39,10 +40,7 @@ package
 		private function init():void 
 		{
 			
-			var b:Button = new Button("fuck")
-			b.label.color=0
-			stage.addChild(b);
-			trace(b.text);
+			stage.addChild(new Slider)
 			
 			//Alert.show("message~~~~~~", "title",new ListCollection([{text:"ok"}]));
 		}

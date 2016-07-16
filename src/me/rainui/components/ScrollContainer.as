@@ -58,24 +58,35 @@ package me.rainui.components
 		override protected function createChildren():void 
 		{
 			//_container = new Container();
+			if (this.numChildren == 1)
+			{
+				this._content = this.getChildAt(0)
+				this._width = _content.width
+				this._height =  _content.height;
+			}
+			
 			_container.percentWidth = 1;
 			_container.percentHeight = 1;
 			addChild(_container);
 			
-			if (_content)
-			{
-				addContent(_content);
-				this._width = _content.width;
-				this._height = _content.height;
-			}
-			
 			if (_bgSkin == null)
 			{
 				var shape:Shape = new Shape();
-				Draw.rect(shape, 0, 0, 100, 100,RainTheme.WHITE);
+				Draw.rect(shape, 0, 0, _width, _height,RainTheme.WHITE);
 				_bgSkin = shape;
 				_bgSkin.alpha = 0;
 			}
+			
+			
+			if (_content)
+			{
+				addContent(_content);
+				this._width = _content.width
+				this._height =  _content.height;
+				
+			}
+			
+			
 			//else
 			//{
 				//_width = bgSkin.width;

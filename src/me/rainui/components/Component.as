@@ -49,9 +49,7 @@
 		
 		protected var _listeners:Vector.<ListenerModel>=new Vector.<ListenerModel>
 		
-		//新增属性，免除计算像素的步骤
-		protected var _dotWidth:Number;
-		protected var _dotHeight:Number;
+		
 		
 		protected var _autoExpand:Boolean = false;
 		protected var _autoShrink:Boolean = false;
@@ -129,7 +127,12 @@
 				_bgSkin = RainUI.getSkin("bg");
 				_bgSkin.visible = false;
 			}
-			addChildAt(_bgSkin,0);
+			else
+			{
+				//BUG:将bgSkin对宽高的优先级不应是最高。
+			}
+			addChildAt(_bgSkin, 0);
+			
 		}
 		
 		protected function initialize():void
@@ -493,29 +496,11 @@
 			target.addChild(this);
 		}
 		
-		public function get dotWidth():Number 
-		{
-			return _dotWidth;
-		}
 		
-		public function set dotWidth(value:Number):void 
-		{
-			_dotWidth = value;
-		}
-		
-		public function get dotHeight():Number 
-		{
-			return _dotHeight;
-		}
-		
-		public function set dotHeight(value:Number):void 
-		{
-			_dotHeight = value;
-		}
 		
 		public function get styleFactory():Function 
 		{
-			return _styleFactory || Component.defaultStyleFactory;
+			return _styleFactory || defaultStyleFactory;
 		}
 		
 		public function set styleFactory(value:Function):void 

@@ -1,4 +1,4 @@
-package me.rainui.managers
+﻿package me.rainui.managers
 {
 	import adobe.utils.CustomActions;
 	import flash.display.Bitmap;
@@ -34,7 +34,11 @@ package me.rainui.managers
 		
 		public function get index():int
 		{
-			return _index;
+			
+			if (indices.length == 0)
+				return -1;
+			else
+				return _index;
 		}
 		
 		public function set index(value:int):void
@@ -55,6 +59,7 @@ package me.rainui.managers
 						btn.selected = false;
 				}
 				dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, value));
+				
 			}
 			
 			dispatchEvent(new RainUIEvent(RainUIEvent.SELECT, value));
@@ -74,15 +79,9 @@ package me.rainui.managers
 		
 		override protected function onChange(e:RainUIEvent):void 
 		{
-			//super.onChange(e);
-			//
-			//var btn:Button = e.currentTarget as Button;
-			//if (indexs.length > _max)
-				//btn.selected = false;
-			//if (indexs.length <_min)
-				//btn.selected = true;
-				
-			//dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, _index));
+			super.onChange(e);
+			
+			dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, index));
 		}
 	
 	}

@@ -16,7 +16,7 @@ package
 	 * @homepage http://rainsgameworld.sinaapp.com
 	 * @weibo http://www.weibo.com/rainssong
 	 */
-	public class ComponentTest extends Sprite 
+	public class ComponentTest extends Sprite
 	{
 		
 		public function ComponentTest() 

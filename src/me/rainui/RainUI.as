@@ -7,6 +7,7 @@
 	import flash.display.StageScaleMode;
 	import flash.display.StageAlign;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.geom.ColorTransform;
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
@@ -46,6 +47,8 @@
 		static public var designDPI:Number = 321;
 		static public var currentDPI:Number =  Capabilities.screenDPI;
 		
+		static public var dispatcher:EventDispatcher = new EventDispatcher();
+		
 		public function RainUI()
 		{
 			
@@ -75,7 +78,7 @@
 			RainUI.theme = theme;
 			
 			
-			stage.addEventListener(Event.RESIZE, onStageResize);
+			stage.addEventListener(Event.RESIZE, onStageResize,false,64);
 		
 		}
 		

@@ -5,6 +5,7 @@
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.StageScaleMode;
+	import flash.events.Event;
 	import flash.geom.ColorTransform;
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
@@ -20,6 +21,7 @@
 	import me.rainui.components.Button;
 	import me.rainui.components.Label;
 	import me.rainui.components.List;
+	import me.rainui.events.RainUIEvent;
 	import me.rainui.utils.ScaleMethod;
 	
 	/**
@@ -121,11 +123,19 @@
 			_skinDic["buttonNormal"] = blueSkinFactory; 
 			
 			
-			
-			initScale();
+			calcScale();
 			initStyle();
 			initDimensions();
-			initFonts();
+			initFonts()
+			
+			
+			if (RainUI.stage)
+				RainUI.stage.addEventListener(Event.RESIZE, onStageResize);
+		}
+		
+		private function onStageResize(e:Event):void 
+		{
+			calcScale();
 		}
 		
 		protected function initDimensions():void
@@ -176,7 +186,6 @@
 		{
 			Button.defaultStyleFactory = buttonStyleFactory;
 			List.defaultStyleFactory = listStyleFactory;
-			
 			Label.defaultStyleFactory=labelStyleFactory
 		}
 		
@@ -191,12 +200,16 @@
 		{
 			//不能修改皮肤，除非因为存在用户定义好的情况
 			//comp.normalSkin = blueSkinFactory();
-			
-			comp.label.centerX = 0;
-			comp.label..centerY = 0;
-			comp.label.autoSize = true;
-			comp.label.size = RainUI.scale * 32;
-			comp.label.color = 0xffffff;
+			if (comp.label == null)
+			{
+				comp.label = new Label();
+				comp.label.centerX = 0;
+				comp.label.centerY = 0;
+				comp.label.autoSize = true;
+				comp.label.size = RainUI.scale * 32;
+				comp.label.color = 0xffffff;
+				
+			}
 		}
 		
 		public function listStyleFactory(comp:List):void 
@@ -206,9 +219,10 @@
 			//comp.height = controlHeight;
 		}
 		
-		protected function initScale():void
+		protected function calcScale():void
 		{
-			if (RainUI.stage.scaleMode != StageScaleMode.NO_SCALE)
+			
+			if (RainUI.stage == null || RainUI.stage.scaleMode != StageScaleMode.NO_SCALE)
 			{
 				this._textScale = 1;
 				this._scale = 1;
@@ -220,25 +234,34 @@
 			this._heightScale =  RainUI.stageHeight/RainUI.designHeight;
 			this._maxScale =  Math.max(_widthScale, _heightScale);
 			this._minScale =   Math.min(_widthScale, _heightScale);
+			
+			var scale:Number = _scale;
+			
 			switch (_scaleMethod) 
 			{
 				case ScaleMethod.DPI:
-					_scale = this._dpiScale ;
+					scale = this._dpiScale ;
 					
 				break;
 				case ScaleMethod.WIDTH:
-					_scale = this._widthScale ;
+					scale = this._widthScale ;
 				break;
 				case ScaleMethod.HEIGHT:
-					_scale = this._heightScale ;
+					scale = this._heightScale ;
 				break;
 				case ScaleMethod.MAX_LENGTH:
-					_scale = this._maxScale ;
+					scale = this._maxScale ;
 				break;
 				case ScaleMethod.MIN_LENGTH:
-					_scale = this._minScale ;
+					scale = this._minScale ;
 				break;
 				default:
+			}
+			
+			if (scale != _scale)
+			{
+				this._scale = scale;
+				RainUI.dispatcher.dispatchEvent(new RainUIEvent(RainUIEvent.SCALE_CHANGE, _scale));
 			}
 			
 			this._textScale = this._scale / RainUI.stage.contentsScaleFactor;

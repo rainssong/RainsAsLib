@@ -7,6 +7,7 @@ accordance with the terms of the accompanying license agreement.
 */
 package me.rainui.events
 {
+	import flash.events.Event;
 	/**
 	 * Event <code>type</code> constants for collections. This class is
 	 * not a subclass of <code>starling.events.Event</code> because these
@@ -43,5 +44,14 @@ package me.rainui.events
 		public static const UPDATE_ITEM:String = "updateItem";
 		
 		static public const UPDATE_ALL:String = "updateAll";
+		
+		public function CollectionEvent(type:String, data:*, bubbles:Boolean = false, cancelable:Boolean = false) {
+			super(type, data, bubbles, cancelable);
+			
+		}
+		
+		override public function clone():Event {
+			return new CollectionEvent(type,data, bubbles, cancelable);
+		}
 	}
 }

@@ -185,7 +185,7 @@ package me.rainui.components
 		public function dispose(clearFromLoader:Boolean = false):void
 		{
 			//App.asset.disposeBitmapData(_url);
-			if (bitmap)
+			if (bitmap && bitmap.bitmapData)
 			{
 				bitmap.bitmapData.dispose();
 				bitmap.bitmapData = null;

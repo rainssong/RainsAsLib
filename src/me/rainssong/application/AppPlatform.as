@@ -13,7 +13,7 @@ package me.rainssong.application
 		static public const MOBILE:String = "mobile";
 		static public const DESKTOP:String = "desktop";
 		static public const TV:String = "tv";
-		static public const TV:String = "tv";
+		static public const WEB:String = "web";
 		
 		
 		public function AppPlatform() 

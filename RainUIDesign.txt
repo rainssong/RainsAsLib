@@ -1,10 +1,10 @@
 Todo:
-	ScrollContainer无法完全归位√
+	组件新属性：dotWidth(designWidth),scaleMode
+	侦听全局通知
 	涂鸦风格、未来风格UI（日系）
 	由Theme给组件提供默认数据,组件不再从theme处获取。
 	ScrollContainer增加不足居中的选项（超载分为leftrightupbottom）
 	ScrollContainer SmartRender，只刷新显示部分的组件视图
-	WHRatio 锁定宽高比(取消)
 	增加一个content层，用于统计非组件视图宽高。√
 	autoSize改为autoZoomIn和AutoZoomOut
 	基于点的UI设计
