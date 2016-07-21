@@ -99,41 +99,29 @@ package me.rainssong.manager
 			//timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimer);
 		}
 		
-		public function sendRequest(data:Object, url:String, type:String = URLRequestMethod.POST,delay:Number=10000):void
+		public function sendRequest(data:Object, url:String, method:String = URLRequestMethod.POST,delay:Number=10000,contentType:String="application/x-www-form-urlencoded"):void
 		{
 			
 			if (!hasLoader(url))
 				createLoader(url);
 			
-			
-			
 			var request:URLRequest = new URLRequest(url);
 			
-			request.method = type;
+			request.method = method;
+			request.contentType = contentType;
 			
-			
-			if (type == URLRequestMethod.GET)
+			switch (contentType) 
 			{
-				var uv:URLVariables = new URLVariables();
-				
-				for (var i:String in data)
-					uv[i] = data[i];
-				
-				request.data = uv;
-				
-			}
-			else
-			{
-				//request.data = JSON.stringify(data);
-				//request.contentType = "application/json";
-				uv = new URLVariables();
-				
-				for (i in data)
-					uv[i] = data[i];
-				
-				request.data = uv;
-				
-				request.contentType = "application/x-www-form-urlencoded";
+				case "application/x-www-form-urlencoded":
+					var uv:URLVariables = new URLVariables();
+					for (var i:String in data)
+						uv[i] = data[i];
+					request.data = uv;
+				break;
+				case "application/json":
+					request.data = JSON.stringify(data);
+				break;
+				default:
 			}
 			
 			//powerTrace(url, JSON.stringify(data));

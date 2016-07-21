@@ -172,7 +172,7 @@ package me.rainssong.tween
 					
 					fadeToBlack(_oldView,duration*0.5, {onComplete: onFadeComplete});
 					
-					function onFadeComplete()
+					function onFadeComplete():void
 					{
 						fadeFromBlack(_newView,duration*0.5,params);
 						if (_oldView.parent)
@@ -239,7 +239,7 @@ package me.rainssong.tween
 					_blackBmp.alpha = 1;
 					TweenMax.to(_blackBmp, duration, {alpha: 0, onComplete: removeBlack, ease: Cubic.easeInOut, delay: delay});
 					
-					function removeBlack()
+					function removeBlack():void
 					{	
 					if (_blackBmp.parent)
 						_blackBmp.parent.removeChild(_blackBmp);
@@ -294,7 +294,7 @@ package me.rainssong.tween
 					TweenMax.to(_blackBmp, duration * 0.5, {alpha: 1, onComplete: removeViewComplete, onCompleteParams: [view], ease: Cubic.easeInOut, delay: delay});
 					TweenMax.to(_blackBmp, duration * 0.5, {alpha: 0, onComplete: removeBlack, ease: Cubic.easeInOut, delay: delay + duration * 0.5});
 					
-					function removeBlack()
+					function removeBlack():void
 				{
 					if (_blackBmp.parent)
 						_blackBmp.parent.removeChild(_blackBmp);
