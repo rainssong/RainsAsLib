@@ -20,6 +20,28 @@
 		
 		}
 		
+		static public function getValue(obj:*, expression:String):*
+		{
+			if (obj == null)
+				return null;
+			
+			var arr:Array = expression.split(".");
+			
+			var result:*= obj;
+			
+			for (var i:int = 0; i < arr.length; i++) 
+			{
+				if(result.hasOwnProperty(arr[i]))
+					result = result[arr[i]];
+				//if (!result == null || result==undefined)
+					//return result;
+				else
+					return null;
+			}
+			
+			return result;
+		}
+		
 		static public function traceProps(obj:*):void
 		{
 			powerTrace(getQualifiedClassName(obj));

@@ -177,6 +177,9 @@ package me.rainui.components
 			//{
 				//factory = alertFactory != null ? alertFactory : defaultAlertFactory;
 			//}
+			message ||= "";
+			title ||= "";
+			
 			var alert:Alert = new Alert();
 			alert.title = title;
 			alert.message = message;
@@ -190,6 +193,8 @@ package me.rainui.components
 				//factory = overlayFactory;
 			//}
 			PopUpManager.addPopUp(alert, isModal, isCentered);
+			
+			alert.redraw();
 			return alert;
 		}
 
@@ -230,7 +235,18 @@ package me.rainui.components
 		override protected function createChildren():void 
 		{
 			_titleLabel = new Label(DEFAULT_CHILD_NAME_HEADER,{parent:this,centerX:0,top:0,color:0xffffff,percentWidth:0.9});
-			_contentLabel = new Label(DEFAULT_CHILD_NAME_MESSAGE,{parent:this,centerX:0,percentWidth:0.9,align:Align.CENTER,color:0xffffff});
+			_contentLabel = new Label(DEFAULT_CHILD_NAME_MESSAGE,{parent:this,centerX:0,percentWidth:0.9,align:Align.TOP,color:0xffffff});
+			//
+			//
+			//_contentLabel.multiline = true;
+			//_contentLabel.wordWrap = true;
+			
+			//_contentLabel = new Label("一二三四五六七八九十一二三四五六七八九十", { parent:this, centerX:0, width:200, align:Align.CENTER, color:0xffffff } );
+		   
+		   _contentLabel.multiline = true;
+			_contentLabel.wordWrap = true;
+			
+			
 			
 			//_titleLabel = new Label(DEFAULT_CHILD_NAME_HEADER,{parent:this,centerX:0,top:0,color:0xffffff});
 			//_contentLabel = new Label(DEFAULT_CHILD_NAME_MESSAGE,{parent:this,centerX:0,top:34*RainUI.scale,percentWidth:0.9,align:Align.CENTER,color:0xffffff});
@@ -262,12 +278,16 @@ package me.rainui.components
 		
 		override public function redraw():void 
 		{
-			_titleLabel.text = _title || "";
-			_contentLabel.text = _message || "";
+			
+			
+			
+			
+			//_titleLabel.text = _title || "";
+			//_contentLabel.text = _message || "";
 			
 			_titleLabel.redraw();
 			//_contentLabel.y = _titleLabel.y + _titleLabel.height+ _gap;
-			//_contentLabel.redraw();
+			_contentLabel.redraw();
 			//
 			//btnGroup.y = _contentLabel.y + _contentLabel.height + _gap;
 			//btnGroup.redraw();
@@ -282,10 +302,10 @@ package me.rainui.components
 				//btnGroup.borderVisible = true;
 			}
 			
-			_width = this.contentWidth+20;
-			_height = this.contentHeight+20;
-			
 			super.redraw();
+			
+			_width = this.contentWidth+20;
+			_height = this.contentHeight + 20;
 		}
 
 		/**
@@ -342,7 +362,8 @@ package me.rainui.components
 			{
 				return;
 			}
-			this._title = value;
+			this._title = value || "";
+			_titleLabel.text = value;
 			callLater(redraw);
 			//this.invalidate(INVALIDATION_FLAG_DATA);
 		}
@@ -369,7 +390,8 @@ package me.rainui.components
 			{
 				return;
 			}
-			this._message = value;
+			this._message = value || "";
+			_contentLabel.text = _message;
 			callLater(redraw);
 		}
 

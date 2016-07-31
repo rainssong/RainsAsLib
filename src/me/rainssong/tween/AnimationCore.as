@@ -37,8 +37,12 @@ package me.rainssong.tween
 			if (!newView.parent)
 				_parent.addChildAt(newView, _parent.getChildIndex(oldView));
 			
-			oldView["mouseEnabled"] = false;
-			oldView["mouseChildren"] = false;
+			if (oldView.hasOwnProperty("mouseEnabled"))
+			{
+				oldView["mouseEnabled"] = false;
+				oldView["mouseChildren"] = false;
+			}
+			
 			
 			if (params)
 			{

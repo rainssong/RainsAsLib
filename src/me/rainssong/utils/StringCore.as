@@ -129,6 +129,12 @@
 			return (str.substring(0, 7) == "http://" || str.substring(0, 8) == "https://");
 		}
 		
+		public static function getDomain(str:String):String
+		{
+			var baseUrl:String = str.split("://")[1].split("/")[0];
+			return (baseUrl.substr(0, 4) == "www.") ? baseUrl.substr(4) : baseUrl;
+		}
+		
 		public static function deleteProtocol(url:String):String
 		{
 			return url.replace(/[a-zA-z]+:\/\//, "");

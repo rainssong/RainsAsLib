@@ -11,7 +11,6 @@ package me.rainssong.application
 	import flash.utils.getDefinitionByName;
 	import me.rainssong.manager.SharedObjectProxy;
 	import me.rainssong.manager.SystemManager;
-	import me.rainssong.system.SystemCore;
 
 
 /**

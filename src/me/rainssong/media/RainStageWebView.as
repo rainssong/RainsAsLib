@@ -80,6 +80,12 @@
 			_webView.viewPort = new Rectangle(globalPoint.x, globalPoint.y, webWidth, webHeight);
 		}
 		
+		override protected function onRemove(e:Event):void 
+		{
+			_webView.stage = null;
+			super.onRemove(e);
+		}
+		
 		
 		override public function destroy():void
 		{

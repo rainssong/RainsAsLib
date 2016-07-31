@@ -37,11 +37,17 @@ package me.rainui.components
 		
 		override protected function createChildren():void
 		{
+			if (this.numChildren == 1 )
+			{
+				_width = getChildAt(0).width;
+				_height =  getChildAt(0).height;
+			}
 			if (this.numChildren == 1 && getChildAt(0) is Bitmap)
 			{
 				//if (this.getChildAt(0) is Bitmap)
 				_content = this.getChildAt(0) as Bitmap;
 			}
+		
 			if(_content==null)
 			{
 				_content = new Bitmap();

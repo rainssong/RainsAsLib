@@ -2,7 +2,6 @@
 package me.rainssong.net
 {
 	import avmplus.finish;
-	import com.vsdevelop.air.filesystem.FileCore;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
@@ -13,10 +12,8 @@ package me.rainssong.net
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
-	import com.vsdevelop.net.SharedManage;
 	import flash.net.URLRequestHeader;
 	import flash.utils.ByteArray;
-	import com.vsdevelop.net.SharedManage;
 	import flash.utils.getDefinitionByName;
 	import me.rainssong.utils.DebugPanel;
 	
@@ -47,6 +44,8 @@ package me.rainssong.net
 		private var _isDownloading:Boolean = false;
 		private var _autoDestroy:Boolean = false;
 		
+		private var _rangeloader:URLLoader = new URLLoader();
+		
 		public function ResumeDownloader()
 		{
 			
@@ -55,36 +54,10 @@ package me.rainssong.net
 		public function download(sourceUrl:String, targetUrl:String, autoStart:Boolean = true, isCover:Boolean = false):void
 		{
 			_sourceUrl = sourceUrl;
-			
-			
 			_targetUrl = targetUrl
-			//_targetUrl = targetUrl.replace(":","\\");
-			//_targetUrl = targetUrl.replace(":8200","");
 			_autoStart = autoStart;
 			_isCover = isCover;
-			_bytesLoaded = 0;
-			_isFinished = false;
-			//_targetFile = FileCore.newFile(targetUrl);
 
-			_targetFile = new File(_targetUrl);
-			_targetFile.parent.createDirectory();
-			//_targetFile = (new File("/" + targetUrl)).nativePath;
-			//如果有了就别下了。
-			if (_targetFile.exists && !isCover)
-			{
-				powerTrace(this + "文件已存在，下载取消");
-				dispatchEvent(new Event(Event.COMPLETE));
-				return;
-			}
-			
-			//.substring(0, targetUrl.lastIndexOf("."))
-			_tempFileUrl = _targetUrl + "." + EXTENSION;
-			powerTrace(_tempFileUrl);
-			//_tempFile =new File("/"+_tempFileUrl);
-			_tempFile = new File(_tempFileUrl);
-			_tempFile.parent.createDirectory();
-			
-			
 			try
 			{
 				_sourceFile = new File(sourceUrl);
@@ -93,11 +66,38 @@ package me.rainssong.net
 			{
 				
 			}
+				
+			_targetFile = new File(_targetUrl);
+			_targetFile.parent.createDirectory();
 			
+			//如果有了就别下了。
+			if (_targetFile.exists && !isCover)
+			{
+				_isDownloading = false;
+				_isFinished = true;
+				powerTrace(this + "文件已存在，下载取消");
+				dispatchEvent(new Event(Event.COMPLETE));
+				return;
+			}
+			
+			_tempFileUrl = _targetUrl + "." + EXTENSION;
+			powerTrace(_tempFileUrl);
+			_tempFile = new File(_tempFileUrl);
+			_tempFile.parent.createDirectory();
+			
+			
+			
+			_bytesLoaded = 0;
+			_isFinished = false;
 			var loader:URLLoader = new URLLoader();
 			loader.load(new URLRequest(sourceUrl));
 			loader.addEventListener(IOErrorEvent.IO_ERROR, loaderErrorHandler);
 			loader.addEventListener(ProgressEvent.PROGRESS, loaderProgressHandler);
+			
+			
+			_rangeloader.addEventListener(IOErrorEvent.IO_ERROR, loaderErrorHandler);
+			_rangeloader.dataFormat = URLLoaderDataFormat.BINARY;
+			_rangeloader.addEventListener(Event.COMPLETE, rangeDownloadCompleteHandler);
 		}
 		
 		private function loaderProgressHandler(e:ProgressEvent):void
@@ -106,6 +106,8 @@ package me.rainssong.net
 			_totalLength = URLLoader(e.target).bytesTotal; //得到文件的真实尺寸;
 			
 			powerTrace( "总长度" + totalLength);
+			
+			// TODO: file not exist
 			
 			URLLoader(e.target).close(); //停止load;
 			
@@ -117,7 +119,7 @@ package me.rainssong.net
 		
 		}
 		
-		public function startDownLoad():void
+		private function startDownLoad():void
 		{
 			if (_tempFile.exists)
 			{
@@ -138,6 +140,10 @@ package me.rainssong.net
 					fs.close();
 				}
 			}
+			else
+			{
+				_startPoint = 0;
+			}
 			
 			_isDownloading = true;
 			
@@ -153,14 +159,7 @@ package me.rainssong.net
 			var header:URLRequestHeader = new URLRequestHeader("Range", "bytes=" + _startPoint + "-" + _endPoint);
 			request.requestHeaders.push(header);
 			
-			var loader:URLLoader = new URLLoader();
-			
-			
-			loader.addEventListener(IOErrorEvent.IO_ERROR, loaderErrorHandler);
-			
-			loader.dataFormat = URLLoaderDataFormat.BINARY;
-			loader.addEventListener(Event.COMPLETE, rangeDownloadCompleteHandler);
-			loader.load(request);
+			_rangeloader.load(request);
 		}
 		
 		private function loaderErrorHandler(e:IOErrorEvent):void 
@@ -196,8 +195,8 @@ package me.rainssong.net
 			
 			if (loadedPercent < 1)
 			{
-				dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS));
-				powerTrace(_targetUrl.split("/").slice(-1),loadedPercent.toPrecision(2));
+				dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS,false,false,_bytesLoaded,_totalLength));
+				//powerTrace(_targetUrl.split("/").slice(-1),loadedPercent.toPrecision(2));
 				startDownLoad();
 			}
 			else
@@ -274,7 +273,7 @@ package me.rainssong.net
 		
 		public function get loadedPercent():Number
 		{
-			return _endPoint / _totalLength;
+			return _bytesLoaded / _totalLength;
 		}
 		
 		public function get sourceUrl():String
