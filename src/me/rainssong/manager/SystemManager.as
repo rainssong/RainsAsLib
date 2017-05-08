@@ -27,6 +27,20 @@ package  me.rainssong.manager
 			else return false;
 		}
 		
+		static public function get isMacOS():Boolean
+		{
+			if (Capabilities.os.match("Mac OS"))
+				return true;
+			else return false;
+		}
+		
+		static public function get isLinux():Boolean
+		{
+			if (Capabilities.os.match("Linux"))
+				return true;
+			else return false;
+		}
+		
 		static public function get isIphone():Boolean
 		{
 			if (Capabilities.os.match("iPhone") )
@@ -40,7 +54,6 @@ package  me.rainssong.manager
 				return true;
 			else return false;
 		}
-
 		
 		static public function get isAndroid():Boolean
 		{

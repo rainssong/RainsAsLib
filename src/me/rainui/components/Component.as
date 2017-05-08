@@ -60,6 +60,9 @@
 		
 		protected var _styleName:String = "Component";
 		
+		protected var _destroyed:Boolean = false;
+		
+		
 		
 		public function Component(dataSource:Object=null)
 		{
@@ -338,7 +341,10 @@
 			if(_borderVisible)
 				showBorder();
 			
-			sendEvent(Event.RESIZE);
+			//powerTrace(this,"dispatch resize")
+			//sendEvent(Event.RESIZE);
+			dispatchEvent(new Event(Event.RESIZE,true, false));
+			
 			clearCallLater(resize);
 		}
 		
@@ -489,14 +495,14 @@
 		{
 			removeAllEventListener();
 			this.removeChildren();
+			_destroyed = true;
 		}
 		
 		public function set parent(target:DisplayObjectContainer):void
 		{
+			//powerTrace(target + "add" + this);
 			target.addChild(this);
 		}
-		
-		
 		
 		public function get styleFactory():Function 
 		{
@@ -507,6 +513,12 @@
 		{
 			_styleFactory = value;
 		}
+		
+		public function get destroyed():Boolean 
+		{
+			return _destroyed;
+		}
+		
 		
 		
 		

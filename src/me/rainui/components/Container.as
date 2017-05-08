@@ -55,12 +55,9 @@ package me.rainui.components
 		
 		public function Container(dataSource:Object = null)
 		{
-			//this.scrollRect = new Rectangle(0, 0, 100, 100);
 			super(dataSource)
-			addEventListener(Event.ADDED, onAdded);
-			addEventListener(Event.REMOVED, onRemoved);
-			addExternalListener(RainUI.dispatcher, RainUIEvent.SCALE_CHANGE, onScaleChange);
 		}
+		
 		
 		protected function onScaleChange(e:RainUIEvent):void
 		{
@@ -71,6 +68,9 @@ package me.rainui.components
 		{
 			super.preinitialize();
 			this.mouseChildren = true;
+			addEventListener(Event.ADDED, onAdded);
+			addEventListener(Event.REMOVED, onRemoved);
+			addExternalListener(RainUI.dispatcher, RainUIEvent.SCALE_CHANGE, onScaleChange);
 		}
 		
 		override protected function initialize():void
@@ -94,6 +94,7 @@ package me.rainui.components
 		{
 			if (e.target == this)
 			{
+				//powerTrace(this + "start listen");
 				parent.addEventListener(Event.RESIZE, onParentResize);
 				callLater(calcSize);
 			}
@@ -103,7 +104,10 @@ package me.rainui.components
 		
 		protected function onParentResize(e:Event):void
 		{
-			callLater(calcSize);
+			if (e.target == parent)
+			{
+				callLater(calcSize);
+			}
 		}
 		
 		/**添加显示对象*/

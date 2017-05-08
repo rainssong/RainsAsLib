@@ -5,7 +5,7 @@ package me.rainui.managers
 	import me.rainui.components.RadioButton;
 	import me.rainui.events.RainUIEvent;
 	/**
-	 * ...
+	 * 过时,用RadioGroup代替
 	 * @author Rainssong
 	 */
 	public class RadioButtonGroup  extends EventDispatcher

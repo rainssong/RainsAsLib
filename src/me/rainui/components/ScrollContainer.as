@@ -3,6 +3,7 @@ package me.rainui.components
 	import com.greensock.motionPaths.Direction;
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
@@ -41,6 +42,18 @@ package me.rainui.components
 		protected var _mouseWheelScrollDirection:String = ALL;
 		protected var _mouseWheelScrollStep:Number = 5;
 		
+		protected var horizontalScrollBar:SimpleScrollBar;
+
+		/**
+		 * The vertical scrollbar instance. May be null.
+		 *
+		 * <p>For internal use in subclasses.</p>
+		 *
+		 * @see #verticalScrollBarFactory
+		 * @see #createScrollBars()
+		 */
+		protected var verticalScrollBar:SimpleScrollBar;
+		
 		public function ScrollContainer(content:DisplayObject=null,dataSource:Object=null) 
 		{
 			super(dataSource);
@@ -58,40 +71,51 @@ package me.rainui.components
 		override protected function createChildren():void 
 		{
 			//_container = new Container();
-			if (this.numChildren == 1)
-			{
-				this._content = this.getChildAt(0)
-				this._width = _content.width
-				this._height =  _content.height;
-			}
+			
+			//Bug：在获取内容之前，会将bgSkin作为Contnet
+			//if (this.numChildren == 1)
+			//{
+				//this._content = this.getChildAt(0);
+			//}
 			
 			_container.percentWidth = 1;
 			_container.percentHeight = 1;
 			addChild(_container);
 			
-			if (_bgSkin == null)
-			{
-				var shape:Shape = new Shape();
-				Draw.rect(shape, 0, 0, _width, _height,RainTheme.WHITE);
-				_bgSkin = shape;
-				_bgSkin.alpha = 0;
-			}
+			horizontalScrollBar = new SimpleScrollBar();
+			horizontalScrollBar.direction = Directions.HORIZONTAL;
+			horizontalScrollBar.percentWidth = 1;
+			horizontalScrollBar.bottom = 0;
 			
+			verticalScrollBar = new SimpleScrollBar();
+			verticalScrollBar.direction = Directions.VERTICAL;
+			verticalScrollBar.percentHeight = 1;
+			verticalScrollBar.right = 0;
+			
+			addChild(horizontalScrollBar)
+			addChild(verticalScrollBar)
 			
 			if (_content)
 			{
 				addContent(_content);
 				this._width = _content.width
-				this._height =  _content.height;
-				
+				this._height = _content.height;
 			}
 			
-			
+			if (_bgSkin == null)
+			{
+				var shape:Sprite = new Sprite();
+				Draw.rect(shape, 0, 0, _width, _height,RainTheme.WHITE);
+				_bgSkin = shape;
+				_bgSkin.alpha = 0;
+			}
 			//else
 			//{
-				//_width = bgSkin.width;
-				//_height = bgSkin.height;
+				//this._width = _bgSkin.width;
+				//this._height = _bgSkin.height;
 			//}
+			
+			//要更新滚动条
 			//redraw();
 			super.createChildren();
 		}
@@ -105,6 +129,28 @@ package me.rainui.components
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
 			this.scrollRect = new Rectangle(0, 0, _width, _height);
+		}
+		
+		override public function redraw():void 
+		{
+			if (verticalScrollBar != null && content!=null)
+			{
+				verticalScrollBar.page = this.height;
+				verticalScrollBar.minimum = 0;
+				verticalScrollBar.maximum = content.height;
+			}
+			if (horizontalScrollBar != null && content!=null)
+			{
+				horizontalScrollBar.page = this.width;
+				horizontalScrollBar.minimum = 0;
+				horizontalScrollBar.maximum = content.width;
+			}
+			
+			horizontalScrollBar.visible=direction == Directions.HORIZONTAL ||  direction == Directions.ANY
+			verticalScrollBar.visible=direction == Directions.VERTICAL ||  direction == Directions.ANY
+
+			
+			super.redraw();
 		}
 		
 		private function onMouseWheel(e:MouseEvent):void 
@@ -130,6 +176,19 @@ package me.rainui.components
 				onDrag();
 			else
 				offDrag();
+				
+				
+				
+			if (verticalScrollBar != null)
+			{
+
+				verticalScrollBar.value = -_container.y/(content.height-this.height)*content.height;
+			}
+			
+			if (horizontalScrollBar != null)
+			{
+				horizontalScrollBar.value = -_container.x/(content.width-this.width)*content.width;
+			}
 				
 			//powerTrace(_container.x, _container.y);
 		}
@@ -343,6 +402,8 @@ package me.rainui.components
 			}
 			_content = value;
 			addContent(_content);
+			
+			callLater(redraw);
 		}
 		
 		public function get container():Container 

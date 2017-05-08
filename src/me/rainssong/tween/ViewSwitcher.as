@@ -68,9 +68,10 @@ package me.rainssong.tween
 			
 			switch (effect)
 			{
-				//BUG:
+				//BUG:未移除旧视图
 				case "none": 
-					
+						//addView(_parent, newView, effect, vars1);
+						//removeView(oldView, effect, vars2);
 					break;
 				case "move": 
 					

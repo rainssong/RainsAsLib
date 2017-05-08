@@ -53,7 +53,11 @@ package me.rainssong.tween
 				if (params.hasOwnProperty("delay"))
 					delay = params["delay"];
 				if (params["duration"])
+				{
 					duration = params["duration"];
+					delete  params["duration"];
+				}
+					
 				if (params["direction"])
 					direction = params["direction"];
 				

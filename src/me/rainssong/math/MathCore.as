@@ -104,11 +104,11 @@ package me.rainssong.math
 		 * @param	cycle
 		 * @return
 		 */
-		public static function getCycledNumber(number:Number, a:Number, b:Number = 0, includeB:Boolean = false ):Number
+		public static function getCycledNumber(number:Number, a:Number, b:Number = 0, includeB:Boolean = false):Number
 		{
 			var min:Number = Math.min(a, b);
 			var max:Number = Math.max(a, b);
-			var distance:Number = max - min+includeB;
+			var distance:Number = max - min + includeB;
 			var value:Number = number % distance;
 			while (value < min)
 				value += distance;
@@ -220,9 +220,9 @@ package me.rainssong.math
 		
 		/**
 		 * Generates a random number based on the seed provided.
-		 * 
+		 *
 		 * @param	Seed	A number between 0 and 1, used to generate a predictable random number (very optional).
-		 * 
+		 *
 		 * @return	A <code>Number</code> between 0 and 1.
 		 */
 		static public function srand(Seed:Number):Number
@@ -252,14 +252,14 @@ package me.rainssong.math
 			return point;
 		}
 		
-		public static function pointToPixel(point:uint,dpi:uint=96):Number
+		public static function pointToPixel(point:uint, dpi:uint = 96):Number
 		{
 			return Math.floor(point / 72 * dpi);
 		}
 		
-		public static function pixelToPoint(pixel:uint,dpi:uint=96):Number
+		public static function pixelToPoint(pixel:uint, dpi:uint = 96):Number
 		{
-			return Math.floor(pixel/dpi*72);
+			return Math.floor(pixel / dpi * 72);
 		}
 		
 		/**
@@ -347,17 +347,21 @@ package me.rainssong.math
 		
 		//find the number bigger than v in 2 4 8 16 32...
 		public static function nextPowerOfTwo(v:uint):uint
-        {
-            v--;
-            v |= v >> 1;
-            v |= v >> 2;
-            v |= v >> 4;
-            v |= v >> 8;
-            v |= v >> 16;
-            v++;
-            return v;
-        }
+		{
+			v--;
+			v |= v >> 1;
+			v |= v >> 2;
+			v |= v >> 4;
+			v |= v >> 8;
+			v |= v >> 16;
+			v++;
+			return v;
+		}
 		
+		public static  function GCD(a:int, b:int):int
+		{
+			return b==0?a:GCD(b,a%b);  
+		}
 	
 	}
 }

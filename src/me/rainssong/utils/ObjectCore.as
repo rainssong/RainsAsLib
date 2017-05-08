@@ -211,5 +211,10 @@
 			}
 			return toObj;
 		}
+		
+		static public function printObjToCode(obj:*):void
+		{
+			powerTrace(objToCode(obj));
+		}
 	}
 }

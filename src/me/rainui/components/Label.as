@@ -42,6 +42,8 @@ package me.rainui.components
 		
 		override protected function preinitialize():void
 		{
+			
+			super.preinitialize();
 			mouseEnabled = false;
 			mouseChildren = true;
 			
@@ -69,7 +71,7 @@ package me.rainui.components
 				_contentAlign = Align.LEFT;
 				textField.autoSize = TextFieldAutoSize.NONE;
 				_content = textField;
-				
+				textField.height = 60 * RainUI.scale;
 				
 				this._width = 200*RainUI.scale;
 				this._height = 60*RainUI.scale;
@@ -122,8 +124,8 @@ package me.rainui.components
 			textField.selectable = false;
 			callLater(resize);
 			
-			//if (defaultStyleFactory!=null)
-				//defaultStyleFactory(this);
+			if (defaultStyleFactory!=null)
+				defaultStyleFactory(this);
 		}
 		
 		/**显示的文本*/

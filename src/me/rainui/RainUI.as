@@ -78,7 +78,7 @@
 			RainUI.theme = theme;
 			
 			
-			stage.addEventListener(Event.RESIZE, onStageResize,false,64);
+			stage.addEventListener(Event.RESIZE, onStageResize,true,64);
 		
 		}
 		
@@ -150,8 +150,8 @@
 			var shape:Shape = new Shape();
 			shape.graphics.lineStyle(1, 0);
 			shape.graphics.beginFill(RainTheme.WHITE, 1);
-			shape.graphics.drawRoundRect(0, 0, 80, 80, 10, 10);
-			shape.scale9Grid = new Rectangle(10, 10, 80 - 2 * 10, 80 - 2 * 10);
+			shape.graphics.drawRoundRect(0, 0, 40, 40, 10, 10);
+			shape.scale9Grid = new Rectangle(10, 10, 40 - 2 * 10, 40 - 2 * 10);
 			return shape;
 		}
 		

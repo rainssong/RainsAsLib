@@ -234,12 +234,13 @@ package me.rainui.components
 		
 		override protected function createChildren():void 
 		{
-			_titleLabel = new Label(DEFAULT_CHILD_NAME_HEADER,{parent:this,centerX:0,top:0,color:0xffffff,percentWidth:0.9});
-			_contentLabel = new Label(DEFAULT_CHILD_NAME_MESSAGE,{parent:this,centerX:0,percentWidth:0.9,align:Align.TOP,color:0xffffff});
+			_titleLabel = new Label(DEFAULT_CHILD_NAME_HEADER,{parent:this,centerX:0,top:0,color:0xffffff,align:Align.TOP,percentWidth:0.9});
+			_contentLabel = new Label(DEFAULT_CHILD_NAME_MESSAGE,{parent:this,centerX:0,percentWidth:0.9,align:Align.TOP,top:32 * RainUI.scale,color:0xffffff});
 			//
 			//
 			//_contentLabel.multiline = true;
 			//_contentLabel.wordWrap = true;
+			
 			
 			//_contentLabel = new Label("一二三四五六七八九十一二三四五六七八九十", { parent:this, centerX:0, width:200, align:Align.CENTER, color:0xffffff } );
 		   

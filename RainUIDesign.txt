@@ -1,5 +1,7 @@
 Todo:
-	组件新属性：dotWidth(designWidth),scaleMode
+	新的自适应方案：dotWidth、dotTop（设计宽高区别于实际宽高）；widthStretchMode、topStretchMode...（缩放方案，none，dpi，percent，min（全局值），max（全局值），width , height）；widthAnchor、topAnchor（参照物，这个还是有问题,theme.width,stage.height , parent,）
+	
+	组件新属性：scaleWidth,scaleHeight,scaleMin,scaleMax
 	侦听全局通知
 	涂鸦风格、未来风格UI（日系）
 	由Theme给组件提供默认数据,组件不再从theme处获取。
@@ -16,6 +18,7 @@ Todo:
 	EventHandlerManager（自动销毁）:addEventHandler(target,Event.COMPLETE,handler);
 	ButtonGroup
 	DefaultTheme(在未手动选择主题的情况下，自动创建一个)
+	
 	
 
 工作流：

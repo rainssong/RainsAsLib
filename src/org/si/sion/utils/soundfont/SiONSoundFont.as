@@ -80,7 +80,7 @@ package org.si.sion.utils.soundfont {
                     for (i=0; i<fmVoices.length;      i++) if (fmVoices[i])      driver.setVoice(i, fmVoices[i]);
                     for (i=0; i<waveTables.length;    i++) {
                         if (waveTables[i]) {
-                            SiOPMTable._instance._sion_internal::registerWaveTable(i, new SiOPMWaveTable().copyFrom(waveTables[i]));
+                            //SiOPMTable._instance._sion_internal::registerWaveTable(i,new SiOPMWaveTable().copyFrom(waveTables[i]));
                         }
                     }
                     for (i=0; i<envelopes.length; i++) {

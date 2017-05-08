@@ -112,7 +112,7 @@ package me.rainui.components
 				//this._dataProvider.addEventListener(CollectionEvent.REMOVE_ITEM, dataProvider_removeItemHandler);
 				//this._dataProvider.addEventListener(CollectionEvent.REPLACE_ITEM, dataProvider_replaceItemHandler);
 				//this._dataProvider.addEventListener(CollectionEvent.RESET, dataProvider_resetHandler);
-				this._items.addEventListener(Event.CHANGE, onChange);
+				this._items.addEventListener(Event.CHANGE, onItemsChange);
 			}
 			
 			if(_items != null)

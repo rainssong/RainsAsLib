@@ -7,6 +7,7 @@
 	import flash.display.IBitmapDrawable;
 	import flash.display.Stage;
 	import flash.filesystem.File;
+	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
 	import flash.utils.ByteArray;
 	import me.rainssong.date.DateCore;
@@ -32,12 +33,13 @@
 			KeyboardManager.regFunction(shot, keyCode);
 		}
 		
-		static public function shot(target:IBitmapDrawable=null,type:String=null):void
+		static public function shot(target:IBitmapDrawable=null,type:String=null,rect:Rectangle=null):void
 		{
 			if (target == null) target = _target;
 			if (type == null) type = Snapshot.type;
-			var bmd:BitmapData = new BitmapData(target["width"], target["height"], false, 0xFFFFFF);
-			bmd.draw(target);
+			if (rect == null) rect = new Rectangle(0, 0, target["width"], target["height"]);
+			var bmd:BitmapData = new BitmapData(rect.width,rect.height, true, 0xFFFFFF);
+			bmd.draw(target,null,null,null,rect);
 			var content:ByteArray= type == "png"?PNGEncoder.encode(bmd):new JPGEncoder().encode(bmd);
 			var file:File=FileCore.createFile(content, "byteArray", File.desktopDirectory.resolvePath(DateCore.format(new Date(),"%Y%M2%D2%h2%m2%s2") + "."+type).nativePath);
 			bmd.dispose();

@@ -1,3 +1,16 @@
+rainUI2/
+rainUI2Test/
+
+
+#############
+## FlashDevelop
+#############
+
+*.as3proj
+*.fla
+cert/
+bin-release/
+
 #################
 ## Eclipse
 #################

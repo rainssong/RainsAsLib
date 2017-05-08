@@ -76,7 +76,7 @@ package me.rainui.components
 			this.text = text;
 		}
 		
-		override protected function preinitialize():void
+		override protected function preinitialize():void 
 		{
 			super.preinitialize();
 			
@@ -85,8 +85,6 @@ package me.rainui.components
 			this.mouseChildren = false
 			this.mouseEnabled = true;
 			
-			//this._width = 200*RainUI.scale;
-			//this._height = 60*RainUI.scale;
 		}
 		
 		override protected function createChildren():void

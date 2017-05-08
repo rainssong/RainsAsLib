@@ -301,8 +301,8 @@
 		{
 			var shape:Shape = new Shape();
 			shape.graphics.beginFill(RainTheme.WHITE, 1);
-			shape.graphics.drawRoundRect(0, 0, 80, 80, 10, 10);
-			shape.scale9Grid = new Rectangle(10, 10, 80 - 2 * 10, 80 - 2 * 10);
+			shape.graphics.drawRoundRect(0, 0, 40, 40, 10, 10);
+			shape.scale9Grid = new Rectangle(10, 10, 40 - 2 * 10, 40 - 2 * 10);
 			shape.scaleX = shape.scaleY = _scale;
 			return shape;
 		}
