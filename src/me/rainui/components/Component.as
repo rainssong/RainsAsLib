@@ -121,6 +121,8 @@
 		{
 			//_width = 100;
 			//_height = 100;
+			
+			
 		}
 		
 		protected function createChildren():void
@@ -140,6 +142,7 @@
 		
 		protected function initialize():void
 		{
+			//2017-05-21:styleFactory优先级相对于默认低，但是比createChildren高
 			if (styleFactory != null )
 				styleFactory(this);
 		}

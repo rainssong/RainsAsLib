@@ -112,7 +112,7 @@ package me.rainui.data
 		 */
 		public function getItemIndex(item:Object):int
 		{
-			return _data.indexOf(this._data, item);
+			return _data.indexOf(item, 0);
 		}
 		
 		public function addItemAt(item:Object, index:int):void
@@ -129,18 +129,20 @@ package me.rainui.data
 		public function removeItemAt(index:int):Object
 		{
 			var item:Object=_data.splice(index,1)
-			this.sendEvent(RainUIEvent.CHANGE);
+			//this.sendEvent(RainUIEvent.CHANGE,null,true);
+			dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE,null,true))
 			//this.sendEvent(CollectionEventType.REMOVE_ITEM, false, index);
 			return item;
 		}
 		
-		public function removeItem(item:Object):void
+		public function removeItem(item:Object):Object
 		{
 			var index:int = this.getItemIndex(item);
 			if(index >= 0)
 			{
-				this.removeItemAt(index);
+				return this.removeItemAt(index);
 			}
+			return null;
 		}
 
 		/**

@@ -42,17 +42,11 @@ package me.rainui.components
 		protected var _mouseWheelScrollDirection:String = ALL;
 		protected var _mouseWheelScrollStep:Number = 5;
 		
-		protected var horizontalScrollBar:SimpleScrollBar;
-
-		/**
-		 * The vertical scrollbar instance. May be null.
-		 *
-		 * <p>For internal use in subclasses.</p>
-		 *
-		 * @see #verticalScrollBarFactory
-		 * @see #createScrollBars()
-		 */
-		protected var verticalScrollBar:SimpleScrollBar;
+		
+		protected var _hasHorizontalScrollBar:Boolean = true;
+		public var horizontalScrollBar:SimpleScrollBar;
+		protected var _hasVerticalScrollBar:Boolean = true;
+		public var verticalScrollBar:SimpleScrollBar;
 		
 		public function ScrollContainer(content:DisplayObject=null,dataSource:Object=null) 
 		{
@@ -133,6 +127,7 @@ package me.rainui.components
 		
 		override public function redraw():void 
 		{
+
 			if (verticalScrollBar != null && content!=null)
 			{
 				verticalScrollBar.page = this.height;
@@ -146,9 +141,9 @@ package me.rainui.components
 				horizontalScrollBar.maximum = content.width;
 			}
 			
-			horizontalScrollBar.visible=direction == Directions.HORIZONTAL ||  direction == Directions.ANY
-			verticalScrollBar.visible=direction == Directions.VERTICAL ||  direction == Directions.ANY
-
+			
+			horizontalScrollBar.visible=(direction == Directions.HORIZONTAL ||  direction == Directions.ANY ) && _hasHorizontalScrollBar
+			verticalScrollBar.visible=(direction == Directions.VERTICAL ||  direction == Directions.ANY) && _hasVerticalScrollBar
 			
 			super.redraw();
 		}
@@ -179,13 +174,13 @@ package me.rainui.components
 				
 				
 				
-			if (verticalScrollBar != null)
+			if (verticalScrollBar != null && content!=null)
 			{
 
 				verticalScrollBar.value = -_container.y/(content.height-this.height)*content.height;
 			}
 			
-			if (horizontalScrollBar != null)
+			if (horizontalScrollBar != null && content!=null)
 			{
 				horizontalScrollBar.value = -_container.x/(content.width-this.width)*content.width;
 			}
@@ -441,6 +436,32 @@ package me.rainui.components
 			return _container.contentWidth -_width ;
 		}
 		
+		public function get hasHorizontalScrollBar():Boolean 
+		{
+			return _hasHorizontalScrollBar;
+		}
+		
+		public function set hasHorizontalScrollBar(value:Boolean):void 
+		{
+			if (_hasHorizontalScrollBar == value)
+			return;
+			_hasHorizontalScrollBar = value;
+			callLater(redraw);
+		}
+		
+		public function get hasVerticalScrollBar():Boolean 
+		{
+			return _hasVerticalScrollBar;
+		}
+		
+		public function set hasVerticalScrollBar(value:Boolean):void 
+		{
+			if (_hasVerticalScrollBar == value)
+			return;
+			_hasVerticalScrollBar = value;
+			callLater(redraw);
+		}
+		
 		override public function resize():void 
 		{
 			super.resize();
@@ -450,6 +471,19 @@ package me.rainui.components
 				rect.width = _width;
 				rect.height = _height;
 				this.scrollRect = rect;
+			}
+			
+			if (verticalScrollBar != null && content!=null)
+			{
+				verticalScrollBar.page = this.height;
+				verticalScrollBar.minimum = 0;
+				verticalScrollBar.maximum = content.height;
+			}
+			if (horizontalScrollBar != null && content!=null)
+			{
+				horizontalScrollBar.page = this.width;
+				horizontalScrollBar.minimum = 0;
+				horizontalScrollBar.maximum = content.width;
 			}
 			
 			

@@ -642,6 +642,7 @@ package me.rainui.components
 			this.layout();
 			super.redraw();
 		}
+		
 
 		/**
 		 * If the component's dimensions have not been set explicitly, it will

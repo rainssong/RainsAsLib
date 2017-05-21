@@ -305,7 +305,7 @@
 		 *  @playerversion AIR 1.1
 		 *  @productversion Flex 3
 		 */
-		public static function substitute(str:String, ... rest):String
+		public static function format(str:String, ... rest):String
 		{
 			if (str == null)
 				return '';
@@ -330,5 +330,6 @@
 			
 			return str;
 		}
+		
 	}
 }

@@ -1,6 +1,12 @@
 rainUI2/
 rainUI2Test/
 
+#############
+## Inteillj
+#############
+
+.idea/
+*.iml
 
 #############
 ## FlashDevelop

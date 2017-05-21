@@ -459,6 +459,12 @@ package ascb.util {
           oSymbols.decimal = ".";
           oSymbols.before = true;
           break;
+		case "zh-CN":
+          oSymbols.currency = "￥";
+          oSymbols.group = ",";
+          oSymbols.decimal = ".";
+          oSymbols.before = true;
+          break;
         case "en-UK":
           oSymbols.currency = "\u00A3";
           oSymbols.group = ",";

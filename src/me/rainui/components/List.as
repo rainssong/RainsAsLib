@@ -98,15 +98,17 @@ package me.rainui.components
 			
 			if (value is Array)
 				_items = new ListCollection(value);
-			if ( value is ListCollection)
+			else if ( value is ListCollection)
 				_items = value;
-			else
+			else 
 				return;
+				
+				
 				
 			index = -1;
 			
 			
-			if(this._items)
+			if(this._items!=null)
 			{
 				//this._dataProvider.addEventListener(CollectionEvent.ADD_ITEM, dataProvider_addItemHandler);
 				//this._dataProvider.addEventListener(CollectionEvent.REMOVE_ITEM, dataProvider_removeItemHandler);
@@ -121,6 +123,7 @@ package me.rainui.components
 		
 		private function onItemsChange(e:RainUIEvent):void 
 		{
+			_rendersFlag = true;
 			callLater(redraw);
 		}
 		
@@ -219,6 +222,7 @@ package me.rainui.components
 					if (_labelField.length>0)
 						c.text = String(_items.getItemAt(i)[_labelField]);
 					else
+						//可能会将没必要的东西显示出来
 						c.text = String(_items.getItemAt(i));
 					c.dataSource=_items.getItemAt(i);
 					addContent(c);

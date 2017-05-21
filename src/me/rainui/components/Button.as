@@ -27,6 +27,10 @@ package me.rainui.components
 	//import morn.core.utils.ObjectUtils;
 	//import morn.core.utils.StringUtils;
 	
+	/**
+	 * Todo:按钮不一定非要Label,应该按需增加
+	 */
+	
 	/**选择改变后触发*/
 	[Event(name="select",type="flash.events.Event")]
 	

@@ -27,11 +27,12 @@ package me.rainui.managers
 		//BUG:赋值无意义
 		protected var _btnVec:Vector.<Button> = new Vector.<Button>();
 		//private var _index:int = -1;
-		protected var _max:int = 9999;
+
+		protected var _max:int = Infinity;
 		protected var _min:int = 0;
 		protected var _indices:Vector.<int> = new Vector.<int>;
 		
-		public function ToggleGroup(btnVec:Vector.<Button> = null ,min:int=3,max:int=9999)
+		public function ToggleGroup(btnVec:Vector.<Button> = null ,min:int=3,max:int=Infinity)
 		{
 			super();
 			

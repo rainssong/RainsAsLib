@@ -1,4 +1,6 @@
-Todo:
+﻿Todo:
+	一切以自带属性为优先（Theme不可修改自带属性）
+	Btn不一定有Label
 	新的自适应方案：dotWidth、dotTop（设计宽高区别于实际宽高）；widthStretchMode、topStretchMode...（缩放方案，none，dpi，percent，min（全局值），max（全局值），width , height）；widthAnchor、topAnchor（参照物，这个还是有问题,theme.width,stage.height , parent,）
 	
 	组件新属性：scaleWidth,scaleHeight,scaleMin,scaleMax

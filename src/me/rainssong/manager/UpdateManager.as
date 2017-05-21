@@ -63,7 +63,10 @@ package me.rainssong.manager
 			
 			for (var i:Function in _functionDic)
 			{
-				i.apply(this, [_timeDelta]);
+				if(i.length==1)
+					i.apply(this, [_timeDelta]);
+				else
+					i.apply(this)
 			}
 		}
 		

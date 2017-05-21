@@ -208,7 +208,6 @@
 				comp.label.autoSize = true;
 				comp.label.size = RainUI.scale * 32;
 				comp.label.color = 0xffffff;
-				
 			}
 		}
 		

@@ -37,7 +37,7 @@ package me.rainui.events {
 		static public const SCALE_CHANGE:String = "scaleChange";
 		
 		
-		public function RainUIEvent(type:String, data:*, bubbles:Boolean = false, cancelable:Boolean = false) {
+		public function RainUIEvent(type:String, data:*=null, bubbles:Boolean = false, cancelable:Boolean = false) {
 			super(type, data, bubbles, cancelable);
 			
 		}

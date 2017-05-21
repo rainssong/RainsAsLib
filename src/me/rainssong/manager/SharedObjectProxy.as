@@ -3,6 +3,7 @@ package me.rainssong.manager
 	import flash.net.SharedObject;
 	import flash.utils.flash_proxy;
 	import flash.utils.Proxy;
+	import me.rainssong.utils.ObjectCore;
 	
 	/**
 	 * ...
@@ -19,11 +20,11 @@ package me.rainssong.manager
 			
 		}
 		
-		override flash_proxy function setProperty(name:*, value:*):void 
-		{
-			_so.data[name] = value;
-			_so.flush();
-		}
+		//override flash_proxy function setProperty(name:*, value:*):void 
+		//{
+			//_so.data[name] = value;
+			//_so.flush();
+		//}
 		
 		public function setData(name:*, value:*):void 
 		{
@@ -31,28 +32,27 @@ package me.rainssong.manager
 			_so.flush();
 		}
 		
-		override flash_proxy function getProperty(name:*):* 
-		{
-			return _so.data[name] ;
-		}
+		//override flash_proxy function getProperty(name:*):* 
+		//{
+			//return _so.data[name] ;
+		//}
 		 
 		public function getData(name:*):* 
 		{
 			return _so.data[name] ;
 		}
 		
-		override flash_proxy function deleteProperty(name:*):Boolean 
-		{
-			delete _so.data[name];
-			_so.flush();
-			return super.flash_proxy::deleteProperty("name");
-		}
+		//override flash_proxy function deleteProperty(name:*):Boolean 
+		//{
+			//delete _so.data[name];
+			//_so.flush();
+			//return super.flash_proxy::deleteProperty("name");
+		//}
 		
-		flash_proxy function deleteData(name:*):Boolean 
+		public function deleteData(name:*):void 
 		{
 			delete _so.data[name];
 			_so.flush();
-			return _so.data.flash_proxy::deleteProperty("name");
 		}
 		
 		/* DELEGATE flash.net.SharedObject */
@@ -75,6 +75,28 @@ package me.rainssong.manager
 		public function get data():Object 
 		{
 			return _so.data;
+		}
+		
+		public function packageData(...rest):Object
+		{
+			var result:Object = { };
+			for (var i:int = 0; i < rest.length; i++) 
+			{
+				result[rest[i]] = ObjectCore.clone(data[rest[i]]);
+			}
+			
+			return result;
+		}
+		
+		public function unpackageData(pack:Object):void
+		{
+			if (pack as Object)
+			{
+				for (var item:String in pack) 
+				{
+					data[item] = pack[item];
+				}
+			}
 		}
 		
 		

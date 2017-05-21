@@ -47,8 +47,9 @@ package me.rainui.components
 			mouseEnabled = false;
 			mouseChildren = true;
 			
-			_format = RainUI.getTextFormat("label");
-			size = 32 * RainUI.scale;
+			//BUG:会覆盖掉原本的文字
+			
+			
 			this._width = 200*RainUI.scale;
 			this._height = 60*RainUI.scale;
 			_autoSize = false;
@@ -72,6 +73,8 @@ package me.rainui.components
 				textField.autoSize = TextFieldAutoSize.NONE;
 				_content = textField;
 				textField.height = 60 * RainUI.scale;
+				_format = RainUI.getTextFormat("label");
+				size = 32 * RainUI.scale;
 				
 				this._width = 200*RainUI.scale;
 				this._height = 60*RainUI.scale;
@@ -81,8 +84,9 @@ package me.rainui.components
 				
 				_width = textField.width;
 				_height = textField.height;
-				_format = textField.getTextFormat();
+
 				_text = textField.text;
+				_format = textField.getTextFormat();
 				_content = textField;
 				
 				size = textField.getTextFormat().size;

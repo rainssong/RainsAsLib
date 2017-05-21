@@ -49,7 +49,7 @@
 			}
 			else
 			{
-				_index = value;
+				_index = value%_btnVec.length;
 				for (var i:int = 0; i < _btnVec.length; i++)
 				{
 					var btn:Button = _btnVec[i];
@@ -59,7 +59,6 @@
 						btn.selected = false;
 				}
 				dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, value));
-				
 			}
 			
 			dispatchEvent(new RainUIEvent(RainUIEvent.SELECT, value));
