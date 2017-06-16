@@ -26,6 +26,7 @@ package me.rainssong.manager
 	public class RequestManager extends EventDispatcher
 	{
 		private static const _loaderDic:Dictionary = new Dictionary();
+		private static const _callBackDic:Dictionary = new Dictionary();
 		static private const _loaderRevDic:Dictionary = new Dictionary();
 		static private const _timerDic:RevDictionary = new RevDictionary(true);
 		
@@ -47,8 +48,13 @@ package me.rainssong.manager
 			var url:String = _loaderRevDic[e.target];
 			var data:Object = e.target.data;
 			//var timer:Timer = _timerDic.getValue(url)  as Timer;
+			var ent:RequestEvent = new RequestEvent(e.type, url, data, e.bubbles, e.cancelable);
+			
+			if (_callBackDic[url] != null)
+				_callBackDic[url].apply(this, ent);
 			//timer.stop();
-			dispatchEvent(new RequestEvent(e.type, url, data, e.bubbles, e.cancelable));
+			
+			dispatchEvent(ent);
 			
 		}
 		
@@ -99,7 +105,7 @@ package me.rainssong.manager
 			//timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimer);
 		}
 		
-		public function sendRequest(data:Object, url:String, method:String = URLRequestMethod.POST,delay:Number=10000,contentType:String="application/x-www-form-urlencoded"):void
+		public function sendRequest(data:Object, url:String, method:String = URLRequestMethod.POST,delay:Number=10000,contentType:String="application/x-www-form-urlencoded",callBack:Function=null):URLLoader
 		{
 			
 			if (!hasLoader(url))
@@ -126,11 +132,18 @@ package me.rainssong.manager
 			
 			//powerTrace(url, JSON.stringify(data));
 			_loaderDic[url].load(request);
-			
+			_callBackDic[url] = callBack;
 			//var timer:Timer = _timerDic.getValue(url)  as Timer;
 			//timer.delay = delay;
 			//timer.reset();
 			//timer.start();
+			return _loaderDic[url] as URLLoader;
+		}
+		
+		
+		public function post(url:String, data:Object = null, callBack:Function = null,  contentType:String = "application/x-www-form-urlencoded")
+		{
+			sendRequest(data, url, URLRequestMethod.POST, 10000, contentType, callBack);
 		}
 	}
 

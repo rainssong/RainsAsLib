@@ -142,8 +142,8 @@ package me.rainui.components
 			}
 			
 			
-			horizontalScrollBar.visible=(direction == Directions.HORIZONTAL ||  direction == Directions.ANY ) && _hasHorizontalScrollBar
-			verticalScrollBar.visible=(direction == Directions.VERTICAL ||  direction == Directions.ANY) && _hasVerticalScrollBar
+			horizontalScrollBar.visible=(direction == Directions.HORIZONTAL ||  direction == Directions.ANY ) && _hasHorizontalScrollBar && (_width<_container.contentWidth)
+			verticalScrollBar.visible=(direction == Directions.VERTICAL ||  direction == Directions.ANY) && _hasVerticalScrollBar && (_height<_container.contentHeight)
 			
 			super.redraw();
 		}

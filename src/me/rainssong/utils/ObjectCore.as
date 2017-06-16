@@ -174,6 +174,14 @@
 			return bytes.readObject();
 		}
 		
+		//public static function simpleClone(source:Object):*
+		//{
+			//for (var name:String in source) 
+			//{
+				//if(source[name] is )
+			//}
+		//}
+		
 		/**
 		 * 该方法并不严谨
 		 * @param	a
