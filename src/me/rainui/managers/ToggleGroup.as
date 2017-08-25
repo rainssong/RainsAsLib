@@ -28,11 +28,11 @@ package me.rainui.managers
 		protected var _btnVec:Vector.<Button> = new Vector.<Button>();
 		//private var _index:int = -1;
 
-		protected var _max:int = Infinity;
+		protected var _max:int = 999;
 		protected var _min:int = 0;
 		protected var _indices:Vector.<int> = new Vector.<int>;
 		
-		public function ToggleGroup(btnVec:Vector.<Button> = null ,min:int=3,max:int=Infinity)
+		public function ToggleGroup(btnVec:Vector.<Button> = null ,min:int=3,max:int=999)
 		{
 			super();
 			
