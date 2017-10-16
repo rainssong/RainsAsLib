@@ -51,7 +51,7 @@ package me.rainssong.manager
 			var ent:RequestEvent = new RequestEvent(e.type, url, data, e.bubbles, e.cancelable);
 			
 			if (_callBackDic[url] != null)
-				_callBackDic[url].apply(this, ent);
+				_callBackDic[url].apply(this, [ent]);
 			//timer.stop();
 			
 			dispatchEvent(ent);

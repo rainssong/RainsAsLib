@@ -23,13 +23,16 @@
 	{
 		private  static var _target:DisplayObject;
 		public static var type:String="jpg";
-		static public function bind(target:DisplayObject, keyCode:uint=Keyboard.SPACE):void
+		static public function bind(target:DisplayObject, keyCode:uint=Keyboard.SPACE,type:String="jpg"):void
 		{
 			_target = target;
 			if (_target["stage"])
 				KeyboardManager.startListen(_target["stage"]);
 			else
 				KeyboardManager.startListen(_target);
+				
+			Snapshot.type = type;
+				
 			KeyboardManager.regFunction(shot, keyCode);
 		}
 		
@@ -37,10 +40,21 @@
 		{
 			if (target == null) target = _target;
 			if (type == null) type = Snapshot.type;
-			if (rect == null) rect = new Rectangle(0, 0, target["width"], target["height"]);
+			if (rect == null)
+			{
+				if (target is Stage)
+				{
+					rect = new Rectangle(0, 0, target["stageWidth"], target["stageHeight"]);
+				}
+				else
+				{
+					rect = new Rectangle(0, 0, target["width"], target["height"]);
+				}
+			}
+			
 			var bmd:BitmapData = new BitmapData(rect.width,rect.height, true, 0xFFFFFF);
 			bmd.draw(target,null,null,null,rect);
-			var content:ByteArray= type == "png"?PNGEncoder.encode(bmd):new JPGEncoder().encode(bmd);
+			var content:ByteArray= type == "png"?PNGEncoder.encode(bmd):new JPGEncoder(80).encode(bmd);
 			var file:File=FileCore.createFile(content, "byteArray", File.desktopDirectory.resolvePath(DateCore.format(new Date(),"%Y%M2%D2%h2%m2%s2") + "."+type).nativePath);
 			bmd.dispose();
 		}

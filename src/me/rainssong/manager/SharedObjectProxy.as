@@ -37,9 +37,12 @@ package me.rainssong.manager
 			//return _so.data[name] ;
 		//}
 		 
-		public function getData(name:*):* 
+		public function getData(name:*,defalut:*=null):* 
 		{
-			return _so.data[name] ;
+			if(_so.data[name] ==null && defalut!=null)
+				setData(name, defalut);
+				
+			return _so.data[name];
 		}
 		
 		//override flash_proxy function deleteProperty(name:*):Boolean 

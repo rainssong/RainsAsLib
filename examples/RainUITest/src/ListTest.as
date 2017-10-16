@@ -9,6 +9,7 @@ package
 	import me.rainui.components.List;
 	import me.rainui.components.ListItem;
 	import me.rainui.components.Page;
+	import me.rainui.data.ListCollection;
 	import me.rainui.events.RainUIEvent;
 	import me.rainui.RainTheme;
 	import me.rainui.RainUI;
@@ -21,10 +22,10 @@ package
 	 * @homepage http://rainsgameworld.sinaapp.com
 	 * @weibo http://www.weibo.com/rainssong
 	 */
-	public class ListExample extends Page 
+	public class ListTest extends Page 
 	{
 		public var list:List
-		public function ListExample() 
+		public function ListTest() 
 		{
 			super();
 			
@@ -35,12 +36,16 @@ package
 		
 		private function init():void 
 		{
-			list = new List(["1", "2", "3", "44444", "55555", "66666", "66666", "66666", "66666", "66666", "66666", "66666"], { parent:stage } );
-			//list.itemRender = ir;
+			//list = new List(["1", "2", "3", "44444", "55555", "66666", "66666", "66666", "66666", "66666", "66666", "66666"], { parent:stage } );
+			list = new List(null, { parent:stage } );
+			list.itemRender = ir;
+			
 			list.btnGroup.max = 1;
 			list.addEventListener(RainUIEvent.CHANGE, onChange);
 			
 			//addChild(new ListItem("122112"));
+			
+			setTimeout(function() { list.items =new ListCollection( ["1", "2", "3", "44444", "55555", "66666", "66666", "66666", "66666", "66666", "66666", "66666"]); }, 1000);
 		}
 		
 		private function onChange(e:RainUIEvent):void 

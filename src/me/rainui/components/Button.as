@@ -76,6 +76,7 @@ package me.rainui.components
 		
 		public function Button(text:String = "",dataSource:Object=null)
 		{
+			
 			super(dataSource);
 			this.text = text;
 		}
@@ -89,6 +90,15 @@ package me.rainui.components
 			this.mouseChildren = false
 			this.mouseEnabled = true;
 			
+		}
+		
+
+		override public function set dataSource(value:Object):void 
+		{
+			if (value is String)
+				value = { text:value };
+			
+			super.dataSource = value;
 		}
 		
 		override protected function createChildren():void

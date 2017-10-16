@@ -105,7 +105,8 @@ package me.rainui.components
 				
 				
 				
-			index = -1;
+			index =-1;
+			_rendersFlag = true;
 			
 			
 			if(this._items!=null)
@@ -216,23 +217,25 @@ package me.rainui.components
 				}
 				_cells.length = 0;
 				
-				for (var i:int = 0; i < _items.length; i++)
-				{
-					var c:ListItem = getItemView();
-					if (_labelField.length>0)
-						c.text = String(_items.getItemAt(i)[_labelField]);
-					else
-						//可能会将没必要的东西显示出来
-						c.text = String(_items.getItemAt(i));
-					c.dataSource=_items.getItemAt(i);
-					addContent(c);
-					c.y = _cellSize * i;
-					c.height = _cellSize;
-					c.percentWidth = 1;
-					cells.push(c);
-					addCell(c);
-					_btnGroup.addButton(c);
-				}
+				
+				if (_items != null) 
+					for (var i:int = 0; i < _items.length; i++)
+					{
+						var c:ListItem = getItemView();
+						if (_labelField.length>0)
+							c.text = String(_items.getItemAt(i)[_labelField]);
+						else
+							//可能会将没必要的东西显示出来
+							c.text = String(_items.getItemAt(i));
+						c.dataSource=_items.getItemAt(i);
+						addContent(c);
+						c.y = _cellSize * i;
+						c.height = _cellSize;
+						c.percentWidth = 1;
+						cells.push(c);
+						addCell(c);
+						_btnGroup.addButton(c);
+					}
 			}
 			super.redraw();
 		}

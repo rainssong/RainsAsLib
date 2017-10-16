@@ -3,6 +3,7 @@ package me.rainssong.display
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.geom.Point;
+	import flash.utils.getQualifiedClassName;
 	
 	/**
 	 * @date 2016/6/11 4:47
@@ -43,6 +44,57 @@ package me.rainssong.display
 			}
 			
 			to.addChild(targetView);
+		}
+		
+		static public function findChildByClass(base:DisplayObjectContainer,cls:Class):DisplayObject
+		{
+			var result:Array = getChildren(base);
+			while (result.length)
+			{
+				var d:DisplayObject = result.pop();
+				if (d as cls)
+				{
+					return d;
+				}
+				
+				if (d as DisplayObjectContainer)
+				{
+					result = result.concat(getChildren(d as DisplayObjectContainer));
+				}
+			}
+			
+			return null;
+		}
+		
+		static public function findChildByClassName(base:DisplayObjectContainer,clsName:*):DisplayObject
+		{
+			var result:Array = getChildren(base);
+			while (result.length)
+			{
+				var d:DisplayObject = result.pop();
+				if (getQualifiedClassName(d).indexOf(clsName)>=0)
+				{
+					return d;
+				}
+				
+				if (d as DisplayObjectContainer)
+				{
+					result = result.concat(getChildren(d as DisplayObjectContainer));
+				}
+			}
+			
+			return null;
+		}
+		
+		static public function getChildren(d:DisplayObjectContainer):Array
+		{
+			var searchArr:Array=[];
+			for (var i:int = 0; i < d.numChildren; i++) 
+			{
+				searchArr.push(d.getChildAt(i));
+			}
+			
+			return searchArr;
 		}
 		
 	}

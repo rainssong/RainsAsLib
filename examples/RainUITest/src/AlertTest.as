@@ -39,12 +39,12 @@ package
 		private function init():void 
 		{
 			
-			var b:Button = new Button("fuck")
-			b.label.color=0
-			stage.addChild(b);
-			trace(b.text);
+			//var b:Button = new Button("fuck")
+			//b.label.color=0
+			//stage.addChild(b);
+			//trace(b.text);
 			
-			//Alert.show("message~~~~~~", "title",new ListCollection([{text:"ok"}]));
+			Alert.show("message~~~~~~", "title",new ListCollection(["OK"]));
 		}
 		
 		

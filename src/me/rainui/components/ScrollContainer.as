@@ -112,6 +112,8 @@ package me.rainui.components
 			//要更新滚动条
 			//redraw();
 			super.createChildren();
+			
+			callLater(redraw);
 		}
 		
 		override protected function initialize():void 
@@ -174,15 +176,14 @@ package me.rainui.components
 				
 				
 				
-			if (verticalScrollBar != null && content!=null)
+			if (verticalScrollBar != null && _container!=null)
 			{
-
-				verticalScrollBar.value = -_container.y/(content.height-this.height)*content.height;
+				verticalScrollBar.value = -_container.y/(_container.contentHeight-this.height)*_container.contentHeight;
 			}
 			
-			if (horizontalScrollBar != null && content!=null)
+			if (horizontalScrollBar != null && _container!=null)
 			{
-				horizontalScrollBar.value = -_container.x/(content.width-this.width)*content.width;
+				horizontalScrollBar.value = -_container.x/(_container.contentWidth-this.width)*_container.contentWidth;
 			}
 				
 			//powerTrace(_container.x, _container.y);
@@ -473,17 +474,17 @@ package me.rainui.components
 				this.scrollRect = rect;
 			}
 			
-			if (verticalScrollBar != null && content!=null)
+			if (verticalScrollBar != null && _container!=null)
 			{
 				verticalScrollBar.page = this.height;
 				verticalScrollBar.minimum = 0;
-				verticalScrollBar.maximum = content.height;
+				verticalScrollBar.maximum = _container.contentHeight;
 			}
 			if (horizontalScrollBar != null && content!=null)
 			{
 				horizontalScrollBar.page = this.width;
 				horizontalScrollBar.minimum = 0;
-				horizontalScrollBar.maximum = content.width;
+				horizontalScrollBar.maximum = _container.contentWidth;
 			}
 			
 			
