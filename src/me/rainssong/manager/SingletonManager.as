@@ -44,6 +44,13 @@
 		{
 			return _so;
 		}
+		
+		
+		CONFIG::air
+		public static function get downloadManager():DownloadManager
+		{
+			return SingletonManager.getSingleton(DownloadManager) as DownloadManager;
+		}
 	
 		
 	}

@@ -58,10 +58,11 @@
 					else
 						btn.selected = false;
 				}
+				
 				dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, value));
 			}
-			
-			dispatchEvent(new RainUIEvent(RainUIEvent.SELECT, value));
+			//已经在onSelect里发送事件了。
+			//dispatchEvent(new RainUIEvent(RainUIEvent.SELECT, value));
 		
 		}
 		
@@ -78,9 +79,11 @@
 		
 		override protected function onChange(e:RainUIEvent):void 
 		{
-			super.onChange(e);
+			//super.onChange(e);
 			
-			dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, index));
+			//if(index==)
+			
+			//dispatchEvent(new RainUIEvent(RainUIEvent.CHANGE, index));
 		}
 	
 	}

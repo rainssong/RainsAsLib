@@ -81,8 +81,9 @@ package me.rainui.components
 		{
 			//BUG:这一句会导致在iOS上输入一次就选中所有文字,原因不明
 			//callLater(redraw);
+			e.stopPropagation();
 			_text = textField.text;
-			sendEvent(Event.CHANGE);
+			sendEvent(Event.CHANGE,textField.text,true);
 		}
 		
 		override public function resize():void

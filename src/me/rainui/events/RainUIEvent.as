@@ -8,11 +8,13 @@ package me.rainui.events {
 	
 	/**UI事件类*/
 	public class RainUIEvent extends ObjectEvent {
+		
+		private static const PREFIX:String = "rainui_";
 		//-----------------Component-----------------	
 		/**移动组件*/
-		public static const MOVE:String = "move";
-		public static const SELECT:String = "select";
-		public static const CHANGE:String = "change";
+		public static const MOVE:String = PREFIX+"move";
+		public static const SELECT:String = PREFIX+"select";
+		public static const CHANGE:String = PREFIX+"change";
 		/**更新完毕*/
 		public static const RENDER_COMPLETED:String = "renderCompleted";
 		/**显示鼠标提示*/

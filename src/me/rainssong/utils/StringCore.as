@@ -257,6 +257,14 @@
 			return Number(str.replace(/\D/g, ""));
 		}
 		
+		static public function toPercent(num:Number):String
+		{
+			var str=Number(num*100).toFixed(1);
+			str+="%";
+			return str;
+		}
+
+		
 		//public static function getFileName(url:String):String
 		//{
 		//return url.split(/[\\/] / ).slice( -1)[0];

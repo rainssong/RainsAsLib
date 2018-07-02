@@ -28,6 +28,7 @@
 			return getSingleton(Type,params);
 		}
 		
+		/* 全局事件发送器*/
 		public static function get eventBus():EventBus
 		{
 			return getSingleton(EventBus);
