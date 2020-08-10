@@ -407,6 +407,7 @@ package me.rainssong.tween
 			var _parent:DisplayObjectContainer = view.parent;
 			
 			//if (_blackBmp.parent)_blackBmp.parent.removeChild(_blackBmp) 
+			//var blackBmp:Bitmap = new Bitmap(new BitmapData(100, 100, false, 0));
 			_parent.addChild(_blackBmp);
 			_blackBmp.x = view.x;
 			_blackBmp.y = view.y;
@@ -418,6 +419,17 @@ package me.rainssong.tween
 				vars = {};
 			
 			vars.alpha = 0;
+			var compFun:Function = vars.onComplete;
+			var compFunPam:Array = vars.onCompleteParams;
+			
+			
+			vars.onComplete = function():void
+			{
+				if (_blackBmp.parent)
+					_blackBmp.parent.removeChild(_blackBmp);
+				if(compFun!=null)
+				compFun.apply(null, compFunPam);
+			}
 			
 			TweenMax.to(_blackBmp, duration, vars);
 			

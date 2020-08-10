@@ -533,6 +533,7 @@ package me.rainui.components
 		 * @default true
 		 */
 		public var liveDragging:Boolean = true;
+		public var minimumTrack:Button;
 		
 		/**
 		 * @private
@@ -1144,7 +1145,7 @@ package me.rainui.components
 		{
 			if (this.thumb==null)
 			{
-				this.thumb = Image();
+				this.thumb = new Button();
 				//this.thumb.keepDownStateOnRollOut = true;
 				this.thumb.addEventListener(MouseEvent.CLICK, thumb_touchHandler);
 			}
@@ -1162,9 +1163,9 @@ package me.rainui.components
 				this.minimumTrack = null;
 			}
 
-			var factory:Function = this._minimumTrackFactory != null ? this._minimumTrackFactory : defaultMinimumTrackFactory;
-			this.minimumTrack = Button(factory());
-			this.minimumTrack.keepDownStateOnRollOut = true;
+			//var factory:Function = this._minimumTrackFactory != null ? this._minimumTrackFactory : defaultMinimumTrackFactory;
+			this.minimumTrack =new Button();
+			//this.minimumTrack.keepDownStateOnRollOut = true;
 			this.minimumTrack.addEventListener(MouseEvent.CLICK, track_touchHandler);
 			
 			this.addChildAt(this.minimumTrack, 0);

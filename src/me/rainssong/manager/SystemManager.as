@@ -57,6 +57,7 @@ package  me.rainssong.manager
 		
 		static public function get isAndroid():Boolean
 		{
+			powerTrace("Can be wrong");
 			if (Capabilities.os.toLocaleLowerCase().match("android"))
 				return true;
 			else return false;

@@ -321,8 +321,12 @@ package me.rainssong.math
 			return result;
 		}
 		
-		public static function equals(array1:Array, array2:Array):Boolean
+		public static function equals(array1:*, array2:*):Boolean
 		{
+			
+			if (array1 == array2)
+					return true;
+					
 			if (array1.length != array2.length)
 			{
 				return false;

@@ -152,7 +152,7 @@ package me.rainssong.tween
 					vars1.onComplete = onComplete;
 					vars1.onCompleteParams = onCompleteParams;
 					
-					//BUG:bitmap没有消失
+					//BUG:卡顿的时候，导致addView removeView结束时间不一致
 					addView(_parent, newView, "fadeFromBlack", vars1);
 					removeView(oldView, "fadeToBlack", vars2);
 					
@@ -327,10 +327,12 @@ package me.rainssong.tween
 		
 		private function animFinish():void
 		{
+			removeOldView();
+			
 			if (autoDestory)
 				destroy();
 			
-			removeOldView();
+			
 		}
 		
 		public function destroy():void

@@ -20,7 +20,7 @@ package me.rainssong.utils
 	{
 		public function Chinese()
 		{
-			throw new Error("单例...");
+			throw new Error("单例");
 			
 		}
 		
@@ -47,7 +47,7 @@ package me.rainssong.utils
 		 * @return 
 		 * 
 		 */  
-		public static function convertChar(chineseChar:String):String
+		public static function getFirstPinyin(chineseChar:String):String
 		{
 			var bytes:ByteArray = new ByteArray
 			bytes.writeMultiByte(chineseChar.charAt(0), "cn-gb");

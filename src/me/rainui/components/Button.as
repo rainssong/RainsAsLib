@@ -486,6 +486,7 @@ package me.rainui.components
 				//_bitmap.width = value;
 			}
 			//callLater(changeLabelSize);
+			callLater(redraw);
 		}
 		
 		override public function set height(value:Number):void

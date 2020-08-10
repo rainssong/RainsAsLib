@@ -15,6 +15,12 @@ package me.rainssong.math
 			return Math.random() * (max - min) + min;
 		}
 		
+		
+		public static function lerp(start:Number, end:Number, t:Number):Number
+		{
+			return (end - start) * t + start;
+		}
+		
 		/**
 		 *  Round a number. By default the number is rounded to the nearest
 		 *  integer. Specifying a roundToInterval parameter allows you to round

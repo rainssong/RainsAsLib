@@ -12,7 +12,7 @@
 	增加一个content层，用于统计非组件视图宽高。√
 	autoSize改为autoZoomIn和AutoZoomOut
 	基于点的UI设计
-	PageNavigator
+	PageNavigator，参考安卓，对Page设定父级关系和静态数据
 	TouchRect
 	Theme决定 初始化的缩放值（由stage宽高 dpi 决定）
 	用标签标记刷新的视图内容,有calllater已经不需要
@@ -20,7 +20,10 @@
 	EventHandlerManager（自动销毁）:addEventHandler(target,Event.COMPLETE,handler);
 	ButtonGroup
 	DefaultTheme(在未手动选择主题的情况下，自动创建一个)
+	对UI边界进行绑定。
 	
+	ResourceManager：防止重复加载
+	Alert增加自适应。
 	
 
 工作流：

@@ -1,5 +1,8 @@
 package me.rainui.managers 
 {
+	import adobe.utils.CustomActions;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Shape;
@@ -7,8 +10,13 @@ package me.rainui.managers
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import me.rainssong.display.DisplayCore;
 	import me.rainssong.utils.Draw;
+	import me.rainssong.utils.ScaleMode;
 	import me.rainui.RainUI;
+	import me.rainui.components.Container;
+	import me.rainui.components.DisplayResizer;
+	import me.rainui.components.Page;
 	
 	/**
 	 * @date 2015/9/19 2:52
@@ -53,12 +61,29 @@ package me.rainui.managers
 			{
 				if(_overlayView == null)
 				{
-					var shape:Sprite = Draw.getSprite(Draw.rect, [0, 0, 100, 100, 0, 0.4]);
-					_overlayView = shape;
+					var p:Page = new Page();
+					//var c:Container = new Container({width:100,height:100});
+					//c.graphics.beginFill(0, 0.4);
+					//c.graphics.drawRect(0, 0, 100, 100);
+					//shape.addChild(c)
+					
+					var b:Bitmap = new Bitmap(new BitmapData(100, 100, true, 0x66000000));
+					var dr:DisplayResizer = new DisplayResizer(b, {percentWidth:1, percentHeight:1});
+					dr.contentScaleMode=ScaleMode.EXACT_FIT
+					p.addChild(dr);
+					
+					var shape:Shape = new Shape();
+					shape.graphics.beginFill(0, 1);
+					shape.graphics.drawRect(0, 0, 80, 80);
+					shape.cacheAsBitmap = true;
+					shape.alpha = 0.4;
+					//p.bgSkin.visible =shape;
+					
+					_overlayView = p;
 				}
 				
-				_overlayView.width = _root.stage.stageWidth;
-				_overlayView.height =_root.stage.stageHeight;
+				//_overlayView.width = _root.stage.stageWidth;
+				//_overlayView.height =_root.stage.stageHeight;
 				_root.addChild(_overlayView);
 				//this._popUpToOverlay[popUp] = overlay;
 			}
@@ -67,7 +92,7 @@ package me.rainui.managers
 			//this._popUps.push(popUp);
 			_root.addChild(_pop=popUp);
 			popUp.addEventListener(Event.REMOVED_FROM_STAGE, popUp_removedFromStageHandler,false,16);
-
+			
 			//if(this._popUps.length == 1)
 			//{
 				//this._root.stage.addEventListener(ResizeEvent.RESIZE, stage_resizeHandler);
@@ -99,6 +124,12 @@ package me.rainui.managers
 			popUp.y = (stage.stageHeight - popUp.height) / 2;
 		}
 		
+		
+		public function removePop()
+		{
+			
+		}
+		
 		/**
 		 * @private
 		 */
@@ -115,6 +146,9 @@ package me.rainui.managers
 				_overlayView.parent.removeChild(_overlayView);
 				//delete _popUpToOverlay[popUp];
 			}
+			
+			
+			
 			//var focusManager:IFocusManager = this._popUpToFocusManager[popUp];
 			//if(focusManager)
 			//{

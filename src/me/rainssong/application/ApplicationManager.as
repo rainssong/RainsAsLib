@@ -27,14 +27,21 @@ package me.rainssong.application
 		static public const TRIAL_EDITION:String = "TrialEdition";
 		static public const FREE_EDITION:String = "FreeEdition";
 		
+		//版本
 		public static var edition:String = NORMAL_EDITION;
 		static private var inited:Boolean = false;
 		
 		public static var stage:Stage
 		public static var stageWidth:Number = 0;
 		public static var stageHeight:Number = 0;
-		static public var platform:String="";
 		
+		//分发平台
+		static public var platform:String="";
+		//设备，手机、平板、电脑
+		static public var device:String = "";
+		
+		
+		//版本序号
 		protected static var _version:String = null;
 		
 		
@@ -79,7 +86,7 @@ package me.rainssong.application
 		}
 		
 		
-		public static function get DEBUG_MODE():Boolean
+		public static function get IS_DEBUG_MODE():Boolean
 		{
 			try
 			{
@@ -92,9 +99,9 @@ package me.rainssong.application
 			return false;
 		}
 		
-		public static function get RELEAS_MODE():Boolean
+		public static function get IS_RELEAS_MODE():Boolean
 		{
-			return !DEBUG_MODE;
+			return !IS_DEBUG_MODE;
 		}
 		
 		public static function get WEB_PLAYER():Boolean 
@@ -130,13 +137,14 @@ package me.rainssong.application
 		public static function isNewVersion(newVer:String = "1.0", oldVer:String = ""):Boolean
 		{
 			var newArr:Array = newVer.split(".").concat("0","0","0","0")
-		
 			var oldArr:Array =	oldVer.split(".").concat("0","0","0","0")
 			
 			for (var i:int = 0; i < 4; i++)
 			{
 				if (Number(newArr[i]) > Number(oldArr[i]))
 					return true;
+				else if (Number(newArr[i]) < Number(oldArr[i]))
+					return false;
 			}
 			return false;
 		}

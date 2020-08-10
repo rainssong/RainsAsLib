@@ -21,60 +21,66 @@ package me.rainssong.display
 		}
 		
 		/**获取9宫格拉伸位图数据*/
-		//public static function scale9Bmd(bmd:BitmapData, sizeGrid:Array, width:int, height:int):BitmapData
-		//{
-			//
-			//
-			//if (bmd.width == width && bmd.height == height)
-			//{
-				//return bmd;
-			//}
-			//
-			//var m:Matrix = new Matrix();
-			//var newRect:Rectangle = new Rectangle();
-			//var clipRect:Rectangle = new Rectangle();
-			//var grid:Rectangle = new Rectangle();
-			//
-			//
-			//width = width > 1 ? width : 1;
-			//height = height > 1 ? height : 1;
-			//
-			//var gw:int = int(sizeGrid[0]) + int(sizeGrid[2]);
-			//var gh:int = int(sizeGrid[1]) + int(sizeGrid[3]);
-			//var newBmd:BitmapData = new BitmapData(width, height, bmd.transparent, 0x00000000);
+
+		public static function scale9Bmd(bmd:BitmapData, rect:Rectangle, width:int, height:int):BitmapData
+		{
+			i
+			
+			if (bmd.width == width && bmd.height == height)
+			{
+				return bmd;
+			}
+			
+			var m:Matrix = new Matrix();
+			var newRect:Rectangle = new Rectangle();
+			var clipRect:Rectangle = new Rectangle();
+			var grid:Rectangle = rect
+			
+			
+			width = width > 1 ? width : 1;
+			height = height > 1 ? height : 1;
+			
+
+			var gw:Number = grid.width;
+			var gh:Number = grid.height;
+			
+			var newBmd:BitmapData = new BitmapData(width, height, bmd.transparent, 0x00000000);
 			//如果目标大于九宫格，则进行9宫格缩放，否则直接缩放
-			//if (width > gw && height > gh)
-			//{
-				//MathCore.setRect( grid, {x:sizeGrid[0], y:sizeGrid[1], width:bmd.width - sizeGrid[0] - sizeGrid[2], height:bmd.height - sizeGrid[1] - sizeGrid[3]});
-				//var rows:Array = [0, grid.top, grid.bottom, bmd.height];
-				//var cols:Array = [0, grid.left, grid.right, bmd.width];
-				//var newRows:Array = [0, grid.top, height - (bmd.height - grid.bottom), height];
-				//var newCols:Array = [0, grid.left, width - (bmd.width - grid.right), width];
-				//for (var i:int = 0; i < 3; i++)
-				//{
-					//for (var j:int = 0; j < 3; j++)
-					//{
-						//
-						//MathCore.setRect(newRect, {x:cols[i], y:rows[j], width:cols[i + 1] - cols[i], height:rows[j + 1] - rows[j]});
-						//MathCore.setRect(clipRect, {x:ewCols[i], y:newRows[j], width:newCols[i + 1] - newCols[i], height:newRows[j + 1] - newRows[j]});
-						//m.identity();
-						//m.a = clipRect.width / newRect.width;
-						//m.d = clipRect.height / newRect.height;
-						//m.tx = clipRect.x - newRect.x * m.a;
-						//m.ty = clipRect.y - newRect.y * m.d;
-						//newBmd.draw(bmd, m, null, null, clipRect, true);
-					//}
-				//}
-			//}
-			//else
-			//{
+			if (width > (bmd.width-gw) && height > (bmd.height-gh))
+			{
+				var rows:Array = [0, grid.top, grid.bottom, bmd.height];
+				var cols:Array = [0, grid.left, grid.right, bmd.width];
+				var newRows:Array = [0, grid.top, height - (bmd.height - grid.bottom), height];
+				var newCols:Array = [0, grid.left, width - (bmd.width - grid.right), width];
+				for (var i:int = 0; i < 3; i++)
+				{
+					for (var j:int = 0; j < 3; j++)
+					{
+						
+						MathCore.setRect(newRect, {x:cols[i], y:rows[j], width:cols[i + 1] - cols[i], height:rows[j + 1] - rows[j]});
+						MathCore.setRect(clipRect, {x:newCols[i], y:newRows[j], width:newCols[i + 1] - newCols[i], height:newRows[j + 1] - newRows[j]});
+						m.identity();
+						m.a = clipRect.width / newRect.width;
+						m.d = clipRect.height / newRect.height;
+						m.tx = clipRect.x - newRect.x * m.a;
+						m.ty = clipRect.y - newRect.y * m.d;
+						newBmd.draw(bmd, m, null, null, clipRect, true);
+						
+					}
+					//return newBmd;
+				}
+			}
+			else
+			{
 				//m.identity();
 				//m.scale(width / bmd.width, height / bmd.height);
-				//MathCore.setRect(grid, 0, 0, width, height);
+				//MathCore.setRect(grid, {x:0, y:0, width:width, height:height});
+				newBmd = drawResizeBmd(bmd, width, height);
+				
 				//newBmd.draw(bmd, m, null, null, grid, true);
-			//}
-			//return newBmd;
-		//}
+			}
+			return newBmd;
+		}
 		
 		/**创建切片资源*/
 		public static function createClips(bmd:BitmapData, xNum:int, yNum:int):Vector.<BitmapData>
@@ -194,6 +200,8 @@ package me.rainssong.display
 			}
 			return result;
 		}
+		
+
 	
 	}
 

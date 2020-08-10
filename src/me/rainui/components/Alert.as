@@ -14,6 +14,7 @@ package me.rainui.components
 	import me.rainssong.utils.Align;
 	import me.rainui.data.ListCollection;
 	import me.rainui.events.RainUIEvent;
+	import me.rainui.managers.BackManager;
 	import me.rainui.managers.PopUpManager;
 	import me.rainui.RainUI;
 
@@ -168,7 +169,7 @@ package me.rainui.components
 		
 		 public var btnGroup:ButtonGroup
 		 
-		public static function show(message:String, title:String = null, buttons:ListCollection = null,
+		public static function show(message:String, title:String = null, buttonDatas:ListCollection = null,
 			icon:DisplayObject = null, isModal:Boolean = true, isCentered:Boolean = true,
 			customAlertFactory:Function = null, customOverlayFactory:Function = null):Alert
 		{
@@ -180,10 +181,13 @@ package me.rainui.components
 			message ||= "";
 			title ||= "";
 			
+			if (buttonDatas == null)
+				buttonDatas = new ListCollection([{text:"OK"}]);
+			
 			var alert:Alert = new Alert();
 			alert.title = title;
 			alert.message = message;
-			alert.buttonsDataProvider = buttons;
+			alert.buttonsDataProvider = buttonDatas;
 			
 			//alert.buttonsDataProvider = buttons;
 			//alert.icon = icon;
@@ -740,16 +744,24 @@ package me.rainui.components
 		/**
 		 * @private
 		 */
-		//override protected function initialize():void
-		//{
+		override protected function initialize():void
+		{
 			//if(!this.layout)
 			//{
 				//var layout:VerticalLayout = new VerticalLayout();
 				//layout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_JUSTIFY;
 				//this.layout = layout;
 			//}
-			//super.initialize();
-		//}
+			BackManager.regFun(remove);
+			super.initialize();
+		}
+		
+		
+		override public function destroy():void 
+		{
+			BackManager.unregFun(remove);
+			super.destroy();
+		}
 
 		/**
 		 * @private

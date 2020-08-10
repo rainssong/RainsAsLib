@@ -6,8 +6,10 @@ package me.rainui.components
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
+	import flash.geom.Rectangle;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import me.rainssong.display.BitmapDataCore;
 	import me.rainssong.utils.ScaleMode;
 	import me.rainui.components.Component;
 	import me.rainui.events.RainUIEvent;
@@ -23,9 +25,13 @@ package me.rainui.components
 		//protected var _bitmap:SmartBitmap;
 		protected var _url:String;
 		protected var _loader:Loader = new Loader();
+		protected var _scale9Rect:Rectangle;
+		protected var _sourceBmd:BitmapData;
 		
-		public function Image(url:String = null)
+		public function Image(url:String = null,dataSource:Object=null)
 		{
+			
+			super(null,dataSource);
 			this.url = url;
 		}
 		
@@ -50,8 +56,9 @@ package me.rainui.components
 		
 			if(_content==null)
 			{
-				_content = new Bitmap();
+				_content = new Bitmap(null,"auto",true);
 				addChild(_content);
+				_sourceBmd = bitmap.bitmapData;
 			}
 			else
 			{
@@ -71,8 +78,11 @@ package me.rainui.components
 		
 		private function onLoadComplete(e:Event):void 
 		{
-			bitmap.bitmapData = Bitmap( _loader.content).bitmapData
-			redraw();
+			_sourceBmd = Bitmap( _loader.content).bitmapData;
+			bitmap.bitmapData = _sourceBmd;
+			//callLater(resize);
+			callLater(redraw);
+			
 			dispatchEvent(e.clone());
 		}
 		
@@ -101,26 +111,30 @@ package me.rainui.components
 				}
 				else
 				{
-					bitmapData = null;
+					_sourceBmd = null;
 				}
 			}
 			
 			if (_url == "")
 			{
-				bitmapData =null
+				_sourceBmd =null
 			}
 		}
 		
 		/**源位图数据*/
 		public function get bitmapData():BitmapData
 		{
-			return bitmap.bitmapData;
+			return _sourceBmd;
 		}
 		
+		//仅改变源图
 		public function set bitmapData(value:BitmapData):void
 		{
-			if(bitmap)
-				bitmap.bitmapData = value;
+			if (bitmap)
+			{
+				_sourceBmd =value;
+				
+			}
 			callLater(resize);
 			//sendEvent(RainUIEvent.IMAGE_LOADED);
 		}
@@ -128,29 +142,13 @@ package me.rainui.components
 		override public function set width(value:Number):void
 		{
 			super.width = value;
-			//bitmap.width = width;
 		}
 		
 		override public function set height(value:Number):void
 		{
 			super.height = value;
-			//bitmap.height = height;
 		}
 		
-		/**九宫格信息(格式:左边距,上边距,右边距,下边距)*/
-		//public function get sizeGrid():String
-		//{
-			//if (bitmap.sizeGrid)
-			//{
-				//return bitmap.sizeGrid.join(",");
-			//}
-			//return null;
-		//}
-		//
-		//public function set sizeGrid(value:String):void
-		//{
-			////_bitmap.sizeGrid = StringUtils.fillArray(Styles.defaultSizeGrid, value);
-		//}
 		
 		/**是否对位图进行平滑处理*/
 		public function get smoothing():Boolean
@@ -181,9 +179,23 @@ package me.rainui.components
 			return _content as Bitmap;
 		}
 		
-		public function set bitmap(value:Bitmap):void 
+		//独占唯一
+		//public function set bitmap(value:Bitmap):void 
+		//{
+			//_content = value;
+//
+			//_sourceBmd = bitmap.bitmapData;
+		//}
+		
+		public function get scale9Rect():Rectangle 
 		{
-			_content = value;
+			return _scale9Rect;
+		}
+		
+		public function set scale9Rect(value:Rectangle):void 
+		{
+			_scale9Rect = value;
+			callLater(resize);
 		}
 		
 		/**销毁资源
@@ -191,16 +203,43 @@ package me.rainui.components
 		public function dispose(clearFromLoader:Boolean = false):void
 		{
 			//App.asset.disposeBitmapData(_url);
-			if (bitmap && bitmap.bitmapData)
+			if (bitmap)
 			{
-				bitmap.bitmapData.dispose();
 				bitmap.bitmapData = null;
+				_sourceBmd=null
 			}
 				
 			if (clearFromLoader)
 			{
 				//App.loader.clearResLoaded(_url);
 			}
+		}
+		
+		
+		override public function resize():void 
+		{
+			
+			super.resize();
+			
+			callLater(runScale9);
+			//powerTrace("Image", width, height);
+		}
+		
+		private function runScale9():void 
+		{
+			if (_scale9Rect && bitmap && _sourceBmd)
+				bitmap.bitmapData = BitmapDataCore.scale9Bmd(_sourceBmd, _scale9Rect, _width, _height)
+			else
+				bitmap.bitmapData  = _sourceBmd;
+		}
+		
+		override public function redraw():void 
+		{
+			
+			super.redraw();
+			callLater(runScale9);
+			//if (_scale9Rect && bitmap && _sourceBmd)
+				//bitmap.bitmapData=BitmapDataCore.scale9Bmd(_sourceBmd,_scale9Rect,_width,_height)
 		}
 	
 	}

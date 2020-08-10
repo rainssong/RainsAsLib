@@ -8,6 +8,8 @@
 	import flash.display.StageAlign;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.KeyboardEvent;
+	import flash.ui.Keyboard;
 	import flash.geom.ColorTransform;
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
@@ -17,6 +19,7 @@
 	import me.rainssong.math.MathCore;
 	import me.rainssong.utils.Color;
 	import me.rainssong.utils.Draw;
+	import me.rainui.managers.BackManager;
 	import me.rainui.managers.RenderManager;
 	
 	/**
@@ -79,7 +82,19 @@
 			
 			
 			stage.addEventListener(Event.RESIZE, onStageResize,true,64);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKey);
 		
+		}
+		
+		static private function onKey(e:KeyboardEvent):void 
+		{
+			switch (e.keyCode)
+			{
+				case Keyboard.BACK:
+						e.preventDefault();
+						BackManager.runLast();
+						break;
+			}
 		}
 		
 		static public function getSkin(name:String):DisplayObject

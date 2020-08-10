@@ -39,7 +39,7 @@
 			stage.addEventListener(Event.ACTIVATE, onStageActivate);
 			try 
 			{
-				var StageOrientationEvent:Class = getDefinitionByName("StageOrientationEvent") as Class;
+				var StageOrientationEvent:Class = getDefinitionByName("flash.events.StageOrientationEvent") as Class;
 				stage.addEventListener(StageOrientationEvent.ORIENTATION_CHANGING, onOrientationChange); 
 			}
 			catch (e:Error)
