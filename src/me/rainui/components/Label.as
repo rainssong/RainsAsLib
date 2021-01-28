@@ -23,6 +23,7 @@ package me.rainui.components
 	{
 		//public var deftaultTextFormat:TextFormat = new TextFormat("微软雅黑", 24, 0, null, null, null, null, null, TextFormatAlign.CENTER);
 		public var textField:TextField;
+		//TODO:这里应该代理？
 		protected var _format:TextFormat;
 		protected var _text:String = "";
 		protected var _isHtml:Boolean;
@@ -130,6 +131,8 @@ package me.rainui.components
 			
 			if (defaultStyleFactory!=null)
 				defaultStyleFactory(this);
+				
+			super.initialize();
 		}
 		
 		/**显示的文本*/
@@ -165,6 +168,7 @@ package me.rainui.components
 			{
 				//BUG:多色由富文本组件完成
 				textField.defaultTextFormat = _format;
+				//BUG:可能会导致iOS上框选
 				//textField.setTextFormat(_format);
 			}
 			
@@ -515,6 +519,7 @@ package me.rainui.components
 		public function set embedFonts(value:Boolean):void 
 		{
 			textField.embedFonts = value;
+			callLater(resize);
 		}
 		
 		/* DELEGATE flash.text.TextField */
@@ -590,11 +595,6 @@ package me.rainui.components
 		override public function set height(value:Number):void
 		{
 			super.height = value;
-		}
-		
-		override public function set y(value:Number):void 
-		{
-			super.y = value;
 		}
 		
 		//override public function get autoSize():Boolean 

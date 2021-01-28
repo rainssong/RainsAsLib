@@ -210,50 +210,21 @@ package me.rainssong.date
 				dateString = dateString.replace(monthNames[i].substr(0, 3), (i + 1).toString());
 			}
 			
-			var dateArr:Array = dateString.split(/[:-\s]/);
-			var formatArr:Array = formatString.split(/[:-\s]/);
+			//var dateArr:Array = dateString.split(/[:-\s]/);
+			//var formatArr:Array = formatString.split(/[:-\s]/);
 			
 			var date:Date = new Date();
 			
 			
-			for (i = 0; i < formatArr.length; i++) 
-			{
-				var str:String = formatArr[i];
-				switch (str) 
-				{
-					case "YY":
-						date.fullYear = 2000 + Number(dateArr[i]);
-					break;
-					case "YYYY":
-						date.fullYear = Number(dateArr[i]);
-					break;
-					case "MM":
-					case "M":
-						date.month = Number(dateArr[i])-1;
-					break;
-					case "DD":
-					case "D":
-						date.date = Number(dateArr[i]);
-					break;
-					case "h":
-					case "hh":
-						date.hours = Number(dateArr[i]);
-					break;
-					case "m":
-					case "mm":
-						date.minutes = Number(dateArr[i]);
-					break;
-					case "s":
-					case "ss":
-						date.seconds = Number(dateArr[i]);
-					break;
-					case "ms":
-						date.milliseconds = Number(dateArr[i]);
-					break;
-					default:
-				}
-			}
-			
+			date.fullYear = Number(dateString.substr(formatString.indexOf("YYYY"), 4));
+			date.month = Number(dateString.substr(formatString.indexOf("MM"), 2));
+			date.date = Number(dateString.substr(formatString.indexOf("DD"), 2));
+			if(formatString.indexOf("hh")>=0)
+				date.hour = Number(dateString.substr(formatString.indexOf("hh"), 2));
+			if(formatString.indexOf("mm")>=0)
+				date.mintue = Number(dateString.substr(formatString.indexOf("mm"), 2));
+			if(formatString.indexOf("ss")>=0)
+				date.second = Number(dateString.substr(formatString.indexOf("ss"), 2));
 			
 			
 			return date;

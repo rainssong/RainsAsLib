@@ -380,7 +380,7 @@ package me.rainssong.tween
 			
 			vars.alpha = 1;
 			
-			TweenMax.to(_blackBmp, duration, vars);
+			TweenMax.to(_blackBmp,duration, vars);
 		}
 		
 		static public function blackToTrans(view:DisplayObject,duration:Number=0.4, vars:Object = null):void

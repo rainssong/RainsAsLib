@@ -24,14 +24,13 @@ package me.rainui.layout
 			super.preinitialize();
 		}
 		//延横轴
-		public override function CalculateLayoutInputHorizontal():void
+		public function CalculateLayoutInputHorizontal():void
         {
-            super.CalculateLayoutInputHorizontal();
             CalcAlongAxis(Directions.HORIZONTAL, true);
         }
 		
 		
-        public override function CalculateLayoutInputVertical()
+        public function CalculateLayoutInputVertical()
         {
             CalcAlongAxis(Directions.VERTICAL, true);
         }

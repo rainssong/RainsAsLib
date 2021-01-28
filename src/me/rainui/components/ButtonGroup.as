@@ -7,9 +7,12 @@ package me.rainui.components
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import me.rainssong.utils.Directions;
+	import me.rainui.RainUI;
 	import me.rainui.data.ListCollection;
 	import me.rainui.events.CollectionEvent;
 	import me.rainui.events.RainUIEvent;
+	import me.rainui.layout.HorizontalOrVerticalLayoutGroup;
+	import me.rainui.layout.LayoutGroup;
 
 
 
@@ -71,7 +74,7 @@ package me.rainui.components
 	 * @see ../../../help/button-group.html How to use the Feathers ButtonGroup component
 	 * @see feathers.controls.TabBar
 	 */
-	public class ButtonGroup extends Container
+	public class ButtonGroup extends HorizontalOrVerticalLayoutGroup
 	{
 		
 
@@ -232,95 +235,32 @@ package me.rainui.components
 		 * @see #DIRECTION_HORIZONTAL
 		 * @see #DIRECTION_VERTICAL
 		 */
-		public function get direction():String
-		{
-			return _direction;
-		}
+		//public function get direction():String
+		//{
+			//return _direction;
+		//}
 
 		/**
 		 * @private
 		 */
-		public function set direction(value:String):void
-		{
-			if(this._direction == value)
-			{
-				return;
-			}
-			this._direction = value;
-			callLater(redraw);
-		}
+		//public function set direction(value:String):void
+		//{
+			//if(this._direction == value)
+			//{
+				//return;
+			//}
+			//this._direction = value;
+			//callLater(redraw);
+		//}
 
 		/**
 		 * @private
 		 */
 		//protected var _distributeButtonSizes:Boolean = true;
 
-		/**
-		 * If <code>true</code>, the buttons will be equally sized in the
-		 * direction of the layout. In other words, if the button group is
-		 * horizontal, each button will have the same width, and if the button
-		 * group is vertical, each button will have the same height. If
-		 * <code>false</code>, the buttons will be sized to their ideal
-		 * dimensions.
-		 *
-		 * <p>The following example doesn't distribute the button sizes:</p>
-		 *
-		 * <listing version="3.0">
-		 * group.distributeButtonSizes = false;</listing>
-		 *
-		 * @default true
-		 */
-		//public function get distributeButtonSizes():Boolean
-		//{
-			//return this._distributeButtonSizes;
-		//}
 
-		/**
-		 * @private
-		 */
-		//public function set distributeButtonSizes(value:Boolean):void
-		//{
-			//if(this._distributeButtonSizes == value)
-			//{
-				//return;
-			//}
-			//this._distributeButtonSizes = value;
-			//this.invalidate(INVALIDATION_FLAG_STYLES);
-		//}
 
-		/**
-		 * @private
-		 */
-		protected var _gap:Number = 10;
 
-		/**
-		 * Space, in pixels, between buttons.
-		 *
-		 * <p>The following example sets the gap used for the button layout to
-		 * 20 pixels:</p>
-		 *
-		 * <listing version="3.0">
-		 * group.gap = 20;</listing>
-		 *
-		 * @default 0
-		 */
-		public function get gap():Number
-		{
-			return this._gap;
-		}
-
-		/**
-		 * @private
-		 */
-		public function set gap(value:Number):void
-		{
-			if(this._gap == value)
-			{
-				return;
-			}
-			this._gap = value;
-			callLater(redraw);
-		}
 
 
 		/**
@@ -447,8 +387,6 @@ package me.rainui.components
 		 */
 		override public function redraw():void
 		{
-			
-			layoutButtons();
 			super.redraw();
 		}
 
@@ -486,11 +424,8 @@ package me.rainui.components
 				this._buttons[i] = this.createButton(item);
 			}
 			
-			layoutButtons();
 			callLater(redraw);
 		}
-
-
 
 		
 		/**
@@ -527,21 +462,23 @@ package me.rainui.components
 		/**
 		 * @private
 		 */
-		protected function layoutButtons():void
-		{
-			if(_direction==Directions.HORIZONTAL)
-				for (var i:int = 0; i < _buttons.length; i++) 
-				{
-					_buttons[i].x = i * (_buttons[i].width + gap);
-					_buttons[i].y = 0;
-				}
-			else
-				for (i = 0; i < _buttons.length; i++) 
-				{
-					_buttons[i].x =0;
-					_buttons[i].y = i * (_buttons[i].height + gap);
-				}
-		}
+		//protected function layoutButtons():void
+		//{
+			//if(_direction==Directions.HORIZONTAL)
+				//for (var i:int = 0; i < _buttons.length; i++) 
+				//{
+					//_buttons[i].x = i * (_buttons[i].width + gap);
+					//_buttons[i].y = 0;
+				//}
+			//else
+				//for (i = 0; i < _buttons.length; i++) 
+				//{
+					//_buttons[i].x =0;
+					//_buttons[i].y = i * (_buttons[i].height + gap);
+				//}
+		//}
+		
+
 
 		/**
 		 * @private

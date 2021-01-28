@@ -145,6 +145,11 @@ package me.rainssong.manager
 		{
 			sendRequest(data, url, URLRequestMethod.POST, 10000, contentType, callBack);
 		}
+		
+		public function get(url:String, data:Object = null, callBack:Function = null,  contentType:String = "application/x-www-form-urlencoded")
+		{
+			sendRequest(data, url, URLRequestMethod.GET, 10000, contentType, callBack);
+		}
 	}
 
 }

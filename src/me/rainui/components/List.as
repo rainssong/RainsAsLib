@@ -33,7 +33,6 @@ package me.rainui.components
 		protected var _spaceY:int;
 		protected var _cells:Vector.<ListItem> = new Vector.<ListItem>();
 		protected var _items:ListCollection
-		protected var _index:int = -1;
 		//protected var _selectHandler:Handler;
 		//protected var _renderHandler:Handler;
 		//protected var _mouseHandler:Handler;

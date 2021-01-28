@@ -53,6 +53,9 @@ package me.rainui.components
 		
 		public var destroyOnRemove:Boolean = true;
 		
+		
+		private var elements:Vector.<DisplayObject>=new Vector.<DisplayObject>();
+		
 		public function Container(dataSource:Object = null)
 		{
 			super(dataSource)
@@ -115,6 +118,7 @@ package me.rainui.components
 		{
 			element.x = x;
 			element.y = y;
+			//elements.push(element);
 			addChild(element);
 		}
 		
@@ -123,6 +127,7 @@ package me.rainui.components
 		{
 			element.x = x;
 			element.y = y;
+			//elements.push(element);
 			addChildAt(element, index);
 		}
 		
@@ -132,7 +137,7 @@ package me.rainui.components
 			for (var i:int = 0, n:int = elements.length; i < n; i++)
 			{
 				var item:DisplayObject = elements[i];
-				addChild(item);
+				//addElement(item);
 			}
 		}
 		
@@ -142,6 +147,11 @@ package me.rainui.components
 			if (element && contains(element))
 			{
 				removeChild(element);
+				//for (var i:int = elements.length; i > 0;i-- ) 
+				//{
+					//element == elements[i]
+					//elements.shift(i);
+				//}
 			}
 		}
 		

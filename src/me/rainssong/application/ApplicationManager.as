@@ -99,7 +99,7 @@ package me.rainssong.application
 			return false;
 		}
 		
-		public static function get IS_RELEAS_MODE():Boolean
+		public static function get IS_RELEASE_MODE():Boolean
 		{
 			return !IS_DEBUG_MODE;
 		}

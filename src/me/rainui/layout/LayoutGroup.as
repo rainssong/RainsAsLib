@@ -30,8 +30,9 @@ package me.rainui.layout
 		/**
 		 * 所有子对象填入
 		 */
-        public function CalculateLayoutInputHorizontal():void
+        public function GetAllChildren():void
         {
+			_childrens.length = 0;
             for (var i:int = 0; i < this.numChildren; i++)
             {
 				var d:DisplayObject = this.getChildAt(i);
@@ -75,7 +76,6 @@ package me.rainui.layout
 		  
         }
 
-        public function CalculateLayoutInputVertical(){}
 
 
         public function  SetLayoutHorizontal(){}

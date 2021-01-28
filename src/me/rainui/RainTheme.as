@@ -96,7 +96,7 @@
 		static public var designHeight:Number = 768;
 		
 		
-		public function RainTheme(scaleMethod:String="dpi")
+		public function RainTheme(scaleMethod:String=ScaleMethod.DPI)
 		{
 			_scaleMethod = scaleMethod;
 			
@@ -189,14 +189,15 @@
 			Label.defaultStyleFactory=labelStyleFactory
 		}
 		
-		protected function labelStyleFactory(com:Label):void
+		protected function labelStyleFactory(com:Label):Label
 		{
 			//com.width = 200*RainUI.scale;
 			//com.height = 60*RainUI.scale;
 			com.format = ObjectCore.clone(primaryTextFormat);
+			return com;
 		}
 		
-		public function buttonStyleFactory(comp:Button):void 
+		public function buttonStyleFactory(comp:Button):Button 
 		{
 			//不能修改皮肤，除非因为存在用户定义好的情况
 			//comp.normalSkin = blueSkinFactory();
@@ -209,13 +210,15 @@
 				comp.label.size = RainUI.scale * 32;
 				comp.label.color = 0xffffff;
 			}
+			return comp;
 		}
 		
-		public function listStyleFactory(comp:List):void 
+		public function listStyleFactory(comp:List):List 
 		{
 			//comp.bgSkin = whiteFlatSkinFactory();
 			//comp.width = controlWidth;
 			//comp.height = controlHeight;
+			return comp;
 		}
 		
 		protected function calcScale():void
@@ -328,7 +331,7 @@
 					break;
 				case "gray": 
 				case GRAY_TEXT_FORMAT: 
-					tf = new TextFormat("微软雅黑", 32, GRAY, null, null, null, null, null, TextFormatAlign.CENTER);
+					tf = ObjectCore.clone(grayTextFormat);
 					break;
 				case "black": 
 				case "textInput": 

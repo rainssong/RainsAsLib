@@ -14,6 +14,8 @@ package me.rainui.components
 	import me.rainssong.utils.Align;
 	import me.rainui.data.ListCollection;
 	import me.rainui.events.RainUIEvent;
+	import me.rainui.layout.HorizontalOrVerticalLayoutGroup;
+	import me.rainui.layout.VerticalLayoutGroup;
 	import me.rainui.managers.BackManager;
 	import me.rainui.managers.PopUpManager;
 	import me.rainui.RainUI;
@@ -169,6 +171,8 @@ package me.rainui.components
 		
 		 public var btnGroup:ButtonGroup
 		 
+		 public var layout:VerticalLayoutGroup;
+		 
 		public static function show(message:String, title:String = null, buttonDatas:ListCollection = null,
 			icon:DisplayObject = null, isModal:Boolean = true, isCentered:Boolean = true,
 			customAlertFactory:Function = null, customOverlayFactory:Function = null):Alert
@@ -223,6 +227,7 @@ package me.rainui.components
 		
 		protected var _titleLabel:Label;
 		protected var _contentLabel:Label;
+		protected var _verticalLayout:HorizontalOrVerticalLayoutGroup
 
 		
 		override protected function preinitialize():void 
@@ -238,8 +243,20 @@ package me.rainui.components
 		
 		override protected function createChildren():void 
 		{
-			_titleLabel = new Label(DEFAULT_CHILD_NAME_HEADER,{parent:this,centerX:0,top:0,color:0xffffff,align:Align.TOP,percentWidth:0.9});
-			_contentLabel = new Label(DEFAULT_CHILD_NAME_MESSAGE,{parent:this,centerX:0,percentWidth:0.9,align:Align.TOP,top:32 * RainUI.scale,color:0xffffff});
+			
+			if (layout == null )
+			{
+				layout = new VerticalLayoutGroup()
+				layout.width = 440 * RainUI.scale;;
+				layout.height = 240 * RainUI.scale;
+				layout.spacing=10*RainUI.scale
+				layout.top = 10 * RainUI.scale;
+				layout.childControlHeight = true;
+				this.addChild(layout);
+			}
+			
+			_titleLabel = new Label(DEFAULT_CHILD_NAME_HEADER,{parent:layout,centerX:0,color:0xffffff,align:Align.CENTER,percentWidth:0.9});
+			_contentLabel = new Label(DEFAULT_CHILD_NAME_MESSAGE,{parent:layout,centerX:0,centerY:0,percentWidth:0.9,align:Align.CENTER,color:0xffffff,wordWrap:true});
 			//
 			//
 			//_contentLabel.multiline = true;
@@ -260,15 +277,17 @@ package me.rainui.components
 			{
 				this.btnGroup = new ButtonGroup()
 				btnGroup.addEventListener(RainUIEvent.SELECT, onSelect);
+				//btnGroup.borderVisible = true;
+				//btnGroup.autoSize = true;
 			}
 			
 			if (_buttonsDataProvider)
 			{
-				this.addChild(btnGroup);
+				layout.addChild(btnGroup);
 				this.btnGroup.items = _buttonsDataProvider;
-				this.btnGroup.bottom = _gap;
+				this.btnGroup.bottom = 0*RainUI.scale;
 				this.btnGroup.centerX = 0;
-				this.btnGroup.autoSize = true;
+				//this.btnGroup.autoSize = true;
 			}
 			
 			
@@ -300,17 +319,19 @@ package me.rainui.components
 			if (_buttonsDataProvider)
 			{
 				this.addChild(btnGroup);
-				this.btnGroup.autoSize = true;
+				//this.btnGroup.autoSize = true;
 				this.btnGroup.items = _buttonsDataProvider;
-				this.btnGroup.bottom = 10;
+				this.btnGroup.bottom = 0;
 				this.btnGroup.centerX = 0;
 				//btnGroup.borderVisible = true;
 			}
 			
-			super.redraw();
-			
 			_width = this.contentWidth+20;
 			_height = this.contentHeight + 20;
+			
+			super.redraw();
+			
+			
 		}
 
 		/**
@@ -755,6 +776,8 @@ package me.rainui.components
 			BackManager.regFun(remove);
 			super.initialize();
 		}
+		
+
 		
 		
 		override public function destroy():void 

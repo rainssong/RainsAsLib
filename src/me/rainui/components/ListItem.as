@@ -28,7 +28,7 @@ package me.rainui.components
 			if (label == null)
 			{
 				label = new Label();
-				label.format = RainUI.getTextFormat(RainTheme.GRAY_TEXT_FORMAT);
+				label.color = RainTheme.GRAY;
 				label.align = Align.LEFT;
 				
 				label.centerX = 0;
@@ -62,6 +62,9 @@ package me.rainui.components
 			//selectHandler = onSelect;
 			//unselectHandler = onUnselect;
 		}
+		
+		
+		
 		
 		//private function onSelect(e:RainUIEvent=null):void 
 		//{

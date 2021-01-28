@@ -2,6 +2,7 @@ package me.rainui.layout
 {
 	import com.greensock.motionPaths.Direction;
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import me.rainssong.math.MathCore;
 	import me.rainssong.utils.Directions;
 	
@@ -48,12 +49,14 @@ package me.rainui.layout
 		//最小，默认，主动填充
 		//public var min:Number, preferred:Number, flexible:Number;
 		
+		public var axis:String = Directions.HORIZONTAL;
+		public var isVertical:String = true;
 		
       
 		//计算整体内容大小
         protected function CalcAlongAxis(axis:String, isVertical:Boolean)
         {
-			
+			GetAllChildren();
             var childForceExpandSize:Boolean = (axis == Directions.HORIZONTAL) ? childForceExpandWidth : childForceExpandHeight;
 
 
@@ -172,9 +175,18 @@ package me.rainui.layout
             
         }
 		
-		override protected function initialize():void 
+		override public function redraw():void 
 		{
-			super.initialize();
+			super.redraw();
+			CalcAlongAxis(axis, isVertical);
+			SetChildrenAlongAxis(axis, isVertical);
+		}
+		
+		
+		override protected function onAdded(param0:Event):void 
+		{
+			super.onAdded(param0);
+			redraw();
 		}
 		
 

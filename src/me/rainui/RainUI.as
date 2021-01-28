@@ -4,7 +4,6 @@
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Stage;
-	import flash.display.StageScaleMode;
 	import flash.display.StageAlign;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

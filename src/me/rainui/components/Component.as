@@ -25,9 +25,10 @@
 	 */
 	dynamic public class Component extends Sprite
 	{
-		//size
+		//绝对像素
 		protected var _width:Number = NaN;
 		protected var _height:Number = NaN;
+		
 		
 		protected var _autoSize:Boolean = false;
 		
